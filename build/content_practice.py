@@ -40,6 +40,7 @@ JAMS_FAQ = [
 
 def jams():
     faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in JAMS_FAQ)
+    sessions = listings.sessions_block() or listings.sessions_or_none()
     body = f"""
 <section class="hero">
   <div class="wrap">
@@ -51,8 +52,13 @@ def jams():
 
 <section class="section">
   <div class="wrap">
-    {answer("A contact improv jam is an open, unguided session where people practise Contact Improvisation together. There is no teacher and usually no music. Participants arrive and leave freely, dance with whoever is willing, sit at the edge to rest and watch, and stop at any time. Jams are the primary way the form is practised in Miami and worldwide.")}
-    {listings.sessions_block()}
+    {answer("A contact improv jam is an open, unguided session where people practise Contact Improvisation together. There is no teacher and usually no music. Participants arrive and leave freely, dance with whoever is willing, sit at the edge to rest and watch, and stop at any time. Jams are the primary way the form is practised worldwide, and in Miami they sit alongside a small number of recurring classes and festival camps.")}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {sessions}
   </div>
 </section>
 
@@ -103,7 +109,7 @@ def jams():
         ),
         schema.breadcrumb("/jams", "Jams"),
         schema.faq(JAMS_FAQ),
-        listings.sessions_schema(),
+        listings.events_schema(),
     )
     return page(
         "Contact Improv Jams in Miami | What to Expect & Where to Go",
@@ -151,7 +157,11 @@ def classes():
         <p>There is no certification body for Contact Improvisation, so you cannot check a licence. What you can check is behaviour. A teacher should state their consent framework in the first ten minutes rather than assuming it. They should demonstrate as much as they talk. They should correct unsafe technique immediately, including in the room rather than in a private aside afterwards. They should not require you to partner with a particular person, and they should be comfortable when you decline one.</p>
         <p>A scene with no certification is a scene where reputation is the entire quality control. That is worth knowing before you pay for an intensive.</p>
       </div>
-      {listings.classes_block()}
+      <h2>Where to learn it in Miami</h2>
+      <div class="prose">
+        <p>One recurring Contact Improvisation class in Miami-Dade could be verified from its own listings when this page was last checked: <strong>Contact Improv &mdash; ALL LEVELS</strong> at Dance Arts Miami, 250 NE 61st Street, Miami, 33137, on Tuesdays from 6:00 to 7:00 PM. It is advertised as covering connection, weight sharing, momentum and spontaneous partnering, and no partner is needed. Because it is published as a multi-date series on Eventbrite and mirrored on Meetup, confirm the current week there rather than trusting this page.</p>
+        <p>Beyond that class, the realistic routes into the form in Miami are the <a href="/jams">jams, camps and adjacent practice</a> listed elsewhere on this site. If you would rather learn in a structured way and no class is running near you, a contemporary dance or improvisation class at any Miami studio will teach you most of the body literacy, and the jams will teach you the rest.</p>
+      </div>
       <h2>Questions people ask before their first session</h2>
       {faq_html}
     </div>
@@ -169,6 +179,7 @@ def classes():
         ),
         schema.breadcrumb("/classes", "Classes"),
         schema.faq(FIRST_JAM_FAQ),
+        listings.course_schema(),
         schema.item_list(
             "/classes",
             "Skills taught in a Contact Improvisation beginners' course",

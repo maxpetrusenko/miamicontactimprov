@@ -145,10 +145,12 @@ def defined_terms(terms, path="/glossary"):
 
 
 def item_list(path, name, items):
-    """items: list of (name, url, description)."""
+    """items: list of (name, url, description). `path` may carry its own #fragment."""
+    anchor = f"#{path.split('#', 1)[1]}" if "#" in path else "#list"
+    page = path.split("#", 1)[0]
     return {
         "@type": "ItemList",
-        "@id": SITE + path + "#list",
+        "@id": SITE + page + anchor,
         "name": name,
         "itemListOrder": "https://schema.org/ItemListUnordered",
         "numberOfItems": len(items),
@@ -166,19 +168,20 @@ def item_list(path, name, items):
 
 
 def video_objects(entries, path="/videos"):
-    """entries: list of dicts with title, description, thumbnail, embed, url, channel."""
+    """entries: list of dicts with title, description, embed, url, channel (+ optional thumbnail, upload)."""
     def node(e):
         n = {
             "@type": "VideoObject",
             "name": e["title"],
             "description": e["description"],
-            "thumbnailUrl": e["thumbnail"],
             "embedUrl": e["embed"],
             "url": e["url"],
             "publisher": {"@type": "Organization", "name": e["channel"]},
             "isFamilyFriendly": True,
         }
-        # uploadDate is only emitted when it has actually been verified upstream.
+        if e.get("thumbnail"):
+            n["thumbnailUrl"] = e["thumbnail"]
+        # uploadDate and thumbnailUrl are only emitted when actually verified upstream.
         if e.get("upload"):
             n["uploadDate"] = e["upload"]
         return n
@@ -195,5 +198,22 @@ def video_objects(entries, path="/videos"):
     }
 
 
+def _flatten(nodes):
+    """A builder may hand back a single node, a node, or a list of nodes. Flatten one level.
+
+    Without this, a builder returning a list put a bare array inside @graph, which the
+    validator then walked as if it were a node and crashed on.
+    """
+    out = []
+    for n in nodes:
+        if n is None or n == [] or n == {}:
+            continue
+        if isinstance(n, list):
+            out.extend(x for x in n if x)
+        else:
+            out.append(n)
+    return out
+
+
 def render(*nodes):
-    return _graph([n for n in nodes if n])
+    return _graph(_flatten(nodes))

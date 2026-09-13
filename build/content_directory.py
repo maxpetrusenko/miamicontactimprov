@@ -6,19 +6,19 @@ import listings
 
 MIAMI_FAQ = [
     ("Is there contact improvisation in Miami?",
-     "Yes, though it is organised by individuals rather than a single institution, so there is no one calendar. Contact improvisation has been practised in South Florida for decades. The CI World Jam Map listed a monthly Miami community jam at Excello Dance Space in past years, and Miami's physically integrated dance company, Karen Peterson Dancers, has been a long-running home for contact-based and improvisational movement work in the city."),
+     "Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and contact improv, and Camp Contact brings contact improvisation to the Love Burn festival on Virginia Key each February. Contact improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution."),
     ("Why does searching for 'improv Miami' not find this?",
-     "Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented."),
+     "Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented, and it is why this site spells the whole thing out."),
     ("Where do people dance contact improv in Miami?",
-     "In rented studio space, cultural centres, university dance departments and outdoors. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not."),
+     "Rented studio space, a residence in Miami Beach, a warehouse or wellness venue, and outdoors at Virginia Key during the annual burn. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not."),
     ("Do I need a partner to attend?",
      "No, and bringing one is not required. Jams are designed so that people arrive alone and dance with whoever is willing. Attending with a partner is fine, but you are not expected to spend the session with them."),
     ("Is it taught in English, Spanish, or both?",
      "Miami is bilingual, and organisers in Miami-Dade typically work in both. Contact improvisation is mostly taught through touch and demonstration, so language matters less than in most movement classes, but ask if you are unsure."),
     ("Can contact improvisation happen outdoors in Miami?",
-     "It can, and historically it has, on beaches and in parks. Practical constraints are heat, humidity, sand and rain. Sessions tend to run early morning or after sunset, on grass or a hard flat surface, with more water than you think you need."),
+     "It does, at least once a year and at scale, at Love Burn on Virginia Key. Outside a festival, the practical constraints are heat, humidity, sand and rain. Sessions tend to run early morning or after sunset, on grass or a hard flat surface, with more water than you think you need."),
     ("Is there a contact improvisation festival in Florida?",
-     "Not on the scale of the European or West Coast CI festivals. Regional practice in Florida has centred on recurring local jams in Miami, Sarasota, Gainesville and Jacksonville, several of which are listed on the CI World Jam Map's Florida page. Travelling dancers typically go to the larger national and international festivals."),
+     "Not on the scale of the European or West Coast CI festivals. Florida's CI practice has centred on recurring local sessions in Miami, Sarasota, Gainesville, Orlando and Jacksonville, several of which are listed on the CI World Jam Map's Florida page. Miami's own large gathering is Love Burn, which is a regional burn with contact improvisation inside it rather than a CI festival. Travelling dancers go to the national and international festivals."),
     ("How do I start a jam in Miami?",
      "Book a studio for a recurring two-hour slot, choose whether it is open or experienced, write the protocol down and say it out loud at the start of every session, set a door fee that covers the room, and list it somewhere public. Two hours a week and a consistent room is the entire infrastructure."),
 ]
@@ -50,15 +50,17 @@ def miami():
     ])}
     <div class="prose">
       <h2>The honest state of it</h2>
-      <p>It is worth being direct, because most city guides are not. Miami's contact improvisation scene is small, scattered and largely undocumented online. The global CI World Jam Map, run by the team behind contactimprov.com, once carried a monthly Monday community jam at Excello Dance Space in Miami with rotating facilitators and a ten dollar door. That listing is the clearest trace of a recurring Miami jam anywhere on the open web, and it may no longer be current. Nothing on this page claims otherwise.</p>
-      <p>What does exist, verifiably, is adjacent. Miami has a contemporary dance community, university dance programmes, a physically integrated dance company that has been working in the city for years, and a large movement and somatic scene. Contact improvisation is practised inside all of that, mostly without the label attached.</p>
+      <p>It is worth being direct, because most city guides are not. Miami's contact improvisation scene is small and largely undocumented online. What exists is real but scattered: one weekly all-levels class at Dance Arts Miami, a contact-adjacent jam and workshop programme run by Kama Flight out of Miami Beach, and Camp Contact bringing contact improvisation to Love Burn on Virginia Key each February. Those four things are what this site could verify, and they are listed on <a href="/jams">the jams page</a> with their sources and the date each was checked.</p>
+      <p>The rest of the picture is thinner than a directory would like. The global CI World Jam Map carries a monthly Monday community jam at Excello Dance Space with rotating facilitators and a ten dollar door; that listing is undated and this site does not present it as current. Miami's older CI organising ran through platforms that no longer exist: a Yahoo Group and a Tribe.net community, both of which shut down with their hosts. Miami's physically integrated dance company, Karen Peterson Dancers, is active and current and has long been part of the city's improvisational and partner-work landscape, which is why it appears in the directory rather than being written off with the dead links.</p>
       <h2>Where the answer actually lives</h2>
-      <p>Nobody can tell you where the jam is tonight from a static web page. The three places that can:</p>
+      <p>Nobody can tell you where the jam is tonight from a static web page. The places that can:</p>
       <ul class="dir-list">
+        <li><p><strong>The organisers themselves</strong></p><p>Every one of them publishes their own listings and answers a direct message. This is the fastest and most reliable route, and it is why the directory exists.</p><p><a href="/directory">The directory</a></p></li>
         <li><p><strong>The CI World Jam Map, Florida page</strong></p><p>The global community's own listing. It is honest about being patchy and asks readers to send corrections.</p><p><a href="https://www.contactimprov.com/florida.html" rel="noopener nofollow">contactimprov.com/florida.html</a></p></li>
-        <li><p><strong>The organisations below</strong></p><p>Miami dance organisations that work with improvisation and partner work. A direct message to any of them will get you a better answer than any search engine will.</p><p><a href="/directory">The directory</a></p></li>
-        <li><p><strong>The people who already jam</strong></p><p>Searches that work: <code>contact improvisation Miami</code>, <code>contact improv South Florida</code>, <code>CI jam Florida</code>. Searches that do not: anything with the bare word <code>improv</code>, which in Miami means comedy theatre.</p></li>
+        <li><p><strong>Searches that work</strong></p><p><code>contact improvisation Miami</code>, <code>contact improv South Florida</code>, <code>CI jam Florida</code>. Searches that do not: anything built on the bare word <code>improv</code>, which in Miami returns comedy theatres in Doral and Dania Beach.</p></li>
       </ul>
+      <h2>One trap worth naming</h2>
+      <p>A web search for contact improvisation in Miami will sooner or later surface "Contact Improvisation Gold Coast" and events at "The Farm, Miami". Those are in Miami, Queensland, Australia, postcode 4220. They have nothing to do with Florida and they are excluded from every listing on this site.</p>
       <h2 id="start-one">If there is no jam near you, start one</h2>
       <p>This is not a consolation prize. Most jams in the world exist because one person booked a room. The minimum viable version costs about two hours of studio rental a week and an hour of admin.</p>
       <ol class="dir-list">
@@ -144,11 +146,13 @@ MUSIC_NOTE = (
 
 DIRECTORY_FAQ = [
     ("Who teaches contact improvisation in Miami?",
-     "Contact improvisation has no certification body, so there is no register to consult. The practical route is to ask the studios and organisations that work with partner and improvisational movement in Miami-Dade, several of which are listed on this page, and to ask at any jam you attend who is teaching locally."),
+     "Contact improvisation has no certification body, so there is no register to consult. What could be verified when this page was last checked is one recurring all-levels class: Contact Improv \u2014 ALL LEVELS at Dance Arts Miami, Tuesdays 6:00 to 7:00 PM. Everything else runs through organisations that answer a direct message, which are listed above."),
     ("How do I get listed here?",
-     "Send the name, the city, what you teach or host, and a link to your own page. There is no fee and no membership. Listings are checked against your own published information before they go up."),
+     "Send the name, the city, what you teach or host, and a link to your own page. There is no fee and no membership. Listings are checked against your own published information before they go up, and each entry shows the date it was checked."),
     ("Do you list jams outside Miami?",
      "The focus is Miami-Dade and Broward. Sessions elsewhere in Florida are linked through the CI World Jam Map, which covers the whole state and the world."),
+    ("Why are 5Rhythms and ecstatic dance on a contact improvisation site?",
+     "Because they are the adjacent practices a newcomer to this kind of movement will actually meet in Miami, and because every entry is labelled with what it is. A directory that silently mixed them together would be worse than one that says so."),
 ]
 
 
@@ -171,17 +175,14 @@ def directory():
   <div class="wrap">
     {answer("Contact Improvisation has no central directory because it has no central body. Local listings are held by the organisers themselves. The closest thing to a global index is the CI World Jam Map at contactimprov.com, which lists sessions by country and state, including a Florida page covering Miami, Sarasota, Gainesville and Jacksonville.")}
     <div class="prose">
-      <h2 id="teachers">Teachers and organisers in Miami</h2>
-    </div>
-    {listings.teachers_block()}
-    <div class="prose">
-      <h2 id="studios">Studios and organisations</h2>
-    </div>
-    {listings.local_orgs_block()}
-    <div class="prose">
       <h2>International resources</h2>
       <p>These are the sites that actually hold the form's listings, archives and gatherings. Each one was opened and checked when it was added here.</p>
       <ul class="dir-list">{resources}</ul>
+    </div>
+    {listings.teachers_note()}
+    {listings.orgs_block()}
+    {listings.adjacent_block()}
+    <div class="prose">
       <h2>Questions about the directory</h2>
       {faq_html}
     </div>
@@ -191,6 +192,7 @@ def directory():
 </section>
 """
     items = [(n, u, d) for n, u, d in GLOBAL_RESOURCES]
+    local = [(o[0], o[3], o[5][:160]) for o in listings.ORGS]
     jsonld = schema.render(
         schema.organisation(),
         schema.webpage(
@@ -200,7 +202,8 @@ def directory():
         ),
         schema.breadcrumb("/directory", "Directory"),
         schema.faq(DIRECTORY_FAQ),
-        schema.item_list("/directory", "Contact Improvisation resources", items),
+        schema.item_list("/directory#international", "Contact Improvisation international resources", items),
+        schema.item_list("/directory#miami", "Miami movement organisations", local),
     )
     return page(
         "Contact Improvisation Directory | Miami Teachers & Studios",

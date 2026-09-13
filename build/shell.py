@@ -8,6 +8,9 @@ SITE = "https://miamicontactimprov.com"
 NAME = "Miami Contact Improv"
 TAGLINE = "A working map of Contact Improvisation in Miami"
 
+# Bump when the local listings in build/listings.py are re-checked against source.
+LAST_CHECKED = "13 September 2026"
+
 NAV = [
     ("What is CI", "/what-is-contact-improvisation"),
     ("Miami", "/miami"),
@@ -121,7 +124,7 @@ def footer():
     </div>
     <div class="colophon">
       <span>{NAME} &middot; an independent, non-commercial resource for the Miami dance community.</span>
-      <span>Contact Improvisation has no central authority, no licence and no membership. This site is one map of it, not the map.</span>
+      <span>Local listings last checked {LAST_CHECKED}. Contact Improvisation has no central authority, no licence and no membership. This site is one map of it, not the map.</span>
     </div>
   </div>
 </footer>"""

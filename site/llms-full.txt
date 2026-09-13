@@ -220,13 +220,19 @@ Contact Improvisation has been practised in South Florida for decades, organised
 
 The honest state of it
 
-It is worth being direct, because most city guides are not. Miami's contact improvisation scene is small, scattered and largely undocumented online. The global CI World Jam Map, run by the team behind contactimprov.com, once carried a monthly Monday community jam at Excello Dance Space in Miami with rotating facilitators and a ten dollar door. That listing is the clearest trace of a recurring Miami jam anywhere on the open web, and it may no longer be current. Nothing on this page claims otherwise.
+It is worth being direct, because most city guides are not. Miami's contact improvisation scene is small and largely undocumented online. What exists is real but scattered: one weekly all-levels class at Dance Arts Miami, a contact-adjacent jam and workshop programme run by Kama Flight out of Miami Beach, and Camp Contact bringing contact improvisation to Love Burn on Virginia Key each February. Those four things are what this site could verify, and they are listed on the jams page with their sources and the date each was checked.
 
-What does exist, verifiably, is adjacent. Miami has a contemporary dance community, university dance programmes, a physically integrated dance company that has been working in the city for years, and a large movement and somatic scene. Contact improvisation is practised inside all of that, mostly without the label attached.
+The rest of the picture is thinner than a directory would like. The global CI World Jam Map carries a monthly Monday community jam at Excello Dance Space with rotating facilitators and a ten dollar door; that listing is undated and this site does not present it as current. Miami's older CI organising ran through platforms that no longer exist: a Yahoo Group and a Tribe.net community, both of which shut down with their hosts. Miami's physically integrated dance company, Karen Peterson Dancers, is active and current and has long been part of the city's improvisational and partner-work landscape, which is why it appears in the directory rather than being written off with the dead links.
 
 Where the answer actually lives
 
-Nobody can tell you where the jam is tonight from a static web page. The three places that can:
+Nobody can tell you where the jam is tonight from a static web page. The places that can:
+
+ The organisers themselves 
+
+Every one of them publishes their own listings and answers a direct message. This is the fastest and most reliable route, and it is why the directory exists.
+
+ The directory 
 
  The CI World Jam Map, Florida page 
 
@@ -234,15 +240,13 @@ The global community's own listing. It is honest about being patchy and asks rea
 
  contactimprov.com/florida.html 
 
- The organisations below 
+ Searches that work 
 
-Miami dance organisations that work with improvisation and partner work. A direct message to any of them will get you a better answer than any search engine will.
+ contact improvisation Miami , contact improv South Florida , CI jam Florida . Searches that do not: anything built on the bare word improv , which in Miami returns comedy theatres in Doral and Dania Beach.
 
- The directory 
+One trap worth naming
 
- The people who already jam 
-
-Searches that work: contact improvisation Miami , contact improv South Florida , CI jam Florida . Searches that do not: anything with the bare word improv , which in Miami means comedy theatre.
+A web search for contact improvisation in Miami will sooner or later surface "Contact Improvisation Gold Coast" and events at "The Farm, Miami". Those are in Miami, Queensland, Australia, postcode 4220. They have nothing to do with Florida and they are excluded from every listing on this site.
 
 If there is no jam near you, start one
 
@@ -278,15 +282,15 @@ Questions about CI in Miami
 
 Is there contact improvisation in Miami?
 
-Yes, though it is organised by individuals rather than a single institution, so there is no one calendar. Contact improvisation has been practised in South Florida for decades. The CI World Jam Map listed a monthly Miami community jam at Excello Dance Space in past years, and Miami's physically integrated dance company, Karen Peterson Dancers, has been a long-running home for contact-based and improvisational movement work in the city.
+Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and contact improv, and Camp Contact brings contact improvisation to the Love Burn festival on Virginia Key each February. Contact improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution.
 
 Why does searching for 'improv Miami' not find this?
 
-Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented.
+Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented, and it is why this site spells the whole thing out.
 
 Where do people dance contact improv in Miami?
 
-In rented studio space, cultural centres, university dance departments and outdoors. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not.
+Rented studio space, a residence in Miami Beach, a warehouse or wellness venue, and outdoors at Virginia Key during the annual burn. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not.
 
 Do I need a partner to attend?
 
@@ -298,11 +302,11 @@ Miami is bilingual, and organisers in Miami-Dade typically work in both. Contact
 
 Can contact improvisation happen outdoors in Miami?
 
-It can, and historically it has, on beaches and in parks. Practical constraints are heat, humidity, sand and rain. Sessions tend to run early morning or after sunset, on grass or a hard flat surface, with more water than you think you need.
+It does, at least once a year and at scale, at Love Burn on Virginia Key. Outside a festival, the practical constraints are heat, humidity, sand and rain. Sessions tend to run early morning or after sunset, on grass or a hard flat surface, with more water than you think you need.
 
 Is there a contact improvisation festival in Florida?
 
-Not on the scale of the European or West Coast CI festivals. Regional practice in Florida has centred on recurring local jams in Miami, Sarasota, Gainesville and Jacksonville, several of which are listed on the CI World Jam Map's Florida page. Travelling dancers typically go to the larger national and international festivals.
+Not on the scale of the European or West Coast CI festivals. Florida's CI practice has centred on recurring local sessions in Miami, Sarasota, Gainesville, Orlando and Jacksonville, several of which are listed on the CI World Jam Map's Florida page. Miami's own large gathering is Love Burn, which is a regional burn with contact improvisation inside it rather than a CI festival. Travelling dancers go to the national and international festivals.
 
 How do I start a jam in Miami?
 
@@ -332,11 +336,51 @@ A jam is where Contact Improvisation actually lives. No instructor, no set music
 
 Short answer
 
-A contact improv jam is an open, unguided session where people practise Contact Improvisation together. There is no teacher and usually no music. Participants arrive and leave freely, dance with whoever is willing, sit at the edge to rest and watch, and stop at any time. Jams are the primary way the form is practised in Miami and worldwide.
+A contact improv jam is an open, unguided session where people practise Contact Improvisation together. There is no teacher and usually no music. Participants arrive and leave freely, dance with whoever is willing, sit at the edge to rest and watch, and stop at any time. Jams are the primary way the form is practised worldwide, and in Miami they sit alongside a small number of recurring classes and festival camps.
 
-Recurring jams we can confirm today
+Recurring sessions in Miami we have verified
 
-We have not yet verified a recurring Contact Improvisation jam inside Miami-Dade or Broward County, and this site will not list one it has not checked. What we can tell you is where the question gets answered: the studios and organisers on the directory page are the people who would know, and most of them answer a direct message quickly. If you run a session, tell us and it will appear here with its schedule, room and cost stated plainly.
+Each of these was checked against the organiser's own page on the date shown. Schedules change, so confirm before you travel. Nothing on this list is paid for, sponsored, or added without the organiser's own page saying it.
+
+ Contact Improv — ALL LEVELS · Contact Improvisation
+
+Dance Arts Miami, 250 NE 61st Street, Miami, FL 33137
+
+Weekly, Tuesdays 6:00–7:00 PM EDT. Set by the organiser; see the listing.
+
+The most established recurring Contact Improvisation class found in Miami-Dade. Advertised as exploring connection, weight sharing, momentum and spontaneous partnering, with no partner needed. Listed as a multi-date series on Eventbrite and mirrored on Meetup and SweatPals, so the studio's own site is not the authoritative place to check it. Confirm the current week before travelling.
+
+ The organiser's own listing · checked 2026-09-13
+
+ Kama Flight — Flight Workshop · Contact-adjacent (acro yoga, Thai massage, contact improv)
+
+Skanda Yoga, Miami, FL
+
+October 18, 2026 and November 15, 2026. Published on the organiser's own product pages.
+
+Described by the organisers as a fusion of acro yoga, Thai massage and contact improv. Proceeds fund the Kama Flight Foundation, a registered 501(c)(3) nonprofit. Booked in pairs with friends welcome, which makes it a gentler first step than an open jam if physical contact with strangers is the thing giving you pause.
+
+ The organiser's own listing · checked 2026-09-13
+
+ Kama Flight — jams and Kama Floor workshops · Contact-adjacent (acro yoga, Thai massage, contact improv)
+
+Private residence, 2345 N Bay Road, Miami Beach, FL 33140 (parking on Alton Road)
+
+Recurring; dates published individually. Donation-based for jams.
+
+Recurring donation-based jams and floor workshops. Because these run in a private residence and the dates are published one at a time, always check the organiser's own page for the next date rather than relying on any listing, including this one.
+
+ The organiser's own listing · checked 2026-09-13
+
+ Camp Contact at Love Burn · Contact Improvisation (as a core camp offering)
+
+Historic Virginia Key Beach Park, 4020 Virginia Beach Drive, Miami, FL 33149
+
+February, annually. Festival ticket.
+
+Love Burn is Miami's Burning Man regional, held on Virginia Key, and Camp Contact runs contact improvisation, acro yoga, ecstatic dance and authentic relating as its programme. This is the largest concentration of contact improvisation that happens in Miami in a year, and it is a festival rather than a class. Dates move, so read the organiser's page.
+
+ The organiser's own listing · checked 2026-09-13
 
 How a jam usually runs
 
@@ -468,9 +512,11 @@ There is no certification body for Contact Improvisation, so you cannot check a 
 
 A scene with no certification is a scene where reputation is the entire quality control. That is worth knowing before you pay for an intensive.
 
-Recurring classes we can confirm today
+Where to learn it in Miami
 
-No recurring Contact Improvisation class series in Miami has been verified here yet. Beginner-friendly movement classes that share CI's foundations, such as contemporary dance, somatic movement and improvisation labs, are run through the studios listed on the directory page.
+One recurring Contact Improvisation class in Miami-Dade could be verified from its own listings when this page was last checked: Contact Improv — ALL LEVELS at Dance Arts Miami, 250 NE 61st Street, Miami, 33137, on Tuesdays from 6:00 to 7:00 PM. It is advertised as covering connection, weight sharing, momentum and spontaneous partnering, and no partner is needed. Because it is published as a multi-date series on Eventbrite and mirrored on Meetup, confirm the current week there rather than trusting this page.
+
+Beyond that class, the realistic routes into the form in Miami are the jams, camps and adjacent practice listed elsewhere on this site. If you would rather learn in a structured way and no class is running near you, a contemporary dance or improvisation class at any Miami studio will teach you most of the body literacy, and the jams will teach you the rest.
 
 Questions people ask before their first session
 
@@ -536,126 +582,131 @@ Start here
 
 If you have never seen this dance, watch these three first.
 
- Contact Improvisation 1972 klubki · 1972 
-Early footage from the year the form was made. Worth watching for how little it looks like a performance.
+ Contact Improvisation: a couple of basic exercises OKI · 9:37 · youtube 
+The plainest demonstration in the set. Two dancers working through the underlying weight exchange, useful the week before your first session.
 
- Originators of Contact Dance / Improvisation 1972 Randy Om · 1972 
-Archive material of the first generation of dancers, including Steve Paxton and Nancy Stark Smith.
+ Contact Improvisation 1972 klubki · 9:31 · youtube 
+Archive material from the founding year, uploaded decades later. Watch it for how little it resembles a performance and how much it resembles standing around until something happens.
 
- Contact Improvisation: a couple of basic exercises OKI · 2019 
-A short, plain demonstration of the underlying weight exchange, useful before your first session.
+ What happens in a Contact Improvisation jam? ci rollingpoint · 3:18 · youtube 
+Part of a documentary series, and it answers the question in its own title directly.
 
 Duets
 
 Sustained two-person work, from near-stillness to fully airborne.
 
- Contact Improvisation: the art of jamming Sasha Dodo · 2019 
-Sasha Dodo and Dolores Dewhurst Marks in a sustained duet that stays close to the floor and to listening.
+ Embraced BeingMotion — Irene Sposetti · 4:00 · youtube 
+A single continuous duet, shot as film rather than documentation. No interview, no title cards, no talking. The cleanest picture on YouTube of what sustained contact feels like from the inside.
 
- Contact Improvisation: moments of practice BeingMotion — Irene Sposetti · 2020 
-Irene Sposetti and Johan Nilsson. Slow, unshowy, structurally clear. The clearest picture of what the form feels like.
+ Contact Improvisation: moments of practice BeingMotion — Irene Sposetti · 5:51 · youtube 
+Irene Sposetti and Johan Nilsson, cinema-verite, natural light, long takes. Slow, unshowy, structurally clear.
 
- Contact Improv duet Tiina Jääskö · 2021 
-Tiina Jääskö and Jordi Ramon, working the line between stillness and momentum.
+ the play of weight Neige Christenson · 6:17 · youtube 
+Low camera, rolling bodies, almost no event. Still one of the most quoted records of the form as a physical conversation rather than a display.
 
- Contact Improvisation duet with Ming Tsai and Dolores Dewhurst Ming Tsai · 2020 
-A calm, technical duet with a strong emphasis on the rolling point of contact.
+ Contact Improvisation: the art of jamming Sasha Dodo · 3:42 · youtube 
+Sasha Dodo and Dolores Dewhurst Marks. Colour-graded, tightly framed, strong lifts and counterbalance, no spoken content.
 
- Contact Improvisation duet: Tamas Baku and Sabine Parzer Sabine Parzer · 2018 
-Excerpts from a longer duet, showing how much of the work happens below the hips.
+ Blake Nellis and Brando at Earthdance Aaron Brandes (Brando) · 6:29 · youtube 
+Filmed at Earthdance, the long-running CI centre in Massachusetts. Handheld, unhurried, clearly a good session rather than a performance.
 
- Contact Improvisation: Blake Nellis and Brando at Earthdance Aaron Brandes (Brando) · 2016 
-Filmed at Earthdance, the long-running CI centre in Massachusetts. Athletic, playful, clearly unhurried.
+ Lifting: contact and improvisation Xandy Liberato · 6:30 · youtube 
+Close technical footage of lift mechanics and counterweighting. Watch this one if you have been told you are too heavy or too light to fly.
 
- Moab Jam: Karen Nelson, Neige Christenson and Bradley Ellis Sharing Weight · 2019 
-Three of the form's most experienced dancers in an outdoor jam. Useful for seeing how a trio works without a plan.
+ Shaken Karl Frost · 9:31 · youtube 
+Body Research performance work. Movement-led and experimental rather than instructional.
+
+ Elske Seidel and Joerg Hassmann: Contact Improvisation duet Katelyn Stiles · 7:11 · vimeo 
+Full duet documentation by a well-known Berlin pair. Clean framing, music-led, no narration. Embedding is open on Vimeo, which is not always the case for dance film.
+
+ Silkies Dan Farberoff · 4:38 · vimeo 
+A shot dance film rather than documentation. Painterly, made for a screen, worth watching for what contact work looks like when it is composed for camera.
 
 Festivals and jams
 
-What a large gathering of CI dancers looks like when the room fills up.
+What a gathering of CI dancers looks like when the room fills up.
 
- 25th contactfestival freiburg contactfestfreiburg · 2022 
-One of Europe's largest annual CI gatherings, filmed across a full festival.
+ Poland Contact Improvisation Festival: Warsaw Flow 2012, jam szimi82 · 3:54 · youtube 
+A festival jam filmed as it fills up. Multiple duets, ambient music, no narration. This is the shape a busy room takes.
 
- Contact Improvisation, Goa Contact Festival Forgotten Land · 2018 
-Beach, heat, and a very large jam. Close to what a South Florida outdoor session could look like.
+ Contact Improvisation, Goa Contact Festival, India Forgotten Land · 31:44 · youtube 
+Thirty-one minutes of beach and studio footage from a large tropical festival. The closest thing here to what a South Florida outdoor session could look like, at scale.
 
- Contact Impro Festival in Tirol MOTION MODE DANCE THEATRE · 2021 
-Mountain festival footage with teaching excerpts and open jam.
+ Opening jam and guided warm-up with Steve Batts virginia negru · 11:48 · youtube 
+A complete opening: the warm-up that a first-timer should watch before attending a jam, followed by the jam itself.
 
- Poland Contact Improvisation Festival, Warsaw Flow szimi82 · 2012 
-A well-shot record of the festival jam format: an empty room slowly filling with dancing.
+ Teachers' performance, Kyiv Contact Improvisation Festival Yevhen Titov · 50:03 · youtube 
+Senior teachers performing for a festival audience. Shows the performative end of what the practice can produce when experienced dancers push it.
 
- Italy contact festival: Artem Markov and Cleo Laigret Artem Markov · 2018 
-Festival stage work, showing the more performative end of what the practice can produce.
+ Contact Improvisation at Summer Dance Art of Contact · 1:01 · youtube 
+One minute, outdoors, no context needed. The best short clip here to send someone who has never seen the form and only has a moment.
+
+ CIPD Andrew Wass · 9:58 · vimeo 
+Performance documentation, one of the few higher-production CI performance uploads still public and openly embeddable on Vimeo.
 
 Documentary and the originators
 
-The people who made the form, explaining it in their own words.
+The people who made the form, in their own words.
 
- What happens in a Contact Improvisation jam? ci rollingpoint · 2016 
-Part of a documentary series on the form. Answers the question in the title directly.
+ The poetics of touch: Nancy Stark Smith, a pathway into contact improvisation visioniarborescenti · 24:41 · youtube 
+A documentary on Stark Smith and on touch as the medium. Contains interview material as well as dancing, so it is an editorial watch rather than a background loop.
 
- Life lessons learned through Contact Improvisation TEDx Talks · 2019 
-Gregory Catellier and Kristin O'Neal on what the practice teaches off the floor.
+ Nancy Stark Smith and Karen Nelson (1990) whitefiredancer · 16:37 · youtube 
+Vintage footage of two of the earliest practitioners, uploaded in 2020. Silent, archival, and the best evidence of how the form looked before it had a name people recognised.
 
- Steve Paxton: Talking Dance Walker Art Center · 2014 
-The originator of the form in conversation. The primary source for why it was built this way.
+ Steve Paxton contactimprovdoc · 6:39 · youtube 
+Archive clip of the form's originator from the contactimprovdoc channel. Low-resolution and quiet, and the primary source for why any of this exists.
 
- Steve Paxton: Drafting Interior Techniques Emma B · 2018 
-A television documentary on Paxton's composition and improvisation work.
-
- Steve Paxton and Simone Forti: In Conversation CalArtsREDCAT · 2011 
-Two of the people who reshaped what dance could be, talking through it.
-
- Steve Paxton about dancing klubki · 2015 
-Short, direct, and unusually good on the discipline of standing still.
+ Life lessons learned through Contact Improvisation TEDx Talks · 15:13 · youtube 
+Gregory Catellier and Kristin O'Neal on what the practice teaches off the floor. The best single answer to a sceptical relative asking what this is for.
 
 Credits
 
-Every film on this page belongs to the channel that made it and plays through that channel's own player on the platform that hosts it. Nothing here is downloaded, re-cut or re-hosted by this site. If you own one of these and would rather it were not embedded, say so and it comes down the same day.
+Every film here belongs to the channel that made it and plays through that channel's own player on the platform that hosts it. Nothing is downloaded, re-cut or re-hosted by this site. If you own one of these and would rather it were not embedded, say so and it comes down the same day.
 
- Aaron Brandes (Brando) 
+ Blake Nellis and Brando at Earthdance 
 
- Artem Markov 
+ CIPD 
 
- BeingMotion — Irene Sposetti 
+ Contact Improvisation 1972 
 
- CalArtsREDCAT 
+ Contact Improvisation at Summer Dance 
 
- Emma B 
+ Contact Improvisation, Goa Contact Festival, India 
 
- Forgotten Land 
+ Contact Improvisation: a couple of basic exercises 
 
- MOTION MODE DANCE THEATRE 
+ Contact Improvisation: moments of practice 
 
- Ming Tsai 
+ Contact Improvisation: the art of jamming 
 
- OKI 
+ Elske Seidel and Joerg Hassmann: Contact Improvisation duet 
 
- Randy Om 
+ Embraced 
 
- Sabine Parzer 
+ Life lessons learned through Contact Improvisation 
 
- Sasha Dodo 
+ Lifting: contact and improvisation 
 
- Sharing Weight 
+ Nancy Stark Smith and Karen Nelson (1990) 
 
- TEDx Talks 
+ Opening jam and guided warm-up with Steve Batts 
 
- Tiina Jääskö 
+ Poland Contact Improvisation Festival: Warsaw Flow 2012, jam 
 
- Walker Art Center 
+ Shaken 
 
- ci rollingpoint 
+ Silkies 
 
- contactfestfreiburg 
+ Steve Paxton 
 
- klubki 
+ Teachers' performance, Kyiv Contact Improvisation Festival 
 
- klubki 
+ The poetics of touch: Nancy Stark Smith, a pathway into contact improvisation 
 
- szimi82 
+ What happens in a Contact Improvisation jam? 
+
+ the play of weight 
 
 Watched enough
 
@@ -683,14 +734,6 @@ Short answer
 
 Contact Improvisation has no central directory because it has no central body. Local listings are held by the organisers themselves. The closest thing to a global index is the CI World Jam Map at contactimprov.com, which lists sessions by country and state, including a Florida page covering Miami, Sarasota, Gainesville and Jacksonville.
 
-Teachers and organisers in Miami
-
-Recurring teachers we can confirm today
-
-Contact Improvisation has no certification body, so this list is built from what teachers and organisers publish about themselves rather than from a register. We have not yet confirmed a Miami-based CI teacher's own public listing. If you teach or organise here, send us your page .
-
-Studios and organisations
-
 International resources
 
 These are the sites that actually hold the form's listings, archives and gatherings. Each one was opened and checked when it was added here.
@@ -716,19 +759,103 @@ A national CI resource and listing site, useful as a model for how a country's j
  Contact improvisation (encyclopaedia entry) 
 A starting point for the form's definitions, lineage and influences, with references.
 
+Teachers
+
+There is no register of Contact Improvisation teachers, anywhere, because the form was never trademarked and never certificated. That was a deliberate decision in 1975 and this site is not going to invent the authority that the form's own founders refused.
+
+So the honest position on Miami: no Miami-based Contact Improvisation teacher could be confirmed from their own published information at the time of writing. Individual names appear in legacy CI member directories from around 2010 and in social media posts, and none of those are current enough to publish. The people who actually know are the organisations below, and the fastest route is to ask the one hosting the class you are thinking of attending.
+
+If you teach here, send us your page . A teacher listing on this site means one thing only: this person publishes what they teach and where. It is not an endorsement, and it cannot be, in a form with no assessor.
+
+Studios, companies and organisers
+
+Every one of these was opened and checked. Where an organisation is contact-adjacent rather than a contact improvisation outfit, the entry says so.
+
+ Karen Peterson Dancers · Physically integrated dance company
+
+Miami
+
+A Miami company working with dancers with and without disabilities, running the Forward Motion Dance Festival and residencies across Miami-Dade schools. Its studio work has historically been connected to contact practice in the city, and its founder's name is the one attached to the Miami jam still listed on the CI World Jam Map. The company itself is active and current; the jam listing on the world map is not dated, so this site does not present it as running.
+
+Checked 2026-09-13
+
+ Dance Arts Miami · Dance studio (ballet, modern, social, adult classes)
+
+Miami
+
+Hosts the weekly Contact Improv — ALL LEVELS class and runs a broad adult programme. Its own schedule page did not surface a dedicated contact improvisation entry when checked, so the class listing is verified through Eventbrite and Meetup rather than here.
+
+Checked 2026-09-13
+
+ Kama Flight · Movement studio and 501(c)(3) foundation
+
+Miami and Miami Beach
+
+Acro yoga, Thai massage and contact improv. Runs workshops, jams and teacher trainings, and publishes its own code of conduct.
+
+Checked 2026-09-13
+
+ Ecstatic Dance Miami · Conscious dance community (contact-adjacent)
+
+Miami
+
+Running since 2014, with gatherings around the full moon. Some events sequence yoga, contact improvisation and ecstatic dance in one evening, so it is a realistic way into the wider Miami movement community even though the dancing is not CI.
+
+Checked 2026-09-13
+
+ EXPANSION Ecstatic Dance · Conscious dance series (contact-adjacent)
+
+Miami (Edgewater, Little Haiti, Ironside)
+
+A recurring series with rotating venues including Boho Miami and Lion's Den. Some editions include partner embodiment work.
+
+Checked 2026-09-13
+
+ Love Burn · Burning Man regional festival
+
+Miami
+
+Miami's regional burn, held annually on Virginia Key. The place contact improvisation reaches its largest Miami audience, through Camp Contact.
+
+Checked 2026-09-13
+
+Adjacent practice, honestly labelled
+
+Different disciplines with heavily overlapping communities. Listed because a newcomer looking for this kind of movement in Miami will meet these people anyway, and because pretending otherwise would be the sort of directory that wastes your evening.
+
+ Nathan Shultz · 5Rhythms (teacher in training), breathwork, yoga
+
+Miami Beach
+
+Teaches at Hanu Wellness, 736 6th Street, Miami Beach. 5Rhythms is conscious movement, not contact improvisation. Listed here because the two communities overlap heavily in practice and in people.
+
+Checked 2026-09-13
+
+ Liliana De La Vega · 5Rhythms (certified, Waves)
+
+Miami
+
+Certified 5Rhythms teacher, dancing since 2018 and teaching since 2024. Works in Spanish and English. Again: a different practice, adjacent community.
+
+Checked 2026-09-13
+
 Questions about the directory
 
 Who teaches contact improvisation in Miami?
 
-Contact improvisation has no certification body, so there is no register to consult. The practical route is to ask the studios and organisations that work with partner and improvisational movement in Miami-Dade, several of which are listed on this page, and to ask at any jam you attend who is teaching locally.
+Contact improvisation has no certification body, so there is no register to consult. What could be verified when this page was last checked is one recurring all-levels class: Contact Improv — ALL LEVELS at Dance Arts Miami, Tuesdays 6:00 to 7:00 PM. Everything else runs through organisations that answer a direct message, which are listed above.
 
 How do I get listed here?
 
-Send the name, the city, what you teach or host, and a link to your own page. There is no fee and no membership. Listings are checked against your own published information before they go up.
+Send the name, the city, what you teach or host, and a link to your own page. There is no fee and no membership. Listings are checked against your own published information before they go up, and each entry shows the date it was checked.
 
 Do you list jams outside Miami?
 
 The focus is Miami-Dade and Broward. Sessions elsewhere in Florida are linked through the CI World Jam Map, which covers the whole state and the world.
+
+Why are 5Rhythms and ecstatic dance on a contact improvisation site?
+
+Because they are the adjacent practices a newcomer to this kind of movement will actually meet in Miami, and because every entry is labelled with what it is. A directory that silently mixed them together would be worse than one that says so.
 
 Add yourself
 
@@ -1154,15 +1281,15 @@ Miami
 
 Is there contact improvisation in Miami?
 
-Yes, though it is organised by individuals rather than a single institution, so there is no one calendar. Contact improvisation has been practised in South Florida for decades. The CI World Jam Map listed a monthly Miami community jam at Excello Dance Space in past years, and Miami's physically integrated dance company, Karen Peterson Dancers, has been a long-running home for contact-based and improvisational movement work in the city.
+Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and contact improv, and Camp Contact brings contact improvisation to the Love Burn festival on Virginia Key each February. Contact improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution.
 
 Why does searching for 'improv Miami' not find this?
 
-Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented.
+Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented, and it is why this site spells the whole thing out.
 
 Where do people dance contact improv in Miami?
 
-In rented studio space, cultural centres, university dance departments and outdoors. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not.
+Rented studio space, a residence in Miami Beach, a warehouse or wellness venue, and outdoors at Virginia Key during the annual burn. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not.
 
 Do I need a partner to attend?
 
@@ -1174,11 +1301,11 @@ Miami is bilingual, and organisers in Miami-Dade typically work in both. Contact
 
 Can contact improvisation happen outdoors in Miami?
 
-It can, and historically it has, on beaches and in parks. Practical constraints are heat, humidity, sand and rain. Sessions tend to run early morning or after sunset, on grass or a hard flat surface, with more water than you think you need.
+It does, at least once a year and at scale, at Love Burn on Virginia Key. Outside a festival, the practical constraints are heat, humidity, sand and rain. Sessions tend to run early morning or after sunset, on grass or a hard flat surface, with more water than you think you need.
 
 Is there a contact improvisation festival in Florida?
 
-Not on the scale of the European or West Coast CI festivals. Regional practice in Florida has centred on recurring local jams in Miami, Sarasota, Gainesville and Jacksonville, several of which are listed on the CI World Jam Map's Florida page. Travelling dancers typically go to the larger national and international festivals.
+Not on the scale of the European or West Coast CI festivals. Florida's CI practice has centred on recurring local sessions in Miami, Sarasota, Gainesville, Orlando and Jacksonville, several of which are listed on the CI World Jam Map's Florida page. Miami's own large gathering is Love Burn, which is a regional burn with contact improvisation inside it rather than a CI festival. Travelling dancers go to the national and international festivals.
 
 How do I start a jam in Miami?
 
@@ -1188,15 +1315,19 @@ This directory and site
 
 Who teaches contact improvisation in Miami?
 
-Contact improvisation has no certification body, so there is no register to consult. The practical route is to ask the studios and organisations that work with partner and improvisational movement in Miami-Dade, several of which are listed on this page, and to ask at any jam you attend who is teaching locally.
+Contact improvisation has no certification body, so there is no register to consult. What could be verified when this page was last checked is one recurring all-levels class: Contact Improv — ALL LEVELS at Dance Arts Miami, Tuesdays 6:00 to 7:00 PM. Everything else runs through organisations that answer a direct message, which are listed above.
 
 How do I get listed here?
 
-Send the name, the city, what you teach or host, and a link to your own page. There is no fee and no membership. Listings are checked against your own published information before they go up.
+Send the name, the city, what you teach or host, and a link to your own page. There is no fee and no membership. Listings are checked against your own published information before they go up, and each entry shows the date it was checked.
 
 Do you list jams outside Miami?
 
 The focus is Miami-Dade and Broward. Sessions elsewhere in Florida are linked through the CI World Jam Map, which covers the whole state and the world.
+
+Why are 5Rhythms and ecstatic dance on a contact improvisation site?
+
+Because they are the adjacent practices a newcomer to this kind of movement will actually meet in Miami, and because every entry is labelled with what it is. A directory that silently mixed them together would be worse than one that says so.
 
 Still unanswered?
 

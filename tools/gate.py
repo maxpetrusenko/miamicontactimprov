@@ -77,11 +77,21 @@ REQUIRED = {
     "ItemList": ["name", "itemListElement", "numberOfItems"],
     "Place": ["name"],
     "VideoObject": ["name", "thumbnailUrl", "embedUrl"],
+    "Event": ["name", "startDate", "location", "eventStatus"],
+    "Course": ["name", "description", "provider"],
+    "CourseInstance": ["courseMode", "location"],
+    "Schedule": ["byDay", "startTime"],
     "ListItem": ["position"],
     "Question": ["name", "acceptedAnswer"],
     "DefinedTerm": ["name", "description"],
 }
 LD_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
+
+# Types that a single page must define at most once. Everything else may repeat.
+SINGLETON_TYPES = {
+    "Organization", "WebSite", "WebPage", "BreadcrumbList", "FAQPage",
+    "DefinedTermSet", "Place", "Course",
+}
 
 
 def check_jsonld(pages):
@@ -114,7 +124,9 @@ def check_jsonld(pages):
                     if prop not in node:
                         add(ERROR, "json-ld", page, f"{t} missing required property '{prop}'")
             for t, c in seen.items():
-                if c > 1:
+                # Only true singletons. A page may legitimately list many Events,
+                # ListItems, VideoObjects, Questions or DefinedTerms.
+                if c > 1 and t in SINGLETON_TYPES:
                     add(ERROR, "json-ld", page, f"{t} defined {c} times in one graph")
         if '"@type": "Organization"' not in src:
             add(ERROR, "json-ld", page, "no Organization node")
@@ -350,4 +362,14 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # A crash is a broken validator, not a finding. Exit 2 so it can never be
+    # mistaken for the exit-1 findings band.
+    try:
+        sys.exit(main())
+    except SystemExit:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        import traceback
+        traceback.print_exc()
+        print(f"\ngate could not run: {type(exc).__name__}: {exc}", file=sys.stderr)
+        sys.exit(2)
