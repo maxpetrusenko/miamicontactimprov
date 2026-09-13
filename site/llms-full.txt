@@ -744,8 +744,14 @@ The international hub for the form, run since the 1990s: a world jam map, an eve
  CI World Jam Map: Florida 
 The community's own Florida listing. It is the closest thing to a South Florida jam directory that exists, and it is maintained by whoever sends corrections.
 
+ CI Global Calendar 
+A shared, multilingual calendar of CI classes, jams, workshops and festivals worldwide, posted by the organisers and teachers themselves. The best single place to look for something happening anywhere.
+
  Contact Quarterly 
 The journal that grew out of the 1975 newsletter, and the form's main written archive for four and a half decades.
+
+ CQ CI Contacts List 
+Contact Quarterly's referral directory for locating CI classes, jams and practitioners, organised by country and US state.
 
  Earthdance 
 A long-running movement and improvisation centre in Plainfield, Massachusetts, hosting workshops, residencies and jams.
