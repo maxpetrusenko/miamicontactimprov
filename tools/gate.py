@@ -230,6 +230,31 @@ def check_files(site_dir):
         add(ERROR, "files", "robots.txt", "a blanket Disallow blocks every crawler")
 
 
+def check_canonical_forms(site_dir, pages):
+    """Every page must exist at exactly one URL. The .html form 301s to the clean form.
+
+    Only real rules count. The first version of this check substring-matched the whole
+    file, so a comment mentioning the path satisfied it and the gate lied green.
+    """
+    red = (site_dir / "_redirects").read_text(encoding="utf-8")
+    rules = [ln.strip() for ln in red.splitlines()
+             if ln.strip() and not ln.strip().startswith("#")]
+    measured("redirects.rules", len(rules))
+    if len(rules) < 2:
+        add(ERROR, "canonical", "_redirects",
+            "too few redirect rules; a second reachable URL per page is duplicate content")
+    sources = set(rules)
+    for name in pages:
+        if name in ("index.html", "404.html"):
+            continue
+        needle = f"/{name}"
+        if not any(r.split()[0] == needle for r in rules if r.split()):
+            add(ERROR, "canonical", "_redirects",
+                f"{name} is reachable at two URLs; no rule collapses it")
+    if not sources:
+        add(ERROR, "canonical", "_redirects", "no redirect rules parsed")
+
+
 def check_assets(site_dir):
     """favicon and og:image must be raster at the right size."""
     try:
@@ -306,6 +331,7 @@ def main():
     check_sitemap(site_dir, pages)
     check_links(pages, site_dir)
     check_files(site_dir)
+    check_canonical_forms(site_dir, pages)
     check_assets(site_dir)
     check_a11y(pages)
 
