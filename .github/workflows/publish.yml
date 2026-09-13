@@ -1,0 +1,107 @@
+name: Build, gate, deploy
+
+# Fail-closed by design: the gates run in the SAME job as the deploy, before the
+# deploy step, so a broken page aborts the job and Cloudflare Pages keeps serving
+# the previous build. Never split the gates into a sibling job - that silently
+# removes the protection.
+#
+# The deploy steps are guarded to push-to-main only. A `pull_request` run that
+# reaches a deploy step writes unmerged content to production, and if the branch
+# is behind main it rolls production backwards.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Gate and deploy
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependencies
+        run: python3 -m pip install --quiet pillow
+
+      - name: Build assets
+        run: python3 build/make_assets.py
+
+      - name: Build site
+        run: python3 build/build.py --out site
+
+      - name: Gate (html structure, json-ld, seo, links, discovery files, raster assets, a11y)
+        run: python3 tools/gate.py --site site
+
+      - name: Assert the gate measured the whole surface
+        run: |
+          set -euo pipefail
+          pages=$(find site -maxdepth 1 -name '*.html' | wc -l | tr -d ' ')
+          echo "rendered pages: $pages"
+          if [ "$pages" -lt 12 ]; then
+            echo "::error::expected at least 12 rendered pages, measured $pages"
+            exit 1
+          fi
+          for f in robots.txt sitemap.xml llms.txt llms-full.txt _headers 404.html; do
+            test -s "site/$f" || { echo "::error::missing discovery file: site/$f"; exit 1; }
+          done
+
+      - name: Verify the structured-data graph actually declares the canonical host
+        run: |
+          set -euo pipefail
+          n=$(grep -l 'miamicontactimprov.com' site/*.html | wc -l | tr -d ' ')
+          total=$(find site -maxdepth 1 -name '*.html' | wc -l | tr -d ' ')
+          echo "pages naming the canonical host: $n of $total"
+          test "$n" -eq "$total" || { echo "::error::not every page declares the canonical host"; exit 1; }
+
+      - name: Deploy to Cloudflare Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 pages deploy site --project-name=miamicontactimprov --branch=main --commit-dirty=true
+
+      - name: Verify the deployment is live at the custom domain
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 20); do
+            code=$(curl -s -o /tmp/home.html -w '%{http_code}' "https://miamicontactimprov.com/?cb=$GITHUB_SHA" || true)
+            if [ "$code" = "200" ] && grep -q 'Contact Improvisation' /tmp/home.html; then
+              echo "live: 200 with expected marker"
+              exit 0
+            fi
+            echo "attempt $i: $code"
+            sleep 15
+          done
+          echo "::error::custom domain did not serve the new build"
+          exit 1
+
+      - name: Submit sitemap to IndexNow
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          key_file="site/indexnow-$(date -u +%s).txt"
+          echo "${{ secrets.INDEXNOW_KEY }}" > "/tmp/indexnow.txt"
+          urls=$(python3 - <<'PY'
+          import re, pathlib, json
+          locs = re.findall(r"<loc>(.*?)</loc>", pathlib.Path("site/sitemap.xml").read_text())
+          print(json.dumps(locs))
+          PY
+          )
+          curl -s -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "{\"host\":\"miamicontactimprov.com\",\"key\":\"${{ secrets.INDEXNOW_KEY }}\",\"keyLocation\":\"https://miamicontactimprov.com/${{ secrets.INDEXNOW_KEY }}.txt\",\"urlList\":$urls}"

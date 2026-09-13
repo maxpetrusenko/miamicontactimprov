@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.codex
+.claude
+.cursor
+.agents
+.hermes
+.wrangler

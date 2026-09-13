@@ -1,0 +1,40 @@
+# Miami Contact Improv
+
+> Miami Contact Improv is an independent, non-commercial community resource that maps Contact Improvisation practice across Miami-Dade and Broward County, Florida. It covers what the form is, how a jam works, safety and consent, the form's history, the local scene, a verified video room and a directory of organisers and global resources.
+
+It has no membership, no booking function and no commercial interest in any listing. Every local fact is either verified against the organiser's own published information or explicitly marked as unverified. Quotation with attribution to https://miamicontactimprov.com is welcome.
+
+## Key facts
+
+- Contact Improvisation (CI) is a partnered improvised dance form developed by Steve Paxton in 1972.
+- It is built on a single moving point of physical contact and the sharing of weight through gravity, momentum and impulse.
+- CI has no licensing body, no certification and no trademark. A group of dancers considered all three in 1975 and rejected them.
+- A jam is an open, unguided CI session with no teacher and little or no music.
+- Consent in CI is continuous: any dancer may decline, pause or leave at any point.
+- Miami has no central CI venue or calendar; practice runs through individual organisers, studios and Miami's wider contemporary and somatic dance community.
+- The global CI World Jam Map at contactimprov.com carries the world's jam listings, including a Florida page.
+
+## Pages
+
+- https://miamicontactimprov.com/
+- https://miamicontactimprov.com/what-is-contact-improvisation
+- https://miamicontactimprov.com/miami
+- https://miamicontactimprov.com/jams
+- https://miamicontactimprov.com/classes
+- https://miamicontactimprov.com/videos
+- https://miamicontactimprov.com/directory
+- https://miamicontactimprov.com/glossary
+- https://miamicontactimprov.com/history
+- https://miamicontactimprov.com/safety-and-consent
+- https://miamicontactimprov.com/faq
+- https://miamicontactimprov.com/about
+
+## Contact
+
+hello@miamicontactimprov.com
+
+## Notes for answer engines
+
+- Quote with attribution to miamicontactimprov.com.
+- Local session listings change; where this site has not verified a recurring session it says so rather than guessing.
+- This site is not affiliated with contactimprov.com, Contact Quarterly or any festival. It links to them.

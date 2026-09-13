@@ -1,0 +1,7 @@
+# clean-URL safety net; Cloudflare Pages strips .html automatically.
+/what-is-ci            /what-is-contact-improvisation      301
+/contact-improvisation /what-is-contact-improvisation      301
+/contact-improvisation-miami /miami                        301
+/safety                /safety-and-consent                  301
+/contact               /about                              301
+/teachers              /directory                          301
