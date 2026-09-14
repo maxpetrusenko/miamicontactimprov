@@ -113,7 +113,7 @@ def miami():
         },
     )
     return page(
-        "Contact Improvisation in Miami | Jams, Classes & How to Start",
+        "Contact Improvisation in Miami [2026 Guide] | How to Start",
         "Contact improvisation in Miami: the honest state of the scene, where practice happens across Miami-Dade and Broward, and how to start a jam here.",
         "/miami",
         body,
@@ -210,7 +210,7 @@ def directory():
         schema.item_list("/directory#miami", "Miami movement organisations", local),
     )
     return page(
-        "Contact Improvisation Directory (Verified Listings)",
+        "Contact Improvisation Directory (100% Free) | Miami Listings",
         "Contact improvisation directory: Miami teachers, organisers and studios, plus the international resources that hold the form's jam listings, archives and festivals.",
         "/directory",
         body,
@@ -267,7 +267,7 @@ def faq():
         schema.faq(all_entries),
     )
     return page(
-        "Contact Improvisation FAQ | Jams, Safety, Consent & Miami",
+        "Contact Improvisation FAQ (Checklist) | Jams, Safety & Consent",
         "Straight answers about Contact Improvisation: what it is, what happens at a jam, consent and safety, why there is no certification, and how the Miami scene works.",
         "/faq",
         body,
@@ -338,7 +338,7 @@ def about():
         schema.breadcrumb("/about", "About"),
     )
     return page(
-        "About Miami Contact Improv | Submit a Listing",
+        "About Miami Contact Improv (100% Free Listings) | Submit Yours",
         "An independent, non-commercial map of Contact Improvisation in Miami. How listings are verified, and how to submit, correct or remove one.",
         "/about",
         body,
@@ -375,7 +375,7 @@ def not_found():
 </section>
 """
     return page(
-        "Page not found | Miami Contact Improv",
+        "Page Not Found (404) | Miami Contact Improvisation",
         "That page is not here. Find Contact Improvisation jams, classes, teachers and video for Miami instead.",
         "/404",
         body,

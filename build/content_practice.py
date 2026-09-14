@@ -112,7 +112,7 @@ def jams():
         listings.events_schema(),
     )
     return page(
-        "Contact Improv Jams in Miami (What to Expect)",
+        "Contact Improv Jams in Miami [Step-by-Step] | What to Expect",
         "What a contact improv jam is and how a session runs, plus the open practice sessions confirmed in Miami and South Florida. What to wear, what to bring, how to leave a dance.",
         "/jams",
         body,
@@ -193,7 +193,7 @@ def classes():
         ),
     )
     return page(
-        "Contact Improvisation Classes in Miami | Beginners Welcome",
+        "Contact Improvisation Classes Miami [Updated for 2026]",
         "How to start Contact Improvisation in Miami: what a beginners' class teaches, a step-by-step first jam walkthrough, how to judge a teacher, and what to bring.",
         "/classes",
         body,
@@ -277,7 +277,7 @@ def safety():
         schema.faq(SAFETY_FAQ),
     )
     return page(
-        "Contact Improv Safety & Consent | Your Rights in a Jam",
+        "Contact Improv Safety & Consent [Step-by-Step Guide]",
         "Consent in Contact Improvisation: what you may always decline, how physical safety works, spotting, what the practice is not, and what to do when something goes wrong.",
         "/safety-and-consent",
         body,
@@ -316,7 +316,7 @@ def videos():
         videos_data.schema_list(),
     )
     return page(
-        "Contact Improvisation Videos (22) | Films, Jams & Documentary",
+        "Contact Improvisation Videos (22) | Free Films & Documentary",
         "Contact Improvisation on film: performance work, jam footage and documentary records worth watching before your first session.",
         "/videos",
         body,

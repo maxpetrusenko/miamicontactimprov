@@ -98,7 +98,7 @@ def home():
         },
     )
     return page(
-        "Contact Improvisation Miami | Jams, Classes & Teachers",
+        "Contact Improvisation Miami [2026 Guide] | Jams & Classes",
         "Contact Improvisation in Miami: what it is, where the jams are, who teaches it and how to start. A community map of CI across Miami-Dade and Broward County.",
         "/",
         body,
@@ -195,7 +195,7 @@ def what_is():
         schema.defined_terms(WHATIS_TERMS, "/what-is-contact-improvisation"),
     )
     return page(
-        "What Is Contact Improvisation? Definition & How a Jam Works",
+        "What Is Contact Improvisation? [Step-by-Step Guide]",
         "Contact Improvisation explained: a 1972 partnered dance form built on shared weight and a rolling point of contact. What a jam is, consent, spotting and how to start.",
         "/what-is-contact-improvisation",
         body,
@@ -271,7 +271,7 @@ def history():
         schema.faq(HISTORY_FAQ),
     )
     return page(
-        "History of Contact Improvisation: 1972 to Now [Timeline]",
+        "History of Contact Improvisation [Timeline] | 1962 to Now",
         "How Contact Improvisation began: Steve Paxton, Magnesium at Oberlin College, the first performances in New York in 1972, and why the form was never trademarked.",
         "/history",
         body,
@@ -342,7 +342,7 @@ def glossary():
         schema.defined_terms(terms),
     )
     return page(
-        "Contact Improvisation Glossary: Jam, Score & Small Dance",
+        "Contact Improvisation Glossary [Checklist] | Jam, Score & More",
         "Plain-language definitions of Contact Improvisation terms: jam, score, small dance, underscore, weight sharing, spotting, landing and the edge.",
         "/glossary",
         body,
