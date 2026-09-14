@@ -16,13 +16,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
+import content_local  # noqa: E402
 import content_practice  # noqa: E402
 import schema  # noqa: E402
 import shell  # noqa: E402
 import videos_data  # noqa: E402
 
 SITE = shell.SITE
-TODAY = "2026-09-13"
+TODAY = "2026-09-14"
 
 # route, filename, builder, sitemap priority, changefreq
 PAGES = [
@@ -30,6 +31,7 @@ PAGES = [
     ("/what-is-contact-improvisation", "what-is-contact-improvisation.html",
      content_core.what_is, "0.9", "monthly", None),
     ("/miami", "miami.html", content_directory.miami, "0.9", "weekly", None),
+    ("/miami-jams", "miami-jams.html", content_local.miami_jams, "0.9", "weekly", None),
     ("/jams", "jams.html", content_practice.jams, "0.8", "weekly", None),
     ("/classes", "classes.html", content_practice.classes, "0.8", "monthly", None),
     ("/your-first-jam", "your-first-jam.html", content_practice.your_first_jam, "0.8", "monthly", None),

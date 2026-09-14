@@ -459,6 +459,107 @@ def check_disambiguation(site_dir, pages):
             f"llms.txt summary line does not state '{phrase}'")
 
 
+# ---------------------------------------------------------------- local listings
+DATE_FIELD_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def _import_build_module(name):
+    """Import a module out of build/, the way _schema_constant reads schema.py."""
+    build = pathlib.Path(__file__).resolve().parent.parent / "build"
+    if not (build / f"{name}.py").is_file():
+        return None
+    if str(build) not in sys.path:
+        sys.path.insert(0, str(build))
+    try:
+        return __import__(name)
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def check_local_listings():
+    """The local listing tables are this property's honesty rules; enforce them in code.
+
+    build/listings.py used to say those rules were "enforced by review rather than by
+    code". Review is what let an undated listing read as current in the first place, so
+    the rules that carry a published claim are asserted here instead: a session with no
+    stated modality, no source URL or no checked date, a dated occurrence with no named
+    organiser, and an organiser map that has drifted away from the session names all
+    fail the build rather than shipping.
+
+    The session COUNT is deliberately not the measured value. An empty list is a valid,
+    honest state on this property (see the module docstring in build/listings.py), so a
+    check that failed closed on it would punish the correct behaviour. What is measured
+    is the number of constraints actually compared, which is what must never be zero.
+    """
+    listings = _import_build_module("listings")
+    if listings is None:
+        add(ERROR, "local-listings", "build/listings.py",
+            "cannot import build/listings.py; the local listing contract is unverified")
+        return
+
+    checks = 0
+    sessions = getattr(listings, "SESSIONS", None)
+    if not isinstance(sessions, list):
+        add(ERROR, "local-listings", "build/listings.py", "SESSIONS is missing or not a list")
+        return
+
+    def bad(name, message):
+        add(ERROR, "local-listings", name, message)
+
+    names = []
+    for row in sessions:
+        checks += 1
+        if len(row) != 9:
+            bad(str(row[0] if row else "?"), f"session row has {len(row)} fields, expected 9")
+            continue
+        name, modality, _city, venue, schedule, cost, url, verified, note = row
+        names.append(name)
+        if not str(modality).strip():
+            bad(name, "session states no modality; a contact-adjacent practice must never read as CI")
+        if not str(url).startswith("http"):
+            bad(name, f"session source is not a URL: {url!r}")
+        if not DATE_FIELD_RE.match(str(verified)):
+            bad(name, f"session checked date is not YYYY-MM-DD: {verified!r}")
+        for field, value in (("venue", venue), ("schedule", schedule), ("cost", cost), ("note", note)):
+            checks += 1
+            if not str(value).strip():
+                bad(name, f"session {field} is empty")
+
+    orgs = getattr(listings, "SESSION_ORGANISERS", {})
+    checks += 1
+    if not isinstance(orgs, dict):
+        bad("build/listings.py", "SESSION_ORGANISERS is missing or not a dict")
+        orgs = {}
+    for name in names:
+        checks += 1
+        if name not in orgs:
+            bad(name, "session names no organiser in SESSION_ORGANISERS")
+    if names:
+        for name in sorted(orgs):
+            checks += 1
+            if name not in names:
+                bad(name, "SESSION_ORGANISERS entry matches no session (orphaned organiser)")
+
+    dates = getattr(listings, "EVENT_DATES", {})
+    event_orgs = getattr(listings, "EVENT_ORGS", {})
+    for name, occurrences in (dates.items() if isinstance(dates, dict) else []):
+        checks += 1
+        if name not in names:
+            bad(name, "EVENT_DATES names a session that does not exist")
+        if name not in event_orgs:
+            bad(name, "a dated occurrence has no EVENT_ORGS entry, so an Event would publish "
+                      "under a guessed organiser")
+        for iso, location in occurrences:
+            checks += 1
+            if not DATE_FIELD_RE.match(str(iso)):
+                bad(name, f"occurrence date is not YYYY-MM-DD: {iso!r}")
+            checks += 1
+            if not str(location).strip():
+                bad(name, "occurrence has no location string")
+
+    measured("local-listings.constraints", checks)
+
+
 # ---------------------------------------------------------------- aria / a11y basics
 def check_a11y(pages):
     n = 0
@@ -619,6 +720,7 @@ def main():
     check_a11y(pages)
     check_disambiguation(site_dir, pages)
     check_video_room(pages)
+    check_local_listings()
 
     bands = Counter(b for b, *_ in findings)
     if not args.quiet:

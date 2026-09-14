@@ -7,14 +7,20 @@ Rules for this file, enforced by review rather than by code:
   * An empty list is a valid, honest state. Deleting a dead entry is a normal change.
   * No prices are copied unless the organiser publishes them on the page we link to.
 
-Verified 2026-09-13.
+Every entry carries its own checked date. Every source URL, and the HTTP status it
+was read at, is recorded in docs/miami-jams-sources.md.
 """
 
 import html
 import schema
 
+# Org and adjacent-practice entries: the date their own pages were last opened and read.
 VERIFIED = "2026-09-13"
 
+# Sessions in Miami-Dade and Broward: re-opened and re-read on this date.
+SESSIONS_VERIFIED = "2026-09-14"
+
+# name, modality, city, venue, schedule, cost, url, verified, note
 # name, modality, city, venue, schedule, cost, url, verified, note
 SESSIONS = [
     (
@@ -22,41 +28,52 @@ SESSIONS = [
         "Contact Improvisation",
         "Miami",
         "Dance Arts Miami, 250 NE 61st Street, Miami, FL 33137",
-        "Weekly, Tuesdays 6:00\u20137:00 PM EDT",
-        "Set by the organiser; see the listing",
+        "Weekly, Tuesdays 6:00\u20137:00 PM EDT; the Meetup listing states the recurrence runs to 28 February 2027",
+        "$22 for a first class on Eventbrite, $30 on Meetup and SweatPals",
         "https://www.eventbrite.com/e/contact-improv-all-levels-tickets-1999219825315",
-        VERIFIED,
-        "The most established recurring Contact Improvisation class found in Miami-Dade. Advertised as "
-        "exploring connection, weight sharing, momentum and spontaneous partnering, with no partner needed. "
-        "Listed as a multi-date series on Eventbrite and mirrored on Meetup and SweatPals, so the studio's "
-        "own site is not the authoritative place to check it. Confirm the current week before travelling.",
+        SESSIONS_VERIFIED,
+        "The most established recurring Contact Improvisation class found in Miami-Dade. Published on Eventbrite "
+        "by Esther Frances & Dmitry Krasnyanskiy and hosted at Dance Arts Miami. Advertised as exploring "
+        "connection, weight sharing, momentum and spontaneous partnering, with no partner needed, and mirrored "
+        "on Meetup and SweatPals. The three listings disagree with each other, so read the one you are actually "
+        "booking through: a first class is $22 on Eventbrite and $30 on Meetup and SweatPals, and refunds run "
+        "to 7 days before the event on Eventbrite while SweatPals states none. Dance Arts Miami's own schedule "
+        "page carried no contact improvisation entry when it was opened, so this class is verified through its "
+        "Eventbrite, Meetup and SweatPals listings rather than the studio's own site, and the current week is "
+        "always worth confirming there.",
     ),
     (
         "Kama Flight \u2014 Flight Workshop",
         "Contact-adjacent (acro yoga, Thai massage, Contact Improvisation)",
         "Miami",
-        "Skanda Yoga, Miami, FL",
-        "October 18, 2026 and November 15, 2026",
-        "Published on the organiser's own product pages",
+        "Skanda Yoga, 1800 SW 1st Ave #102, Miami, FL 33129",
+        "October 18, 2026 and November 15, 2026, 3:00\u20134:30 PM on both dates",
+        "$50, sold as a partner pair (admission for two)",
         "https://kamaflight.com/products/flight-workshop-miami-fl-october-18-2026",
-        VERIFIED,
-        "Described by the organisers as a fusion of acro yoga, Thai massage and Contact Improvisation. Proceeds "
-        "fund the Kama Flight Foundation, a registered 501(c)(3) nonprofit. Booked in pairs with friends "
-        "welcome, which makes it a gentler first step than an open jam if physical contact with strangers "
-        "is the thing giving you pause.",
+        SESSIONS_VERIFIED,
+        "Described by the organisers as a fusion of acro yoga, Thai massage and Contact Improvisation, and as a "
+        "new partner wellness modality built on the neuroscience of play and connection. Proceeds fund the Kama "
+        "Flight Foundation, a registered 501(c)(3) nonprofit. Booked in pairs with friends welcome, which makes "
+        "it a gentler first step than an open jam if physical contact with strangers is the thing giving you "
+        "pause. One thing we could not resolve: both the October and the November product pages render an 'Add "
+        "to cart' control and also the words 'Sold Out', so treat availability as unclear and ask "
+        "info@kamaflight.com before planning around either date.",
     ),
     (
-        "Kama Flight \u2014 jams and Kama Floor workshops",
+        "Kama Flight \u2014 jams",
         "Contact-adjacent (acro yoga, Thai massage, Contact Improvisation)",
         "Miami Beach",
-        "Private residence, 2345 N Bay Road, Miami Beach, FL 33140 (parking on Alton Road)",
-        "Recurring; dates published individually",
-        "Donation-based for jams",
-        "https://kamaflight.com/",
-        VERIFIED,
-        "Recurring donation-based jams and floor workshops. Because these run in a private residence and "
-        "the dates are published one at a time, always check the organiser's own page for the next date "
-        "rather than relying on any listing, including this one.",
+        "Private residence, 2345 N Bay Rd, Miami Beach, FL 33140",
+        "Most recent published Miami jam: 8 September 2026, 6:30\u20139:00 PM. No later Miami date was published when we checked.",
+        "Donation, with $10, $20 and $30 offered as suggested amounts, booked in advance",
+        "https://kamaflight.com/collections/jams",
+        SESSIONS_VERIFIED,
+        "Recurring donation-based jams at a private residence, which has to be booked in advance and is why the "
+        "exact address is confirmed to ticket holders. The organiser's own jams collection listed exactly one "
+        "Miami jam when it was opened, dated 8 September 2026 and therefore already past, with no next Miami "
+        "date published beside it. That is why this entry carries its date instead of being presented as a "
+        "running session: check the organiser's page for the next one rather than trusting any list, including "
+        "this one.",
     ),
     (
         "Camp Contact at Love Burn",
@@ -68,11 +85,75 @@ SESSIONS = [
         "https://loveburn.campcontact.org/",
         VERIFIED,
         "Love Burn is Miami's Burning Man regional, held on Virginia Key, and Camp Contact runs contact "
-        "improvisation, acro yoga, ecstatic dance and authentic relating as its programme. This is the "
-        "largest concentration of contact improvisation that happens in Miami in a year, and it is a "
-        "festival rather than a class. Dates move, so read the organiser's page.",
+        "improvisation, acro yoga, ecstatic dance, tai chi, massage and authentic relating as its programme. The "
+        "camp's own page states that the camp loves 'Contact Improvisation Dance, Acro Yoga, Ecstatic Dance, Tai "
+        "Chi, Massage, Hugs, and Authentic Relating'. This is the largest concentration of contact improvisation "
+        "that happens in Miami in a year, and it is a festival rather than a class. The page prints the dates "
+        "5-8 February without printing the year beside them, while its own countdown points at early February "
+        "2027, so read the page directly rather than treating a month and a day from this site as a confirmed "
+        "booking date.",
+    ),
+    (
+        "Ecstatic Dance Miami \u2014 Full Moon Immersion",
+        "Contact-adjacent (ecstatic dance, with a Contact Improv component the listing advertises). Not a CI jam.",
+        "Hollywood, Broward County",
+        "Exact venue not published by the organiser. The listing names Hollywood Lakes, Hollywood, FL, and sends the location to ticket holders on the day.",
+        "Saturday 26 September 2026, 7:00\u201311:59 PM EDT. Monthly, on the full moon.",
+        "Not published on the pages we read; advance tickets only",
+        "https://www.eventbrite.com/e/ecstatic-dance-miami-september-26th-full-moon-immersion-tickets-1999291383347",
+        SESSIONS_VERIFIED,
+        "The organiser's own listing describes the evening as a monthly embodiment and healing experience "
+        "through Contact Improv, ecstatic dance, tantra, aquatic healing work and sound healing, so contact "
+        "improvisation is one part of a longer programme rather than the whole of it. The organiser states "
+        "plainly that there are no tickets at the door and no drop-ins. Their site has been running since 2014 "
+        "and gathers every full moon. The trade-off of carrying this entry is the one thing we cannot verify "
+        "for you: the venue is deliberately withheld until a ticket is bought, so the county is Broward and the "
+        "city is Hollywood, and nothing more specific is published for us to check.",
+    ),
+    (
+        "Ecstatic Dance Fort Lauderdale",
+        "Contact-adjacent (ecstatic dance). Not Contact Improvisation, and the listing makes no CI claim.",
+        "Fort Lauderdale, Broward County",
+        "Le Sound Temple, 2501 NE 30th St, Fort Lauderdale, FL 33306",
+        "Monthly, first Saturday of the month, 7:30\u20139:30 PM with doors at 7:00 PM. The only dated gathering the listing names is its inaugural, 5 September 2026.",
+        "$33",
+        "https://ecstaticdance.org/dance/ecstatic-dance-ft-lauderdale/",
+        SESSIONS_VERIFIED,
+        "An evening of cacao, breathwork, ecstatic dance and a closing sound bath, carried on ecstaticdance.org, "
+        "the global conscious-dance directory, in the organiser's own words. It is listed here because it is "
+        "the clearest recurring movement gathering in Broward County that could be verified at all, and because "
+        "no contact improvisation jam in Broward could be found to list instead. It is not contact "
+        "improvisation, and this site will not imply otherwise. The venue's own events page publishes sound "
+        "baths and breathwork but not this dance, so the directory listing above is the source to check.",
     ),
 ]
+
+
+# Who runs each session, in the words that organiser publishes about itself. Kept beside
+# SESSIONS rather than inside it so the session tuple keeps its shape; tools/gate.py
+# asserts that every session names an organiser here and that nothing here is orphaned,
+# so the two cannot drift apart.
+SESSION_ORGANISERS = {
+    "Contact Improv \u2014 ALL LEVELS": (
+        "Esther Frances & Dmitry Krasnyanskiy, hosted at Dance Arts Miami",
+        "https://www.eventbrite.com/e/contact-improv-all-levels-tickets-1999219825315",
+    ),
+    "Kama Flight \u2014 Flight Workshop": (
+        "Kama Flight", "https://kamaflight.com/",
+    ),
+    "Kama Flight \u2014 jams": (
+        "Kama Flight", "https://kamaflight.com/",
+    ),
+    "Camp Contact at Love Burn": (
+        "Camp Contact", "https://loveburn.campcontact.org/",
+    ),
+    "Ecstatic Dance Miami \u2014 Full Moon Immersion": (
+        "Ecstatic Dance Miami", "https://ecstaticdancemiami.com/",
+    ),
+    "Ecstatic Dance Fort Lauderdale": (
+        "Ecstatic Dance Fort Lauderdale", "https://ecstaticdance.org/dance/ecstatic-dance-ft-lauderdale/",
+    ),
+}
 
 # name, kind, city, url, verified, note
 ORGS = [
@@ -275,20 +356,49 @@ EVENT_DATES = {
         ("2026-10-18", "Skanda Yoga, Miami, FL"),
         ("2026-11-15", "Skanda Yoga, Miami, FL"),
     ],
+    "Ecstatic Dance Miami \u2014 Full Moon Immersion": [
+        ("2026-09-26", "Hollywood Lakes, Hollywood, FL"),
+    ],
+}
+
+# The organiser and locality behind each dated occurrence. Separate from EVENT_DATES so
+# that mapping keeps its shape. events_schema() skips any occurrence with no entry here,
+# so a date can never be published under a guessed organiser, and tools/gate.py asserts
+# the two mappings cover each other and that every key names a session that exists.
+EVENT_ORGS = {
+    "Kama Flight \u2014 Flight Workshop": {
+        "slug": "kama-flight",
+        "organiser": "Kama Flight",
+        "organiser_url": "https://kamaflight.com/",
+        "locality": "Miami",
+        "ticketed": True,
+    },
+    "Ecstatic Dance Miami \u2014 Full Moon Immersion": {
+        "slug": "ecstatic-dance-miami",
+        "organiser": "Ecstatic Dance Miami",
+        "organiser_url": "https://ecstaticdancemiami.com/",
+        "locality": "Hollywood",
+        "ticketed": None,
+    },
 }
 
 
 def events_schema():
-    """Only events with a date read off the organiser's own page are emitted."""
+    """Only occurrences with a date read off the organiser's own page are emitted.
+
+    An occurrence with no EVENT_ORGS entry is skipped rather than attributed to a
+    default organiser, and `ticketed` is written only where the price is published.
+    """
     nodes = []
     for name, modality, city, venue, schedule, cost, url, verified, note in SESSIONS:
         dates = EVENT_DATES.get(name)
-        if not dates:
+        meta = EVENT_ORGS.get(name)
+        if not dates or not meta:
             continue
         for iso, location in dates:
-            nodes.append({
+            node = {
                 "@type": "Event",
-                "@id": f"{schema.SITE}/jams#{iso}-kama-flight",
+                "@id": f"{schema.SITE}/jams#{iso}-{meta['slug']}",
                 "name": name,
                 "description": note,
                 "startDate": iso,
@@ -297,14 +407,24 @@ def events_schema():
                 "location": {
                     "@type": "Place",
                     "name": location,
-                    "address": {"@type": "PostalAddress", "addressLocality": "Miami",
-                                "addressRegion": "FL", "addressCountry": "US"},
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": meta["locality"],
+                        "addressRegion": "FL",
+                        "addressCountry": "US",
+                    },
                 },
-                "organizer": {"@type": "Organization", "name": "Kama Flight", "url": "https://kamaflight.com/"},
+                "organizer": {
+                    "@type": "Organization",
+                    "name": meta["organiser"],
+                    "url": meta["organiser_url"],
+                },
                 "url": url,
                 "image": schema.SITE + "/assets/og.png",
-                "isAccessibleForFree": False,
-            })
+            }
+            if meta["ticketed"] is not None:
+                node["isAccessibleForFree"] = not meta["ticketed"]
+            nodes.append(node)
     return nodes or None
 
 
