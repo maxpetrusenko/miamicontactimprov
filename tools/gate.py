@@ -76,7 +76,7 @@ REQUIRED = {
     "DefinedTermSet": ["name", "hasDefinedTerm"],
     "ItemList": ["name", "itemListElement", "numberOfItems"],
     "Place": ["name"],
-    "VideoObject": ["name", "thumbnailUrl", "embedUrl"],
+    "VideoObject": ["name", "thumbnailUrl"],
     "Event": ["name", "startDate", "location", "eventStatus"],
     "Course": ["name", "description", "provider"],
     "CourseInstance": ["courseMode", "location"],
@@ -85,7 +85,39 @@ REQUIRED = {
     "Question": ["name", "acceptedAnswer"],
     "DefinedTerm": ["name", "description"],
 }
+
+# A video plays from somewhere. Someone else's film is embedded from the platform
+# that hosts it (embedUrl); a film this site made and hosts is served from here
+# (contentUrl). Either satisfies the requirement, and check_video_room decides which
+# one carries the credit.
+REQUIRED_ANY = {
+    "VideoObject": [("embedUrl", "contentUrl")],
+}
+
 LD_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
+
+# Nodes that live under a container key rather than at the top of @graph. Without
+# walking these, REQUIRED["VideoObject"] and REQUIRED["ListItem"] applied to nothing
+# at all: the VideoObjects sit in ItemList.itemListElement[].item, so the check was
+# green while measuring nothing.
+NESTED_KEYS = ("itemListElement", "item", "mainEntity", "hasDefinedTerm")
+
+
+def _nested_typed_nodes(obj, out):
+    """Collect typed nodes reachable under a container key."""
+    if isinstance(obj, list):
+        for item in obj:
+            _nested_typed_nodes(item, out)
+        return
+    if not isinstance(obj, dict):
+        return
+    if obj.get("@type"):
+        out.append(obj)
+    for key in NESTED_KEYS:
+        value = obj.get(key)
+        if isinstance(value, (dict, list)):
+            _nested_typed_nodes(value, out)
+
 
 # Types that a single page must define at most once. Everything else may repeat.
 SINGLETON_TYPES = {
@@ -96,6 +128,7 @@ SINGLETON_TYPES = {
 
 def check_jsonld(pages):
     total_nodes = 0
+    nested_nodes = 0
     for page, src in pages.items():
         blocks = LD_RE.findall(src)
         if not blocks:
@@ -123,6 +156,27 @@ def check_jsonld(pages):
                 for prop in REQUIRED.get(t, []):
                     if prop not in node:
                         add(ERROR, "json-ld", page, f"{t} missing required property '{prop}'")
+                for group in REQUIRED_ANY.get(t, []):
+                    if not any(prop in node for prop in group):
+                        add(ERROR, "json-ld", page,
+                            f"{t} has none of {' / '.join(group)}: it does not say where the video plays")
+                # The same rules apply to typed nodes nested in a container
+                # (ItemList.itemListElement[].item, FAQPage.mainEntity, a
+                # DefinedTermSet's terms). They are what the room is actually built
+                # from, so they are measured rather than assumed.
+                nested = []
+                _nested_typed_nodes(node, nested)
+                for child in nested:
+                    nt = child.get("@type")
+                    nested_nodes += 1
+                    for prop in REQUIRED.get(nt, []):
+                        if prop not in child:
+                            add(ERROR, "json-ld", page,
+                                f"nested {nt} missing required property '{prop}' (in {t})")
+                    for group in REQUIRED_ANY.get(nt, []):
+                        if not any(prop in child for prop in group):
+                            add(ERROR, "json-ld", page,
+                                f"nested {nt} has none of {' / '.join(group)} (in {t})")
             for t, c in seen.items():
                 # Only true singletons. A page may legitimately list many Events,
                 # ListItems, VideoObjects, Questions or DefinedTerms.
@@ -132,6 +186,7 @@ def check_jsonld(pages):
             add(ERROR, "json-ld", page, "no Organization node")
     measured("json-ld.pages", len(pages))
     measured("json-ld.nodes", total_nodes)
+    measured("json-ld.nested_nodes", nested_nodes)
 
 
 # ---------------------------------------------------------------- seo
@@ -428,6 +483,111 @@ def check_a11y(pages):
     measured("a11y.pages", n)
 
 
+# ---------------------------------------------------------------- video room
+SITE_ROOT = "https://miamicontactimprov.com"
+VIDEO_ROOM_PATH = "/videos"
+VIDEO_COUNT_RE = re.compile(r"\((\d+)\)")
+
+
+def _all_typed_nodes(src):
+    """Every typed node in a page's @graph, containers included."""
+    out = []
+    for raw in LD_RE.findall(src):
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+        for node in (data.get("@graph") or [data]):
+            out.append(node)
+            _nested_typed_nodes(node, out)
+    return out
+
+
+def _credit_names(node):
+    """Every name and @id a VideoObject credits as creator or publisher."""
+    names = []
+    for key in ("creator", "publisher"):
+        credit = node.get(key)
+        if isinstance(credit, dict):
+            if credit.get("name"):
+                names.append(credit["name"])
+            if credit.get("@id"):
+                names.append(credit["@id"])
+        elif isinstance(credit, str):
+            names.append(credit)
+    return names
+
+
+def check_video_room(pages):
+    """Two claims the video room must keep true.
+
+    1. Attribution. A film with an embedUrl belongs to the channel that published it
+       and must name that channel, never this site. A film this site hosts may only
+       be credited to this site. Either way the room cannot carry a film with no
+       credited maker, which is what the room did before: 22 embeds and no credit.
+    2. The title's bracket count. `(22)` in a title is a claim made in the search
+       result, so it is recounted here against the films actually on the page. The
+       count covers owned and embedded films alike, because that is what the page
+       carries.
+    """
+    site_name = _schema_constant("ORG_NAME") or "Miami Contact Improv"
+    org_id = _schema_constant("ORG_ID")
+    if not org_id:
+        add(ERROR, "video-attribution", "build/schema.py",
+            "schema.ORG_ID is missing, so no self-hosted film can be credited to this site")
+        return
+    # The site's own name is read off the served Organization node rather than
+    # hardcoded here, so this check cannot drift away from what the page actually says.
+    site_credit = {org_id}
+    for src in pages.values():
+        for node in _all_typed_nodes(src):
+            if node.get("@type") == "Organization" and node.get("@id") == org_id and node.get("name"):
+                site_credit.add(node["name"].lower())
+    if len(site_credit) < 2:
+        add(ERROR, "video-attribution", "build/schema.py",
+            "no Organization node names this site, so its own credit cannot be identified")
+        return
+    room_pages = [p for p, src in pages.items()
+                  if any(c.rstrip("/") == SITE_ROOT + VIDEO_ROOM_PATH for c in CANON_RE.findall(src))]
+    if not room_pages:
+        add(ERROR, "video-count", "-",
+            f"no page canonicalises to {VIDEO_ROOM_PATH}; the video room cannot be checked")
+        return
+    total = 0
+    for page, src in pages.items():
+        videos = [n for n in _all_typed_nodes(src) if n.get("@type") == "VideoObject"]
+        if not videos:
+            continue
+        total += len(videos)
+        for v in videos:
+            credited = _credit_names(v)
+            claimed_by_site = any(name.lower() in site_credit or name == org_id for name in credited)
+            if v.get("embedUrl"):
+                if claimed_by_site:
+                    add(ERROR, "video-attribution", page,
+                        f"embedded film credited to this site: {v.get('name')!r}")
+                if not credited:
+                    add(ERROR, "video-attribution", page,
+                        f"embedded film with no credited channel: {v.get('name')!r}")
+            elif org_id not in credited:
+                add(ERROR, "video-attribution", page,
+                    f"self-hosted film not credited to this site: {v.get('name')!r}")
+        if page in room_pages:
+            m = TITLE_RE.search(src)
+            if not m:
+                continue
+            bracket = VIDEO_COUNT_RE.search(m.group(1))
+            if not bracket:
+                add(ERROR, "video-count", page,
+                    f"video room title carries no (n) count: {m.group(1).strip()!r}")
+            elif int(bracket.group(1)) != len(videos):
+                add(ERROR, "video-count", page,
+                    f"title says ({bracket.group(1)}) but the page carries {len(videos)} films")
+    measured("video.attributed", total)
+    if total == 0:
+        add(ERROR, "video-count", "-", "no VideoObject found anywhere; the room lost its films")
+
+
 # ---------------------------------------------------------------- main
 def main():
     ap = argparse.ArgumentParser()
@@ -458,6 +618,7 @@ def main():
     check_assets(site_dir)
     check_a11y(pages)
     check_disambiguation(site_dir, pages)
+    check_video_room(pages)
 
     bands = Counter(b for b, *_ in findings)
     if not args.quiet:

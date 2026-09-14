@@ -302,19 +302,22 @@ def safety():
 
 
 def videos():
+    count = videos_data.embed_count()
     body = f"""
 <section class="hero">
   <div class="wrap">
     <p class="eyebrow">Video room</p>
-    <h1>What it looks like when it is working.</h1>
-    <p class="lede">Contact Improvisation is difficult to describe and immediately recognisable on film. These are the performances, jams and documentary records worth watching before your first session.</p>
+    <h1>Our own films are being made. Until then, this room is credit where it is due.</h1>
+    <p class="lede">This jam has not shot a video yet, so nothing on this page is ours. Every film below was made by the channel named on it, plays through that channel's own player, and stays that channel's work. What we are shooting for Miami is listed as what it is: in production, with no runtime and no date until a file exists.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    {answer("Contact Improvisation (CI) on video falls into three useful categories: performance work, where trained dancers push the form to its physical limits; jam footage, which shows what an ordinary session actually looks like; and documentary and teaching material, which explains the principles behind what you are seeing.")}
-    {videos_data.gallery()}
+    {answer(f"Every film on this page was made by someone else and is credited to them by name: {count} pieces, each embedded from the platform that hosts it. None of them was shot in Miami, and none of them is this site's. The jam's own films are in production, listed here as planned pieces; each one moves to the top of this page as ours only when the finished file is hosted here.")}
+    {videos_data.owned_room()}
+    {videos_data.in_production()}
+    {videos_data.reference_section()}
     {videos_data.credits()}
     {band("Watched enough", "Nothing on this page will teach you what two minutes on a floor with another person will.", [("Jams in Miami", "/jams", "primary"), ("First jam walkthrough", "/classes#first-jam", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Contact Improvisation video room</em>. miamicontactimprov.com. https://miamicontactimprov.com/videos")}
@@ -326,14 +329,14 @@ def videos():
         schema.webpage(
             "/videos",
             "Contact Improvisation video room",
-            "Contact Improvisation on film: performance work, jam footage and documentary records, with sources and channels.",
+            "Contact Improvisation on film: every channel credited by name, plus the films this jam is shooting in Miami.",
         ),
         schema.breadcrumb("/videos", "Videos"),
         videos_data.schema_list(),
     )
     return page(
-        "Contact Improvisation Videos (22) | Free Films & Documentary",
-        "Contact Improvisation on film: performance work, jam footage and documentary records worth watching before your first session.",
+        f"Contact Improvisation Videos ({count}) | Free Films & Documentary",
+        "Contact Improvisation on film: the channels that made it, credited by name, plus the Miami films this jam is shooting. None of it is ours yet.",
         "/videos",
         body,
         jsonld=jsonld,

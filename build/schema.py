@@ -197,19 +197,51 @@ def item_list(path, name, items):
 
 
 def video_objects(entries, path="/videos"):
-    """entries: list of dicts with title, description, embed, url, channel (+ optional thumbnail, upload)."""
+    """entries: dicts with title, description, and EITHER
+    embed + url + channel (someone else's film, embedded from its platform) OR
+    content + url + thumbnail (+ optional duration) served from this domain.
+
+    Attribution rule, and the reason this is spelled out: a VideoObject carrying an
+    embedUrl is someone else's work, so the credit goes to that channel by name and
+    this site is never its creator or publisher. Only an entry whose contentUrl is
+    hosted on this domain may name this site. Getting this backwards puts this
+    site's name on a film it did not make, which is a false claim in a search result.
+    """
+    def channel_node(name, url):
+        # The upload channel is the only attribution the platform actually publishes,
+        # so it is what gets credited. No individual creator is invented for a film
+        # whose channel does not state one.
+        node = {"@type": "Organization", "name": name}
+        if url:
+            node["url"] = url
+        return node
+
     def node(e):
         n = {
             "@type": "VideoObject",
             "name": e["title"],
             "description": e["description"],
-            "embedUrl": e["embed"],
-            "url": e["url"],
-            "publisher": {"@type": "Organization", "name": e["channel"]},
             "isFamilyFriendly": True,
         }
-        if e.get("thumbnail"):
+        if e.get("embed"):
+            n["embedUrl"] = e["embed"]
+            n["url"] = e["url"]
+            if e.get("thumbnail"):
+                n["thumbnailUrl"] = e["thumbnail"]
+            credit = channel_node(e["channel"], e.get("url"))
+            n["creator"] = credit
+            n["publisher"] = credit
+        else:
+            n["contentUrl"] = e["content"]
+            n["url"] = e["url"]
             n["thumbnailUrl"] = e["thumbnail"]
+            # Ours, and only here may the site's own Organization be the credit.
+            n["creator"] = {"@id": ORG_ID}
+            n["publisher"] = {"@id": ORG_ID}
+            if e.get("duration"):
+                n["duration"] = e["duration"]
+            if e.get("filmed_on"):
+                n["dateCreated"] = e["filmed_on"]
         # uploadDate and thumbnailUrl are only emitted when actually verified upstream.
         if e.get("upload"):
             n["uploadDate"] = e["upload"]

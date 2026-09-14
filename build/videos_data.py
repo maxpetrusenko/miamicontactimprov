@@ -14,9 +14,21 @@ Re-verify a candidate before adding it:
 Vimeo additionally reports domain_status_code: 403 in the oEmbed payload when the
 owner has restricted embedding to specific domains, even though the HTTP status is
 200. Check the payload, not just the status.
+
+OWNERSHIP. This module holds two different things and they are never mixed:
+
+  VIDEOS  other people's films. Embedded from the platform that hosts them, credited
+          to the channel by name, and never described as this site's work.
+  OWNED   films this jam shot and hosts itself. The only entries that may carry this
+          site's own attribution in the page or in the VideoObject.
+
+A third-party film is never re-hosted, re-cut or re-uploaded here, and it never gets
+this site's name on it. A film of ours is never embedded from someone else's player.
 """
 
 import html
+import pathlib
+
 import schema
 
 # id, platform, title, channel, upload_date, duration, category, note
@@ -129,6 +141,54 @@ CATEGORIES = [
 # of being cropped to a band, and nothing in it depends on audio.
 HERO_VIDEO_ID = "q4wUEiHowSU"
 
+# ------------------------------------------------------------------ our own films
+# EMPTY, and that is the honest state: this jam has not shot a film yet. An entry
+# here is a claim that a finished file exists and is hosted on this domain, so an
+# entry is added only once the piece is shot, cut and published.
+#
+# Shape: (id, title, duration, filmedOn, location)
+#   id        slug. Two files must be committed for it, both served from this
+#             domain: site/media/<id>.mp4 and site/media/<id>-poster.jpg. The film
+#             is ours, so it plays from our page and our player (contentUrl), not
+#             from someone else's embed.
+#   title     the piece's own title, as it reads on the page.
+#   duration  "m:ss", read off the finished file. Never estimated, never rounded.
+#   filmedOn  "YYYY-MM-DD", the day it was shot. Not the publish date.
+#   location  where it was shot, e.g. "Miami, FL".
+OWNED = []
+OWNED_TUPLE_SHAPE = "(id, title, duration, filmedOn, location)"
+OWNED_MEDIA_DIR = "media"
+OWNED_EXT = ".mp4"
+OWNED_POSTER_SUFFIX = "-poster.jpg"
+
+# The films in production, in the brief's priority order. While OWNED is empty the
+# page tells the reader these are planned, not available. A slug that appears in
+# OWNED drops out of this list, so the same film is never both promised and shown.
+# Shape: (slug, title, note, link, link_label). link is an on-site path the piece
+# connects to, or "" when it connects to nothing here.
+PLANNED = [
+    ("what-actually-happens-at-a-contact-improv-jam",
+     "What actually happens at a contact improv jam",
+     "shot at a jam in Miami, which is the only Miami-shot contact improv film that "
+     "will exist anywhere", "/jams", "the jams page"),
+    ("contact-improvisation-for-beginners-the-first-20-minutes",
+     "Contact improvisation for beginners: the first 20 minutes",
+     "the warm-up and the first exercises a beginner is actually given",
+     "/your-first-jam", "the first-jam walkthrough"),
+    ("rolling-point-of-contact-weight-sharing-floorwork",
+     "Rolling point of contact, weight sharing, floorwork",
+     "the technique underneath the dancing, shown slowly enough to copy",
+     "/glossary#weight-sharing", "the weight sharing definition"),
+    ("is-contact-improv-sexual",
+     "Is contact improv sexual?",
+     "the question that stops people attending, answered plainly",
+     "/safety-and-consent", "safety and consent"),
+    ("the-small-dance",
+     "The small dance",
+     "the standing practice, tied to the definition this site already owns",
+     "/glossary#small-dance", "the glossary definition"),
+]
+
 EMBED = {
     "youtube": "https://www.youtube-nocookie.com/embed/{id}?rel=0&modestbranding=1",
     "vimeo": "https://player.vimeo.com/video/{id}?byline=0&portrait=0&title=0",
@@ -164,6 +224,132 @@ def watch_url(v):
     return WATCH[v[1]].format(id=v[0])
 
 
+def embed_count():
+    """Every film the room carries: ours plus the credited third-party embeds.
+
+    The page title's bracket count is built from this, so the number in the SERP
+    cannot drift away from the number of films actually on the page.
+    """
+    return len(OWNED) + len(VIDEOS)
+
+
+# --------------------------------------------------------------------- our films
+
+def _repo_root():
+    return pathlib.Path(__file__).resolve().parent.parent
+
+
+def owned_media_path(o):
+    """The film as committed: what the deploy actually serves."""
+    return _repo_root() / "site" / OWNED_MEDIA_DIR / f"{o[0]}{OWNED_EXT}"
+
+
+def owned_poster_path(o):
+    return _repo_root() / "site" / OWNED_MEDIA_DIR / f"{o[0]}{OWNED_POSTER_SUFFIX}"
+
+
+def content_url(o):
+    return f"{schema.SITE}/{OWNED_MEDIA_DIR}/{o[0]}{OWNED_EXT}"
+
+
+def poster_url(o):
+    return f"{schema.SITE}/{OWNED_MEDIA_DIR}/{o[0]}{OWNED_POSTER_SUFFIX}"
+
+
+def iso_duration(mss):
+    """'9:37' -> 'PT9M37S'. Raises rather than guessing at a malformed runtime."""
+    parts = str(mss).split(":")
+    if not all(p.isdigit() for p in parts):
+        raise RuntimeError(f"duration {mss!r} is not m:ss or h:mm:ss; read it off the file")
+    nums = [int(p) for p in parts]
+    if len(nums) == 2:
+        return f"PT{nums[0]}M{nums[1]}S"
+    if len(nums) == 3:
+        return f"PT{nums[0]}H{nums[1]}M{nums[2]}S"
+    raise RuntimeError(f"duration {mss!r} is not m:ss or h:mm:ss; read it off the file")
+
+
+def guard_owned():
+    """Refuse to render a film of ours that is not actually hosted here.
+
+    Naming a film the site does not have is the same class of false claim as an
+    invented listing, so the build stops rather than shipping the claim.
+    """
+    for o in OWNED:
+        if len(o) != 5:
+            raise RuntimeError(
+                f"OWNED entry {o[0]!r} has {len(o)} fields; expected {OWNED_TUPLE_SHAPE}")
+        iso_duration(o[2])
+        for label, p in (("film", owned_media_path(o)), ("poster", owned_poster_path(o))):
+            if not p.is_file() or p.stat().st_size == 0:
+                raise RuntimeError(
+                    f"OWNED entry {o[0]!r} has no {label} at "
+                    f"{p.relative_to(_repo_root())}. Commit the file before claiming the film.")
+
+
+def planned_rows():
+    """Planned pieces still unshot. A published slug is not also promised."""
+    shot = {o[0] for o in OWNED}
+    return [p for p in PLANNED if p[0] not in shot]
+
+
+def owned_room():
+    """The featured room: our films first, and only when there are any."""
+    guard_owned()
+    if not OWNED:
+        return ""
+    figs = []
+    for o in OWNED:
+        _oid, title, duration, filmed_on, location = o
+        figs.append(
+            '<figure><div class="frame">'
+            f'<video controls preload="metadata" poster="{html.escape(poster_url(o))}" '
+            f'width="1280" height="720" playsinline>'
+            f'<source src="{html.escape(content_url(o))}" type="video/mp4">'
+            "Your browser cannot play this file. "
+            f'<a href="{html.escape(content_url(o))}">Download it instead.</a>'
+            "</video></div>"
+            f"<figcaption><strong>{html.escape(title)}</strong>"
+            f"<span>Filmed {html.escape(filmed_on)} in {html.escape(location)} &middot; "
+            f"{html.escape(duration)} &middot; our own film</span>"
+            "<p>Shot and cut by the people who dance here. It plays from this site, and "
+            "the file is ours.</p></figcaption></figure>"
+        )
+    return (
+        '<div class="prose"><p class="eyebrow">Filmed at the jam</p>'
+        '<h2 id="our-films">Our own films</h2>'
+        "<p>These are shot at a real session, by the people in the room. They play from "
+        "this site: the file is ours, nothing here is embedded from anyone else's channel, "
+        "and nothing in this section is somebody else's work under our name.</p></div>"
+        f'<div class="media-grid">{"".join(figs)}</div>'
+    )
+
+
+def in_production():
+    """The honest not-yet state. Specific about what is coming, silent on what is not known."""
+    rows = planned_rows()
+    if not rows:
+        return ""
+    lis = ""
+    for _slug, title, note, link, label in rows:
+        line = f"<strong>{html.escape(title)}</strong> &mdash; {html.escape(note)}"
+        if link:
+            line += f' <a href="{html.escape(link)}">{html.escape(label)}</a>'
+        lis += f"<li>{line}</li>"
+    return (
+        '<div class="prose"><h2 id="in-production">What we are filming</h2>'
+        "<p>None of the films below exist yet. This jam has not shot a video, so there is "
+        "no film of ours to show you on this page today, and this page will not borrow the "
+        "credit by passing off someone else's film as ours. These are in production, in "
+        "this order:</p>"
+        f"<ul>{lis}</ul>"
+        "<p>No runtime and no filming date is given for any of them, because neither is "
+        "known yet: a runtime is read off the finished cut and a filming date is a day that "
+        "has already happened. Both appear on this page only when the file does, and when "
+        "the file exists the piece moves to the top of this page as ours.</p></div>"
+    )
+
+
 def _figure(v):
     vid, platform, title, channel, _date, duration, _cat, note = v
     return (
@@ -172,7 +358,7 @@ def _figure(v):
         f'loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" '
         f'allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>'
         f"</div><figcaption><strong>{html.escape(title)}</strong>"
-        f"<span>{html.escape(channel)} &middot; {duration} &middot; {platform}</span>"
+        f"<span>by {html.escape(channel)} &middot; {duration} &middot; {platform}</span>"
         f"<p>{html.escape(note)}</p></figcaption></figure>"
     )
 
@@ -186,32 +372,73 @@ def gallery():
         if not items:
             continue
         out.append(
-            f'<div class="prose"><h2 id="{slug}">{title}</h2><p>{blurb}</p></div>'
+            f'<div class="prose"><h3 id="{slug}">{title}</h3><p>{blurb}</p></div>'
             f'<div class="media-grid">{"".join(_figure(v) for v in items)}</div>'
         )
     return "".join(out)
 
 
-def credits():
-    rows = sorted({(v[2], watch_url(v)) for v in VIDEOS})
-    lis = "".join(
-        f'<li><a href="{html.escape(u)}" rel="noopener nofollow">{html.escape(c)}</a></li>'
-        for c, u in rows
-    )
+def reference_section():
+    """Other people's films, named as such, with every channel credited."""
+    if not VIDEOS:
+        raise RuntimeError("VIDEOS is empty. The reference section must not ship without entries.")
     return (
-        '<div class="prose"><h2>Credits</h2>'
-        "<p>Every film here belongs to the channel that made it and plays through that channel's own "
-        "player on the platform that hosts it. Nothing is downloaded, re-cut or re-hosted by this site. "
-        "If you own one of these and would rather it were not embedded, "
+        '<div class="prose"><h2 id="reference-watching">Reference watching</h2>'
+        f"<p>Everything in this section is someone else's film. These {len(VIDEOS)} pieces "
+        "were made and published by the channels named on each one, they play through those "
+        "channels' own players on the platforms that host them, and this site owns none of "
+        "them and filmed none of them. We link to them because they are the records worth "
+        "watching, and the credit stays with the person who made them.</p>"
+        "<p>They are also, at the time of writing, nearly all of what exists: the supply of "
+        "contact improvisation film is thin and largely old, and none of it was shot in "
+        "Miami. That gap is why the films in production above are being made here.</p>"
+        "</div>"
+        + gallery()
+    )
+
+
+def credits():
+    by_channel = {}
+    for v in VIDEOS:
+        by_channel.setdefault(v[3], []).append((v[2], watch_url(v)))
+    lis = ""
+    for channel in sorted(by_channel):
+        links = ", ".join(
+            f'<a href="{html.escape(u)}" rel="noopener nofollow">{html.escape(t)}</a>'
+            for t, u in by_channel[channel]
+        )
+        lis += f"<li><strong>{html.escape(channel)}</strong> &mdash; {links}</li>"
+    return (
+        '<div class="prose"><h3 id="credits">Who made the films in this section</h3>'
+        "<p>Every film above belongs to the channel that made it and plays through that "
+        "channel's own player on the platform that hosts it. None of it is this site's work "
+        "and none of it is presented as this site's work. Nothing is downloaded, re-cut or "
+        "re-hosted here. If you own one of these and would rather it were not embedded, "
         '<a href="/about#submit">say so</a> and it comes down the same day.</p>'
         f"<ul>{lis}</ul></div>"
     )
 
 
 def schema_list():
-    if not VIDEOS:
-        return None
+    """VideoObjects for the room. Ours first, then the credited embeds.
+
+    Attribution is decided by where the film plays: an entry with an embedUrl is
+    someone else's and is credited to that channel, and only an entry whose
+    contentUrl is on this domain may carry this site's name as creator or publisher.
+    """
+    guard_owned()
     entries = []
+    for o in OWNED:
+        _oid, title, duration, filmed_on, location = o
+        entries.append({
+            "title": title,
+            "description": f"Filmed {filmed_on} in {location} by the people who dance at this jam.",
+            "content": content_url(o),
+            "url": schema.SITE + "/videos#our-films",
+            "thumbnail": poster_url(o),
+            "duration": iso_duration(duration),
+            "filmed_on": filmed_on,
+        })
     for v in VIDEOS:
         vid, platform, title, channel, upload, _duration, _cat, note = v
         e = {
@@ -226,4 +453,7 @@ def schema_list():
         if upload:
             e["upload"] = upload
         entries.append(e)
+    if not entries:
+        raise RuntimeError(
+            "The video room has no entries: neither OWNED nor VIDEOS has anything in it.")
     return schema.video_objects(entries)
