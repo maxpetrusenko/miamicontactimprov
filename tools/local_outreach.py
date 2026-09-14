@@ -15,11 +15,18 @@ directory that exists to sell followed links. Nothing here asks for a link back 
 nothing offers anything in return, which is the line that matters.
 
 Run:
-    python3 tools/local_outreach.py            # writes everything, sends nothing
-    python3 tools/local_outreach.py --out DIR  # somewhere else
+    python3 tools/local_outreach.py                 # the original five, writes everything, sends nothing
+    python3 tools/local_outreach.py --set followups # the follow-ups to the 2026-09-13 sends
+    python3 tools/local_outreach.py --set all
+    python3 tools/local_outreach.py --out DIR       # somewhere else
 
-Sources for the recipient addresses, and the status each page was read at on
-2026-09-14, are in docs/miami-jams-sources.md.
+`DRAFTS` holds the first set. `FOLLOWUP_DRAFTS` holds the messages that follow the sends of
+2026-09-13 to moti@contactimprov.com, bodydiary@ciglobalcalendar.net and info@contactquarterly.com;
+they are follow-ups rather than repitches, and why is documented per draft and in
+docs/listing-submissions-mic.md.
+
+Sources for the recipient addresses, and the status each page was read at on 2026-09-14, are in
+docs/miami-jams-sources.md and docs/listing-submissions-mic.md.
 """
 
 import argparse
@@ -142,15 +149,14 @@ miamicontactimprov.com
     },
     {
         "key": "03-broward-arts-calendar",
-        "recipient": "arts calendar submission route, Broward Cultural Division",
+        "recipient": "browardarts@broward.org",
         "recipient_verified": (
-            "UNVERIFIED, and this is why: ArtsCalendar.com returned HTTP 403 to every request "
-            "from this host on 2026-09-14, including / and /contact, so its submission terms "
-            "and its contact address could not be read here. The address browardarts@broward.org "
-            "appeared in a secondary report and is NOT verified. Broward.org/Arts (HTTP 200) "
-            "links to ArtsCalendar.com but publishes no email. Before this draft is sent, open "
-            "https://artscalendar.com/register and read the submission page, then address the "
-            "message to whatever it publishes."
+            "Verified 2026-09-14: https://artscalendar.com/contact returns HTTP 200 and "
+            "publishes, verbatim, \"Email: browardarts@broward.org\" and \"Phone: (954) 357-7457\", "
+            "under \"Broward Cultural Division, Main Library, 100 S Andrews Ave 6th Floor, Fort "
+            "Lauderdale, FL 33301\". The site root also returns 200. An earlier note in this file "
+            "recorded HTTP 403 from this host and marked the address unverified; that was wrong "
+            "for 2026-09-14 and is corrected here."
         ),
         "subject": "Submitting a Broward County listings resource to ArtsCalendar",
         "why_legitimate": (
@@ -185,8 +191,9 @@ Two questions:
    events and performances only? If it is events only, no problem at all, tell me and I
    will not pursue it.
 
-2. If it does belong, what is the correct submission route? I could not read the
-   submission page from here, so I would rather be told the right one than guess.
+2. If it does belong, is there a submission route you would rather I used than this
+   address? I am writing to the contact address published on your contact page, and I
+   would rather be pointed at the right route than send this to the wrong desk.
 
 Either answer is useful, and I would rather ask than submit something you would have to
 reject.
@@ -308,6 +315,203 @@ miamicontactimprov.com
 ]
 
 
+# --- follow-ups, prepared 2026-09-14 ---------------------------------------------------------
+#
+# The 2026-09-13 sends already went to moti@contactimprov.com, bodydiary@ciglobalcalendar.net and
+# info@contactquarterly.com. These are NOT repitches of those messages. Each one either answers a
+# question the earlier message left open, corrects a fact that changed, or opens a surface that was
+# not in the first pass. The reasoning and the live status of every page are in
+# docs/listing-submissions-mic.md.
+FOLLOWUP_DRAFTS = [
+    {
+        "key": "06-contactimprov-free-member-route",
+        "recipient": "moti@contactimprov.com",
+        "recipient_verified": (
+            "Verified. Published on https://www.contactimprov.com/ as the contact for the World "
+            "Jam Map, and already a live thread since the 2026-09-13 message."
+        ),
+        "subject": "The free member route: does a city resource qualify for it?",
+        "why_legitimate": (
+            "The site's own membership page states that free Basic Membership includes a member "
+            "listing, and the World Jam Map pages ask in writing to be sent corrections. This is a "
+            "question about the site's own product, put to the site, on a thread the site opened. "
+            "It requests no link and offers nothing in return; it explicitly declines the paid "
+            "listing so no one has to wonder whether the silence is a sales tactic."
+        ),
+        "body": """Hello Moti,
+
+One more question on the same thread, and then I will leave it alone.
+
+I re-read your membership page on 14 September 2026 and it says:
+
+    FREE Basic Membership Includes: Member listing on the site.
+
+I had assumed the only route onto the site was a listing I had to arrange, so I did not ask this
+first time. Is a free Basic Membership appropriate for a non-commercial city resource like mine, or
+is a member listing meant for individuals and studios?
+
+    https://miamicontactimprov.com/miami-jams
+
+To be clear about one thing so nobody has to guess at my motive: I am not going to buy the $5
+per-event listing on the world workshop/event calendar. If the answer is that a non-commercial
+resource does not belong on the site at all, that is a clean answer and I will stop asking.
+
+If it does belong, whatever the correct route is, I will use that instead of guessing.
+
+One correction to carry over from my earlier message, re-checked today: the two links under
+"Contact Improvisation in Miami" are still unreachable. tribes.tribe.net/ciseflo returns 404, and
+groups.yahoo.com/group/ciseflo/ returns 200 but lands on yahoo.com's homepage.
+
+Thank you,
+Max
+miamicontactimprov.com
+""",
+    },
+    {
+        "key": "07-ciglobalcalendar-regional-snippet",
+        "recipient": "bodydiary@ciglobalcalendar.net",
+        "recipient_verified": (
+            "Verified. Used by this project for the 2026-09-13 message; the site's own contact "
+            "forms at /contactForm/compose/project-manager and /contactForm/compose/administrator "
+            "are the published routes."
+        ),
+        "subject": "The regional snippet for Florida, and who is already registered in Miami",
+        "why_legitimate": (
+            "The calendar's own Get Involved page publishes the regional/country snippet route for "
+            "exactly this purpose: a regional site embeds the calendar's events for its area and "
+            "the calendar keeps the authority and the data. That is an integration the publisher "
+            "offers, not a link exchange, and the second question is a request for the facts the "
+            "site already holds so the Miami page does not duplicate them."
+        ),
+        "body": """Hello,
+
+Following my message of 13 September, and re-reading your site today so this is current.
+
+I am not asking again whether a city hub can be posted as an event. Your Help page answers that, and
+I accept the answer: entries have to be Contact Improvisation events, and anything else gets removed.
+
+What I am asking about is the route your Get Involved page offers:
+
+    Direct access to Country/Regional contents
+    If you are the developer of a regional/country website you can include a snippet that show
+    just the events related to your area.
+
+Two questions:
+
+1. Could I have the snippet for Florida, or the pointer to how it is implemented? I would like
+   miamicontactimprov.com to show the actual Contact Improvisation events already in your calendar
+   for Florida, with the calendar credited as the source and linked as the place to register. The
+   calendar keeps the authority; my page would just mirror the events for the state, because right
+   now a reader in Miami has no single place to see what is running.
+
+2. Which organisers in Miami are already registered with the calendar? I would rather point my jam
+   list at them than duplicate or contradict them. If no Miami organiser is registered yet, that is
+   useful to know too, because it tells me the state is effectively unrepresented.
+
+Either answer helps, and I am happy to be pointed at documentation rather than have anyone spend
+time explaining it to me.
+
+Thank you,
+Max
+miamicontactimprov.com
+""",
+    },
+    {
+        "key": "08-contactquarterly-add-route",
+        "recipient": "info@contactquarterly.com",
+        "recipient_verified": (
+            "Verified. Published on "
+            "https://contactquarterly.com/contact-improvisation/newsletter/ as a mailto: link and "
+            "used by this project for the 2026-09-13 message."
+        ),
+        "subject": "Your page answers my question, so only the add route is outstanding",
+        "why_legitimate": (
+            "The Contacts List describes itself as a referral directory that lists individuals and "
+            "organizations willing to refer people to Contact activity locally, and a Miami entry "
+            "is exactly that. The only outstanding item is a procedural one the page does not "
+            "publish. Nothing is offered in exchange and no reciprocal link is proposed."
+        ),
+        "body": """Hello,
+
+I wrote on 13 September asking whether the CI Contacts List is for individuals only. Your own page
+answers it, so I am withdrawing that question rather than leaving it hanging:
+
+    The Contacts List is a referral directory for locating Contact Improvisation classes, jams,
+    and practitioners around the world. It lists individuals and organizations who are willing to
+    refer people to Contact activities in their area.
+
+So organisations qualify. The only thing still outstanding is procedural. The page offers "Log in to
+edit your listing", which presumes the reader is already on the list, and I could not find a route
+for proposing a new entry. What is the correct way to propose one?
+
+For reference, and because it may be useful to whoever maintains the list rather than because it is
+a complaint: Florida does not appear under United States. The state headings I can see are
+California, Colorado, Connecticut, Georgia, Illinois, Maryland, Massachusetts, Michigan, Minnesota,
+New Mexico, New York, North Carolina, Ohio, Pennsylvania, Rhode Island, Texas, Vermont, Washington
+and Wisconsin. Miami has been effectively absent.
+
+The resource I would propose for a Miami entry is non-commercial: https://miamicontactimprov.com
+It runs no sessions, takes no bookings, charges nothing and carries no advertising, and it lists
+what could be verified about practice in the county with the source and the date each entry was
+checked.
+
+If the answer is that the list is maintained only by existing members, that is a clean answer.
+
+Thank you,
+Max
+miamicontactimprov.com
+""",
+    },
+    {
+        "key": "09-danceseekers-eligibility",
+        "recipient": "https://danceseekers.com/get-listed (form; no address is published on the page)",
+        "recipient_verified": (
+            "Route verified 2026-09-14: https://danceseekers.com/get-listed returns HTTP 200 and "
+            "carries the submission form. No contact address is published on that page, so this "
+            "draft has no address and must NOT be sent to one that was guessed. Submit through the "
+            "form, or read /contact first."
+        ),
+        "subject": "Eligibility question before I submit: does a city-level resource fit your four categories?",
+        "why_legitimate": (
+            "This is an eligibility question put to the site that operates the map, whose own page "
+            "says it verifies every submission and publishes a page that links back to the "
+            "organizer. Because a city-level resource is none of the four categories it accepts, "
+            "submitting one anyway would be manufacturing a fit, so the question is the honest "
+            "move. Nothing is offered in exchange."
+        ),
+        "body": """Hello,
+
+I would like to ask about eligibility before I submit anything, because your Get Listed page names
+four categories and what I have is not obviously one of them.
+
+Your page says: "Know an event, studio, recurring social, or class series that belongs on the map?
+Tell us about it - something you run, or something you love. We verify every submission, then
+publish a dedicated page that links back to the organizer's website and socials. Free."
+
+What I run is none of those four things. It is a non-commercial resource site that maps what could
+be verified about Contact Improvisation practice across Miami-Dade and Broward County: a weekly
+all-levels class at Dance Arts Miami on Tuesdays, two dated workshops at Skanda Yoga, and Camp
+Contact at the Love Burn festival on Virginia Key each February, each entry naming its organiser,
+venue, schedule and the date the source was checked.
+
+    https://miamicontactimprov.com/miami-jams
+
+My question: does a city-level listings resource qualify for a page, or is the site only for the four
+categories you list? If it is only those four, that is a clean answer and I will not pursue it.
+
+I noticed your Miami page shows 23 organizers and 148 events, so whoever curates it already knows the
+local scene well. If it is more useful, I am happy to send the verified Miami and Broward entries as
+corrections for that page instead of asking for a page of my own. Either is fine, and the second one
+is probably more useful to your readers.
+
+Thank you,
+Max
+miamicontactimprov.com
+""",
+    },
+]
+
+
 def build_raw(to, subject, body):
     """The exact bytes that would be sent, RFC 822, base64url for transport."""
     msg = (
@@ -348,16 +552,9 @@ def send(*_a, **_kw):
     )
 
 
-def main():
-    ap = argparse.ArgumentParser(description="Prepare (never send) the local-listing outreach.")
-    ap.add_argument("--out", default=DEFAULT_OUT)
-    args = ap.parse_args()
-
-    out = pathlib.Path(args.out)
-    out.mkdir(parents=True, exist_ok=True)
-
+def prepare(drafts, out):
     manifest = []
-    for d in DRAFTS:
+    for d in drafts:
         path = out / f"{d['key']}.eml"
         path.write_bytes(eml_bytes(d).encode("utf-8"))
         b64 = build_raw(d["recipient"], d["subject"], d["body"])
@@ -376,16 +573,44 @@ def main():
             "eml": str(path),
             "b64": str(out / f"{d['key']}.b64"),
             "reason": str(out / f"{d['key']}.reason.txt"),
-            "recipient_verified": not d["recipient_verified"].startswith("UNVERIFIED"),
+            "recipient_verified": not d["recipient_verified"].startswith(("UNVERIFIED", "Route verified")),
             "sent": False,
         })
         print(f"prepared  {d['key']:32} -> {d['recipient']}")
         print(f"          {path}")
+    return manifest
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Prepare (never send) the local-listing outreach.")
+    ap.add_argument("--out", default=DEFAULT_OUT)
+    ap.add_argument(
+        "--set",
+        choices=("drafts", "followups", "all"),
+        default="drafts",
+        help=(
+            "drafts = the original five prepared 2026-09-14; followups = the five prepared "
+            "2026-09-14 that follow the 2026-09-13 sends, written to 2026-09-14-followups; "
+            "all = both"
+        ),
+    )
+    args = ap.parse_args()
+
+    out = pathlib.Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+
+    manifest = []
+    if args.set in ("drafts", "all"):
+        manifest += prepare(DRAFTS, out)
+    if args.set in ("followups", "all"):
+        (out / "2026-09-14-followups").mkdir(parents=True, exist_ok=True)
+        manifest += prepare(FOLLOWUP_DRAFTS, out / "2026-09-14-followups")
 
     (out / "MANIFEST.json").write_text(
         json.dumps(
             {
                 "prepared_on": PREPARED_ON,
+                "set": args.set,
                 "sending_enabled": SENDING_ENABLED,
                 "sent": 0,
                 "drafts": manifest,
