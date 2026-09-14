@@ -32,6 +32,8 @@ PAGES = [
     ("/miami", "miami.html", content_directory.miami, "0.9", "weekly", None),
     ("/jams", "jams.html", content_practice.jams, "0.8", "weekly", None),
     ("/classes", "classes.html", content_practice.classes, "0.8", "monthly", None),
+    ("/your-first-jam", "your-first-jam.html", content_practice.your_first_jam, "0.8", "monthly", None),
+    ("/keep-practising", "keep-practising.html", content_practice.keep_practising, "0.7", "monthly", None),
     ("/videos", "videos.html", content_practice.videos, "0.7", "monthly", None),
     ("/directory", "directory.html", content_directory.directory, "0.7", "weekly", None),
     ("/glossary", "glossary.html", content_core.glossary, "0.6", "monthly", None),

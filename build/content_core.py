@@ -184,7 +184,7 @@ def what_is():
       <h2>Questions people actually ask</h2>
       {faq_html}
     </div>
-    {band("Ready to try it?", "Read what happens at a jam before you go, then find one near you.", [("Jams in Miami", "/jams", "primary"), ("First jam walkthrough", "/classes#first-jam", "secondary")])}
+    {band("Ready to try it?", "Read what happens at a jam before you go, then find one near you.", [("Jams in Miami", "/jams", "primary"), ("Your first jam, step by step", "/your-first-jam", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>What is Contact Improvisation?</em>. miamicontactimprov.com. https://miamicontactimprov.com/what-is-contact-improvisation")}
   </div>
 </section>
