@@ -40,7 +40,7 @@ NAV = [
     ("about", {"en": "About", "es": "Acerca de"}),
 ]
 
-NAV_CTA = {"en": ("Submit a jam", "/about#submit"), "es": ("Publica tu sesión", "/about#submit")}
+NAV_CTA = {"en": ("Submit a jam", "/about#submit"), "es": ("Publica tu sesión", "/es/acerca-de#submit")}
 
 FOOTER_COLS = [
     ("start", {

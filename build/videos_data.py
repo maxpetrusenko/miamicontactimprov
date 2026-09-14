@@ -137,6 +137,101 @@ CATEGORIES = [
     ("documentary", "Documentary and the originators", "The people who made the form, in their own words."),
 ]
 
+# ------------------------------------------------------------------ Spanish (es)
+# The room's prose is this site's own writing, so it is translated. What is NOT
+# translated: every film TITLE, every channel name and every platform string, because
+# those are quoted from the platform that publishes the film — translating a quoted
+# title would be inventing a citation. Keyed by video id so a new film cannot be added
+# without its note being written for both locales (the missing-key fallback below is the
+# English note, and a Spanish page carrying an English note is a defect, not a default).
+ES_NOTES = {
+    "H8JiB2Nv5Qo": "La demostración más llana del conjunto. Dos personas trabajando el compartir peso "
+                   "de base, útil la semana antes de tu primera sesión.",
+    "9FeSDsmIeHA": "Material de archivo del año fundacional, subido décadas después. Míralo por lo poco "
+                   "que se parece a una actuación y lo mucho que se parece a estar de pie hasta que "
+                   "pasa algo.",
+    "u9AhpFxfEfs": "Parte de una serie documental, y responde a la pregunta de su propio título "
+                   "directamente.",
+    "q4wUEiHowSU": "Un dúo único y continuo, rodado como cine y no como documentación. Sin entrevista, "
+                   "sin rótulos, sin hablar. La imagen más limpia que hay en YouTube de cómo se siente "
+                   "el contacto sostenido desde dentro.",
+    "ED8hNoulZv4": "Irene Sposetti y Johan Nilsson, cine directo, luz natural, planos largos. Lento, sin "
+                   "lucimiento, estructuralmente claro.",
+    "Ltq6y06E8ew": "Cámara baja, cuerpos rodando, casi ningún acontecimiento. Sigue siendo uno de los "
+                   "registros más citados de la forma como conversación física y no como exhibición.",
+    "NGf03Yg6fM0": "Sasha Dodo y Dolores Dewhurst Marks. Etalonado, encuadre cerrado, levantamientos "
+                   "fuertes y contrapeso, sin contenido hablado.",
+    "zQRF2sLK1vY": "Rodado en Earthdance, el centro de IC de larga trayectoria en Massachusetts. Cámara "
+                   "en mano, sin prisa, claramente una buena sesión y no una actuación.",
+    "_qnzKHrxKbA": "Material técnico cercano sobre la mecánica del levantamiento y el contrapeso. Mira "
+                   "este si te han dicho que eres demasiado pesado o demasiado ligero para volar.",
+    "YxLT9OELURo": "Trabajo de actuación de Body Research. Guiado por el movimiento y experimental, no "
+                   "instructivo.",
+    "yyaHk7KN9bY": "Una jam de festival filmada mientras se llena. Varios dúos, música ambiental, sin "
+                   "narración. Esta es la forma que toma una sala llena.",
+    "dE0AEE0zGmU": "Treinta y un minutos de playa y estudio en un festival tropical grande. Lo más "
+                   "parecido que hay aquí a lo que podría ser una sesión al aire libre en el sur de "
+                   "Florida, a gran escala.",
+    "X-7izu2QpqA": "Una apertura completa: el calentamiento que alguien que viene por primera vez "
+                   "debería ver antes de asistir a una jam, y después la jam misma.",
+    "azDakHrdzpw": "Profesorado veterano actuando para un público de festival. Muestra el extremo "
+                   "performativo de lo que la práctica puede producir cuando quien baila tiene "
+                   "experiencia y la lleva al límite.",
+    "TL1i9BhMQrE": "Un minuto, al aire libre, sin necesidad de contexto. El mejor clip corto de aquí "
+                   "para mandárselo a alguien que nunca ha visto la forma y solo tiene un momento.",
+    "v6Pt0OXK7es": "Un documental sobre Stark Smith y sobre el tacto como medio. Incluye material de "
+                   "entrevista además de baile, así que es para verlo con atención y no de fondo.",
+    "XGIlU89MgIQ": "Material de archivo de dos de las primeras practicantes, subido en 2020. Mudo, de "
+                   "archivo, y la mejor prueba de cómo se veía la forma antes de tener un nombre que "
+                   "la gente reconociera.",
+    "XrUeYbUmhQA": "Clip de archivo del creador de la forma, del canal contactimprovdoc. Baja resolución "
+                   "y silencioso, y la fuente primaria de por qué existe todo esto.",
+    "hlIRjfto7o0": "Gregory Catellier y Kristin O'Neal sobre lo que la práctica enseña fuera de la sala. "
+                   "La mejor respuesta única a un familiar escéptico que pregunta para qué sirve esto.",
+    "162251068": "Documentación completa de un dúo por una pareja berlinesa conocida. Encuadre limpio, "
+                 "guiado por la música, sin narración. En Vimeo la incrustación está abierta, cosa que "
+                 "no siempre ocurre con el cine de danza.",
+    "143397945": "Una película de danza rodada, no documentación. Pictórica, hecha para una pantalla, "
+                 "merece verse por cómo se ve el trabajo de contacto cuando se compone para cámara.",
+    "223688821": "Documentación de una actuación, una de las pocas subidas de actuación de IC con "
+                 "producción más alta que sigue siendo pública y abiertamente incrustable en Vimeo.",
+}
+
+ES_CATEGORIES = [
+    ("foundations", "Empieza por aquí", "Si nunca has visto esta danza, mira estos tres primero."),
+    ("duets", "Dúos", "Trabajo sostenido de dos personas, desde la casi quietud hasta volar del todo."),
+    ("festivals", "Festivales y jams", "Cómo se ve un encuentro de bailarines de IC cuando la sala se llena."),
+    ("documentary", "Documental y los orígenes", "Las personas que hicieron la forma, con sus propias palabras."),
+]
+
+# Notes and link labels for the pieces in production, keyed by slug. Titles stay as
+# published: they are the working titles of the films themselves.
+ES_PLANNED = {
+    "what-actually-happens-at-a-contact-improv-jam": (
+        "rodado en una jam en Miami, que es el único filme de contact improv rodado en Miami "
+        "que va a existir en cualquier parte", "/es/jams", "la página de jams"),
+    "contact-improvisation-for-beginners-the-first-20-minutes": (
+        "el calentamiento y los primeros ejercicios que recibe de verdad alguien que empieza",
+        "/es/tu-primera-jam", "el recorrido de la primera jam"),
+    "rolling-point-of-contact-weight-sharing-floorwork": (
+        "la técnica que hay debajo del baile, mostrada lo bastante despacio para copiarla",
+        "/es/glosario#compartir-peso", "la definición de compartir peso"),
+    "is-contact-improv-sexual": (
+        "la pregunta que frena a la gente para asistir, respondida sin rodeos",
+        "/es/seguridad-y-consentimiento", "seguridad y consentimiento"),
+    "the-small-dance": (
+        "la práctica de pie, ligada a la definición que este sitio ya tiene",
+        "/es/glosario#small-dance", "la definición del glosario"),
+}
+
+ES_SECTION = {
+    "reference_heading": "Ver como referencia",
+    "credits_heading": "Quién hizo los filmes de esta sección",
+    "production_heading": "Qué estamos filmando",
+    "owned_heading": "Nuestros propios filmes",
+    "by": "de",
+}
+
 # Embed-verified as a muted looping background. Cinematic, no talking heads, tolerant
 # of being cropped to a band, and nothing in it depends on audio.
 HERO_VIDEO_ID = "q4wUEiHowSU"
@@ -293,11 +388,17 @@ def planned_rows():
     return [p for p in PLANNED if p[0] not in shot]
 
 
-def owned_room():
+def owned_room(lang="en"):
     """The featured room: our films first, and only when there are any."""
     guard_owned()
     if not OWNED:
         return ""
+    if lang == "es":
+        credit_prefix, footer_note = "Rodado", ("Rodado y montado por las personas que bailan aquí. Se reproduce desde este "
+                 "sitio, y el archivo es nuestro.")
+    else:
+        credit_prefix, footer_note = "Filmed", ("Shot and cut by the people who dance here. It plays from this site, and "
+                 "the file is ours.")
     figs = []
     for o in OWNED:
         _oid, title, duration, filmed_on, location = o
@@ -310,32 +411,56 @@ def owned_room():
             f'<a href="{html.escape(content_url(o))}">Download it instead.</a>'
             "</video></div>"
             f"<figcaption><strong>{html.escape(title)}</strong>"
-            f"<span>Filmed {html.escape(filmed_on)} in {html.escape(location)} &middot; "
-            f"{html.escape(duration)} &middot; our own film</span>"
-            "<p>Shot and cut by the people who dance here. It plays from this site, and "
-            "the file is ours.</p></figcaption></figure>"
+            f"<span>{credit_prefix} {html.escape(filmed_on)} &middot; {html.escape(location)} &middot; "
+            f"{html.escape(duration)} &middot; {'nuestro propio filme' if lang == 'es' else 'our own film'}</span>"
+            f"<p>{footer_note}</p></figcaption></figure>"
         )
-    return (
-        '<div class="prose"><p class="eyebrow">Filmed at the jam</p>'
-        '<h2 id="our-films">Our own films</h2>'
-        "<p>These are shot at a real session, by the people in the room. They play from "
+    heading = ES_SECTION["owned_heading"] if lang == "es" else "Our own films"
+    intro = (
+        "Estos se ruedan en una sesión real, por las personas que están en la sala. Se reproducen "
+        "desde este sitio: el archivo es nuestro, aquí no se incrusta nada del canal de nadie, y "
+        "nada de esta sección es trabajo ajeno bajo nuestro nombre."
+        if lang == "es" else
+        "These are shot at a real session, by the people in the room. They play from "
         "this site: the file is ours, nothing here is embedded from anyone else's channel, "
-        "and nothing in this section is somebody else's work under our name.</p></div>"
+        "and nothing in this section is somebody else's work under our name."
+    )
+    eyebrow = "Rodado en la jam" if lang == "es" else "Filmed at the jam"
+    return (
+        f'<div class="prose"><p class="eyebrow">{eyebrow}</p>'
+        f'<h2 id="our-films">{heading}</h2>'
+        f"<p>{intro}</p></div>"
         f'<div class="media-grid">{"".join(figs)}</div>'
     )
 
 
-def in_production():
+def in_production(lang="en"):
     """The honest not-yet state. Specific about what is coming, silent on what is not known."""
     rows = planned_rows()
     if not rows:
         return ""
     lis = ""
     for _slug, title, note, link, label in rows:
+        if lang == "es":
+            note, link, label = ES_PLANNED.get(_slug, (note, link, label))
         line = f"<strong>{html.escape(title)}</strong> &mdash; {html.escape(note)}"
         if link:
             line += f' <a href="{html.escape(link)}">{html.escape(label)}</a>'
         lis += f"<li>{line}</li>"
+    if lang == "es":
+        return (
+            f'<div class="prose"><h2 id="in-production">{ES_SECTION["production_heading"]}</h2>'
+            "<p>Ninguno de los filmes de abajo existe todavía. Esta jam no ha rodado ningún "
+            "vídeo, así que hoy no hay ningún filme nuestro que mostrarte en esta página, y "
+            "esta página no va a tomar prestado el crédito haciendo pasar el filme de otra "
+            "persona por nuestro. Estos están en producción, en este orden:</p>"
+            f"<ul>{lis}</ul>"
+            "<p>No se da duración ni fecha de rodaje para ninguno de ellos, porque ninguna de "
+            "las dos se conoce aún: una duración se lee del montaje terminado, y una fecha de "
+            "rodaje es un día que ya ha ocurrido. Las dos aparecen en esta página solo cuando "
+            "aparece el archivo, y cuando el archivo existe la pieza sube al principio de esta "
+            "página como nuestra.</p></div>"
+        )
     return (
         '<div class="prose"><h2 id="in-production">What we are filming</h2>'
         "<p>None of the films below exist yet. This jam has not shot a video, so there is "
@@ -350,38 +475,57 @@ def in_production():
     )
 
 
-def _figure(v):
+def _figure(v, lang="en"):
     vid, platform, title, channel, _date, duration, _cat, note = v
+    if lang == "es":
+        note = ES_NOTES.get(vid, note)
+    by = ES_SECTION["by"] if lang == "es" else "by"
     return (
         f'<figure><div class="frame">'
         f'<iframe src="{embed_url(v)}" title="{html.escape(title)} \u2014 {html.escape(channel)}" '
         f'loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" '
         f'allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>'
         f"</div><figcaption><strong>{html.escape(title)}</strong>"
-        f"<span>by {html.escape(channel)} &middot; {duration} &middot; {platform}</span>"
+        f"<span>{by} {html.escape(channel)} &middot; {duration} &middot; {platform}</span>"
         f"<p>{html.escape(note)}</p></figcaption></figure>"
     )
 
 
-def gallery():
+def gallery(lang="en"):
     if not VIDEOS:
         raise RuntimeError("VIDEOS is empty. The video room must not ship without verified entries.")
+    categories = ES_CATEGORIES if lang == "es" else CATEGORIES
     out = []
-    for slug, title, blurb in CATEGORIES:
+    for slug, title, blurb in categories:
         items = [v for v in VIDEOS if v[6] == slug]
         if not items:
             continue
         out.append(
             f'<div class="prose"><h3 id="{slug}">{title}</h3><p>{blurb}</p></div>'
-            f'<div class="media-grid">{"".join(_figure(v) for v in items)}</div>'
+            f'<div class="media-grid">{"".join(_figure(v, lang) for v in items)}</div>'
         )
     return "".join(out)
 
 
-def reference_section():
+def reference_section(lang="en"):
     """Other people's films, named as such, with every channel credited."""
     if not VIDEOS:
         raise RuntimeError("VIDEOS is empty. The reference section must not ship without entries.")
+    if lang == "es":
+        return (
+            f'<div class="prose"><h2 id="reference-watching">{ES_SECTION["reference_heading"]}</h2>'
+            f"<p>Todo lo de esta sección es un filme de otra persona. Estas {len(VIDEOS)} piezas "
+            "las hicieron y publicaron los canales que se nombran en cada una, se reproducen en los "
+            "reproductores de esos canales en las plataformas que las alojan, y este sitio no posee "
+            "ninguna ni rodó ninguna. Enlazamos a ellas porque son los registros que merece la pena "
+            "ver, y el crédito se queda en quien las hizo.</p>"
+            "<p>También son, en el momento de escribir esto, casi todo lo que existe: la oferta de "
+            "filmes de Improvisación de Contacto es escasa y en gran parte antigua, y ninguno se rodó "
+            "en Miami. Ese hueco es la razón de que los filmes en producción de arriba se estén "
+            "haciendo aquí.</p>"
+            "</div>"
+            + gallery("es")
+        )
     return (
         '<div class="prose"><h2 id="reference-watching">Reference watching</h2>'
         f"<p>Everything in this section is someone else's film. These {len(VIDEOS)} pieces "
@@ -397,7 +541,7 @@ def reference_section():
     )
 
 
-def credits():
+def credits(lang="en"):
     by_channel = {}
     for v in VIDEOS:
         by_channel.setdefault(v[3], []).append((v[2], watch_url(v)))
@@ -408,6 +552,17 @@ def credits():
             for t, u in by_channel[channel]
         )
         lis += f"<li><strong>{html.escape(channel)}</strong> &mdash; {links}</li>"
+    if lang == "es":
+        return (
+            f'<div class="prose"><h3 id="credits">{ES_SECTION["credits_heading"]}</h3>'
+            "<p>Cada filme de arriba pertenece al canal que lo hizo y se reproduce en el "
+            "reproductor de ese canal, en la plataforma que lo aloja. Ninguno es trabajo de "
+            "este sitio y ninguno se presenta como trabajo de este sitio. Aquí no se descarga, "
+            "ni se recorta, ni se vuelve a alojar nada. Si eres propietario de alguno y "
+            "prefieres que no esté incrustado, "
+            '<a href="/es/acerca-de#submit">dilo</a> y baja el mismo día.</p>'
+            f"<ul>{lis}</ul></div>"
+        )
     return (
         '<div class="prose"><h3 id="credits">Who made the films in this section</h3>'
         "<p>Every film above belongs to the channel that made it and plays through that "

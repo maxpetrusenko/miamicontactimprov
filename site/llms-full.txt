@@ -7,7 +7,7 @@ It has no membership, no booking function and no commercial interest in any list
 
 ## Languages
 
-Seven core pages are also published in Spanish under /es/. The Spanish pages are translations of their English counterparts and make no claim the English page does not make; where a page is English-only it is absent from /es/ rather than machine-translated. The English page is the x-default of every pair.
+Every public page is published in both English and Spanish, 30 pages in total. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
 
 ## Key facts
 
@@ -2093,7 +2093,7 @@ Escrito suena abstracto. En la sala es lo más práctico que vas a aprender, y e
 
 Dinos que existes y te añadimos al mapa. Jams, clases, profesorado, estudios, festivales y grupos de práctica recurrente tienen cabida aquí.
 
- Publica una entrada Leer el directorio (en inglés)
+ Publica una entrada Leer el directorio
 
 ---
 
@@ -2134,7 +2134,7 @@ La Improvisación de Contacto no es acrobacia en pareja para un público, aunque
 
 Cómo llegó a Florida
 
-La IC se extendió por giras, enseñanza y un boletín en papel, no por una organización, y por eso la mayoría de las ciudades desarrolló su escena sin dirección central. Miami no es una excepción: aquí la práctica pasa por profesores individuales, alquileres de estudio, parques y la comunidad de danza y movimiento del sur de Florida, y no por una institución única. Esta página describe lo que se sabe hoy, y la página de Miami (en inglés) traza el mapa de lo que se ha podido verificar.
+La IC se extendió por giras, enseñanza y un boletín en papel, no por una organización, y por eso la mayoría de las ciudades desarrolló su escena sin dirección central. Miami no es una excepción: aquí la práctica pasa por profesores individuales, alquileres de estudio, parques y la comunidad de danza y movimiento del sur de Florida, y no por una institución única. Esta página describe lo que se sabe hoy, y la página de Miami traza el mapa de lo que se ha podido verificar.
 
 Preguntas que la gente hace de verdad
 
@@ -2179,6 +2179,142 @@ Lee qué pasa en una jam antes de ir, y luego busca una cerca de ti.
 Cita esta página
 
 Miami Contact Improv (2026). ¿Qué es la Improvisación de Contacto? . miamicontactimprov.com. https://miamicontactimprov.com/es/que-es-la-improvisacion-de-contacto
+
+---
+
+## https://miamicontactimprov.com/es/miami
+
+id="main">
+
+La ciudad
+
+La Improvisación de Contacto en Miami.
+
+Miami es una ciudad de salas prestadas y escenas no oficiales. La improvisación de contacto funciona aquí igual: alguien que enseña con un espacio, una compañía con un estudio, una persona que baila con un número de teléfono, y quien aparezca.
+
+Respuesta breve
+
+La Improvisación de Contacto (IC) se practica en el sur de Florida desde hace décadas, organizada por personas y no a través de ninguna institución. Miami no tiene una sede de IC permanente ni un calendario central. La práctica ha pasado históricamente por espacio de estudio alquilado, como la jam comunitaria listada en Excello Dance Space, y por partes de la comunidad de danza contemporánea, físicamente integrada y somática más amplia de Miami. Como la forma no tiene organismo que la licencie, la escena es lo que construyan las personas que están en ella.
+
+ País Estados Unidos 
+
+ Estado Florida 
+
+ Condados incluidos Miami-Dade y Broward 
+
+ Ciudades y barrios Miami, Miami Beach, Wynwood, Little Havana, Brickell, Coral Gables, Doral, Hialeah, Pinecrest, Fort Lauderdale 
+
+ Idiomas inglés y español 
+
+ Mejores meses para practicar al aire libre de noviembre a abril 
+
+ Meses más duros para practicar al aire libre de junio a septiembre: calor, humedad y lluvia 
+
+ Cómo se organiza la escena Individualmente. Sin organismo, sede ni calendario central 
+
+El estado honesto de esto
+
+Merece la pena ser directo, porque la mayoría de las guías de ciudad no lo son. La escena de improvisación de contacto de Miami es pequeña y está poco documentada en internet. Lo que existe es real pero disperso: una clase semanal de todos los niveles en Dance Arts Miami, un programa de jams y talleres adyacente al contacto que Kama Flight lleva desde Miami Beach, y Camp Contact llevando la improvisación de contacto a Love Burn en Virginia Key cada febrero. Esas son las cosas que este sitio pudo verificar, y están listadas en la página de jams con sus fuentes y la fecha en que se comprobó cada una.
+
+El resto del cuadro es más fino de lo que a un directorio le gustaría. El mapa mundial CI World Jam Map contiene una jam comunitaria de lunes mensual en Excello Dance Space, con facilitadores rotativos y una entrada de diez dólares; ese listado no lleva fecha y este sitio no lo presenta como vigente. La organización de IC más antigua de Miami pasó por plataformas que ya no existen: un Yahoo Group y una comunidad de Tribe.net, ambas cerradas con sus servidores. La compañía de danza físicamente integrada de Miami, Karen Peterson Dancers, está activa y vigente y lleva mucho tiempo formando parte del paisaje improvisativo y de trabajo en pareja de la ciudad, y por eso aparece en el directorio y no se descarta junto a los enlaces muertos.
+
+Dónde vive de verdad la respuesta
+
+Nadie puede decirte desde una página web estática dónde está la jam esta noche. Los lugares que sí pueden:
+
+ Quien organiza, en persona 
+
+Todos publican sus propios listados y contestan a un mensaje directo. Es la vía más rápida y más fiable, y es la razón de que exista el directorio.
+
+ El directorio 
+
+ CI World Jam Map, página de Florida 
+
+El listado de la propia comunidad global. Es honesto sobre lo incompleto que está y pide a quien lo lea que mande correcciones.
+
+ contactimprov.com/florida.html 
+
+ Búsquedas que funcionan 
+
+ contact improvisation Miami , contact improv South Florida , CI jam Florida . Búsquedas que no funcionan: cualquiera construida sobre la palabra suelta improv , que en Miami devuelve teatros de comedia en Doral y Dania Beach.
+
+Una trampa que merece nombrarse
+
+Una búsqueda en la web de improvisación de contacto en Miami acabará tarde o temprano sacando "Contact Improvisation Gold Coast" y eventos en "The Farm, Miami". Están en Miami, Queensland, Australia, código postal 4220. No tienen nada que ver con Florida y quedan excluidos de todos los listados de este sitio.
+
+Si no hay ninguna jam cerca de ti, empieza una
+
+Esto no es un premio de consolación. La mayoría de las jams del mundo existen porque una persona reservó una sala. La versión mínima viable cuesta unas dos horas de alquiler de estudio a la semana y una hora de administración.
+
+ Encuentra un suelo. Un estudio de danza con suelo flotante o de marley, a ser posible con colchonetas y una pared para sentarse. Los centros comunitarios y los estudios de yoga sirven. Evita el azulejo, el hormigón y la moqueta.
+
+ Elige una franja recurrente y mantenla. La constancia gana a la frecuencia. La misma tarde cada semana construye una sala; una tarde distinta cada mes no lo hará nunca.
+
+ Decide para quién es. Una jam abierta acepta a todo el mundo y necesita un calentamiento más largo. Una jam de gente con experiencia acepta a quienes ya saben caer con seguridad en pareja. Di cuál es, cada vez.
+
+ Escribe el protocolo y dilo en voz alta. Consentimiento continuo, derecho a rechazar cualquier cosa, no enseñar sin que te lo pidan, no grabar sin preguntar, el borde es para descansar, y aquí está quién sostiene la sala. Dos minutos al principio de cada sesión.
+
+ Fija una entrada que cubra la sala. No para ganar dinero: para que la jam sobreviva más allá de la tercera semana.
+
+ Publícala. Una página, una cuenta, una entrada de calendario recurrente y una entrada en el World Jam Map. Después díselo a este sitio , que no cuesta nada y lleva un minuto.
+
+Cuestiones prácticas propias de Miami
+
+ El calor. Una sesión de dos horas en julio necesita más agua y más descanso que la misma sesión en enero. Reserva a primera hora o por la tarde-noche para cualquier cosa al aire libre.
+
+ La lluvia. Las tormentas de tarde entre junio y septiembre cancelan una jam al aire libre casi con puntualidad. Las salas cubiertas no tienen ese problema, y por eso la mayoría de las jams son bajo techo.
+
+ El suelo. La arena y la hierba perdonan las caídas y son malas para rodar. Las jams de playa funcionan mejor para práctica baja, lenta y de compartir peso que para levantamientos.
+
+ Aparcamiento y distancia. Miami-Dade es ancho y dependiente del coche. Di dónde se aparca cuando anuncies una sesión, y cuenta con que la gente conduzca cuarenta minutos por una jam que merezca la pena.
+
+ Dos idiomas. Publica las sesiones en inglés y en español. Es un trabajo de cinco minutos y duplica a quien puede encontrarte.
+
+ Las temporadas. La gente que baila, enseña y alquila estudios viaja. Cuenta con una caída real de asistencia en verano y alrededor de Art Basel en diciembre.
+
+Preguntas sobre la IC en Miami
+
+¿Hay improvisación de contacto en Miami?
+
+Sí. Hay una clase recurrente de Improvisación de Contacto de todos los niveles los martes en Dance Arts Miami, 250 NE 61st Street. Más allá de eso, la práctica del contacto en Miami vive dentro de una comunidad de movimiento más amplia: Kama Flight lleva jams y talleres adyacentes al contacto que fusionan acro yoga, masaje tailandés e Improvisación de Contacto, y Camp Contact lleva la Improvisación de Contacto al festival Love Burn en Virginia Key cada febrero. La Improvisación de Contacto se practica en el sur de Florida desde hace décadas, organizada por personas y no a través de ninguna institución.
+
+¿Por qué buscar 'improv Miami' no encuentra esto?
+
+Porque en Miami, como en casi todas las ciudades, la palabra improv pertenece al teatro de comedia. Buscar 'improv Miami' devuelve clubs de comedia en Doral y Dania Beach. La forma de danza se encuentra por su nombre completo, 'contact improvisation', o como 'contact improv'. Ese choque de nombres es una de las razones de que la escena de danza de Miami esté poco documentada, y es por lo que este sitio lo escribe entero.
+
+¿Dónde baila la gente Improvisación de Contacto en Miami?
+
+En espacio de estudio alquilado, en una residencia en Miami Beach, en un almacén o centro de bienestar, y al aire libre en Virginia Key durante el burn anual. La práctica en Miami sigue el mismo patrón que en cualquier otra ciudad: alguien reserva una sala dos horas, lo cuenta, y existe una jam. Las salas cambian; el formato no.
+
+¿Necesito pareja para ir?
+
+No, y traerla no es obligatorio. Las jams están diseñadas para que la gente llegue sola y baile con quien quiera. Ir con pareja está bien, pero no se espera que pases la sesión con ella.
+
+¿Se enseña en inglés, en español o en los dos?
+
+Miami es bilingüe, y quienes organizan en Miami-Dade suelen trabajar en los dos idiomas. La improvisación de contacto se enseña sobre todo con el tacto y la demostración, así que el idioma importa menos que en casi cualquier clase de movimiento, pero pregunta si no estás seguro.
+
+¿Puede ocurrir la improvisación de contacto al aire libre en Miami?
+
+Ocurre, al menos una vez al año y a lo grande, en Love Burn en Virginia Key. Fuera de un festival, las limitaciones prácticas son el calor, la humedad, la arena y la lluvia. Las sesiones tienden a hacerse temprano por la mañana o después del atardecer, sobre hierba o una superficie dura y plana, con más agua de la que crees que necesitas.
+
+¿Hay algún festival de improvisación de contacto en Florida?
+
+No a la escala de los festivales europeos o de la costa oeste. La práctica de IC en Florida se ha centrado en sesiones locales recurrentes en Miami, Sarasota, Gainesville, Orlando y Jacksonville, varias de las cuales aparecen en la página de Florida del CI World Jam Map. El gran encuentro de Miami es Love Burn, que es un burn regional con improvisación de contacto dentro y no un festival de IC. Quien viaja bailando va a los festivales nacionales e internacionales.
+
+¿Cómo empiezo una jam en Miami?
+
+Reserva un estudio para una franja recurrente de dos horas, decide si es abierta o para gente con experiencia, escribe el protocolo y dila en voz alta al principio de cada sesión, fija una entrada que cubra la sala, y publícala en algún sitio público. Dos horas a la semana y una sala constante son toda la infraestructura.
+
+¿Sabes algo que esta página no dice?
+
+Si enseñas, acoges, organizas o simplemente bailas en el sur de Florida, dínoslo y entra en el mapa. Las correcciones son tan bienvenidas como las incorporaciones, incluido retirar algo que ha parado.
+
+ Publicar una entrada El directorio Seguir practicando 
+
+Cita esta página
+
+Miami Contact Improv (2026). Improvisación de Contacto en Miami . miamicontactimprov.com. https://miamicontactimprov.com/es/miami
 
 ---
 
@@ -2362,7 +2498,7 @@ Cómo usar esta lista
 
 Trata cada entrada como una pista con fecha y no como un hecho. Abre el enlace de la fuente, que es la página o el listado de quien organiza, y busca una fecha propia: una sesión recurrente cuya fuente no se ha actualizado en meses normalmente ha parado, y un listado sin fecha no es prueba de nada. Después manda un mensaje antes de desplazarte. Quien organiza contesta, y prefiere decírtelo a que llegues a una puerta cerrada.
 
-Cómo es de verdad asistir a cada sesión y cómo transcurre una jam desde el círculo de apertura hasta el último baile está en jams y tu primera jam, paso a paso . Qué hacer en las semanas siguientes a la primera está en seguir practicando (en inglés) . Qué es la Improvisación de Contacto, si nunca has leído nada sobre ella, empieza en qué es la Improvisación de Contacto .
+Cómo es de verdad asistir a cada sesión y cómo transcurre una jam desde el círculo de apertura hasta el último baile está en jams y tu primera jam, paso a paso . Qué hacer en las semanas siguientes a la primera está en seguir practicando . Qué es la Improvisación de Contacto, si nunca has leído nada sobre ella, empieza en qué es la Improvisación de Contacto .
 
 Esta página no organiza ninguna de estas sesiones, no cobra por listarlas y no las clasifica. Es un mapa de una escena sin autoridad central, y no es el mapa.
 
@@ -2370,7 +2506,7 @@ Esta página no organiza ninguna de estas sesiones, no cobra por listarlas y no 
 
 Manda el horario, la sala, el precio y dónde lo publicas. Una entrada aquí significa una sola cosa: quien la organiza lo publica y nosotros comprobamos la página. No es un aval.
 
- Publicar una sesión El directorio más amplio (en inglés) 
+ Publicar una sesión El directorio más amplio 
 
 Cita esta página
 
@@ -2562,7 +2698,7 @@ Las sesiones donde circulan levantamientos suelen mantener a una o dos personas 
 
 Antes y después de tu primera visita
 
-Qué pasa de verdad cuando entras — la llegada, el círculo de apertura, los primeros diez minutos de baile, las frases que puedes decir cuando quieres parar y cuándo irte — está en tu primera jam, paso a paso . Qué hacer en las semanas siguientes, incluidas las semanas en que no hay nada, está en seguir practicando (en inglés) .
+Qué pasa de verdad cuando entras — la llegada, el círculo de apertura, los primeros diez minutos de baile, las frases que puedes decir cuando quieres parar y cuándo irte — está en tu primera jam, paso a paso . Qué hacer en las semanas siguientes, incluidas las semanas en que no hay nada, está en seguir practicando .
 
 Preguntas sobre las jams
 
@@ -2595,6 +2731,112 @@ Dinos el horario, la sala y la entrada y la publicamos. Esta página existe para
 Cita esta página
 
 Miami Contact Improv (2026). Jams de Improvisación de Contacto en Miami . miamicontactimprov.com. https://miamicontactimprov.com/es/jams
+
+---
+
+## https://miamicontactimprov.com/es/clases
+
+id="main">
+
+Aprender
+
+Clases, talleres y tu primera jam.
+
+Puedes empezar con la Improvisación de Contacto sin ninguna formación en danza. Una sesión para principiantes te pone a caer con seguridad en una tarde, y el resto es tiempo en la sala.
+
+Respuesta breve
+
+Una clase de Improvisación de Contacto (IC) enseña las habilidades de base: cómo compartir peso sin derrumbarse, cómo salir rodando de una caída, cómo leer el momento de tu pareja y cómo decir no. Las sesiones para principiantes no presuponen formación en danza. La mayoría de la gente asiste a clases unas semanas y después añade una jam semanal, porque la forma se aprende sobre todo bailando y no con instrucción.
+
+Tu primera jam, paso a paso
+
+ Antes. Escribe a quien organiza y di que eres nuevo. Pregunta tres cosas: si está abierta a principiantes, cuánto cuesta la entrada y si hay calentamiento antes del baile abierto. Las tres respuestas deberían ser fáciles.
+
+ La llegada. Llega al principio si puedes, porque el círculo de apertura es donde se fijan las reglas. Cámbiate, deja la bolsa en el borde, llena la botella.
+
+ El calentamiento. Quédate de pie y escucha los pequeños ajustes que hace tu cuerpo para mantenerse erguido. No es un calentamiento para lo de verdad; es lo de verdad a baja amplitud.
+
+ Tu primer baile. Mira a alguien. Si te devuelve la mirada, estáis bailando. Empieza con una mano, un hombro, o simplemente estando cerca. Mantén un punto de contacto. Deja que una de las dos personas dé peso despacio y mira qué hace el suelo.
+
+ El final. Para cuando quieras. Da un paso atrás, asiente con la cabeza, camina hasta el borde. No hace falta explicación y no se espera ninguna, en ninguna de las dos direcciones.
+
+ Después. Probablemente estarás cansado de una forma que no es cansancio deportivo. Bebe agua. Vuelve , y mira qué pasa después de la primera visita.
+
+Qué enseñan de verdad las clases
+
+Una buena serie para principiantes cubre el mismo puñado de cosas, sea cual sea el estilo de quien enseña.
+
+ Peso Dar y recibir peso a través del esqueleto, no agarrando 
+
+ Caídas Salidas rodando, encogerse, aterrizar en el suelo sin manos 
+
+ Contacto Mantener un único punto de contacto deslizante y seguirlo 
+
+ Escuchar Leer la presión y el momento en lugar de mirar 
+
+ Límites Rechazar, pausar, irse y renegociar a mitad del baile 
+
+ Levantamientos Cómo funcionan las estructuras de apoyo y cuándo no intentar uno 
+
+Cómo juzgar a quien enseña
+
+No hay organismo de certificación de la Improvisación de Contacto, así que no puedes comprobar una licencia. Lo que sí puedes comprobar es el comportamiento. Quien enseña debería enunciar su marco de consentimiento en los primeros diez minutos en lugar de darlo por supuesto. Debería demostrar tanto como habla. Debería corregir una técnica insegura de inmediato, incluso en la sala y no en un aparte privado después. No debería exigirte que hagas pareja con una persona concreta, y debería estar cómodo cuando rechazas a alguien.
+
+Una escena sin certificación es una escena donde la reputación es todo el control de calidad. Merece la pena saberlo antes de pagar un intensivo.
+
+Dónde aprenderlo en Miami
+
+Se pudo verificar una clase recurrente de Improvisación de Contacto en Miami-Dade a partir de sus propios listados cuando esta página se comprobó por última vez: Contact Improv — ALL LEVELS en Dance Arts Miami, 250 NE 61st Street, Miami, 33137, los martes de 18:00 a 19:00. Se anuncia como un espacio para trabajar conexión, compartir peso, momento y formación de pareja espontánea, y no hace falta pareja. Como se publica como una serie de varias fechas en Eventbrite y se replica en Meetup, confirma la semana actual allí en lugar de fiarte de esta página.
+
+Más allá de esa clase, las vías realistas hacia la forma en Miami son las jams, campamentos y prácticas adyacentes listadas en otras partes de este sitio. Si prefieres aprender de forma estructurada y no hay ninguna clase cerca de ti, una clase de danza contemporánea o de improvisación en cualquier estudio de Miami te enseñará buena parte de la alfabetización corporal, y las jams te enseñarán el resto.
+
+Después de la primera
+
+Qué hacer en las semanas siguientes a tu primera sesión, incluidas las semanas en que no hay nada, está en la página de seguir practicando . Un recorrido más completo de la noche en sí — la llegada, el círculo de apertura, los primeros diez minutos de baile y las frases que puedes decir cuando quieres parar — está en tu primera jam, paso a paso .
+
+Preguntas que la gente hace antes de su primera sesión
+
+¿Qué me pongo para una jam de Improvisación de Contacto?
+
+Ropa holgada que cubra la espalda, los hombros y las rodillas, que son los puntos de contacto habituales. Evita cremalleras, hebillas, costuras duras y cualquier textura áspera. Pies descalzos o calcetines blandos antideslizantes. Lleva agua.
+
+¿Tengo que bailar con alguien?
+
+No. Sentarse en el borde es una parte normal de una jam, y bailar solo forma parte de la forma. Puedes rechazar cualquier invitación, en cualquier momento, sin dar motivos, y puedes terminar un baile a mitad de movimiento.
+
+¿Tengo que hablar con la gente?
+
+No mucho. Las jams suelen abrir con un círculo breve donde quien organiza enuncia el protocolo y cualquiera puede añadir un límite o un aviso. Después, casi toda la comunicación es física.
+
+¿Cuánto dura una jam?
+
+Normalmente de dos a tres horas, a menudo con un calentamiento o una clase corta primero. La gente llega y se va a lo largo de la sesión. Llegar después del círculo de apertura suele estar bien; irse antes siempre está bien.
+
+¿Es caro?
+
+El precio lo fija quien lleva la sesión. Las jams comunitarias suelen ser gratuitas, a donación, o una entrada pequeña que cubre el alquiler de la sala. Las tarifas de clases y talleres varían según quien enseña y las fija cada persona.
+
+¿Y si no estoy en forma ni soy flexible?
+
+Para empezar no hace falta ninguna de las dos cosas. La forma se basa en la estructura y la gravedad y no en la fuerza ni el rango de movimiento, y las sesiones para principiantes empiezan de pie y rodando, no con levantamientos.
+
+¿Puedo llevar a mi hijo o hija?
+
+Pregunta a quien organiza. Algunas jams tienen sesiones familiares o para todas las edades; la mayoría de las jams abiertas son espacios de adultos. No hay una regla fija, así que el listado o quien organiza tienen la última palabra.
+
+Tengo una lesión de espalda o de articulaciones. ¿Puedo ir?
+
+Muchas personas con lesiones y condiciones crónicas practican IC, a veces con adaptaciones acordadas con sus parejas. Habla con quien organiza antes de tu primera sesión y con tu pareja antes de cada baile. Este sitio no es consejo médico.
+
+Encuentra algo esta semana
+
+Empieza por una jam, o por una clase para principiantes si prefieres que te enseñen primero. Las dos son puertas de entrada legítimas.
+
+ Jams Profesorado y estudios 
+
+Cita esta página
+
+Miami Contact Improv (2026). Clases de Improvisación de Contacto y primeras jams . miamicontactimprov.com. https://miamicontactimprov.com/es/clases
 
 ---
 
@@ -2798,17 +3040,696 @@ La modalidad de cada entrada de arriba es la que quien organiza declara sobre su
 
 Preguntas prácticas
 
-El coste, ir solo, la forma física, mirar en lugar de bailar y el camino para principiantes están respondidos en una línea cada uno en la página de preguntas . Cómo suele desarrollarse una sesión completa está en jams , y qué enseña de verdad una clase para principiantes está en clases (en inglés) . Si nunca has leído nada sobre la forma, empieza por qué es la Improvisación de Contacto .
+El coste, ir solo, la forma física, mirar en lugar de bailar y el camino para principiantes están respondidos en una línea cada uno en la página de preguntas . Cómo suele desarrollarse una sesión completa está en jams , y qué enseña de verdad una clase para principiantes está en clases . Si nunca has leído nada sobre la forma, empieza por qué es la Improvisación de Contacto .
 
 ¿Listo para ir?
 
 Cada sesión de arriba enlaza con la página de quien la organiza, que es la única fuente que conoce el horario de esta semana.
 
- Jams en Miami Clases y talleres (en inglés) 
+ Jams en Miami Clases y talleres 
 
 Cita esta página
 
 Miami Contact Improv (2026). Tu primera jam de improvisación de contacto, paso a paso . miamicontactimprov.com. https://miamicontactimprov.com/es/tu-primera-jam
+
+---
+
+## https://miamicontactimprov.com/es/seguir-practicando
+
+id="main">
+
+Después de la primera vez
+
+Cómo seguir practicando la improvisación de contacto en Miami.
+
+La parte que viene después de tu primera visita: qué hacer entre jams, por qué la segunda se siente distinta y qué hacer en las semanas en que no hay nada.
+
+Respuesta breve
+
+Sigues practicando volviendo. La Improvisación de Contacto se aprende en la sala y no entre sesiones, así que la respuesta honesta es una jam o una clase semanal, más un poco de práctica en solitario para las semanas en que no hay nada. Esta página cubre la parte posterior a tu primera visita, incluidas las semanas en que la respuesta es que no hay nada.
+
+Practicar por tu cuenta
+
+La small dance es la versión casera de toda la forma: quédate de pie, con la mirada suave, y sigue los microajustes que hace tu cuerpo para mantenerse erguido. Dos minutos bastan para empezar.
+
+A partir de ahí, trabajo de suelo y práctica de caídas. Rodar por el suelo sin empujarte con las manos, y aprender a recibir el suelo rodando en lugar de frenarte. No tiene nada de glamuroso, y es de donde viene en realidad casi toda la seguridad de una jam. Seguridad y consentimiento cubre la mecánica con más detalle.
+
+Practicar con pareja
+
+La forma la practican dos personas, así que en algún momento necesitarás una. El camino es la sala y no una aplicación: baila con gente en una jam y después pregúntale sin más si querría practicar fuera de ella. Mucha gente quiere una pareja de práctica y nunca lo pide.
+
+Acordad dos cosas antes de empezar: en qué parte del cuerpo estáis trabajando y que cualquiera de los dos puede parar en cualquier momento. Veinte minutos de compartir peso en un suelo sin música son una práctica completa.
+
+La segunda visita
+
+La segunda visita es más fácil y más extraña que la primera. Más fácil, porque ya conoces la forma de la noche y dónde está el agua. Más extraña, porque ahora tienes una memoria corporal de cómo se siente un baile, y el hueco entre eso y el principio del siguiente se nota.
+
+La mayoría de la gente que deja la IC la deja entre la primera y la tercera visita. Volver dos veces suele bastar para que se convierta en un hábito.
+
+Si esta semana no hay nada
+
+Miami no tiene un calendario central de IC, así que "¿hay jam esta noche?" no tiene una respuesta fija, y este sitio no adivina ni publica una fecha que no ha comprobado. Los lugares que pueden responder son quienes organizan, cuyas propias páginas y mensajes directos son la única fuente con autoridad, y la página de jams , donde cada entrada muestra la fecha en que se comprobó por última vez.
+
+El mapa mundial CI World Jam Map mantiene una página de Florida con los listados de la propia comunidad, y es honesta sobre lo incompleta que está. El directorio de aquí lista los estudios, quien organiza y las prácticas adyacentes que están vigentes y contestan a un mensaje.
+
+Formar parte de la sala
+
+Una escena sin institución la mantiene quien llega temprano. Tres cosas convierten la asistencia en pertenencia: llega al principio, porque el círculo de apertura es donde se fijan las reglas de la sala y donde es más fácil incluir a quien viene por primera vez. Ofrécete a ayudar a montar o a recoger, porque quienes hacen eso son quienes saben qué pasa el mes que viene. Y cuando estés listo, organiza.
+
+La mayoría de las jams del mundo existen porque una persona reservó una sala, así que empezar una en Miami es el mecanismo real y no un premio de consolación. Si sabes dónde se baila este mes, díselo a este sitio y entra en el mapa.
+
+El ritmo de un año en Miami
+
+La práctica aquí viene por capas. Una clase o una jam semanal es el suelo. Los talleres están por encima. Una vez al año, en febrero, Love Burn en Virginia Key trae a Camp Contact, que lleva la improvisación de contacto, el acro yoga, la danza extática y el authentic relating como su programa.
+
+Ese campamento es la mayor concentración de improvisación de contacto que ocurre en Miami en un año, y es un festival y no una clase. Las fechas se mueven, así que lee la página de quien lo organiza; esta página no publica ninguna fecha.
+
+Qué se está practicando en Miami-Dade y Broward
+
+6 entradas. Cada una nombra a quien la organiza, dónde es, cuándo es, cuánto cuesta y qué tipo de práctica es en realidad, y cada una lleva la fecha en que se abrió y se leyó su fuente. Aparecen en el orden en que se verificaron. Esta página no clasifica nada: ninguna entrada está pagada y ninguna se recomienda por encima de otra.
+
+Los datos de cada sesión (nombre, modalidad, lugar, horario y precio) se reproducen tal como los publica quien la organiza, en su idioma original: traducirlos sería inventar la cita. Lo que sí está en español son las etiquetas y la explicación.
+
+Contact Improv — ALL LEVELS
+
+ Organiza Esther Frances & Dmitry Krasnyanskiy, hosted at Dance Arts Miami 
+
+ Modalidad Contact Improvisation 
+
+ Dónde Dance Arts Miami, 250 NE 61st Street, Miami, FL 33137 (Miami) 
+
+ Cuándo Weekly, Tuesdays 6:00–7:00 PM EDT; the Meetup listing states the recurrence runs to 28 February 2027 
+
+ Precio $22 for a first class on Eventbrite, $30 on Meetup and SweatPals 
+
+The most established recurring Contact Improvisation class found in Miami-Dade. Published on Eventbrite by Esther Frances & Dmitry Krasnyanskiy and hosted at Dance Arts Miami. Advertised as exploring connection, weight sharing, momentum and spontaneous partnering, with no partner needed, and mirrored on Meetup and SweatPals. The three listings disagree with each other, so read the one you are actually booking through: a first class is $22 on Eventbrite and $30 on Meetup and SweatPals, and refunds run to 7 days before the event on Eventbrite while SweatPals states none. Dance Arts Miami's own schedule page carried no contact improvisation entry when it was opened, so this class is verified through its Eventbrite, Meetup and SweatPals listings rather than the studio's own site, and the current week is always worth confirming there.
+
+Leído en https://www.eventbrite.com/e/contact-improv-all-levels-tickets-1999219825315 
+
+ Comprobado el 2026-09-14 
+
+Kama Flight — Flight Workshop
+
+ Organiza Kama Flight 
+
+ Modalidad Contact-adjacent (acro yoga, Thai massage, Contact Improvisation) 
+
+ Dónde Skanda Yoga, 1800 SW 1st Ave #102, Miami, FL 33129 (Miami) 
+
+ Cuándo October 18, 2026 and November 15, 2026, 3:00–4:30 PM on both dates 
+
+ Precio $50, sold as a partner pair (admission for two) 
+
+Described by the organisers as a fusion of acro yoga, Thai massage and Contact Improvisation, and as a new partner wellness modality built on the neuroscience of play and connection. Proceeds fund the Kama Flight Foundation, a registered 501(c)(3) nonprofit. Booked in pairs with friends welcome, which makes it a gentler first step than an open jam if physical contact with strangers is the thing giving you pause. One thing we could not resolve: both the October and the November product pages render an 'Add to cart' control and also the words 'Sold Out', so treat availability as unclear and ask info@kamaflight.com before planning around either date.
+
+Leído en https://kamaflight.com/products/flight-workshop-miami-fl-october-18-2026 
+
+ Comprobado el 2026-09-14 
+
+Kama Flight — jams
+
+ Organiza Kama Flight 
+
+ Modalidad Contact-adjacent (acro yoga, Thai massage, Contact Improvisation) 
+
+ Dónde Private residence, 2345 N Bay Rd, Miami Beach, FL 33140 (Miami Beach) 
+
+ Cuándo Most recent published Miami jam: 8 September 2026, 6:30–9:00 PM. No later Miami date was published when we checked. 
+
+ Precio Donation, with $10, $20 and $30 offered as suggested amounts, booked in advance 
+
+Recurring donation-based jams at a private residence, which has to be booked in advance and is why the exact address is confirmed to ticket holders. The organiser's own jams collection listed exactly one Miami jam when it was opened, dated 8 September 2026 and therefore already past, with no next Miami date published beside it. That is why this entry carries its date instead of being presented as a running session: check the organiser's page for the next one rather than trusting any list, including this one.
+
+Leído en https://kamaflight.com/collections/jams 
+
+ Comprobado el 2026-09-14 
+
+Camp Contact at Love Burn
+
+ Organiza Camp Contact 
+
+ Modalidad Contact Improvisation (as a core camp offering) 
+
+ Dónde Historic Virginia Key Beach Park, 4020 Virginia Beach Drive, Miami, FL 33149 (Miami) 
+
+ Cuándo February, annually 
+
+ Precio Festival ticket 
+
+Love Burn is Miami's Burning Man regional, held on Virginia Key, and Camp Contact runs contact improvisation, acro yoga, ecstatic dance, tai chi, massage and authentic relating as its programme. The camp's own page states that the camp loves 'Contact Improvisation Dance, Acro Yoga, Ecstatic Dance, Tai Chi, Massage, Hugs, and Authentic Relating'. This is the largest concentration of contact improvisation that happens in Miami in a year, and it is a festival rather than a class. The page prints the dates 5-8 February without printing the year beside them, while its own countdown points at early February 2027, so read the page directly rather than treating a month and a day from this site as a confirmed booking date.
+
+Leído en https://loveburn.campcontact.org/ 
+
+ Comprobado el 2026-09-13 
+
+Ecstatic Dance Miami — Full Moon Immersion
+
+ Organiza Ecstatic Dance Miami 
+
+ Modalidad Contact-adjacent (ecstatic dance, with a Contact Improv component the listing advertises). Not a CI jam. 
+
+ Dónde Exact venue not published by the organiser. The listing names Hollywood Lakes, Hollywood, FL, and sends the location to ticket holders on the day. (Hollywood, Broward County) 
+
+ Cuándo Saturday 26 September 2026, 7:00–11:59 PM EDT. Monthly, on the full moon. 
+
+ Precio Not published on the pages we read; advance tickets only 
+
+The organiser's own listing describes the evening as a monthly embodiment and healing experience through Contact Improv, ecstatic dance, tantra, aquatic healing work and sound healing, so contact improvisation is one part of a longer programme rather than the whole of it. The organiser states plainly that there are no tickets at the door and no drop-ins. Their site has been running since 2014 and gathers every full moon. The trade-off of carrying this entry is the one thing we cannot verify for you: the venue is deliberately withheld until a ticket is bought, so the county is Broward and the city is Hollywood, and nothing more specific is published for us to check.
+
+Leído en https://www.eventbrite.com/e/ecstatic-dance-miami-september-26th-full-moon-immersion-tickets-1999291383347 
+
+ Comprobado el 2026-09-14 
+
+Ecstatic Dance Fort Lauderdale
+
+ Organiza Ecstatic Dance Fort Lauderdale 
+
+ Modalidad Contact-adjacent (ecstatic dance). Not Contact Improvisation, and the listing makes no CI claim. 
+
+ Dónde Le Sound Temple, 2501 NE 30th St, Fort Lauderdale, FL 33306 (Fort Lauderdale, Broward County) 
+
+ Cuándo Monthly, first Saturday of the month, 7:30–9:30 PM with doors at 7:00 PM. The only dated gathering the listing names is its inaugural, 5 September 2026. 
+
+ Precio $33 
+
+An evening of cacao, breathwork, ecstatic dance and a closing sound bath, carried on ecstaticdance.org, the global conscious-dance directory, in the organiser's own words. It is listed here because it is the clearest recurring movement gathering in Broward County that could be verified at all, and because no contact improvisation jam in Broward could be found to list instead. It is not contact improvisation, and this site will not imply otherwise. The venue's own events page publishes sound baths and breathwork but not this dance, so the directory listing above is the source to check.
+
+Leído en https://ecstaticdance.org/dance/ecstatic-dance-ft-lauderdale/ 
+
+ Comprobado el 2026-09-14 
+
+La modalidad de cada entrada de arriba es la que quien organiza declara sobre su propia sesión, y cada entrada lleva la fecha en que se abrió y se leyó su fuente: 14 de septiembre de 2026 . Esta página no clasifica nada. Las entradas aparecen en el orden en que se verificaron, ninguna está pagada y este sitio no recomienda ninguna por encima de otra.
+
+Qué no hará esta página
+
+No te va a dar un calendario. Una fecha que no se ha verificado contra la página de quien organiza no aparece en este sitio, porque un listado desactualizado es peor que ningún listado. Una clase enseña las habilidades que una jam da por supuestas, y clases y talleres cubre cómo juzgar una.
+
+Dónde está de verdad el baile de esta semana
+
+Las páginas de quienes organizan son la única fuente actual, y cada entrada de arriba enlaza con una.
+
+ Jams en Miami Profesorado y organizadores 
+
+Cita esta página
+
+Miami Contact Improv (2026). Cómo seguir practicando la Improvisación de Contacto en Miami . miamicontactimprov.com. https://miamicontactimprov.com/es/seguir-practicando
+
+---
+
+## https://miamicontactimprov.com/es/videos
+
+id="main">
+
+Sala de vídeo
+
+Nuestros propios filmes se están haciendo. Hasta entonces, esta sala es dar crédito a quien lo merece.
+
+Esta jam todavía no ha rodado un vídeo, así que nada de esta página es nuestro. Cada filme de abajo lo hizo el canal que se nombra en él, se reproduce en el reproductor de ese canal y sigue siendo el trabajo de ese canal. Lo que estamos rodando para Miami aparece como lo que es: en producción, sin duración y sin fecha hasta que exista un archivo.
+
+Respuesta breve
+
+Cada filme de esta página lo hizo otra persona y se le acredita por su nombre: 22 piezas, cada una incrustada desde la plataforma que la aloja. Ninguna se rodó en Miami, y ninguna es de este sitio. Los filmes de la propia jam están en producción, listados aquí como piezas previstas; cada una sube al principio de esta página como nuestra solo cuando el archivo terminado se aloje aquí.
+
+Qué estamos filmando
+
+Ninguno de los filmes de abajo existe todavía. Esta jam no ha rodado ningún vídeo, así que hoy no hay ningún filme nuestro que mostrarte en esta página, y esta página no va a tomar prestado el crédito haciendo pasar el filme de otra persona por nuestro. Estos están en producción, en este orden:
+
+ What actually happens at a contact improv jam — rodado en una jam en Miami, que es el único filme de contact improv rodado en Miami que va a existir en cualquier parte la página de jams 
+
+ Contact improvisation for beginners: the first 20 minutes — el calentamiento y los primeros ejercicios que recibe de verdad alguien que empieza el recorrido de la primera jam 
+
+ Rolling point of contact, weight sharing, floorwork — la técnica que hay debajo del baile, mostrada lo bastante despacio para copiarla la definición de compartir peso 
+
+ Is contact improv sexual? — la pregunta que frena a la gente para asistir, respondida sin rodeos seguridad y consentimiento 
+
+ The small dance — la práctica de pie, ligada a la definición que este sitio ya tiene la definición del glosario 
+
+No se da duración ni fecha de rodaje para ninguno de ellos, porque ninguna de las dos se conoce aún: una duración se lee del montaje terminado, y una fecha de rodaje es un día que ya ha ocurrido. Las dos aparecen en esta página solo cuando aparece el archivo, y cuando el archivo existe la pieza sube al principio de esta página como nuestra.
+
+Ver como referencia
+
+Todo lo de esta sección es un filme de otra persona. Estas 22 piezas las hicieron y publicaron los canales que se nombran en cada una, se reproducen en los reproductores de esos canales en las plataformas que las alojan, y este sitio no posee ninguna ni rodó ninguna. Enlazamos a ellas porque son los registros que merece la pena ver, y el crédito se queda en quien las hizo.
+
+También son, en el momento de escribir esto, casi todo lo que existe: la oferta de filmes de Improvisación de Contacto es escasa y en gran parte antigua, y ninguno se rodó en Miami. Ese hueco es la razón de que los filmes en producción de arriba se estén haciendo aquí.
+
+Empieza por aquí
+
+Si nunca has visto esta danza, mira estos tres primero.
+
+ Contact Improvisation: a couple of basic exercises de OKI · 9:37 · youtube 
+La demostración más llana del conjunto. Dos personas trabajando el compartir peso de base, útil la semana antes de tu primera sesión.
+
+ Contact Improvisation 1972 de klubki · 9:31 · youtube 
+Material de archivo del año fundacional, subido décadas después. Míralo por lo poco que se parece a una actuación y lo mucho que se parece a estar de pie hasta que pasa algo.
+
+ What happens in a Contact Improvisation jam? de ci rollingpoint · 3:18 · youtube 
+Parte de una serie documental, y responde a la pregunta de su propio título directamente.
+
+Dúos
+
+Trabajo sostenido de dos personas, desde la casi quietud hasta volar del todo.
+
+ Embraced de BeingMotion — Irene Sposetti · 4:00 · youtube 
+Un dúo único y continuo, rodado como cine y no como documentación. Sin entrevista, sin rótulos, sin hablar. La imagen más limpia que hay en YouTube de cómo se siente el contacto sostenido desde dentro.
+
+ Contact Improvisation: moments of practice de BeingMotion — Irene Sposetti · 5:51 · youtube 
+Irene Sposetti y Johan Nilsson, cine directo, luz natural, planos largos. Lento, sin lucimiento, estructuralmente claro.
+
+ the play of weight de Neige Christenson · 6:17 · youtube 
+Cámara baja, cuerpos rodando, casi ningún acontecimiento. Sigue siendo uno de los registros más citados de la forma como conversación física y no como exhibición.
+
+ Contact Improvisation: the art of jamming de Sasha Dodo · 3:42 · youtube 
+Sasha Dodo y Dolores Dewhurst Marks. Etalonado, encuadre cerrado, levantamientos fuertes y contrapeso, sin contenido hablado.
+
+ Blake Nellis and Brando at Earthdance de Aaron Brandes (Brando) · 6:29 · youtube 
+Rodado en Earthdance, el centro de IC de larga trayectoria en Massachusetts. Cámara en mano, sin prisa, claramente una buena sesión y no una actuación.
+
+ Lifting: contact and improvisation de Xandy Liberato · 6:30 · youtube 
+Material técnico cercano sobre la mecánica del levantamiento y el contrapeso. Mira este si te han dicho que eres demasiado pesado o demasiado ligero para volar.
+
+ Shaken de Karl Frost · 9:31 · youtube 
+Trabajo de actuación de Body Research. Guiado por el movimiento y experimental, no instructivo.
+
+ Elske Seidel and Joerg Hassmann: Contact Improvisation duet de Katelyn Stiles · 7:11 · vimeo 
+Documentación completa de un dúo por una pareja berlinesa conocida. Encuadre limpio, guiado por la música, sin narración. En Vimeo la incrustación está abierta, cosa que no siempre ocurre con el cine de danza.
+
+ Silkies de Dan Farberoff · 4:38 · vimeo 
+Una película de danza rodada, no documentación. Pictórica, hecha para una pantalla, merece verse por cómo se ve el trabajo de contacto cuando se compone para cámara.
+
+Festivales y jams
+
+Cómo se ve un encuentro de bailarines de IC cuando la sala se llena.
+
+ Poland Contact Improvisation Festival: Warsaw Flow 2012, jam de szimi82 · 3:54 · youtube 
+Una jam de festival filmada mientras se llena. Varios dúos, música ambiental, sin narración. Esta es la forma que toma una sala llena.
+
+ Contact Improvisation, Goa Contact Festival, India de Forgotten Land · 31:44 · youtube 
+Treinta y un minutos de playa y estudio en un festival tropical grande. Lo más parecido que hay aquí a lo que podría ser una sesión al aire libre en el sur de Florida, a gran escala.
+
+ Opening jam and guided warm-up with Steve Batts de virginia negru · 11:48 · youtube 
+Una apertura completa: el calentamiento que alguien que viene por primera vez debería ver antes de asistir a una jam, y después la jam misma.
+
+ Teachers' performance, Kyiv Contact Improvisation Festival de Yevhen Titov · 50:03 · youtube 
+Profesorado veterano actuando para un público de festival. Muestra el extremo performativo de lo que la práctica puede producir cuando quien baila tiene experiencia y la lleva al límite.
+
+ Contact Improvisation at Summer Dance de Art of Contact · 1:01 · youtube 
+Un minuto, al aire libre, sin necesidad de contexto. El mejor clip corto de aquí para mandárselo a alguien que nunca ha visto la forma y solo tiene un momento.
+
+ CIPD de Andrew Wass · 9:58 · vimeo 
+Documentación de una actuación, una de las pocas subidas de actuación de IC con producción más alta que sigue siendo pública y abiertamente incrustable en Vimeo.
+
+Documental y los orígenes
+
+Las personas que hicieron la forma, con sus propias palabras.
+
+ The poetics of touch: Nancy Stark Smith, a pathway into contact improvisation de visioniarborescenti · 24:41 · youtube 
+Un documental sobre Stark Smith y sobre el tacto como medio. Incluye material de entrevista además de baile, así que es para verlo con atención y no de fondo.
+
+ Nancy Stark Smith and Karen Nelson (1990) de whitefiredancer · 16:37 · youtube 
+Material de archivo de dos de las primeras practicantes, subido en 2020. Mudo, de archivo, y la mejor prueba de cómo se veía la forma antes de tener un nombre que la gente reconociera.
+
+ Steve Paxton de contactimprovdoc · 6:39 · youtube 
+Clip de archivo del creador de la forma, del canal contactimprovdoc. Baja resolución y silencioso, y la fuente primaria de por qué existe todo esto.
+
+ Life lessons learned through Contact Improvisation de TEDx Talks · 15:13 · youtube 
+Gregory Catellier y Kristin O'Neal sobre lo que la práctica enseña fuera de la sala. La mejor respuesta única a un familiar escéptico que pregunta para qué sirve esto.
+
+Quién hizo los filmes de esta sección
+
+Cada filme de arriba pertenece al canal que lo hizo y se reproduce en el reproductor de ese canal, en la plataforma que lo aloja. Ninguno es trabajo de este sitio y ninguno se presenta como trabajo de este sitio. Aquí no se descarga, ni se recorta, ni se vuelve a alojar nada. Si eres propietario de alguno y prefieres que no esté incrustado, dilo y baja el mismo día.
+
+ Aaron Brandes (Brando) — Blake Nellis and Brando at Earthdance 
+
+ Andrew Wass — CIPD 
+
+ Art of Contact — Contact Improvisation at Summer Dance 
+
+ BeingMotion — Irene Sposetti — Embraced , Contact Improvisation: moments of practice 
+
+ Dan Farberoff — Silkies 
+
+ Forgotten Land — Contact Improvisation, Goa Contact Festival, India 
+
+ Karl Frost — Shaken 
+
+ Katelyn Stiles — Elske Seidel and Joerg Hassmann: Contact Improvisation duet 
+
+ Neige Christenson — the play of weight 
+
+ OKI — Contact Improvisation: a couple of basic exercises 
+
+ Sasha Dodo — Contact Improvisation: the art of jamming 
+
+ TEDx Talks — Life lessons learned through Contact Improvisation 
+
+ Xandy Liberato — Lifting: contact and improvisation 
+
+ Yevhen Titov — Teachers' performance, Kyiv Contact Improvisation Festival 
+
+ ci rollingpoint — What happens in a Contact Improvisation jam? 
+
+ contactimprovdoc — Steve Paxton 
+
+ klubki — Contact Improvisation 1972 
+
+ szimi82 — Poland Contact Improvisation Festival: Warsaw Flow 2012, jam 
+
+ virginia negru — Opening jam and guided warm-up with Steve Batts 
+
+ visioniarborescenti — The poetics of touch: Nancy Stark Smith, a pathway into contact improvisation 
+
+ whitefiredancer — Nancy Stark Smith and Karen Nelson (1990) 
+
+Ya has visto bastante
+
+Nada de esta página te va a enseñar lo que te enseñan dos minutos en un suelo con otra persona.
+
+ Jams en Miami Recorrido de la primera jam 
+
+Cita esta página
+
+Miami Contact Improv (2026). Sala de vídeo de Improvisación de Contacto . miamicontactimprov.com. https://miamicontactimprov.com/es/videos
+
+---
+
+## https://miamicontactimprov.com/es/directorio
+
+id="main">
+
+Directorio
+
+A quién preguntar, y dónde continúa el mapa.
+
+Primero quien organiza y los estudios locales, después los recursos internacionales que sostienen los listados, los archivos y los festivales de la forma.
+
+Respuesta breve
+
+La Improvisación de Contacto (IC) no tiene un directorio central porque no tiene un organismo central. Los listados locales los guardan quienes organizan. Lo más parecido a un índice global es el CI World Jam Map en contactimprov.com, que lista sesiones por país y estado, incluida una página de Florida que cubre Miami, Sarasota, Gainesville y Jacksonville.
+
+Recursos internacionales
+
+Estos son los sitios que de verdad sostienen los listados, los archivos y los encuentros de la forma. Cada uno se abrió y se comprobó cuando se añadió aquí.
+
+ Contact Improvisation World Resource 
+El centro internacional de la forma, en marcha desde los años noventa: un mapa mundial de jams, un calendario de eventos, un directorio de profesorado, listados de miembros y un índice de enlaces.
+
+ CI World Jam Map: Florida 
+El listado de Florida de la propia comunidad. Es lo más parecido a un directorio de jams del sur de Florida que existe, y lo mantiene quien manda correcciones.
+
+ CI Global Calendar 
+Un calendario compartido y multilingüe de clases, jams, talleres y festivales de IC en todo el mundo, publicado por quienes organizan y enseñan. El mejor lugar único donde buscar algo que ocurra en cualquier parte.
+
+ Contact Quarterly 
+La revista que nació del boletín de 1975 y el archivo escrito principal de la forma durante cuatro décadas y media.
+
+ CQ CI Contacts List 
+El directorio de referencia de Contact Quarterly para localizar clases, jams y practicantes de IC, organizado por país y estado de Estados Unidos.
+
+ Earthdance 
+Un centro de movimiento e improvisación de larga trayectoria en Plainfield, Massachusetts, que acoge talleres, residencias y jams.
+
+ Touch&Play Global 
+Retiros, talleres y aprendizaje relacional construidos alrededor de la práctica del contacto y del consentimiento.
+
+ Contact Improvisation Dance Canada 
+Un recurso y sitio de listados nacional de IC, útil como modelo de cómo se organizan y se publican las jams de un país.
+
+ Contact improvisation (entrada de enciclopedia) 
+Un punto de partida para las definiciones, el linaje y las influencias de la forma, con referencias.
+
+Los datos de cada sesión (nombre, modalidad, lugar, horario y precio) se reproducen tal como los publica quien la organiza, en su idioma original: traducirlos sería inventar la cita. Lo que sí está en español son las etiquetas y la explicación.
+
+Profesorado
+
+No existe ningún registro de profesorado de Improvisación de Contacto, en ningún sitio, porque la forma nunca se registró como marca ni se certificó. Fue una decisión deliberada en 1975 y este sitio no va a inventar la autoridad que los propios fundadores de la forma rechazaron.
+
+Así que la posición honesta sobre Miami: no se pudo confirmar ningún profesor o profesora de Improvisación de Contacto con base en Miami a partir de su propia información publicada en el momento de escribir esto. Aparecen nombres individuales en directorios de miembros de IC heredados de alrededor de 2010 y en publicaciones de redes sociales, y ninguno de ellos es lo bastante actual para publicarlo. Quien sabe de verdad son las organizaciones de abajo, y la vía más rápida es preguntar a la que organiza la clase a la que estás pensando ir.
+
+Si enseñas aquí, mándanos tu página . Una entrada de profesorado en este sitio significa una sola cosa: esta persona publica qué enseña y dónde. No es un aval, y no puede serlo, en una forma sin evaluador.
+
+Estudios, compañías y organizaciones
+
+Cada una de estas se abrió y se comprobó. Donde una organización es adyacente al contacto y no de improvisación de contacto, la entrada lo dice. Los nombres, los tipos de organización y las notas se reproducen tal como se publicaron en la fuente.
+
+ Karen Peterson Dancers · Physically integrated dance company
+
+Miami
+
+A Miami company working with dancers with and without disabilities, running the Forward Motion Dance Festival and residencies across Miami-Dade schools. Its studio work has historically been connected to contact practice in the city, and its founder's name is the one attached to the Miami jam still listed on the CI World Jam Map. The company itself is active and current; the jam listing on the world map is not dated, so this site does not present it as running.
+
+Comprobado el 2026-09-13
+
+ Dance Arts Miami · Dance studio (ballet, modern, social, adult classes)
+
+Miami
+
+Hosts the weekly Contact Improv — ALL LEVELS class and runs a broad adult programme. Its own schedule page did not surface a dedicated contact improvisation entry when checked, so the class listing is verified through Eventbrite and Meetup rather than here.
+
+Comprobado el 2026-09-13
+
+ Kama Flight · Movement studio and 501(c)(3) foundation
+
+Miami and Miami Beach
+
+Acro yoga, Thai massage and Contact Improvisation. Runs workshops, jams and teacher trainings, and publishes its own code of conduct.
+
+Comprobado el 2026-09-13
+
+ Ecstatic Dance Miami · Conscious dance community (contact-adjacent)
+
+Miami
+
+Running since 2014, with gatherings around the full moon. Some events sequence yoga, contact improvisation and ecstatic dance in one evening, so it is a realistic way into the wider Miami movement community even though the dancing is not CI.
+
+Comprobado el 2026-09-13
+
+ EXPANSION Ecstatic Dance · Conscious dance series (contact-adjacent)
+
+Miami (Edgewater, Little Haiti, Ironside)
+
+A recurring series with rotating venues including Boho Miami and Lion's Den. Some editions include partner embodiment work.
+
+Comprobado el 2026-09-13
+
+ Love Burn · Burning Man regional festival
+
+Miami
+
+Miami's regional burn, held annually on Virginia Key. The place contact improvisation reaches its largest Miami audience, through Camp Contact.
+
+Comprobado el 2026-09-13
+
+Práctica adyacente, etiquetada con honestidad
+
+Disciplinas distintas con comunidades muy solapadas. Aparecen porque alguien nuevo que busca este tipo de movimiento en Miami va a encontrarse con estas personas de todas formas, y porque fingir lo contrario sería el tipo de directorio que te hace perder la tarde. Otra vez: práctica distinta, comunidad vecina.
+
+ Nathan Shultz · 5Rhythms (teacher in training), breathwork, yoga
+
+Miami Beach
+
+Teaches at Hanu Wellness, 736 6th Street, Miami Beach. 5Rhythms is conscious movement, not contact improvisation. Listed here because the two communities overlap heavily in practice and in people.
+
+Comprobado el 2026-09-13
+
+ Liliana De La Vega · 5Rhythms (certified, Waves)
+
+Miami
+
+Certified 5Rhythms teacher, dancing since 2018 and teaching since 2024. Works in Spanish and English. Again: a different practice, adjacent community.
+
+Comprobado el 2026-09-13
+
+Preguntas sobre el directorio
+
+¿Quién enseña improvisación de contacto en Miami?
+
+La improvisación de contacto no tiene organismo de certificación, así que no hay registro que consultar. Lo que se pudo verificar cuando esta página se comprobó por última vez es una clase recurrente de todos los niveles: Contact Improv — ALL LEVELS en Dance Arts Miami, martes de 18:00 a 19:00. Todo lo demás pasa por organizaciones que responden a un mensaje directo, listadas en el directorio .
+
+¿Cómo aparezco aquí?
+
+Manda el nombre, la ciudad, qué enseñas u organizas y un enlace a tu propia página. No hay cuota ni membresía. Las entradas se comprueban contra tu propia información publicada antes de publicarse, y cada entrada muestra la fecha en que se comprobó.
+
+¿Por qué hay danza extática en un sitio de improvisación de contacto?
+
+Porque son las prácticas adyacentes con las que se encontrará de verdad alguien nuevo en este tipo de movimiento en Miami, y porque cada entrada está etiquetada con lo que es. Un directorio que las mezclara en silencio sería peor que uno que lo dice.
+
+No tengo página propia, ¿sirve igual?
+
+Una entrada aquí significa una cosa: que publicas lo que enseñas o lo que organizas en algún sitio que podemos abrir. Si no tienes página, un listado en Eventbrite o Meetup vale, y el enlace que pondremos será ese.
+
+Añádete
+
+Sin cuota, sin membresía, sin comité. Si enseñas, acoges u organizas en el sur de Florida, esta página existe para señalar hacia ti.
+
+ Publicar una entrada La escena de Miami Seguir practicando 
+
+Cita esta página
+
+Miami Contact Improv (2026). Directorio de Improvisación de Contacto . miamicontactimprov.com. https://miamicontactimprov.com/es/directorio
+
+---
+
+## https://miamicontactimprov.com/es/glosario
+
+id="main">
+
+Vocabulario
+
+Las palabras que la gente usa en la sala.
+
+La Improvisación de Contacto tiene su propio lenguaje de trabajo. Nada de él hace falta para bailar, pero conocerlo hace que la primera jam sea mucho menos opaca.
+
+La versión corta
+
+El vocabulario básico de la Improvisación de Contacto (IC) es: contacto (el punto donde dos cuerpos se tocan), compartir peso (dar y recibir el peso del cuerpo), la small dance (la práctica de pie con la que abre una sesión, siguiendo los microajustes del cuerpo en lugar de quedarse inmóvil), un score (una restricción enunciada), la jam (una sesión abierta y sin guía) y el spotting (estar listo para frenar una caída). El original inglés de cada término se nombra cuando es la palabra que la gente busca.
+
+Términos que se usan en una jam
+
+El vocabulario de trabajo de la Improvisación de Contacto, en una frase cada uno. Nada de él hace falta para bailar; conocerlo hace que la primera jam sea mucho menos opaca.
+
+Improvisación de Contacto (IC)
+
+Una forma de danza en pareja en la que dos o más personas improvisan alrededor de puntos de contacto físico cambiantes, compartiendo peso y siguiendo la gravedad, el momento y el impulso.
+
+Jam
+
+Una sesión abierta y sin guía donde cualquiera que esté presente puede bailar. Sin profesor, poca o ninguna música, y un borde donde sentarse a mirar.
+
+Score
+
+Una restricción enunciada que da forma a una improvisación, como bailar solo por debajo de las caderas o seguir el punto de contacto sin interrumpirlo.
+
+Small dance
+
+La small dance es la práctica de pie con la que abre una sesión: te quedas quieto y sigues los microajustes que hace el cuerpo para mantenerse erguido, en lugar de intentar quedarte inmóvil.
+
+Compartir peso
+
+Dar deliberadamente parte o todo tu peso a una pareja y recibir el suyo, con el apoyo del esqueleto y del suelo y no de la musculatura. Es la mecánica central de la forma: una persona da peso, la otra lo recibe, y los papeles se intercambian continuamente.
+
+Spotting
+
+Estar de pie y listo, con las manos libres, cerca de una pareja que baila, para que si una caída va mal haya alguien a mano que la frene.
+
+Underscore
+
+Un score grupal de formato largo desarrollado por Nancy Stark Smith, que recorre unas veinte fases nombradas y se usa para dar forma a toda una sesión de práctica o a un festival.
+
+Aterrizaje
+
+Llegar al suelo desde una caída o un levantamiento, normalmente rodando a través del punto de contacto para que el suelo reciba el peso de forma progresiva.
+
+Solo
+
+Bailar solo dentro de una jam. Completamente normal, y a menudo donde ocurre el trabajo más interesante.
+
+El borde
+
+El perímetro de la sala donde la gente descansa, mira, bebe agua y vuelve a entrar. Mirar desde el borde es participación, no ausencia.
+
+Punto de contacto
+
+El único lugar donde dos cuerpos se tocan. Mantenerlo en singular es lo que evita que el baile se convierta en un forcejeo.
+
+Dúo
+
+Dos personas que bailan. La unidad básica de la forma, aunque la IC también ocurre en tríos y en grupos mayores.
+
+Jam abierta
+
+Una jam sin requisito de experiencia previa. Si una jam está cerrada a principiantes, el listado lo dirá.
+
+Práctica de consentimiento
+
+El hábito de preguntar, rechazar y renegociar dentro del baile. Se trata como parte de la técnica y no como una política.
+
+Palabras aprendidas, el siguiente paso es una sala
+
+El vocabulario tiene sentido unos diez minutos después de tu primera jam, no antes.
+
+ Buscar una jam Qué esperar 
+
+Cita esta página
+
+Miami Contact Improv (2026). Glosario de Improvisación de Contacto . miamicontactimprov.com. https://miamicontactimprov.com/es/glosario
+
+---
+
+## https://miamicontactimprov.com/es/historia
+
+id="main">
+
+Historia
+
+De dónde viene la Improvisación de Contacto.
+
+Empezó en un gimnasio universitario de Ohio, recibió su nombre en una galería de Nueva York y se dejó deliberadamente sin dueño.
+
+Respuesta breve
+
+La Improvisación de Contacto (IC) fue desarrollada por el bailarín y coreógrafo estadounidense Steve Paxton en 1972. Surgió de una residencia en Oberlin College en enero de 1972 y de una serie de funciones en la John Weber Gallery de Nueva York en junio de 1972, y recibió la influencia de la danza moderna, el aikido y las prácticas somáticas. La forma nunca se registró como marca y no tiene organismo que la licencie.
+
+Enero de 1972, Oberlin College
+
+El colectivo improvisativo Grand Union estaba en residencia en Oberlin College, en Ohio. Paxton, miembro de ese grupo, venía dando lo que llamaba una clase suave a primera hora de la mañana, parte meditación y parte ejercicio ligero. Durante la residencia hizo una obra llamada Magnesium para once hombres sobre colchonetas, en la que se lanzaban, se atrapaban, se arrojaban y caían unos entre otros de forma continua, y que terminaba con varios minutos de quietud de pie. Ya le había pedido a una estudiante que estaba mirando, Nancy Stark Smith, que siguiera en contacto si alguna vez volvía a trabajar así.
+
+Paxton traía un conjunto de influencias poco habitual: gimnasia de competición de sus años de escuela, años de estudio de aikido en el New York Aikikai, t'ai chi, tres años en la Merce Cunningham Dance Company y la cofundación del Judson Dance Theater en 1962. La técnica release llegó con Mary Fulkerson, a quien invitó al grupo siguiente.
+
+Junio de 1972, Nueva York
+
+En junio reunió a un grupo mixto para cinco días de práctica continua y una muestra pública en la John Weber Gallery de Nueva York. Ese evento se llamó Contact Improvisation. El grupo incluía a Nancy Stark Smith, Nita Little, Daniel Lepkoff, Barbara Dilley, Nancy Topf, Mary Fulkerson, Laura Chapman, Alice Lusterman, Curt Siddall, David Woodberry y Leon Felder, con Steve Christiansen documentando en vídeo. La primera iteración del baile se hizo en esa semana.
+
+1975: la decisión de no tenerlo
+
+En 1975 quienes trabajaban con Paxton habían formado ReUnion, una compañía que se reunía una vez al año para girar por la costa oeste con funciones y clases. Discutieron registrar el término contact improvisation como marca y establecer una certificación de profesorado, sobre todo porque la forma se extendía más rápido que sus prácticas de seguridad. Rechazaron las dos cosas y en su lugar fundaron un boletín como forma de mantener en contacto a practicantes geográficamente dispersos.
+
+Nancy Stark Smith editó y produjo ese boletín, mecanografiando y fotocopiando ella misma los primeros números. Lisa Nelson se incorporó como coeditora en 1976, y la publicación pasó a llamarse Contact Quarterly , descrita entonces y después como un vehículo para ideas en movimiento. Se publicó durante cuatro décadas y media. La negativa a registrar la marca o certificar es la razón de que hoy no exista ninguna autoridad que licencie la Improvisación de Contacto en ningún lugar del mundo, y la razón de que la escena de cualquier ciudad tenga el aspecto que tiene: organizada localmente, enseñada informalmente y sostenida por las personas que aparecen.
+
+Cómo se desarrolló la práctica
+
+Stark Smith desarrolló después el Underscore , un score de formato largo que da a una improvisación grupal un arco de unas veinte fases nombradas, y los jeroglíficos , una notación para el ritmo sentido de un baile. El trabajo de Lisa Nelson sobre composición y percepción dio forma a cómo la práctica habla de ver y de ser visto. La investigación de Nita Little sobre los estados de atención conectó la IC con la ciencia cognitiva. La forma se trasladó también al trabajo de actuación, a la danza terapia, al teatro físico y a la coreografía contemporánea, de una manera que sus primeros practicantes no esperaban.
+
+La jam como la institución real
+
+Como nunca hubo una organización, lo que llevó la IC por todo el mundo fue la jam: una sesión informal, recurrente y sin enseñanza en una sala prestada, anunciada de boca en boca o en un listado impreso. Contact Quarterly llevó esos listados durante décadas en una sección llamada DanceMap. Esa función ocurre hoy en lugares dispersos, lo que es buena parte de la razón de que este sitio exista para Miami.
+
+Preguntas que la gente hace sobre la historia
+
+¿Quién inventó la Improvisación de Contacto?
+
+Steve Paxton, bailarín y coreógrafo estadounidense. La desarrolló en 1972 a partir de experimentos en Oberlin College y una serie de funciones en Nueva York, apoyándose en su formación en gimnasia, aikido, t'ai chi, la compañía de Merce Cunningham y el Judson Dance Theater.
+
+¿Cuándo fue la primera función de Improvisación de Contacto?
+
+En enero de 1972 Steve Paxton presentó 'Magnesium' en Oberlin College durante una residencia del Grand Union, una obra para once hombres sobre colchonetas que terminaba con varios minutos de quietud de pie. En junio de 1972 un grupo mixto recién reunido representó la obra que llegó a conocerse como Improvisación de Contacto en la John Weber Gallery de Nueva York.
+
+¿Por qué nunca se registró como marca?
+
+En 1975 quienes giraban con Steve Paxton como ReUnion consideraron registrar el nombre y establecer una certificación de profesorado, sobre todo por preocupación por la seguridad a medida que la forma se extendía más allá de quienes la habían aprendido directamente. Decidieron no hacer ninguna de las dos cosas y fundaron un boletín. Ese boletín se convirtió en la revista Contact Quarterly.
+
+¿Quiénes fueron las primeras personas que bailaron Improvisación de Contacto?
+
+El grupo en torno a las primeras funciones en Nueva York en 1972 incluía a Nancy Stark Smith, Nita Little, Daniel Lepkoff, Barbara Dilley, Nancy Topf, Mary Fulkerson, Laura Chapman, Alice Lusterman, Curt Siddall, David Woodberry, Leon Felder y el documentalista de vídeo Steve Christiansen. Nancy Stark Smith pasó a editar Contact Quarterly y a desarrollar el Underscore.
+
+Fuentes
+
+ Contact improvisation , Wikipedia (consultado en septiembre de 2026)
+
+ A Short History , SARMA (consultado en septiembre de 2026)
+
+ Nancy Stark Smith, a Founder of Contact Improvisation, Dies at 68 , The New York Times, 27 de mayo de 2020
+
+ Contact Quarterly , la revista que nació del boletín de 1975
+
+Baila la historia en lugar de leerla
+
+La forma se siente más fácilmente de lo que se describe. Busca una jam y quédate quieto en una sala con otras personas durante dos minutos.
+
+ Jams en Miami Glosario de términos 
+
+Cita esta página
+
+Miami Contact Improv (2026). Historia de la Improvisación de Contacto . miamicontactimprov.com. https://miamicontactimprov.com/es/historia
 
 ---
 
@@ -3100,7 +4021,7 @@ Reserva un estudio para una franja recurrente de dos horas, decide si es abierta
 
 Preguntas prácticas
 
-El coste, ir solo, la forma física y si puedes simplemente mirar: las preguntas que la gente hace antes de su primera sesión, respondidas sin discurso de venta. La noche en sí se recorre en tu primera jam, paso a paso , y las semanas siguientes están en seguir practicando (en inglés) .
+El coste, ir solo, la forma física y si puedes simplemente mirar: las preguntas que la gente hace antes de su primera sesión, respondidas sin discurso de venta. La noche en sí se recorre en tu primera jam, paso a paso , y las semanas siguientes están en seguir practicando .
 
 ¿Cuánto cuesta empezar con la Improvisación de Contacto en Miami?
 
@@ -3128,7 +4049,7 @@ No hay membresía, ni entrada de pago, ni registro central, porque la Improvisac
 
 ¿Quién enseña improvisación de contacto en Miami?
 
-La improvisación de contacto no tiene organismo de certificación, así que no hay registro que consultar. Lo que se pudo verificar cuando esta página se comprobó por última vez es una clase recurrente de todos los niveles: Contact Improv — ALL LEVELS en Dance Arts Miami, martes de 18:00 a 19:00. Todo lo demás pasa por organizaciones que responden a un mensaje directo, listadas en el directorio (en inglés) .
+La improvisación de contacto no tiene organismo de certificación, así que no hay registro que consultar. Lo que se pudo verificar cuando esta página se comprobó por última vez es una clase recurrente de todos los niveles: Contact Improv — ALL LEVELS en Dance Arts Miami, martes de 18:00 a 19:00. Todo lo demás pasa por organizaciones que responden a un mensaje directo, listadas en el directorio .
 
 ¿Cómo aparezco aquí?
 
@@ -3151,3 +4072,83 @@ Si falta una pregunta aquí, probablemente falta también en el sitio. Mándala.
 Cita esta página
 
 Miami Contact Improv (2026). Preguntas frecuentes . miamicontactimprov.com. https://miamicontactimprov.com/es/preguntas-frecuentes
+
+---
+
+## https://miamicontactimprov.com/es/acerca-de
+
+id="main">
+
+Acerca de
+
+Qué es este sitio, y qué no es.
+
+Una referencia independiente y sin ánimo de lucro sobre la Improvisación de Contacto en Miami. Sin membresía, sin comisión, sin estudio detrás y sin ningún organizador que promocionar.
+
+Respuesta breve
+
+miamicontactimprov.com es un recurso comunitario independiente que traza un mapa de la práctica de la Improvisación de Contacto (IC) en los condados de Miami-Dade y Broward. Publica lo que se puede verificar, dice con claridad lo que no, y acepta correcciones de cualquiera que esté en la escena. No organiza sesiones, no acepta reservas y no cobra por publicar.
+
+Por qué existe
+
+La Improvisación de Contacto no tiene federación, ni licencia, ni organización central. Esa apertura es la razón de que se extendiera a todos los continentes, y es también la razón de que una ciudad como Miami pueda tener una práctica intermitente de décadas sin nada en internet que lo demuestre. Cuando la forma no tiene institución, el mapa hay que construirlo a mano.
+
+El mapa mundial CI World Jam Map de contactimprov.com lo hace a escala global desde los años noventa. Este sitio lo hace a escala de una ciudad, con más detalle del que puede llevar un listado global, y enlaza de vuelta al mapa mundial en lugar de competir con él.
+
+Cómo funcionan aquí las entradas
+
+Todo lo que se publica se comprueba antes contra la información que publica quien lo organiza.
+
+Si una sesión no se puede verificar, se lista como no verificada o se deja fuera, nunca se adivina.
+
+Nada está pagado. No hay entradas patrocinadas ni acuerdos de afiliación.
+
+Las retiradas son normales. Las sesiones terminan, los estudios cierran, quien organiza se muda, y la página se corrige.
+
+La exactitud importa más que la exhaustividad. Una página corta y honesta gana a una larga y equivocada.
+
+Publica, corrige o retira una entrada
+
+Escribe a hello@miamicontactimprov.com , o responde desde cualquier cuenta desde la que este sitio publique. En inglés o en español, cualquiera de los dos vale.
+
+Qué mandar para una jam o una clase:
+
+ Nombre Cómo se llama la sesión 
+
+ Dónde El nombre del estudio o del lugar, y la ciudad 
+
+ Cuándo Día, hora y cada cuánto 
+
+ Precio Entrada, donación o gratis 
+
+ Para quién es Abierta a todo el mundo, o se presupone experiencia previa 
+
+ Enlace Tu propia página, entrada de calendario o cuenta de redes 
+
+Qué mandar para una entrada de profesorado: tu nombre, tu ciudad, qué enseñas y un enlace a tu propia página. Si prefieres no aparecer en ningún sitio, dilo y te retiramos sin preguntar por qué.
+
+Si eres propietario de un filme incrustado en la sala de vídeo y prefieres que no lo esté, una línea basta. Baja el mismo día.
+
+Correcciones
+
+Si algo de aquí está mal, es más útil decírnoslo que ignorarlo. Las correcciones que retiran una afirmación son tan bienvenidas como las que añaden una sesión, y la página se cambia en lugar de anotarse.
+
+Qué no es este sitio
+
+No es un estudio, ni un servicio de reservas, ni una escuela.
+
+No evalúa, no certifica ni avala a profesorado. Nadie puede, en esta forma.
+
+No está afiliado a contactimprov.com, a Contact Quarterly ni a ningún festival.
+
+No media en disputas entre bailarinas o entre organizadores.
+
+La página vale lo que vale la sala
+
+Si sabes dónde se baila este mes, eso es lo más útil que nos puedes mandar.
+
+ Escríbenos Leer la página de Miami 
+
+Cita esta página
+
+Miami Contact Improv (2026). Acerca de . miamicontactimprov.com. https://miamicontactimprov.com/es/acerca-de

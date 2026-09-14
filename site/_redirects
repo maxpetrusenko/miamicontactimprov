@@ -17,11 +17,19 @@
 /about.html  /about  301
 /es/index.html  /es/  301
 /es/que-es-la-improvisacion-de-contacto.html  /es/que-es-la-improvisacion-de-contacto  301
+/es/miami.html  /es/miami  301
 /es/jams-miami-dade-broward.html  /es/jams-miami-dade-broward  301
 /es/jams.html  /es/jams  301
+/es/clases.html  /es/clases  301
 /es/tu-primera-jam.html  /es/tu-primera-jam  301
+/es/seguir-practicando.html  /es/seguir-practicando  301
+/es/videos.html  /es/videos  301
+/es/directorio.html  /es/directorio  301
+/es/glosario.html  /es/glosario  301
+/es/historia.html  /es/historia  301
 /es/seguridad-y-consentimiento.html  /es/seguridad-y-consentimiento  301
 /es/preguntas-frecuentes.html  /es/preguntas-frecuentes  301
+/es/acerca-de.html  /es/acerca-de  301
 /es  /es/  301
 
 # Clean-URL safety net. Cloudflare Pages serves /miami.html at /miami, but the

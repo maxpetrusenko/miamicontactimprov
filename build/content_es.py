@@ -35,6 +35,7 @@ from shell import (
 )
 import listings
 import schema
+import videos_data
 
 # The Spanish routes, mirroring build/locales.py. Kept as literals here so a link in
 # Spanish prose is visible where it is written; tools/gate.py fails the build if any of
@@ -46,20 +47,24 @@ R_FIRST = "/es/tu-primera-jam"
 R_LIST = "/es/jams-miami-dade-broward"
 R_FAQ = "/es/preguntas-frecuentes"
 R_SAFETY = "/es/seguridad-y-consentimiento"
-
-# English-only pages. Linked with an explicit lang note in the anchor so a reader is
-# told the destination is in English before they click.
-R_MIAMI = "/miami"
-R_CLASSES = "/classes"
-R_DIRECTORY = "/directory"
-R_GLOSSARY = "/glossary"
-R_HISTORY = "/history"
-R_VIDEOS = "/videos"
-R_KEEP = "/keep-practising"
-R_SUBMIT = "/about#submit"
+R_MIAMI = "/es/miami"
+R_CLASSES = "/es/clases"
+R_DIRECTORY = "/es/directorio"
+R_GLOSSARY = "/es/glosario"
+R_HISTORY = "/es/historia"
+R_VIDEOS = "/es/videos"
+R_KEEP = "/es/seguir-practicando"
+R_ABOUT = "/es/acerca-de"
+R_SUBMIT = "/es/acerca-de#submit"
 
 SHORT = "Respuesta breve"
 CITE = "Cita esta página"
+
+# Spanish labels for the listing tables. Values are quoted verbatim in the organiser's own
+# language (docs/i18n.md rule 2); only these labels are translated.
+L_PREFIX = "Leído en"
+L_CHECKED = "Comprobado el"
+L_VERIFIED_ON = "Comprobado el"
 
 LIST_VALUE_NOTE = (
     "Los datos de cada sesión (nombre, modalidad, lugar, horario y precio) se reproducen "
@@ -108,7 +113,7 @@ def _sessions_block():
             "<p>Ahora mismo, nada. Esta página retira una entrada en lugar de dejar una "
             "desactualizada, así que una lista vacía significa una lista verificada vacía y no "
             "una ciudad vacía. Los estudios y las personas que organizan que aparecen en el "
-            '<a href="/directory" lang="en" hreflang="en">directorio (en inglés)</a> son donde '
+            f'<a href="{R_DIRECTORY}">directorio</a> son donde '
             "está realmente la respuesta.</p></div>"
         )
     return (
@@ -194,7 +199,7 @@ def home():
       <p>La Improvisación de Contacto funciona porque cualquiera de las dos personas puede parar en cualquier momento, por cualquier motivo, sin explicación. Quien está siendo levantado puede poner un pie en el suelo. Quien está siendo sostenido puede apartarse. La danza continúa. Quienes la practican llaman a esto la negociación, y ocurre a través del peso, la respiración y pequeñas señales físicas mucho antes de que alguien hable.</p>
       <p>Escrito suena abstracto. En la sala es lo más práctico que vas a aprender, y es la razón por la que vuelve gente que nunca se había considerado bailarina.</p>
     </div>
-    {band("¿Nuevo en Miami o nuevo en esto?", "Dinos que existes y te añadimos al mapa. Jams, clases, profesorado, estudios, festivales y grupos de práctica recurrente tienen cabida aquí.", [("Publica una entrada", R_SUBMIT, "primary"), ("Leer el directorio (en inglés)", R_DIRECTORY, "secondary")])}
+    {band("¿Nuevo en Miami o nuevo en esto?", "Dinos que existes y te añadimos al mapa. Jams, clases, profesorado, estudios, festivales y grupos de práctica recurrente tienen cabida aquí.", [("Publica una entrada", R_SUBMIT, "primary"), ("Leer el directorio", R_DIRECTORY, "secondary")])}
   </div>
 </section>
 """
@@ -280,7 +285,7 @@ def what_is():
       <h2>Lo que no es</h2>
       <p>La Improvisación de Contacto no es acrobacia en pareja para un público, aunque quien baila con experiencia pueda hacer que lo parezca. No es una sesión de terapia, aunque mucha gente la encuentre reparadora. No es práctica sexual, y las jams defienden colectivamente esa distinción. Y no es un único método correcto: como la forma nunca se registró como marca ni se certificó, los estilos de enseñanza difieren mucho entre quien organiza y entre ciudades.</p>
       <h2>Cómo llegó a Florida</h2>
-      <p>La IC se extendió por giras, enseñanza y un boletín en papel, no por una organización, y por eso la mayoría de las ciudades desarrolló su escena sin dirección central. Miami no es una excepción: aquí la práctica pasa por profesores individuales, alquileres de estudio, parques y la comunidad de danza y movimiento del sur de Florida, y no por una institución única. <a href="{R_WHATIS}">Esta página</a> describe lo que se sabe hoy, y la <a href="/miami" lang="en" hreflang="en">página de Miami (en inglés)</a> traza el mapa de lo que se ha podido verificar.</p>
+      <p>La IC se extendió por giras, enseñanza y un boletín en papel, no por una organización, y por eso la mayoría de las ciudades desarrolló su escena sin dirección central. Miami no es una excepción: aquí la práctica pasa por profesores individuales, alquileres de estudio, parques y la comunidad de danza y movimiento del sur de Florida, y no por una institución única. <a href="{R_WHATIS}">Esta página</a> describe lo que se sabe hoy, y la <a href="{R_MIAMI}">página de Miami</a> traza el mapa de lo que se ha podido verificar.</p>
       <h2>Preguntas que la gente hace de verdad</h2>
       {faq_html}
     </div>
@@ -295,7 +300,7 @@ def what_is():
             R_WHATIS,
             "¿Qué es la Improvisación de Contacto?",
             "Qué es la Improvisación de Contacto: historia, principios, qué es una jam y por qué no tiene organismo que la licencie. Qué pasa en los primeros minutos.",
-            about=[{"@id": schema.SITE + "/#place"}, {"@id": schema.SITE + "/glossary#terms"}],
+            about=[{"@id": schema.SITE + "/#place"}, {"@id": schema.SITE + "/es/glosario#terms"}],
             lang="es",
         ),
         schema.breadcrumb(R_WHATIS, "¿Qué es la Improvisación de Contacto?", lang="es"),
@@ -392,7 +397,7 @@ def jams():
       <h2>Spotting y seguridad</h2>
       <p>Las sesiones donde circulan levantamientos suelen mantener a una o dos personas fuera del baile como <strong>spotters</strong>: cerca, con las manos libres, atentas a una caída que haya que frenar. Es uno de los pocos papeles técnicos y no sociales de una jam, y normalmente quien baila por primera vez puede aprenderlo. Si no tienes claro que puedas recibir el peso de alguien con seguridad, no puedes, y decirlo es la respuesta correcta.</p>
       <h2>Antes y después de tu primera visita</h2>
-      <p>Qué pasa de verdad cuando entras &mdash; la llegada, el círculo de apertura, los primeros diez minutos de baile, las frases que puedes decir cuando quieres parar y cuándo irte &mdash; está en <a href="{R_FIRST}">tu primera jam, paso a paso</a>. Qué hacer en las semanas siguientes, incluidas las semanas en que no hay nada, está en <a href="{R_KEEP}" lang="en" hreflang="en">seguir practicando (en inglés)</a>.</p>
+      <p>Qué pasa de verdad cuando entras &mdash; la llegada, el círculo de apertura, los primeros diez minutos de baile, las frases que puedes decir cuando quieres parar y cuándo irte &mdash; está en <a href="{R_FIRST}">tu primera jam, paso a paso</a>. Qué hacer en las semanas siguientes, incluidas las semanas en que no hay nada, está en <a href="{R_KEEP}">seguir practicando</a>.</p>
       <h2>Preguntas sobre las jams</h2>
       {faq_html}
     </div>
@@ -498,9 +503,9 @@ def your_first_jam():
     <div class="prose">
       <p>{rank_note}</p>
       <h2>Preguntas prácticas</h2>
-      <p>El coste, ir solo, la forma física, mirar en lugar de bailar y el camino para principiantes están respondidos en una línea cada uno en <a href="{R_FAQ}">la página de preguntas</a>. Cómo suele desarrollarse una sesión completa está en <a href="{R_JAMS}">jams</a>, y qué enseña de verdad una clase para principiantes está en <a href="{R_CLASSES}" lang="en" hreflang="en">clases (en inglés)</a>. Si nunca has leído nada sobre la forma, empieza por <a href="{R_WHATIS}">qué es la Improvisación de Contacto</a>.</p>
+      <p>El coste, ir solo, la forma física, mirar en lugar de bailar y el camino para principiantes están respondidos en una línea cada uno en <a href="{R_FAQ}">la página de preguntas</a>. Cómo suele desarrollarse una sesión completa está en <a href="{R_JAMS}">jams</a>, y qué enseña de verdad una clase para principiantes está en <a href="{R_CLASSES}">clases</a>. Si nunca has leído nada sobre la forma, empieza por <a href="{R_WHATIS}">qué es la Improvisación de Contacto</a>.</p>
     </div>
-    {band("¿Listo para ir?", "Cada sesión de arriba enlaza con la página de quien la organiza, que es la única fuente que conoce el horario de esta semana.", [("Jams en Miami", R_JAMS, "primary"), ("Clases y talleres (en inglés)", R_CLASSES, "secondary")])}
+    {band("¿Listo para ir?", "Cada sesión de arriba enlaza con la página de quien la organiza, que es la única fuente que conoce el horario de esta semana.", [("Jams en Miami", R_JAMS, "primary"), ("Clases y talleres", R_CLASSES, "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Tu primera jam de improvisación de contacto, paso a paso</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/tu-primera-jam", CITE)}
   </div>
 </section>
@@ -610,10 +615,10 @@ def miami_jams():
     <div class="prose">
       <h2>Cómo usar esta lista</h2>
       <p>Trata cada entrada como una pista con fecha y no como un hecho. Abre el enlace de la fuente, que es la página o el listado de quien organiza, y busca una fecha propia: una sesión recurrente cuya fuente no se ha actualizado en meses normalmente ha parado, y un listado sin fecha no es prueba de nada. Después manda un mensaje antes de desplazarte. Quien organiza contesta, y prefiere decírtelo a que llegues a una puerta cerrada.</p>
-      <p>Cómo es de verdad asistir a cada sesión y cómo transcurre una jam desde el círculo de apertura hasta el último baile está en <a href="{R_JAMS}">jams</a> y <a href="{R_FIRST}">tu primera jam, paso a paso</a>. Qué hacer en las semanas siguientes a la primera está en <a href="{R_KEEP}" lang="en" hreflang="en">seguir practicando (en inglés)</a>. Qué es la Improvisación de Contacto, si nunca has leído nada sobre ella, empieza en <a href="{R_WHATIS}">qué es la Improvisación de Contacto</a>.</p>
+      <p>Cómo es de verdad asistir a cada sesión y cómo transcurre una jam desde el círculo de apertura hasta el último baile está en <a href="{R_JAMS}">jams</a> y <a href="{R_FIRST}">tu primera jam, paso a paso</a>. Qué hacer en las semanas siguientes a la primera está en <a href="{R_KEEP}">seguir practicando</a>. Qué es la Improvisación de Contacto, si nunca has leído nada sobre ella, empieza en <a href="{R_WHATIS}">qué es la Improvisación de Contacto</a>.</p>
       <p>Esta página no organiza ninguna de estas sesiones, no cobra por listarlas y no las clasifica. Es un mapa de una escena sin autoridad central, y no es el mapa.</p>
     </div>
-    {band("¿Organizas una sesión en Miami-Dade o Broward?", "Manda el horario, la sala, el precio y dónde lo publicas. Una entrada aquí significa una sola cosa: quien la organiza lo publica y nosotros comprobamos la página. No es un aval.", [("Publicar una sesión", R_SUBMIT, "primary"), ("El directorio más amplio (en inglés)", R_DIRECTORY, "secondary")])}
+    {band("¿Organizas una sesión en Miami-Dade o Broward?", "Manda el horario, la sala, el precio y dónde lo publicas. Una entrada aquí significa una sola cosa: quien la organiza lo publica y nosotros comprobamos la página. No es un aval.", [("Publicar una sesión", R_SUBMIT, "primary"), ("El directorio más amplio", R_DIRECTORY, "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Jams y clases de contact improv en Miami-Dade y Broward</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/jams-miami-dade-broward", CITE)}
   </div>
 </section>
@@ -797,7 +802,7 @@ BUYER_FAQ_ES = [
 
 DIRECTORY_FAQ_ES = [
     ("¿Quién enseña improvisación de contacto en Miami?",
-     "La improvisación de contacto no tiene organismo de certificación, así que no hay registro que consultar. Lo que se pudo verificar cuando esta página se comprobó por última vez es una clase recurrente de todos los niveles: Contact Improv &mdash; ALL LEVELS en Dance Arts Miami, martes de 18:00 a 19:00. Todo lo demás pasa por organizaciones que responden a un mensaje directo, listadas en el <a href=\"/directory\" lang=\"en\" hreflang=\"en\">directorio (en inglés)</a>."),
+     "La improvisación de contacto no tiene organismo de certificación, así que no hay registro que consultar. Lo que se pudo verificar cuando esta página se comprobó por última vez es una clase recurrente de todos los niveles: Contact Improv &mdash; ALL LEVELS en Dance Arts Miami, martes de 18:00 a 19:00. Todo lo demás pasa por organizaciones que responden a un mensaje directo, listadas en el <a href=\"/es/directorio\">directorio</a>."),
     ("¿Cómo aparezco aquí?",
      "Manda el nombre, la ciudad, qué enseñas u organizas y un enlace a tu propia página. No hay cuota ni membresía. Las entradas se comprueban contra tu propia información publicada antes de publicarse, y cada entrada muestra la fecha en que se comprobó."),
     ("¿Por qué hay danza extática en un sitio de improvisación de contacto?",
@@ -830,7 +835,7 @@ def faq():
          "Miami tiene una clase recurrente de todos los niveles que pudimos verificar en la página de quien organiza, más jams que van y vienen. Esta página solo lista lo que se comprobó, con la fecha en que se comprobó.",
          MIAMI_FAQ_ES),
         ("Preguntas prácticas",
-         "El coste, ir solo, la forma física y si puedes simplemente mirar: las preguntas que la gente hace antes de su primera sesión, respondidas sin discurso de venta. La noche en sí se recorre en <a href=\"/es/tu-primera-jam\">tu primera jam, paso a paso</a>, y las semanas siguientes están en <a href=\"/keep-practising\" lang=\"en\" hreflang=\"en\">seguir practicando (en inglés)</a>.",
+         "El coste, ir solo, la forma física y si puedes simplemente mirar: las preguntas que la gente hace antes de su primera sesión, respondidas sin discurso de venta. La noche en sí se recorre en <a href=\"/es/tu-primera-jam\">tu primera jam, paso a paso</a>, y las semanas siguientes están en <a href=\"/es/seguir-practicando\">seguir practicando</a>.",
          BUYER_FAQ_ES),
         ("Este sitio",
          "No hay membresía, ni entrada de pago, ni registro central, porque la Improvisación de Contacto no tiene organismo de certificación. Todo lo de aquí se comprobó contra la página de quien organiza.",
@@ -876,6 +881,698 @@ def faq():
         "Preguntas frecuentes de improvisación de contacto [Guía]",
         "Respuestas breves sobre la Improvisación de Contacto en Miami: qué es, cómo empezar, qué pasa en una jam, seguridad y consentimiento, la historia y la escena local.",
         R_FAQ,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ================================================================ the second slice
+# Eight more English pages, now translated: miami, classes, directory, glossary,
+# history, keep-practising, videos, about. Same rules as above — no new fact, listing
+# values quoted verbatim with only the labels translated, one term used consistently —
+# and every cross-link in this slice points at a Spanish route, because a Spanish route
+# now exists for all of them.
+
+# ---------------------------------------------------------------- Miami
+
+def miami():
+    faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in MIAMI_FAQ_ES)
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">La ciudad</p>
+    <h1>La Improvisación de Contacto en Miami.</h1>
+    <p class="lede">Miami es una ciudad de salas prestadas y escenas no oficiales. La improvisación de contacto funciona aquí igual: alguien que enseña con un espacio, una compañía con un estudio, una persona que baila con un número de teléfono, y quien aparezca.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("La Improvisación de Contacto (IC) se practica en el sur de Florida desde hace décadas, organizada por personas y no a través de ninguna institución. Miami no tiene una sede de IC permanente ni un calendario central. La práctica ha pasado históricamente por espacio de estudio alquilado, como la jam comunitaria listada en Excello Dance Space, y por partes de la comunidad de danza contemporánea, físicamente integrada y somática más amplia de Miami. Como la forma no tiene organismo que la licencie, la escena es lo que construyan las personas que están en ella.", SHORT)}
+    {facts([
+      ("País", "Estados Unidos"),
+      ("Estado", "Florida"),
+      ("Condados incluidos", "Miami-Dade y Broward"),
+      ("Ciudades y barrios", "Miami, Miami Beach, Wynwood, Little Havana, Brickell, Coral Gables, Doral, Hialeah, Pinecrest, Fort Lauderdale"),
+      ("Idiomas", "inglés y español"),
+      ("Mejores meses para practicar al aire libre", "de noviembre a abril"),
+      ("Meses más duros para practicar al aire libre", "de junio a septiembre: calor, humedad y lluvia"),
+      ("Cómo se organiza la escena", "Individualmente. Sin organismo, sede ni calendario central"),
+    ])}
+    <div class="prose">
+      <h2>El estado honesto de esto</h2>
+      <p>Merece la pena ser directo, porque la mayoría de las guías de ciudad no lo son. La escena de improvisación de contacto de Miami es pequeña y está poco documentada en internet. Lo que existe es real pero disperso: una clase semanal de todos los niveles en Dance Arts Miami, un programa de jams y talleres adyacente al contacto que Kama Flight lleva desde Miami Beach, y Camp Contact llevando la improvisación de contacto a Love Burn en Virginia Key cada febrero. Esas son las cosas que este sitio pudo verificar, y están listadas en <a href="{R_JAMS}">la página de jams</a> con sus fuentes y la fecha en que se comprobó cada una.</p>
+      <p>El resto del cuadro es más fino de lo que a un directorio le gustaría. El mapa mundial CI World Jam Map contiene una jam comunitaria de lunes mensual en Excello Dance Space, con facilitadores rotativos y una entrada de diez dólares; ese listado no lleva fecha y este sitio no lo presenta como vigente. La organización de IC más antigua de Miami pasó por plataformas que ya no existen: un Yahoo Group y una comunidad de Tribe.net, ambas cerradas con sus servidores. La compañía de danza físicamente integrada de Miami, Karen Peterson Dancers, está activa y vigente y lleva mucho tiempo formando parte del paisaje improvisativo y de trabajo en pareja de la ciudad, y por eso aparece en el directorio y no se descarta junto a los enlaces muertos.</p>
+      <h2>Dónde vive de verdad la respuesta</h2>
+      <p>Nadie puede decirte desde una página web estática dónde está la jam esta noche. Los lugares que sí pueden:</p>
+      <ul class="dir-list">
+        <li><p><strong>Quien organiza, en persona</strong></p><p>Todos publican sus propios listados y contestan a un mensaje directo. Es la vía más rápida y más fiable, y es la razón de que exista el directorio.</p><p><a href="{R_DIRECTORY}">El directorio</a></p></li>
+        <li><p><strong>CI World Jam Map, página de Florida</strong></p><p>El listado de la propia comunidad global. Es honesto sobre lo incompleto que está y pide a quien lo lea que mande correcciones.</p><p><a href="https://www.contactimprov.com/florida.html" rel="noopener nofollow">contactimprov.com/florida.html</a></p></li>
+        <li><p><strong>Búsquedas que funcionan</strong></p><p><code>contact improvisation Miami</code>, <code>contact improv South Florida</code>, <code>CI jam Florida</code>. Búsquedas que no funcionan: cualquiera construida sobre la palabra suelta <code>improv</code>, que en Miami devuelve teatros de comedia en Doral y Dania Beach.</p></li>
+      </ul>
+      <h2>Una trampa que merece nombrarse</h2>
+      <p>Una búsqueda en la web de improvisación de contacto en Miami acabará tarde o temprano sacando "Contact Improvisation Gold Coast" y eventos en "The Farm, Miami". Están en Miami, Queensland, Australia, código postal 4220. No tienen nada que ver con Florida y quedan excluidos de todos los listados de este sitio.</p>
+      <h2 id="start-one">Si no hay ninguna jam cerca de ti, empieza una</h2>
+      <p>Esto no es un premio de consolación. La mayoría de las jams del mundo existen porque una persona reservó una sala. La versión mínima viable cuesta unas dos horas de alquiler de estudio a la semana y una hora de administración.</p>
+      <ol class="dir-list">
+        <li><p><strong>Encuentra un suelo.</strong> Un estudio de danza con suelo flotante o de marley, a ser posible con colchonetas y una pared para sentarse. Los centros comunitarios y los estudios de yoga sirven. Evita el azulejo, el hormigón y la moqueta.</p></li>
+        <li><p><strong>Elige una franja recurrente y mantenla.</strong> La constancia gana a la frecuencia. La misma tarde cada semana construye una sala; una tarde distinta cada mes no lo hará nunca.</p></li>
+        <li><p><strong>Decide para quién es.</strong> Una jam abierta acepta a todo el mundo y necesita un calentamiento más largo. Una jam de gente con experiencia acepta a quienes ya saben caer con seguridad en pareja. Di cuál es, cada vez.</p></li>
+        <li><p><strong>Escribe el protocolo y dilo en voz alta.</strong> Consentimiento continuo, derecho a rechazar cualquier cosa, no enseñar sin que te lo pidan, no grabar sin preguntar, el borde es para descansar, y aquí está quién sostiene la sala. Dos minutos al principio de cada sesión.</p></li>
+        <li><p><strong>Fija una entrada que cubra la sala.</strong> No para ganar dinero: para que la jam sobreviva más allá de la tercera semana.</p></li>
+        <li><p><strong>Publícala.</strong> Una página, una cuenta, una entrada de calendario recurrente y una entrada en el World Jam Map. Después <a href="{R_SUBMIT}">díselo a este sitio</a>, que no cuesta nada y lleva un minuto.</p></li>
+      </ol>
+      <h2>Cuestiones prácticas propias de Miami</h2>
+      <ul>
+        <li><strong>El calor.</strong> Una sesión de dos horas en julio necesita más agua y más descanso que la misma sesión en enero. Reserva a primera hora o por la tarde-noche para cualquier cosa al aire libre.</li>
+        <li><strong>La lluvia.</strong> Las tormentas de tarde entre junio y septiembre cancelan una jam al aire libre casi con puntualidad. Las salas cubiertas no tienen ese problema, y por eso la mayoría de las jams son bajo techo.</li>
+        <li><strong>El suelo.</strong> La arena y la hierba perdonan las caídas y son malas para rodar. Las jams de playa funcionan mejor para práctica baja, lenta y de compartir peso que para levantamientos.</li>
+        <li><strong>Aparcamiento y distancia.</strong> Miami-Dade es ancho y dependiente del coche. Di dónde se aparca cuando anuncies una sesión, y cuenta con que la gente conduzca cuarenta minutos por una jam que merezca la pena.</li>
+        <li><strong>Dos idiomas.</strong> Publica las sesiones en inglés y en español. Es un trabajo de cinco minutos y duplica a quien puede encontrarte.</li>
+        <li><strong>Las temporadas.</strong> La gente que baila, enseña y alquila estudios viaja. Cuenta con una caída real de asistencia en verano y alrededor de Art Basel en diciembre.</li>
+      </ul>
+      <h2>Preguntas sobre la IC en Miami</h2>
+      {faq_html}
+    </div>
+    {band("¿Sabes algo que esta página no dice?", "Si enseñas, acoges, organizas o simplemente bailas en el sur de Florida, dínoslo y entra en el mapa. Las correcciones son tan bienvenidas como las incorporaciones, incluido retirar algo que ha parado.", [("Publicar una entrada", R_SUBMIT, "primary"), ("El directorio", R_DIRECTORY, "secondary"), ("Seguir practicando", R_KEEP, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Improvisación de Contacto en Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/miami", CITE)}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation("es"),
+        schema.webpage(
+            R_MIAMI,
+            "Improvisación de Contacto en Miami",
+            "La escena de Improvisación de Contacto de Miami: dónde se practica, cómo se organiza, las cuestiones prácticas propias de Miami y cómo empezar una jam aquí.",
+            about={"@id": schema.SITE + "/#place"},
+            lang="es",
+        ),
+        schema.breadcrumb(R_MIAMI, "Miami", lang="es"),
+        schema.faq(MIAMI_FAQ_ES, lang="es"),
+        {
+            "@type": "Place",
+            "@id": schema.SITE + "/es/miami#place",
+            "name": "Miami, Florida, United States",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Miami",
+                "addressRegion": "FL",
+                "addressCountry": "US",
+            },
+            "geo": {"@type": "GeoCoordinates", "latitude": 25.7617, "longitude": -80.1918},
+            "containedInPlace": {"@type": "AdministrativeArea", "name": "Miami-Dade County, Florida"},
+        },
+    )
+    return page(
+        "Improvisación de Contacto en Miami [Guía 2026]",
+        "La improvisación de contacto en Miami: el estado real de la escena, dónde se practica en Miami-Dade y Broward, y cómo empezar una jam aquí.",
+        R_MIAMI,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ---------------------------------------------------------------- classes
+
+SKILLS_ES = [
+    ("Compartir peso", R_CLASSES + "#first-jam",
+     "Dar y recibir peso a través del esqueleto"),
+    ("Caídas y rodar", R_CLASSES + "#first-jam",
+     "Salidas seguras de una caída o de un levantamiento fallido"),
+    ("Punto de contacto", R_CLASSES + "#first-jam",
+     "Mantener un único punto de contacto deslizante"),
+    ("Límites y consentimiento", R_SAFETY,
+     "Rechazar, pausar y renegociar"),
+    ("Levantamientos", R_CLASSES + "#first-jam",
+     "Estructuras de apoyo y cuándo no usarlas"),
+]
+
+
+def classes():
+    faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in FIRST_JAM_FAQ_ES)
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Aprender</p>
+    <h1>Clases, talleres y tu primera jam.</h1>
+    <p class="lede">Puedes empezar con la Improvisación de Contacto sin ninguna formación en danza. Una sesión para principiantes te pone a caer con seguridad en una tarde, y el resto es tiempo en la sala.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("Una clase de Improvisación de Contacto (IC) enseña las habilidades de base: cómo compartir peso sin derrumbarse, cómo salir rodando de una caída, cómo leer el momento de tu pareja y cómo decir no. Las sesiones para principiantes no presuponen formación en danza. La mayoría de la gente asiste a clases unas semanas y después añade una jam semanal, porque la forma se aprende sobre todo bailando y no con instrucción.", SHORT)}
+    <div class="prose">
+      <h2 id="first-jam">Tu primera jam, paso a paso</h2>
+      <p><strong>Antes.</strong> Escribe a quien organiza y di que eres nuevo. Pregunta tres cosas: si está abierta a principiantes, cuánto cuesta la entrada y si hay calentamiento antes del baile abierto. Las tres respuestas deberían ser fáciles.</p>
+      <p><strong>La llegada.</strong> Llega al principio si puedes, porque el círculo de apertura es donde se fijan las reglas. Cámbiate, deja la bolsa en el borde, llena la botella.</p>
+      <p><strong>El calentamiento.</strong> Quédate de pie y escucha los pequeños ajustes que hace tu cuerpo para mantenerse erguido. No es un calentamiento para lo de verdad; es lo de verdad a baja amplitud.</p>
+      <p><strong>Tu primer baile.</strong> Mira a alguien. Si te devuelve la mirada, estáis bailando. Empieza con una mano, un hombro, o simplemente estando cerca. Mantén un punto de contacto. Deja que una de las dos personas dé peso despacio y mira qué hace el suelo.</p>
+      <p><strong>El final.</strong> Para cuando quieras. Da un paso atrás, asiente con la cabeza, camina hasta el borde. No hace falta explicación y no se espera ninguna, en ninguna de las dos direcciones.</p>
+      <p><strong>Después.</strong> Probablemente estarás cansado de una forma que no es cansancio deportivo. Bebe agua. <a href="{R_KEEP}">Vuelve</a>, y mira qué pasa después de la primera visita.</p>
+      <h2>Qué enseñan de verdad las clases</h2>
+      <p>Una buena serie para principiantes cubre el mismo puñado de cosas, sea cual sea el estilo de quien enseña.</p>
+      {facts([
+        ("Peso", "Dar y recibir peso a través del esqueleto, no agarrando"),
+        ("Caídas", "Salidas rodando, encogerse, aterrizar en el suelo sin manos"),
+        ("Contacto", "Mantener un único punto de contacto deslizante y seguirlo"),
+        ("Escuchar", "Leer la presión y el momento en lugar de mirar"),
+        ("Límites", "Rechazar, pausar, irse y renegociar a mitad del baile"),
+        ("Levantamientos", "Cómo funcionan las estructuras de apoyo y cuándo no intentar uno"),
+      ])}
+      <h2>Cómo juzgar a quien enseña</h2>
+      <p>No hay organismo de certificación de la Improvisación de Contacto, así que no puedes comprobar una licencia. Lo que sí puedes comprobar es el comportamiento. Quien enseña debería enunciar su marco de consentimiento en los primeros diez minutos en lugar de darlo por supuesto. Debería demostrar tanto como habla. Debería corregir una técnica insegura de inmediato, incluso en la sala y no en un aparte privado después. No debería exigirte que hagas pareja con una persona concreta, y debería estar cómodo cuando rechazas a alguien.</p>
+      <p>Una escena sin certificación es una escena donde la reputación es todo el control de calidad. Merece la pena saberlo antes de pagar un intensivo.</p>
+      <h2>Dónde aprenderlo en Miami</h2>
+      <p>Se pudo verificar una clase recurrente de Improvisación de Contacto en Miami-Dade a partir de sus propios listados cuando esta página se comprobó por última vez: <strong>Contact Improv &mdash; ALL LEVELS</strong> en Dance Arts Miami, 250 NE 61st Street, Miami, 33137, los martes de 18:00 a 19:00. Se anuncia como un espacio para trabajar conexión, compartir peso, momento y formación de pareja espontánea, y no hace falta pareja. Como se publica como una serie de varias fechas en Eventbrite y se replica en Meetup, confirma la semana actual allí en lugar de fiarte de esta página.</p>
+      <p>Más allá de esa clase, las vías realistas hacia la forma en Miami son las <a href="{R_JAMS}">jams, campamentos y prácticas adyacentes</a> listadas en otras partes de este sitio. Si prefieres aprender de forma estructurada y no hay ninguna clase cerca de ti, una clase de danza contemporánea o de improvisación en cualquier estudio de Miami te enseñará buena parte de la alfabetización corporal, y las jams te enseñarán el resto.</p>
+      <h2>Después de la primera</h2>
+      <p>Qué hacer en las semanas siguientes a tu primera sesión, incluidas las semanas en que no hay nada, está en la <a href="{R_KEEP}">página de seguir practicando</a>. Un recorrido más completo de la noche en sí &mdash; la llegada, el círculo de apertura, los primeros diez minutos de baile y las frases que puedes decir cuando quieres parar &mdash; está en <a href="{R_FIRST}">tu primera jam, paso a paso</a>.</p>
+      <h2>Preguntas que la gente hace antes de su primera sesión</h2>
+      {faq_html}
+    </div>
+    {band("Encuentra algo esta semana", "Empieza por una jam, o por una clase para principiantes si prefieres que te enseñen primero. Las dos son puertas de entrada legítimas.", [("Jams", R_JAMS, "primary"), ("Profesorado y estudios", R_DIRECTORY, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Clases de Improvisación de Contacto y primeras jams</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/clases", CITE)}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation("es"),
+        schema.webpage(
+            R_CLASSES,
+            "Clases de Improvisación de Contacto y tu primera jam",
+            "Cómo empezar la Improvisación de Contacto en Miami: qué cubre una clase para principiantes, qué pasa en tu primera jam, cómo juzgar a quien enseña y qué llevar.",
+            lang="es",
+        ),
+        schema.breadcrumb(R_CLASSES, "Clases", lang="es"),
+        schema.faq(FIRST_JAM_FAQ_ES, lang="es"),
+        schema.item_list(
+            R_CLASSES,
+            "Habilidades que enseña un curso para principiantes de Improvisación de Contacto",
+            SKILLS_ES,
+            lang="es",
+        ),
+    )
+    return page(
+        "Clases de Improvisación de Contacto en Miami [2026]",
+        "Cómo empezar la Improvisación de Contacto en Miami: qué enseña una clase para principiantes, un recorrido de tu primera jam y qué llevar.",
+        R_CLASSES,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ---------------------------------------------------------------- directory
+
+# The same nine resources as build/content_directory.GLOBAL_RESOURCES, in the same
+# order, with the site's own description of each translated. The resource NAMES are the
+# organisations' own names and stay as published; so do the URLs.
+GLOBAL_RESOURCES_ES = [
+    ("Contact Improvisation World Resource", "https://www.contactimprov.com/",
+     "El centro internacional de la forma, en marcha desde los años noventa: un mapa mundial de jams, un calendario de eventos, un directorio de profesorado, listados de miembros y un índice de enlaces."),
+    ("CI World Jam Map: Florida", "https://www.contactimprov.com/florida.html",
+     "El listado de Florida de la propia comunidad. Es lo más parecido a un directorio de jams del sur de Florida que existe, y lo mantiene quien manda correcciones."),
+    ("CI Global Calendar", "https://ciglobalcalendar.net/en",
+     "Un calendario compartido y multilingüe de clases, jams, talleres y festivales de IC en todo el mundo, publicado por quienes organizan y enseñan. El mejor lugar único donde buscar algo que ocurra en cualquier parte."),
+    ("Contact Quarterly", "https://www.contactquarterly.com/",
+     "La revista que nació del boletín de 1975 y el archivo escrito principal de la forma durante cuatro décadas y media."),
+    ("CQ CI Contacts List", "https://contactquarterly.com/contact-improvisation/contacts",
+     "El directorio de referencia de Contact Quarterly para localizar clases, jams y practicantes de IC, organizado por país y estado de Estados Unidos."),
+    ("Earthdance", "https://earthdance.net/",
+     "Un centro de movimiento e improvisación de larga trayectoria en Plainfield, Massachusetts, que acoge talleres, residencias y jams."),
+    ("Touch&Play Global", "https://touchandplay.org/",
+     "Retiros, talleres y aprendizaje relacional construidos alrededor de la práctica del contacto y del consentimiento."),
+    ("Contact Improvisation Dance Canada", "https://www.contactimprov.ca/",
+     "Un recurso y sitio de listados nacional de IC, útil como modelo de cómo se organizan y se publican las jams de un país."),
+    ("Contact improvisation (entrada de enciclopedia)", "https://en.wikipedia.org/wiki/Contact_improvisation",
+     "Un punto de partida para las definiciones, el linaje y las influencias de la forma, con referencias."),
+]
+
+TEACHERS_NOTE_ES = (
+    '<div class="prose"><h2 id="teachers">Profesorado</h2>'
+    "<p>No existe ningún registro de profesorado de Improvisación de Contacto, en ningún sitio, porque "
+    "la forma nunca se registró como marca ni se certificó. Fue una decisión deliberada en 1975 y este "
+    "sitio no va a inventar la autoridad que los propios fundadores de la forma rechazaron.</p>"
+    "<p>Así que la posición honesta sobre Miami: <strong>no se pudo confirmar ningún profesor o "
+    "profesora de Improvisación de Contacto con base en Miami a partir de su propia información "
+    "publicada</strong> en el momento de escribir esto. Aparecen nombres individuales en directorios de "
+    "miembros de IC heredados de alrededor de 2010 y en publicaciones de redes sociales, y ninguno de "
+    "ellos es lo bastante actual para publicarlo. Quien sabe de verdad son las organizaciones de abajo, "
+    "y la vía más rápida es preguntar a la que organiza la clase a la que estás pensando ir.</p>"
+    f'<p>Si enseñas aquí, <a href="{R_SUBMIT}">mándanos tu página</a>. Una entrada de profesorado en '
+    "este sitio significa una sola cosa: esta persona publica qué enseña y dónde. No es un aval, y no "
+    "puede serlo, en una forma sin evaluador.</p></div>"
+)
+
+
+def _org_rows_es(rows, heading, blurb):
+    """Studio / organisation entries with Spanish labels and the values quoted verbatim."""
+    if not rows:
+        return ""
+    items = []
+    for name, kind, city, url, verified, note in rows:
+        items.append(
+            f'<li><p><a href="{html.escape(url)}" rel="noopener nofollow"><strong>{html.escape(name)}</strong></a>'
+            f" &middot; {html.escape(kind)}</p>"
+            f"<p>{html.escape(city)}</p>"
+            f"<p>{html.escape(note)}</p>"
+            f"<p>Comprobado el {verified}</p></li>"
+        )
+    return (
+        f'<div class="prose"><h2>{heading}</h2><p>{blurb}</p>'
+        f'<ul class="dir-list">{"".join(items)}</ul></div>'
+    )
+
+
+def directory():
+    resources = "".join(
+        f'<li><a href="{u}" rel="noopener nofollow">{n}</a><p>{d}</p></li>'
+        for n, u, d in GLOBAL_RESOURCES_ES
+    )
+    faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in DIRECTORY_FAQ_ES)
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Directorio</p>
+    <h1>A quién preguntar, y dónde continúa el mapa.</h1>
+    <p class="lede">Primero quien organiza y los estudios locales, después los recursos internacionales que sostienen los listados, los archivos y los festivales de la forma.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("La Improvisación de Contacto (IC) no tiene un directorio central porque no tiene un organismo central. Los listados locales los guardan quienes organizan. Lo más parecido a un índice global es el CI World Jam Map en contactimprov.com, que lista sesiones por país y estado, incluida una página de Florida que cubre Miami, Sarasota, Gainesville y Jacksonville.", SHORT)}
+    <div class="prose">
+      <h2>Recursos internacionales</h2>
+      <p>Estos son los sitios que de verdad sostienen los listados, los archivos y los encuentros de la forma. Cada uno se abrió y se comprobó cuando se añadió aquí.</p>
+      <ul class="dir-list">{resources}</ul>
+      <p>{LIST_VALUE_NOTE}</p>
+    </div>
+    {TEACHERS_NOTE_ES}
+    {_org_rows_es(listings.ORGS, "Estudios, compañías y organizaciones", "Cada una de estas se abrió y se comprobó. Donde una organización es adyacente al contacto y no de improvisación de contacto, la entrada lo dice. Los nombres, los tipos de organización y las notas se reproducen tal como se publicaron en la fuente.")}
+    {_org_rows_es(listings.ADJACENT, "Práctica adyacente, etiquetada con honestidad", "Disciplinas distintas con comunidades muy solapadas. Aparecen porque alguien nuevo que busca este tipo de movimiento en Miami va a encontrarse con estas personas de todas formas, y porque fingir lo contrario sería el tipo de directorio que te hace perder la tarde. Otra vez: práctica distinta, comunidad vecina.")}
+    <div class="prose">
+      <h2>Preguntas sobre el directorio</h2>
+      {faq_html}
+    </div>
+    {band("Añádete", "Sin cuota, sin membresía, sin comité. Si enseñas, acoges u organizas en el sur de Florida, esta página existe para señalar hacia ti.", [("Publicar una entrada", R_SUBMIT, "primary"), ("La escena de Miami", R_MIAMI, "secondary"), ("Seguir practicando", R_KEEP, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Directorio de Improvisación de Contacto</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/directorio", CITE)}
+  </div>
+</section>
+"""
+    items = [(n, u, d) for n, u, d in GLOBAL_RESOURCES_ES]
+    local = [(o[0], o[3], "") for o in listings.ORGS]
+    jsonld = schema.render(
+        schema.organisation("es"),
+        schema.webpage(
+            R_DIRECTORY,
+            "Directorio de Improvisación de Contacto: Miami y más allá",
+            "Profesorado, quien organiza y estudios de improvisación de contacto en Miami, más los recursos internacionales que sostienen los listados y los archivos de la forma.",
+            lang="es",
+        ),
+        schema.breadcrumb(R_DIRECTORY, "Directorio", lang="es"),
+        schema.faq(DIRECTORY_FAQ_ES, lang="es"),
+        schema.item_list(R_DIRECTORY + "#international", "Recursos internacionales de Improvisación de Contacto", items, lang="es"),
+        schema.item_list(R_DIRECTORY + "#miami", "Organizaciones de movimiento de Miami", local, lang="es"),
+    )
+    return page(
+        "Directorio de Improvisación de Contacto (100% gratis)",
+        "Profesorado, quien organiza y estudios de improvisación de contacto en Miami, más los recursos internacionales con los listados y archivos de la forma.",
+        R_DIRECTORY,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ---------------------------------------------------------------- glossary
+
+# One term, one definition, same slugs as the English page so a fragment identifier keeps
+# working in both locales. The retired English synonyms stay reachable as alternateName:
+# the English words are what people actually search, so they are not translated away.
+TERMS_ES = [
+    ("contact-improvisation", "Improvisación de Contacto (IC)",
+     "Una forma de danza en pareja en la que dos o más personas improvisan alrededor de puntos de contacto físico cambiantes, compartiendo peso y siguiendo la gravedad, el momento y el impulso."),
+    ("jam", "Jam",
+     "Una sesión abierta y sin guía donde cualquiera que esté presente puede bailar. Sin profesor, poca o ninguna música, y un borde donde sentarse a mirar."),
+    ("score", "Score",
+     "Una restricción enunciada que da forma a una improvisación, como bailar solo por debajo de las caderas o seguir el punto de contacto sin interrumpirlo."),
+    ("small-dance", "Small dance",
+     "La small dance es la práctica de pie con la que abre una sesión: te quedas quieto y sigues los microajustes que hace el cuerpo para mantenerse erguido, en lugar de intentar quedarte inmóvil."),
+    ("weight-sharing", "Compartir peso",
+     "Dar deliberadamente parte o todo tu peso a una pareja y recibir el suyo, con el apoyo del esqueleto y del suelo y no de la musculatura. Es la mecánica central de la forma: una persona da peso, la otra lo recibe, y los papeles se intercambian continuamente."),
+    ("spotting", "Spotting",
+     "Estar de pie y listo, con las manos libres, cerca de una pareja que baila, para que si una caída va mal haya alguien a mano que la frene."),
+    ("underscore", "Underscore",
+     "Un score grupal de formato largo desarrollado por Nancy Stark Smith, que recorre unas veinte fases nombradas y se usa para dar forma a toda una sesión de práctica o a un festival."),
+    ("landing", "Aterrizaje",
+     "Llegar al suelo desde una caída o un levantamiento, normalmente rodando a través del punto de contacto para que el suelo reciba el peso de forma progresiva."),
+    ("solo", "Solo",
+     "Bailar solo dentro de una jam. Completamente normal, y a menudo donde ocurre el trabajo más interesante."),
+    ("edge", "El borde",
+     "El perímetro de la sala donde la gente descansa, mira, bebe agua y vuelve a entrar. Mirar desde el borde es participación, no ausencia."),
+    ("contact-point", "Punto de contacto",
+     "El único lugar donde dos cuerpos se tocan. Mantenerlo en singular es lo que evita que el baile se convierta en un forcejeo."),
+    ("duet", "Dúo",
+     "Dos personas que bailan. La unidad básica de la forma, aunque la IC también ocurre en tríos y en grupos mayores."),
+    ("open-jam", "Jam abierta",
+     "Una jam sin requisito de experiencia previa. Si una jam está cerrada a principiantes, el listado lo dirá."),
+    ("consent-practice", "Práctica de consentimiento",
+     "El hábito de preguntar, rechazar y renegociar dentro del baile. Se trata como parte de la técnica y no como una política."),
+]
+
+TERM_ALTERNATES_ES = {
+    "small-dance": "the small dance",
+    "weight-sharing": "weight exchange",
+}
+
+
+def glossary():
+    rows = "".join(
+        f'<h3 id="{slug}">{term}</h3><p>{definition}</p>'
+        for slug, term, definition in TERMS_ES
+    )
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Vocabulario</p>
+    <h1>Las palabras que la gente usa en la sala.</h1>
+    <p class="lede">La Improvisación de Contacto tiene su propio lenguaje de trabajo. Nada de él hace falta para bailar, pero conocerlo hace que la primera jam sea mucho menos opaca.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("El vocabulario básico de la Improvisación de Contacto (IC) es: <strong>contacto</strong> (el punto donde dos cuerpos se tocan), <strong>compartir peso</strong> (dar y recibir el peso del cuerpo), la <strong>small dance</strong> (la práctica de pie con la que abre una sesión, siguiendo los microajustes del cuerpo en lugar de quedarse inmóvil), un <strong>score</strong> (una restricción enunciada), la <strong>jam</strong> (una sesión abierta y sin guía) y el <strong>spotting</strong> (estar listo para frenar una caída). El original inglés de cada término se nombra cuando es la palabra que la gente busca.", "La versión corta")}
+    <div class="prose">
+      <h2>Términos que se usan en una jam</h2>
+      <p>El vocabulario de trabajo de la Improvisación de Contacto, en una frase cada uno. Nada de él hace falta para bailar; conocerlo hace que la primera jam sea mucho menos opaca.</p>
+      {rows}
+    </div>
+    {band("Palabras aprendidas, el siguiente paso es una sala", "El vocabulario tiene sentido unos diez minutos después de tu primera jam, no antes.", [("Buscar una jam", R_JAMS, "primary"), ("Qué esperar", R_FIRST, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Glosario de Improvisación de Contacto</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/glosario", CITE)}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation("es"),
+        schema.webpage(
+            R_GLOSSARY,
+            "Glosario de Improvisación de Contacto",
+            "El vocabulario de trabajo de la Improvisación de Contacto: jam, score, small dance, underscore, compartir peso, spotting, aterrizaje y el borde.",
+            lang="es",
+        ),
+        schema.breadcrumb(R_GLOSSARY, "Glosario", lang="es"),
+        schema.defined_terms(TERMS_ES, path="/es/glosario", alternates=TERM_ALTERNATES_ES),
+    )
+    return page(
+        "Glosario de Improvisación de Contacto [Lista]",
+        "Definiciones en lenguaje llano de los términos de la Improvisación de Contacto: jam, score, small dance, underscore, compartir peso, spotting y el borde.",
+        R_GLOSSARY,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ---------------------------------------------------------------- history
+
+def history():
+    faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in HISTORY_FAQ_ES)
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Historia</p>
+    <h1>De dónde viene la Improvisación de Contacto.</h1>
+    <p class="lede">Empezó en un gimnasio universitario de Ohio, recibió su nombre en una galería de Nueva York y se dejó deliberadamente sin dueño.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("La Improvisación de Contacto (IC) fue desarrollada por el bailarín y coreógrafo estadounidense Steve Paxton en 1972. Surgió de una residencia en Oberlin College en enero de 1972 y de una serie de funciones en la John Weber Gallery de Nueva York en junio de 1972, y recibió la influencia de la danza moderna, el aikido y las prácticas somáticas. La forma nunca se registró como marca y no tiene organismo que la licencie.", SHORT)}
+    <div class="prose">
+      <h2>Enero de 1972, Oberlin College</h2>
+      <p>El colectivo improvisativo Grand Union estaba en residencia en Oberlin College, en Ohio. Paxton, miembro de ese grupo, venía dando lo que llamaba una clase suave a primera hora de la mañana, parte meditación y parte ejercicio ligero. Durante la residencia hizo una obra llamada <strong>Magnesium</strong> para once hombres sobre colchonetas, en la que se lanzaban, se atrapaban, se arrojaban y caían unos entre otros de forma continua, y que terminaba con varios minutos de quietud de pie. Ya le había pedido a una estudiante que estaba mirando, Nancy Stark Smith, que siguiera en contacto si alguna vez volvía a trabajar así.</p>
+      <p>Paxton traía un conjunto de influencias poco habitual: gimnasia de competición de sus años de escuela, años de estudio de aikido en el New York Aikikai, t'ai chi, tres años en la Merce Cunningham Dance Company y la cofundación del Judson Dance Theater en 1962. La técnica release llegó con Mary Fulkerson, a quien invitó al grupo siguiente.</p>
+      <h2>Junio de 1972, Nueva York</h2>
+      <p>En junio reunió a un grupo mixto para cinco días de práctica continua y una muestra pública en la John Weber Gallery de Nueva York. Ese evento se llamó Contact Improvisation. El grupo incluía a Nancy Stark Smith, Nita Little, Daniel Lepkoff, Barbara Dilley, Nancy Topf, Mary Fulkerson, Laura Chapman, Alice Lusterman, Curt Siddall, David Woodberry y Leon Felder, con Steve Christiansen documentando en vídeo. La primera iteración del baile se hizo en esa semana.</p>
+      <h2>1975: la decisión de no tenerlo</h2>
+      <p>En 1975 quienes trabajaban con Paxton habían formado ReUnion, una compañía que se reunía una vez al año para girar por la costa oeste con funciones y clases. Discutieron registrar el término <em>contact improvisation</em> como marca y establecer una certificación de profesorado, sobre todo porque la forma se extendía más rápido que sus prácticas de seguridad. Rechazaron las dos cosas y en su lugar fundaron un boletín como forma de mantener en contacto a practicantes geográficamente dispersos.</p>
+      <p>Nancy Stark Smith editó y produjo ese boletín, mecanografiando y fotocopiando ella misma los primeros números. Lisa Nelson se incorporó como coeditora en 1976, y la publicación pasó a llamarse <strong>Contact Quarterly</strong>, descrita entonces y después como un vehículo para ideas en movimiento. Se publicó durante cuatro décadas y media. La negativa a registrar la marca o certificar es la razón de que hoy no exista ninguna autoridad que licencie la Improvisación de Contacto en ningún lugar del mundo, y la razón de que la escena de cualquier ciudad tenga el aspecto que tiene: organizada localmente, enseñada informalmente y sostenida por las personas que aparecen.</p>
+      <h2>Cómo se desarrolló la práctica</h2>
+      <p>Stark Smith desarrolló después el <strong>Underscore</strong>, un score de formato largo que da a una improvisación grupal un arco de unas veinte fases nombradas, y los <strong>jeroglíficos</strong>, una notación para el ritmo sentido de un baile. El trabajo de Lisa Nelson sobre composición y percepción dio forma a cómo la práctica habla de ver y de ser visto. La investigación de Nita Little sobre los estados de atención conectó la IC con la ciencia cognitiva. La forma se trasladó también al trabajo de actuación, a la danza terapia, al teatro físico y a la coreografía contemporánea, de una manera que sus primeros practicantes no esperaban.</p>
+      <h2>La jam como la institución real</h2>
+      <p>Como nunca hubo una organización, lo que llevó la IC por todo el mundo fue la jam: una sesión informal, recurrente y sin enseñanza en una sala prestada, anunciada de boca en boca o en un listado impreso. Contact Quarterly llevó esos listados durante décadas en una sección llamada DanceMap. Esa función ocurre hoy en lugares dispersos, lo que es buena parte de la razón de que este sitio exista para Miami.</p>
+      <h2>Preguntas que la gente hace sobre la historia</h2>
+      {faq_html}
+    </div>
+    <div class="prose" style="margin-top:40px">
+      <h2 style="margin-top:0">Fuentes</h2>
+      <ul>
+        <li><a href="https://en.wikipedia.org/wiki/Contact_improvisation" rel="noopener">Contact improvisation</a>, Wikipedia (consultado en septiembre de 2026)</li>
+        <li><a href="http://sarma.be/docs/3269" rel="noopener">A Short History</a>, SARMA (consultado en septiembre de 2026)</li>
+        <li><a href="https://www.nytimes.com/2020/05/27/arts/dance/nancy-stark-smith-dead.html" rel="noopener">Nancy Stark Smith, a Founder of Contact Improvisation, Dies at 68</a>, The New York Times, 27 de mayo de 2020</li>
+        <li><a href="https://www.contactquarterly.com/" rel="noopener">Contact Quarterly</a>, la revista que nació del boletín de 1975</li>
+      </ul>
+    </div>
+    {band("Baila la historia en lugar de leerla", "La forma se siente más fácilmente de lo que se describe. Busca una jam y quédate quieto en una sala con otras personas durante dos minutos.", [("Jams en Miami", R_JAMS, "primary"), ("Glosario de términos", R_GLOSSARY, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Historia de la Improvisación de Contacto</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/historia", CITE)}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation("es"),
+        schema.webpage(
+            R_HISTORY,
+            "Historia de la Improvisación de Contacto",
+            "Cómo empezó la Improvisación de Contacto en 1972: Steve Paxton, Magnesium en Oberlin, las primeras funciones en la John Weber Gallery y la decisión de 1975 de no registrar la forma como marca.",
+            lang="es",
+        ),
+        schema.breadcrumb(R_HISTORY, "Historia", lang="es"),
+        schema.faq(HISTORY_FAQ_ES, lang="es"),
+    )
+    return page(
+        "Historia de la Improvisación de Contacto [Cronología]",
+        "Cómo empezó la Improvisación de Contacto: Steve Paxton, Magnesium en Oberlin College y por qué la forma nunca se registró como marca ni se certificó.",
+        R_HISTORY,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ---------------------------------------------------------------- keep practising
+
+def keep_practising():
+    sessions = _sessions_for_stage()
+    rank_note = (
+        "La modalidad de cada entrada de arriba es la que quien organiza declara sobre su "
+        "propia sesión, y cada entrada lleva la fecha en que se abrió y se leyó su fuente: "
+        f"<strong>{LAST_CHECKED_BY_LANG['es']}</strong>. Esta página no clasifica nada. Las "
+        "entradas aparecen en el orden en que se verificaron, ninguna está pagada y este sitio "
+        "no recomienda ninguna por encima de otra."
+    )
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Después de la primera vez</p>
+    <h1>Cómo seguir practicando la improvisación de contacto en Miami.</h1>
+    <p class="lede">La parte que viene después de tu primera visita: qué hacer entre jams, por qué la segunda se siente distinta y qué hacer en las semanas en que no hay nada.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("Sigues practicando volviendo. La Improvisación de Contacto se aprende en la sala y no entre sesiones, así que la respuesta honesta es una jam o una clase semanal, más un poco de práctica en solitario para las semanas en que no hay nada. Esta página cubre la parte posterior a tu primera visita, incluidas las semanas en que la respuesta es que no hay nada.", SHORT)}
+    <div class="prose">
+      <h2>Practicar por tu cuenta</h2>
+      <p>La <a href="{R_GLOSSARY}#small-dance">small dance</a> es la versión casera de toda la forma: quédate de pie, con la mirada suave, y sigue los microajustes que hace tu cuerpo para mantenerse erguido. Dos minutos bastan para empezar.</p>
+      <p>A partir de ahí, trabajo de suelo y práctica de caídas. Rodar por el suelo sin empujarte con las manos, y aprender a recibir el suelo rodando en lugar de frenarte. No tiene nada de glamuroso, y es de donde viene en realidad casi toda la seguridad de una jam. <a href="{R_SAFETY}">Seguridad y consentimiento</a> cubre la mecánica con más detalle.</p>
+      <h2>Practicar con pareja</h2>
+      <p>La forma la practican dos personas, así que en algún momento necesitarás una. El camino es la sala y no una aplicación: baila con gente en una jam y después pregúntale sin más si querría practicar fuera de ella. Mucha gente quiere una pareja de práctica y nunca lo pide.</p>
+      <p>Acordad dos cosas antes de empezar: en qué parte del cuerpo estáis trabajando y que cualquiera de los dos puede parar en cualquier momento. Veinte minutos de compartir peso en un suelo sin música son una práctica completa.</p>
+      <h2>La segunda visita</h2>
+      <p>La segunda visita es más fácil y más extraña que la primera. Más fácil, porque ya conoces la forma de la noche y dónde está el agua. Más extraña, porque ahora tienes una memoria corporal de cómo se siente un baile, y el hueco entre eso y el principio del siguiente se nota.</p>
+      <p>La mayoría de la gente que deja la IC la deja entre la primera y la tercera visita. Volver dos veces suele bastar para que se convierta en un hábito.</p>
+      <h2>Si esta semana no hay nada</h2>
+      <p>Miami no tiene un calendario central de IC, así que "¿hay jam esta noche?" no tiene una respuesta fija, y este sitio no adivina ni publica una fecha que no ha comprobado. Los lugares que pueden responder son quienes organizan, cuyas propias páginas y mensajes directos son la única fuente con autoridad, y la <a href="{R_JAMS}">página de jams</a>, donde cada entrada muestra la fecha en que se comprobó por última vez.</p>
+      <p>El mapa mundial CI World Jam Map mantiene una <a href="https://www.contactimprov.com/florida.html" rel="noopener nofollow">página de Florida</a> con los listados de la propia comunidad, y es honesta sobre lo incompleta que está. El <a href="{R_DIRECTORY}">directorio</a> de aquí lista los estudios, quien organiza y las prácticas adyacentes que están vigentes y contestan a un mensaje.</p>
+      <h2>Formar parte de la sala</h2>
+      <p>Una escena sin institución la mantiene quien llega temprano. Tres cosas convierten la asistencia en pertenencia: llega al principio, porque el círculo de apertura es donde se fijan las reglas de la sala y donde es más fácil incluir a quien viene por primera vez. Ofrécete a ayudar a montar o a recoger, porque quienes hacen eso son quienes saben qué pasa el mes que viene. Y cuando estés listo, organiza.</p>
+      <p>La mayoría de las jams del mundo existen porque una persona reservó una sala, así que <a href="{R_MIAMI}#start-one">empezar una en Miami</a> es el mecanismo real y no un premio de consolación. Si sabes dónde se baila este mes, <a href="{R_SUBMIT}">díselo a este sitio</a> y entra en el mapa.</p>
+      <h2>El ritmo de un año en Miami</h2>
+      <p>La práctica aquí viene por capas. Una clase o una jam semanal es el suelo. Los talleres están por encima. Una vez al año, en febrero, Love Burn en Virginia Key trae a Camp Contact, que lleva la improvisación de contacto, el acro yoga, la danza extática y el authentic relating como su programa.</p>
+      <p>Ese campamento es la mayor concentración de improvisación de contacto que ocurre en Miami en un año, y es un festival y no una clase. Las fechas se mueven, así que lee la página de quien lo organiza; esta página no publica ninguna fecha.</p>
+    </div>
+    {sessions}
+    <div class="prose">
+      <p>{rank_note}</p>
+      <h2>Qué no hará esta página</h2>
+      <p>No te va a dar un calendario. Una fecha que no se ha verificado contra la página de quien organiza no aparece en este sitio, porque un listado desactualizado es peor que ningún listado. Una clase enseña las habilidades que una jam da por supuestas, y <a href="{R_CLASSES}">clases y talleres</a> cubre cómo juzgar una.</p>
+    </div>
+    {band("Dónde está de verdad el baile de esta semana", "Las páginas de quienes organizan son la única fuente actual, y cada entrada de arriba enlaza con una.", [("Jams en Miami", R_JAMS, "primary"), ("Profesorado y organizadores", R_DIRECTORY, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Cómo seguir practicando la Improvisación de Contacto en Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/seguir-practicando", CITE)}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation("es"),
+        schema.webpage(
+            R_KEEP,
+            "Cómo seguir practicando la Improvisación de Contacto en Miami",
+            "Qué hacer después de una primera jam de Improvisación de Contacto en Miami: practicar sola y con pareja, la segunda visita, las semanas en que no hay nada y cómo mantenerte informada.",
+            date_modified=LAST_CHECKED_ISO,
+            lang="es",
+        ),
+        schema.breadcrumb(R_KEEP, "Seguir practicando", lang="es"),
+    )
+    return page(
+        "Seguir practicando la Improvisación de Contacto",
+        "Qué hacer después de tu primera jam de improvisación de contacto en Miami: practicar sola y en pareja, la segunda visita y las semanas sin nada.",
+        R_KEEP,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ---------------------------------------------------------------- video room
+
+def videos():
+    count = videos_data.embed_count()
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Sala de vídeo</p>
+    <h1>Nuestros propios filmes se están haciendo. Hasta entonces, esta sala es dar crédito a quien lo merece.</h1>
+    <p class="lede">Esta jam todavía no ha rodado un vídeo, así que nada de esta página es nuestro. Cada filme de abajo lo hizo el canal que se nombra en él, se reproduce en el reproductor de ese canal y sigue siendo el trabajo de ese canal. Lo que estamos rodando para Miami aparece como lo que es: en producción, sin duración y sin fecha hasta que exista un archivo.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer(f"Cada filme de esta página lo hizo otra persona y se le acredita por su nombre: {count} piezas, cada una incrustada desde la plataforma que la aloja. Ninguna se rodó en Miami, y ninguna es de este sitio. Los filmes de la propia jam están en producción, listados aquí como piezas previstas; cada una sube al principio de esta página como nuestra solo cuando el archivo terminado se aloje aquí.", SHORT)}
+    {videos_data.owned_room("es")}
+    {videos_data.in_production("es")}
+    {videos_data.reference_section("es")}
+    {videos_data.credits("es")}
+    {band("Ya has visto bastante", "Nada de esta página te va a enseñar lo que te enseñan dos minutos en un suelo con otra persona.", [("Jams en Miami", R_JAMS, "primary"), ("Recorrido de la primera jam", R_FIRST, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Sala de vídeo de Improvisación de Contacto</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/videos", CITE)}
+  </div>
+</section>
+"""
+    # No VideoObject here, on purpose: build/videos_data.py description strings are
+    # English, and publishing English prose inside the structured data of a Spanish page
+    # is the same defect that keeps Event schema off the Spanish jam pages. The list
+    # below carries the film's own title and its watch URL and nothing else, and the
+    # films stay published once, with full markup, from the English /videos page.
+    films = [
+        (v[2], videos_data.watch_url(v), "")
+        for v in videos_data.VIDEOS
+    ] + [
+        (o[1], videos_data.content_url(o), "")
+        for o in videos_data.OWNED
+    ]
+    jsonld = schema.render(
+        schema.organisation("es"),
+        schema.webpage(
+            R_VIDEOS,
+            "Sala de vídeo de Improvisación de Contacto",
+            "La Improvisación de Contacto en vídeo: cada canal acreditado por su nombre, más los filmes que esta jam está rodando en Miami.",
+            lang="es",
+        ),
+        schema.breadcrumb(R_VIDEOS, "Vídeos", lang="es"),
+        schema.item_list(
+            R_VIDEOS,
+            "Filmes de Improvisación de Contacto en la sala de vídeo",
+            films,
+            lang="es",
+        ),
+    )
+    return page(
+        f"Vídeos de Improvisación de Contacto ({count})",
+        "La Improvisación de Contacto en vídeo: los canales que los hicieron, con su nombre, y los filmes que esta jam rueda en Miami. Ninguno es nuestro todavía.",
+        R_VIDEOS,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ---------------------------------------------------------------- about
+
+def about():
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Acerca de</p>
+    <h1>Qué es este sitio, y qué no es.</h1>
+    <p class="lede">Una referencia independiente y sin ánimo de lucro sobre la Improvisación de Contacto en Miami. Sin membresía, sin comisión, sin estudio detrás y sin ningún organizador que promocionar.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("miamicontactimprov.com es un recurso comunitario independiente que traza un mapa de la práctica de la Improvisación de Contacto (IC) en los condados de Miami-Dade y Broward. Publica lo que se puede verificar, dice con claridad lo que no, y acepta correcciones de cualquiera que esté en la escena. No organiza sesiones, no acepta reservas y no cobra por publicar.", SHORT)}
+    <div class="prose">
+      <h2>Por qué existe</h2>
+      <p>La Improvisación de Contacto no tiene federación, ni licencia, ni organización central. Esa apertura es la razón de que se extendiera a todos los continentes, y es también la razón de que una ciudad como Miami pueda tener una práctica intermitente de décadas sin nada en internet que lo demuestre. Cuando la forma no tiene institución, el mapa hay que construirlo a mano.</p>
+      <p>El mapa mundial CI World Jam Map de contactimprov.com lo hace a escala global desde los años noventa. Este sitio lo hace a escala de una ciudad, con más detalle del que puede llevar un listado global, y enlaza de vuelta al mapa mundial en lugar de competir con él.</p>
+      <h2>Cómo funcionan aquí las entradas</h2>
+      <ul>
+        <li>Todo lo que se publica se comprueba antes contra la información que publica quien lo organiza.</li>
+        <li>Si una sesión no se puede verificar, se lista como no verificada o se deja fuera, nunca se adivina.</li>
+        <li>Nada está pagado. No hay entradas patrocinadas ni acuerdos de afiliación.</li>
+        <li>Las retiradas son normales. Las sesiones terminan, los estudios cierran, quien organiza se muda, y la página se corrige.</li>
+        <li>La exactitud importa más que la exhaustividad. Una página corta y honesta gana a una larga y equivocada.</li>
+      </ul>
+      <h2 id="submit">Publica, corrige o retira una entrada</h2>
+      <p>Escribe a <a href="mailto:hello@miamicontactimprov.com">hello@miamicontactimprov.com</a>, o responde desde cualquier cuenta desde la que este sitio publique. En inglés o en español, cualquiera de los dos vale.</p>
+      <p>Qué mandar para una jam o una clase:</p>
+      {facts([
+        ("Nombre", "Cómo se llama la sesión"),
+        ("Dónde", "El nombre del estudio o del lugar, y la ciudad"),
+        ("Cuándo", "Día, hora y cada cuánto"),
+        ("Precio", "Entrada, donación o gratis"),
+        ("Para quién es", "Abierta a todo el mundo, o se presupone experiencia previa"),
+        ("Enlace", "Tu propia página, entrada de calendario o cuenta de redes"),
+      ])}
+      <p>Qué mandar para una entrada de profesorado: tu nombre, tu ciudad, qué enseñas y un enlace a tu propia página. Si prefieres no aparecer en ningún sitio, dilo y te retiramos sin preguntar por qué.</p>
+      <p>Si eres propietario de un filme incrustado en la <a href="{R_VIDEOS}">sala de vídeo</a> y prefieres que no lo esté, una línea basta. Baja el mismo día.</p>
+      <h2>Correcciones</h2>
+      <p>Si algo de aquí está mal, es más útil decírnoslo que ignorarlo. Las correcciones que retiran una afirmación son tan bienvenidas como las que añaden una sesión, y la página se cambia en lugar de anotarse.</p>
+      <h2>Qué no es este sitio</h2>
+      <ul>
+        <li>No es un estudio, ni un servicio de reservas, ni una escuela.</li>
+        <li>No evalúa, no certifica ni avala a profesorado. Nadie puede, en esta forma.</li>
+        <li>No está afiliado a contactimprov.com, a Contact Quarterly ni a ningún festival.</li>
+        <li>No media en disputas entre bailarinas o entre organizadores.</li>
+      </ul>
+    </div>
+    {band("La página vale lo que vale la sala", "Si sabes dónde se baila este mes, eso es lo más útil que nos puedes mandar.", [("Escríbenos", "mailto:hello@miamicontactimprov.com", "primary"), ("Leer la página de Miami", R_MIAMI, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Acerca de</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/acerca-de", CITE)}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation("es"),
+        schema.webpage(
+            R_ABOUT,
+            "Acerca de Miami Contact Improv",
+            "Qué es miamicontactimprov.com: un recurso comunitario independiente que traza un mapa de la Improvisación de Contacto en Miami-Dade y Broward. Cómo publicar, corregir o retirar una entrada.",
+            lang="es",
+        ),
+        schema.breadcrumb(R_ABOUT, "Acerca de", lang="es"),
+    )
+    return page(
+        "Acerca de Miami Contact Improv (publicar gratis)",
+        "Un mapa independiente y sin ánimo de lucro de la Improvisación de Contacto en Miami. Cómo se comprueban las entradas y cómo publicar, corregir o retirar una.",
+        R_ABOUT,
         body,
         jsonld=jsonld,
         lang="es",

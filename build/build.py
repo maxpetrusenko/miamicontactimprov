@@ -53,11 +53,19 @@ PAGES = [
     # own canonical, its own sitemap entry and its own side of the hreflang pair.
     ("home", "es", content_es.home, "1.0", "weekly", None),
     ("what-is-contact-improvisation", "es", content_es.what_is, "0.9", "monthly", None),
+    ("miami", "es", content_es.miami, "0.9", "weekly", None),
     ("miami-jams", "es", content_es.miami_jams, "0.8", "weekly", None),
     ("jams", "es", content_es.jams, "0.7", "weekly", None),
+    ("classes", "es", content_es.classes, "0.7", "monthly", None),
     ("your-first-jam", "es", content_es.your_first_jam, "0.7", "monthly", None),
+    ("keep-practising", "es", content_es.keep_practising, "0.6", "monthly", None),
+    ("videos", "es", content_es.videos, "0.6", "monthly", None),
+    ("directory", "es", content_es.directory, "0.6", "weekly", None),
+    ("glossary", "es", content_es.glossary, "0.5", "monthly", None),
+    ("history", "es", content_es.history, "0.5", "yearly", None),
     ("safety-and-consent", "es", content_es.safety, "0.6", "yearly", None),
     ("faq", "es", content_es.faq, "0.6", "monthly", None),
+    ("about", "es", content_es.about, "0.4", "yearly", None),
 ]
 
 ROW_FIELDS = ("slug", "lang", "route", "filename", "builder", "priority", "changefreq", "bg")
@@ -310,10 +318,11 @@ KEY_FACTS = [
 ]
 
 LOCALE_NOTE = (
-    "Seven core pages are also published in Spanish under /es/. The Spanish pages are "
-    "translations of their English counterparts and make no claim the English page does "
-    "not make; where a page is English-only it is absent from /es/ rather than machine-"
-    "translated. The English page is the x-default of every pair."
+    "Every public page is published in both English and Spanish, 30 pages in total. The "
+    "Spanish pages under /es/ are translations of their English counterparts and make no "
+    "claim the English page does not make; a page is never machine-translated, and a page "
+    "that is not translated is absent from /es/ rather than generated. The English page is "
+    "the x-default of every pair."
 )
 
 

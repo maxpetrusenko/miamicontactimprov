@@ -55,36 +55,33 @@ ROUTES = {
         "en": "/safety-and-consent",
         "es": "/es/seguridad-y-consentimiento",
     },
-    # English-only pages. One locale in the row, so no hreflang pair is declared and
-    # the switcher sends a Spanish reader to the Spanish home rather than to a page
-    # that does not exist.
-    "miami": {"en": "/miami"},
-    "classes": {"en": "/classes"},
-    "keep-practising": {"en": "/keep-practising"},
-    "videos": {"en": "/videos"},
-    "directory": {"en": "/directory"},
-    "glossary": {"en": "/glossary"},
-    "history": {"en": "/history"},
-    "about": {"en": "/about"},
+    "miami": {"en": "/miami", "es": "/es/miami"},
+    "classes": {"en": "/classes", "es": "/es/clases"},
+    "keep-practising": {"en": "/keep-practising", "es": "/es/seguir-practicando"},
+    "videos": {"en": "/videos", "es": "/es/videos"},
+    "directory": {"en": "/directory", "es": "/es/directorio"},
+    "glossary": {"en": "/glossary", "es": "/es/glosario"},
+    "history": {"en": "/history", "es": "/es/historia"},
+    "about": {"en": "/about", "es": "/es/acerca-de"},
 }
 
 # The order the pages are written, ranked and listed in llms.txt. Purely presentational.
 ORDER = [
     ("home", "en"), ("home", "es"),
     ("what-is-contact-improvisation", "en"), ("what-is-contact-improvisation", "es"),
-    ("miami", "en"),
+    ("miami", "en"), ("miami", "es"),
     ("miami-jams", "en"), ("miami-jams", "es"),
     ("jams", "en"), ("jams", "es"),
-    ("classes", "en"),
+    ("classes", "en"), ("classes", "es"),
     ("your-first-jam", "en"), ("your-first-jam", "es"),
-    ("keep-practising", "en"),
-    ("videos", "en"),
-    ("directory", "en"),
-    ("glossary", "en"),
-    ("history", "en"),
+    ("keep-practising", "en"), ("keep-practising", "es"),
+    ("videos", "en"), ("videos", "es"),
+    ("directory", "en"), ("directory", "es"),
+    ("glossary", "en"), ("glossary", "es"),
+    ("history", "en"), ("history", "es"),
     ("safety-and-consent", "en"), ("safety-and-consent", "es"),
     ("faq", "en"), ("faq", "es"),
-    ("about", "en"),
+    ("about", "en"), ("about", "es"),
 ]
 
 
@@ -144,6 +141,10 @@ NO_TRANSLATION_TITLE = {
     "en": "This page has no translation yet",
     "es": "Esta página aún no está traducida",
 }
+
+# Every public page now exists in both locales, so no switcher link is a fallback any
+# more. The map stays because switch_targets still supports a one-locale slug, and a
+# future page added in English only must keep explaining itself.
 
 
 def switch_targets(slug, lang):
