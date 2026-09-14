@@ -112,7 +112,7 @@ def jams():
         listings.events_schema(),
     )
     return page(
-        "Contact Improv Jams in Miami | What to Expect & Where to Go",
+        "Contact Improv Jams in Miami (What to Expect)",
         "What a contact improv jam is and how a session runs, plus the open practice sessions confirmed in Miami and South Florida. What to wear, what to bring, how to leave a dance.",
         "/jams",
         body,
@@ -316,7 +316,7 @@ def videos():
         videos_data.schema_list(),
     )
     return page(
-        "Contact Improvisation Videos | Performance, Jams & Documentary",
+        "Contact Improvisation Videos (22) | Films, Jams & Documentary",
         "Contact Improvisation on film: performance work, jam footage and documentary records worth watching before your first session.",
         "/videos",
         body,

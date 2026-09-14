@@ -182,6 +182,54 @@ def check_seo(pages, site_dir, canonicals_seen):
     measured("seo.pages", len(pages))
 
 
+# Google renders title links at about 20px Arial in desktop results and cuts
+# them off near 580px. Measure the real font rather than counting characters:
+# character counts are off by 30-40px on these titles, which is the whole
+# margin at this length.
+TITLE_PIXEL_LIMIT = 580
+TITLE_FONT_CANDIDATES = [
+    "/System/Library/Fonts/Supplemental/Arial.ttf",
+    "/Library/Fonts/Arial.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+]
+
+
+def _title_font():
+    try:
+        from PIL import ImageFont
+    except Exception:  # noqa: BLE001
+        return None
+    for path in TITLE_FONT_CANDIDATES:
+        if pathlib.Path(path).exists():
+            try:
+                return ImageFont.truetype(path, 20)
+            except Exception:  # noqa: BLE001
+                continue
+    return None
+
+
+def check_title_width(pages):
+    font = _title_font()
+    if font is None:
+        # Fail closed. A measurement check that cannot measure must not be green.
+        add(ERROR, "title-width", "-",
+            "cannot measure title width: PIL or an Arial/Liberation font is missing")
+        return
+    n = 0
+    for page, src in pages.items():
+        m = TITLE_RE.search(src)
+        if not m:
+            continue
+        title = m.group(1).strip()
+        n += 1
+        px = round(font.getlength(title), 1)
+        if px > TITLE_PIXEL_LIMIT:
+            add(ERROR, "title-width", page,
+                f"title is {px}px, past the {TITLE_PIXEL_LIMIT}px cutoff: {title}")
+    measured("title-width.titles", n)
+
+
 def check_sitemap(site_dir, pages):
     sm = (site_dir / "sitemap.xml").read_text(encoding="utf-8")
     locs = SITEMAP_LOC_RE.findall(sm)
@@ -340,6 +388,7 @@ def main():
     check_html_structure(pages)
     check_jsonld(pages)
     check_seo(pages, site_dir, {})
+    check_title_width(pages)
     check_sitemap(site_dir, pages)
     check_links(pages, site_dir)
     check_files(site_dir)

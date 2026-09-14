@@ -195,7 +195,7 @@ def what_is():
         schema.defined_terms(WHATIS_TERMS, "/what-is-contact-improvisation"),
     )
     return page(
-        "What is Contact Improvisation? Definition, History & How a Jam Works",
+        "What Is Contact Improvisation? Definition & How a Jam Works",
         "Contact Improvisation explained: a 1972 partnered dance form built on shared weight and a rolling point of contact. What a jam is, consent, spotting and how to start.",
         "/what-is-contact-improvisation",
         body,
@@ -271,7 +271,7 @@ def history():
         schema.faq(HISTORY_FAQ),
     )
     return page(
-        "History of Contact Improvisation: 1972 to Now | Miami Contact Improv",
+        "History of Contact Improvisation: 1972 to Now [Timeline]",
         "How Contact Improvisation began: Steve Paxton, Magnesium at Oberlin College, the first performances in New York in 1972, and why the form was never trademarked.",
         "/history",
         body,
@@ -342,7 +342,7 @@ def glossary():
         schema.defined_terms(terms),
     )
     return page(
-        "Contact Improvisation Glossary: Jam, Score, Small Dance & More",
+        "Contact Improvisation Glossary: Jam, Score & Small Dance",
         "Plain-language definitions of Contact Improvisation terms: jam, score, small dance, underscore, weight sharing, spotting, landing and the edge.",
         "/glossary",
         body,

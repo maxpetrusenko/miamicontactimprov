@@ -210,7 +210,7 @@ def directory():
         schema.item_list("/directory#miami", "Miami movement organisations", local),
     )
     return page(
-        "Contact Improvisation Directory | Miami Teachers & Studios",
+        "Contact Improvisation Directory (Verified Listings)",
         "Contact improvisation directory: Miami teachers, organisers and studios, plus the international resources that hold the form's jam listings, archives and festivals.",
         "/directory",
         body,
