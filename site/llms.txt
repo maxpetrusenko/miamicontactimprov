@@ -5,6 +5,10 @@ It is an independent, non-commercial community resource that maps Contact Improv
 
 It has no membership, no booking function and no commercial interest in any listing. Every local fact is either verified against the organiser's own published information or explicitly marked as unverified. Quotation with attribution to https://miamicontactimprov.com is welcome.
 
+## Languages
+
+Seven core pages are also published in Spanish under /es/. The Spanish pages are translations of their English counterparts and make no claim the English page does not make; where a page is English-only it is absent from /es/ rather than machine-translated. The English page is the x-default of every pair.
+
 ## Key facts
 
 - Contact Improvisation (CI) is a partnered improvised dance form developed by Steve Paxton in 1972.
@@ -17,21 +21,28 @@ It has no membership, no booking function and no commercial interest in any list
 
 ## Pages
 
-- https://miamicontactimprov.com/
-- https://miamicontactimprov.com/what-is-contact-improvisation
-- https://miamicontactimprov.com/miami
-- https://miamicontactimprov.com/miami-jams
-- https://miamicontactimprov.com/jams
-- https://miamicontactimprov.com/classes
-- https://miamicontactimprov.com/your-first-jam
-- https://miamicontactimprov.com/keep-practising
-- https://miamicontactimprov.com/videos
-- https://miamicontactimprov.com/directory
-- https://miamicontactimprov.com/glossary
-- https://miamicontactimprov.com/history
-- https://miamicontactimprov.com/safety-and-consent
-- https://miamicontactimprov.com/faq
-- https://miamicontactimprov.com/about
+- https://miamicontactimprov.com/  (en)
+- https://miamicontactimprov.com/what-is-contact-improvisation  (en)
+- https://miamicontactimprov.com/miami  (en)
+- https://miamicontactimprov.com/miami-jams  (en)
+- https://miamicontactimprov.com/jams  (en)
+- https://miamicontactimprov.com/classes  (en)
+- https://miamicontactimprov.com/your-first-jam  (en)
+- https://miamicontactimprov.com/keep-practising  (en)
+- https://miamicontactimprov.com/videos  (en)
+- https://miamicontactimprov.com/directory  (en)
+- https://miamicontactimprov.com/glossary  (en)
+- https://miamicontactimprov.com/history  (en)
+- https://miamicontactimprov.com/safety-and-consent  (en)
+- https://miamicontactimprov.com/faq  (en)
+- https://miamicontactimprov.com/about  (en)
+- https://miamicontactimprov.com/es/  (es)
+- https://miamicontactimprov.com/es/que-es-la-improvisacion-de-contacto  (es)
+- https://miamicontactimprov.com/es/jams-miami-dade-broward  (es)
+- https://miamicontactimprov.com/es/jams  (es)
+- https://miamicontactimprov.com/es/tu-primera-jam  (es)
+- https://miamicontactimprov.com/es/seguridad-y-consentimiento  (es)
+- https://miamicontactimprov.com/es/preguntas-frecuentes  (es)
 
 ## Contact
 

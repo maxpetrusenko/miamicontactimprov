@@ -48,21 +48,24 @@ jobs:
       - name: Assert the gate measured the whole surface
         run: |
           set -euo pipefail
-          pages=$(find site -maxdepth 1 -name '*.html' | wc -l | tr -d ' ')
+          # Recursive on purpose: /es/ is a locale, not an exception. A maxdepth-1 find
+          # counted 16 pages while the gate measured 23, so this assertion had stopped
+          # covering the Spanish tree it is supposed to be checking.
+          pages=$(find site -name '*.html' | wc -l | tr -d ' ')
           echo "rendered pages: $pages"
-          if [ "$pages" -lt 12 ]; then
-            echo "::error::expected at least 12 rendered pages, measured $pages"
+          if [ "$pages" -lt 20 ]; then
+            echo "::error::expected at least 20 rendered pages, measured $pages"
             exit 1
           fi
-          for f in robots.txt sitemap.xml llms.txt llms-full.txt _headers 404.html; do
+          for f in robots.txt sitemap.xml llms.txt llms-full.txt _headers 404.html es/index.html; do
             test -s "site/$f" || { echo "::error::missing discovery file: site/$f"; exit 1; }
           done
 
       - name: Verify the structured-data graph actually declares the canonical host
         run: |
           set -euo pipefail
-          n=$(grep -l 'miamicontactimprov.com' site/*.html | wc -l | tr -d ' ')
-          total=$(find site -maxdepth 1 -name '*.html' | wc -l | tr -d ' ')
+          n=$(grep -rl 'miamicontactimprov.com' --include='*.html' site | wc -l | tr -d ' ')
+          total=$(find site -name '*.html' | wc -l | tr -d ' ')
           echo "pages naming the canonical host: $n of $total"
           test "$n" -eq "$total" || { echo "::error::not every page declares the canonical host"; exit 1; }
 

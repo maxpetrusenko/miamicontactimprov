@@ -95,6 +95,9 @@ REQUIRED_ANY = {
 }
 
 LD_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
+CANON_RE = re.compile(r'<link rel="canonical" href="([^"]+)">')
+HTML_LANG_RE = re.compile(r'<html\b[^>]*\blang="([^"]+)"', re.I)
+ALT_RE = re.compile(r'<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">')
 
 # Nodes that live under a container key rather than at the top of @graph. Without
 # walking these, REQUIRED["VideoObject"] and REQUIRED["ListItem"] applied to nothing
@@ -190,13 +193,20 @@ def check_jsonld(pages):
 
 
 # ---------------------------------------------------------------- seo
+# Shouted markers are matched CASE-SENSITIVELY. "TODO" is a build marker; "todo" is the
+# ordinary Spanish word for "everything", and matching it case-insensitively made this
+# check fire on correctly written Spanish prose. A false positive here is not cosmetic:
+# it is a gate that forbids a language.
+PLACEHOLDERS_CASED = [r"\bTODO\b", r"\bTBD\b", r"\bFIXME\b", r"\bXXX\b"]
 PLACEHOLDERS = [
-    r"\bTODO\b", r"\bTBD\b", r"\bFIXME\b", r"\bXXX\b", r"lorem ipsum",
-    r"Replace with", r"\bFirst name\b", r"\bLast name\b", r"YYYY-MM-DD",
-    r"2026-MM-DD", r"\bplaceholder\b", r"\bLorem\b", r"\[insert",
+    r"lorem ipsum", r"Replace with", r"\bFirst name\b", r"\bLast name\b",
+    r"YYYY-MM-DD", r"2026-MM-DD", r"\bplaceholder\b", r"\bLorem\b", r"\[insert",
 ]
+# Two patterns, because the two classes of marker need different matching. The
+# phrase-like ones are safe case-insensitively; the shouted ones are not.
 PLACE_RE = re.compile("|".join(PLACEHOLDERS), re.I)
-CANON_RE = re.compile(r'<link rel="canonical" href="([^"]+)">')
+PLACE_SENSITIVE_RE = re.compile("|".join(PLACEHOLDERS_CASED))
+PLACE_SENSITIVE_RE = re.compile("|".join(PLACEHOLDERS_CASED))
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S)
 DESC_RE = re.compile(r'<meta name="description" content="([^"]*)">')
 H1_RE = re.compile(r"<h1\b")
@@ -205,8 +215,11 @@ SITEMAP_LOC_RE = re.compile(r"<loc>(.*?)</loc>")
 
 def check_seo(pages, site_dir, canonicals_seen):
     for page, src in pages.items():
-        if PLACE_RE.search(src):
-            hits = sorted({m.group(0) for m in PLACE_RE.finditer(src)})
+        hits = sorted(
+            {m.group(0) for m in PLACE_RE.finditer(src)}
+            | {m.group(0) for m in PLACE_SENSITIVE_RE.finditer(src)}
+        )
+        if hits:
             add(ERROR, "seo", page, f"placeholder text in markup: {hits}")
         t = TITLE_RE.search(src)
         d = DESC_RE.search(src)
@@ -422,15 +435,39 @@ def check_disambiguation(site_dir, pages):
 
     Without it a model can read this site as a studio, a paid directory, or as
     miamiimprov.com (a comedy theatre), which is a real liability on this domain.
+
+    The phrase is asserted PER LOCALE. build/schema.py owns one mapping
+    (DISAMBIGUATION_BY_LANG) and this check reads the phrase that matches the language
+    each page declares on <html>; a Spanish page whose Spanish disambiguation is
+    deleted fails here rather than passing on the English string, which is what a
+    single-language check would have done. The English entry keeps its own name
+    (DISAMBIGUATION) because llms.txt quotes it.
     """
-    phrase = _schema_constant("DISAMBIGUATION")
-    if not phrase:
+    by_lang = _schema_constant("DISAMBIGUATION_BY_LANG")
+    english = _schema_constant("DISAMBIGUATION")
+    if not isinstance(by_lang, dict) or not by_lang:
+        add(ERROR, "disambiguation", "build/schema.py",
+            "the DISAMBIGUATION_BY_LANG map is missing or empty; the entity "
+            "disambiguation has been reduced to a single language again")
+        by_lang = {}
+    if not english:
         add(ERROR, "disambiguation", "build/schema.py",
             "the DISAMBIGUATION constant is missing or empty; the entity "
             "disambiguation has been dropped")
         return
     n = 0
+    fallback_pages = 0
     for page, src in pages.items():
+        m = HTML_LANG_RE.search(src)
+        lang = m.group(1) if m else "en"
+        phrase = by_lang.get(lang)
+        if not phrase:
+            # A page in a language the constant does not cover cannot be checked, and a
+            # check that cannot check must not read green.
+            fallback_pages += 1
+            add(ERROR, "disambiguation", page,
+                f"build/schema.py declares no disambiguation for lang='{lang}'")
+            phrase = english
         for raw in LD_RE.findall(src):
             try:
                 data = json.loads(raw)
@@ -448,15 +485,17 @@ def check_disambiguation(site_dir, pages):
                     add(ERROR, "disambiguation", page,
                         f"Organization.disambiguatingDescription does not state '{phrase}'")
     measured("disambiguation.organization_nodes", n)
+    measured("disambiguation.languages_covered", len(by_lang))
 
     llms = (site_dir / "llms.txt").read_text(encoding="utf-8")
     # The summary line an answer engine reads first, not a substring anywhere in
-    # the file (which a comment would satisfy).
+    # the file (which a comment would satisfy). llms.txt is the English discovery
+    # file, so it quotes the English phrase.
     summary = next((ln for ln in llms.splitlines() if ln.startswith("> ")), "")
     measured("disambiguation.llms_summary_lines", 1 if summary else 0)
-    if phrase.lower() not in summary.lower():
+    if english.lower() not in summary.lower():
         add(ERROR, "disambiguation", "llms.txt",
-            f"llms.txt summary line does not state '{phrase}'")
+            f"llms.txt summary line does not state '{english}'")
 
 
 # ---------------------------------------------------------------- local listings
@@ -561,12 +600,35 @@ def check_local_listings():
 
 
 # ---------------------------------------------------------------- aria / a11y basics
+def _valid_html_langs():
+    """The <html lang> values build/locales.py declares, read back out of the module.
+
+    Reading them rather than hardcoding "en" is what let Spanish pages into the build:
+    the old check required the literal string lang="en" on every page, so a correctly
+    marked Spanish page failed and a page with no lang attribute could pass by carrying
+    the string somewhere else.
+    """
+    mod = _import_build_module("locales")
+    langs = getattr(mod, "HTML_LANG", None) if mod else None
+    if isinstance(langs, dict) and langs:
+        return {str(v) for v in langs.values()}
+    return set()
+
+
 def check_a11y(pages):
+    # A missing locale table makes this a broken validator rather than a finding, so
+    # measured() below exits 2 on it. Exit 1 stays reserved for real findings.
+    valid_langs = _valid_html_langs()
     n = 0
     for page, src in pages.items():
         n += 1
-        if 'lang="en"' not in src:
+        m = HTML_LANG_RE.search(src)
+        if not m:
             add(ERROR, "a11y", page, "no lang attribute on <html>")
+        elif valid_langs and m.group(1) not in valid_langs:
+            add(ERROR, "a11y", page,
+                f'<html lang="{m.group(1)}"> is not one of the declared locales '
+                f'{sorted(valid_langs)}')
         if 'name="viewport"' not in src:
             add(ERROR, "a11y", page, "no viewport meta")
         if "<main" not in src:
@@ -582,6 +644,7 @@ def check_a11y(pages):
             if 'title="' not in tag:
                 add(WARN, "a11y", page, f"<iframe> without title: {tag[:70]}")
     measured("a11y.pages", n)
+    measured("a11y.locales_allowed", len(valid_langs))
 
 
 # ---------------------------------------------------------------- video room
@@ -689,6 +752,183 @@ def check_video_room(pages):
         add(ERROR, "video-count", "-", "no VideoObject found anywhere; the room lost its films")
 
 
+
+# ---------------------------------------------------------------- i18n
+SWITCH_NAV_RE = re.compile(r'<nav class="lang-switch"[^>]*>(.*?)</nav>', re.S)
+SWITCH_HREF_RE = re.compile(r'<a\b[^>]*href="([^"]+)"')
+
+
+def _resolves(site_dir, href):
+    """Does this href reach a file the build actually wrote? Absolute or site-relative."""
+    target = href
+    if target.startswith(SITE_ROOT):
+        target = target[len(SITE_ROOT):]
+    if not target.startswith("/"):
+        return True  # off-site (an external link is not this check's business)
+    rel = target.lstrip("/")
+    if not rel:
+        return (site_dir / "index.html").is_file()
+    return any(c.is_file() for c in (
+        site_dir / rel,
+        site_dir / (rel + ".html"),
+        site_dir / rel / "index.html",
+    ))
+
+
+def check_i18n(pages, site_dir):
+    """Every advertised locale must be a page that exists, in both directions.
+
+    Three failures this catches, all of which shipped silently green before:
+
+    * An hreflang tag pointing at a URL the build did not write. A crawler then indexes
+      a 404 as the Spanish version of a page, which is worse than having no Spanish.
+    * A one-way pair. If the English page declares a Spanish alternate and the Spanish
+      page does not declare the English one, the pairing is half-asserted and search
+      engines discard it.
+    * A switcher link that 404s, which is the user-visible form of the same bug.
+
+    The check reads hrefs out of the served HTML rather than out of build/locales.py,
+    because the served bytes are what a reader and a crawler actually get.
+    """
+    canonicals = {}
+    html_lang = {}
+    alternates = {}
+    for page, src in pages.items():
+        c = CANON_RE.search(src)
+        if c:
+            canonicals[page] = c.group(1).rstrip("/") if c.group(1) != SITE_ROOT else SITE_ROOT
+            canonicals[page] = c.group(1)
+        m = HTML_LANG_RE.search(src)
+        html_lang[page] = m.group(1) if m else ""
+        alternates[page] = ALT_RE.findall(src)
+
+    by_url = {url: page for page, url in canonicals.items()}
+    n_alts = 0
+    n_pairs = 0
+    n_switch = 0
+    translated_pages = 0
+
+    for page, alts in alternates.items():
+        lang = html_lang[page]
+        canonical = canonicals.get(page)
+        if not alts:
+            continue
+        translated_pages += 1
+        langs = [h for h, _href in alts]
+        xdef = [href for h, href in alts if h == "x-default"]
+        if len(xdef) != 1:
+            add(ERROR, "i18n", page,
+                f"{len(xdef)} x-default alternates (exactly one required)")
+        self_ref = [(h, href) for h, href in alts if h == lang and href == canonical]
+        if not self_ref:
+            add(ERROR, "i18n", page,
+                f"alternate set does not reference itself: no hreflang=\"{lang}\" "
+                f"pointing at {canonical}")
+        if len(set(langs)) != len(langs):
+            add(ERROR, "i18n", page, f"duplicate hreflang values: {sorted(langs)}")
+        if len(langs) > 1:
+            n_pairs += 1
+        for h, href in alts:
+            n_alts += 1
+            if h == "x-default":
+                continue
+            target_page = by_url.get(href)
+            if target_page is None:
+                add(ERROR, "i18n", page,
+                    f"hreflang=\"{h}\" points at a URL the build did not write: {href}")
+                continue
+            if not _resolves(site_dir, href):
+                add(ERROR, "i18n", page,
+                    f"hreflang=\"{h}\" points at a missing file: {href}")
+            # reciprocity
+            back = [(hh, hh_href) for hh, hh_href in alternates[target_page]
+                    if hh == lang]
+            if not back:
+                add(ERROR, "i18n", page,
+                    f"hreflang=\"{h}\" -> {target_page} is not reciprocated: that page "
+                    f"declares no hreflang=\"{lang}\"")
+            elif canonical not in [hh_href for _hh, hh_href in back]:
+                add(ERROR, "i18n", page,
+                    f"hreflang=\"{h}\" -> {target_page} points back at "
+                    f"{[hh_href for _hh, hh_href in back]} instead of {canonical}")
+
+    for page, src in pages.items():
+        m = SWITCH_NAV_RE.search(src)
+        in_group = len({h for h, _ in alternates[page]}) > 1
+        if not m:
+            if in_group:
+                add(ERROR, "i18n", page,
+                    "translated page carries no language switcher")
+            continue
+        for href in SWITCH_HREF_RE.findall(m.group(1)):
+            n_switch += 1
+            if not _resolves(site_dir, href):
+                add(ERROR, "i18n", page,
+                    f"language switcher link does not resolve: {href}")
+
+    # A switcher that offers only one language, or a site with no translation at all,
+    # would satisfy the loops above by doing nothing. Both are asserted non-zero.
+    measured("i18n.translated_pages", translated_pages)
+    measured("i18n.alternates", n_alts)
+    measured("i18n.switcher_links", n_switch)
+    if n_pairs < 2:
+        add(ERROR, "i18n", "-",
+            f"only {n_pairs} page(s) carry a reciprocal hreflang pair; the translation "
+            "pairs are gone or no longer reciprocal")
+
+
+# ---------------------------------------------------------------- listing fidelity per locale
+
+# The pages that carry the verified session table. An explicit list rather than a
+# heuristic, so this check cannot quietly stop covering a page: a route added here
+# without the table on it fails, and a listed page that has vanished is a finding.
+LISTING_ROUTES = (
+    "/jams", "/miami-jams", "/your-first-jam",
+    "/es/jams", "/es/jams-miami-dade-broward", "/es/tu-primera-jam",
+)
+
+
+def check_listing_locale_fidelity(pages):
+    """Every listing page, in every locale, must carry every listing's modality and date.
+
+    This is the honesty rule in build/listings.py stated as a measurement: a session is
+    never presented without its modality, and never presented as current without the
+    date its source was checked. It was enforced by review for the English pages and by
+    nothing at all for the Spanish ones, and translating six entries is exactly the
+    change that drops one.
+    """
+    listings = _import_build_module("listings")
+    if listings is None:
+        add(ERROR, "listing-fidelity", "build/listings.py",
+            "cannot import build/listings.py; the per-locale listing contract is unverified")
+        return
+    rows = getattr(listings, "SESSIONS", None)
+    if not isinstance(rows, list):
+        add(ERROR, "listing-fidelity", "build/listings.py", "SESSIONS is missing or not a list")
+        return
+
+    assertions = 0
+    checked = 0
+    for page, src in pages.items():
+        c = CANON_RE.search(src)
+        if not c:
+            continue
+        route = c.group(1)[len(SITE_ROOT):] or "/"
+        if route not in LISTING_ROUTES:
+            continue
+        checked += 1
+        for row in rows:
+            name, modality, _city, _venue, _schedule, _cost, _url, verified, _note = row
+            for label, needle in (("name", name), ("modality", modality),
+                                  ("checked date", verified)):
+                assertions += 1
+                if needle not in src:
+                    add(ERROR, "listing-fidelity", page,
+                        f"listing {name!r} is missing its {label}: {needle!r}")
+    measured("listing-fidelity.pages", checked)
+    measured("listing-fidelity.assertions", assertions)
+
+
 # ---------------------------------------------------------------- main
 def main():
     ap = argparse.ArgumentParser()
@@ -701,11 +941,17 @@ def main():
     if not site_dir.is_dir():
         print(f"site directory not found: {site_dir}", file=sys.stderr)
         return 2
-    html_files = sorted(site_dir.glob("*.html"))
+    # rglob, not glob: the Spanish pages live under /es/, and a non-recursive glob would
+    # have measured only the English tree while reporting a full green run. Page keys are
+    # site-relative paths ("es/jams.html") so a finding names the file it came from.
+    html_files = sorted(site_dir.rglob("*.html"))
     if not html_files:
         print(f"no html files in {site_dir}", file=sys.stderr)
         return 2
-    pages = {p.name: p.read_text(encoding="utf-8") for p in html_files}
+    pages = {
+        p.relative_to(site_dir).as_posix(): p.read_text(encoding="utf-8")
+        for p in html_files
+    }
     measured("pages.rendered", len(pages))
 
     check_html_structure(pages)
@@ -721,6 +967,8 @@ def main():
     check_disambiguation(site_dir, pages)
     check_video_room(pages)
     check_local_listings()
+    check_i18n(pages, site_dir)
+    check_listing_locale_fidelity(pages)
 
     bands = Counter(b for b, *_ in findings)
     if not args.quiet:

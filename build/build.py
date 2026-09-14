@@ -2,6 +2,11 @@
 """Render miamicontactimprov.com into site/.
 
 Usage:  python3 build/build.py [--out site]
+
+Every page is a (slug, locale) pair. The slug is locale-independent; build/locales.py
+owns which route that slug has in each locale, and therefore the hreflang pairing and
+the sitemap entry. A locale a slug does not have is never written, never listed and
+never advertised to a crawler.
 """
 
 import argparse
@@ -16,8 +21,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
+import content_es  # noqa: E402
 import content_local  # noqa: E402
 import content_practice  # noqa: E402
+import locales  # noqa: E402
 import schema  # noqa: E402
 import shell  # noqa: E402
 import videos_data  # noqa: E402
@@ -25,25 +32,77 @@ import videos_data  # noqa: E402
 SITE = shell.SITE
 TODAY = "2026-09-14"
 
-# route, filename, builder, sitemap priority, changefreq
+# slug, locale, builder, sitemap priority, changefreq, background video id
 PAGES = [
-    ("/", "index.html", content_core.home, "1.0", "weekly", videos_data.HERO_VIDEO_ID),
-    ("/what-is-contact-improvisation", "what-is-contact-improvisation.html",
-     content_core.what_is, "0.9", "monthly", None),
-    ("/miami", "miami.html", content_directory.miami, "0.9", "weekly", None),
-    ("/miami-jams", "miami-jams.html", content_local.miami_jams, "0.9", "weekly", None),
-    ("/jams", "jams.html", content_practice.jams, "0.8", "weekly", None),
-    ("/classes", "classes.html", content_practice.classes, "0.8", "monthly", None),
-    ("/your-first-jam", "your-first-jam.html", content_practice.your_first_jam, "0.8", "monthly", None),
-    ("/keep-practising", "keep-practising.html", content_practice.keep_practising, "0.7", "monthly", None),
-    ("/videos", "videos.html", content_practice.videos, "0.7", "monthly", None),
-    ("/directory", "directory.html", content_directory.directory, "0.7", "weekly", None),
-    ("/glossary", "glossary.html", content_core.glossary, "0.6", "monthly", None),
-    ("/history", "history.html", content_core.history, "0.6", "yearly", None),
-    ("/safety-and-consent", "safety-and-consent.html", content_practice.safety, "0.6", "yearly", None),
-    ("/faq", "faq.html", content_directory.faq, "0.7", "monthly", None),
-    ("/about", "about.html", content_directory.about, "0.5", "yearly", None),
+    ("home", "en", content_core.home, "1.0", "weekly", videos_data.HERO_VIDEO_ID),
+    ("what-is-contact-improvisation", "en", content_core.what_is, "0.9", "monthly", None),
+    ("miami", "en", content_directory.miami, "0.9", "weekly", None),
+    ("miami-jams", "en", content_local.miami_jams, "0.9", "weekly", None),
+    ("jams", "en", content_practice.jams, "0.8", "weekly", None),
+    ("classes", "en", content_practice.classes, "0.8", "monthly", None),
+    ("your-first-jam", "en", content_practice.your_first_jam, "0.8", "monthly", None),
+    ("keep-practising", "en", content_practice.keep_practising, "0.7", "monthly", None),
+    ("videos", "en", content_practice.videos, "0.7", "monthly", None),
+    ("directory", "en", content_directory.directory, "0.7", "weekly", None),
+    ("glossary", "en", content_core.glossary, "0.6", "monthly", None),
+    ("history", "en", content_core.history, "0.6", "yearly", None),
+    ("safety-and-consent", "en", content_practice.safety, "0.6", "yearly", None),
+    ("faq", "en", content_directory.faq, "0.7", "monthly", None),
+    ("about", "en", content_directory.about, "0.5", "yearly", None),
+    # Spanish. Same slug, second locale: each of these is a first-class route with its
+    # own canonical, its own sitemap entry and its own side of the hreflang pair.
+    ("home", "es", content_es.home, "1.0", "weekly", None),
+    ("what-is-contact-improvisation", "es", content_es.what_is, "0.9", "monthly", None),
+    ("miami-jams", "es", content_es.miami_jams, "0.8", "weekly", None),
+    ("jams", "es", content_es.jams, "0.7", "weekly", None),
+    ("your-first-jam", "es", content_es.your_first_jam, "0.7", "monthly", None),
+    ("safety-and-consent", "es", content_es.safety, "0.6", "yearly", None),
+    ("faq", "es", content_es.faq, "0.6", "monthly", None),
 ]
+
+ROW_FIELDS = ("slug", "lang", "route", "filename", "builder", "priority", "changefreq", "bg")
+
+
+def check_tables_agree():
+    """The two tables that define this site must not drift.
+
+    build/locales.py says which route a page has in which language; PAGES says which
+    builder writes it and in what order. A row in one and not the other is either a page
+    with no URL or a URL with no page, so the build stops rather than guessing.
+    """
+    declared = {(slug, lang) for slug, lang, *_rest in PAGES}
+    known = {(slug, lang) for slug, lang in locales.ORDER}
+    missing_route = declared - known
+    missing_builder = known - declared
+    problems = []
+    for slug, lang in sorted(missing_route):
+        problems.append(f"PAGES has ({slug}, {lang}) but locales.ORDER has no such row")
+    for slug, lang in sorted(missing_builder):
+        problems.append(f"locales.ORDER has ({slug}, {lang}) but PAGES has no builder")
+    for slug, lang, *_rest in PAGES:
+        if not locales.route(slug, lang):
+            problems.append(f"locales.ROUTES has no route for ({slug}, {lang})")
+    if problems:
+        raise SystemExit("i18n table drift:\n  " + "\n  ".join(problems))
+    seen = {}
+    for slug, lang, *_rest in PAGES:
+        filename = locales.filename_for(locales.route(slug, lang))
+        if filename in seen:
+            raise SystemExit(f"two pages write {filename}: {seen[filename]} and ({slug}, {lang})")
+        seen[filename] = f"({slug}, {lang})"
+
+
+def rows():
+    """Yield one dict per page: the single place a page's URL and file are decided."""
+    check_tables_agree()
+    for slug, lang, builder, prio, freq, bg in PAGES:
+        route = locales.route(slug, lang)
+        yield {
+            "slug": slug, "lang": lang, "route": route,
+            "filename": locales.filename_for(route),
+            "builder": builder, "priority": prio, "changefreq": freq, "bg": bg,
+        }
+
 
 ROBOTS = """# miamicontactimprov.com
 
@@ -150,18 +209,22 @@ def redirects_file():
         "# One URL per page. The .html form 301s to the clean form.",
         "",
     ]
-    for route, filename, _b, _p, _fr, _bg in PAGES:
-        if filename == "index.html":
+    for row in rows():
+        if row["filename"] == "index.html":
             continue
-        lines.append(f"/{filename}  {route}  301")
+        lines.append(f"/{row['filename']}  {row['route']}  301")
+    # A locale directory is reachable with and without its trailing slash. Collapse it,
+    # the same way the .html form is collapsed, rather than serving two URLs per page.
+    for lang in locales.LOCALES:
+        if lang == locales.DEFAULT:
+            continue
+        home = locales.route("home", lang)
+        if home and home != "/":
+            lines.append(f"{home.rstrip('/')}  {home}  301")
     lines.append("")
     lines.append(REDIRECT_ALIASES.rstrip())
     lines.append("")
     return "\n".join(lines)
-
-
-def _slug_route(path):
-    return "/" if path == "/" else path
 
 
 def build(out_dir: pathlib.Path, base_url=None):
@@ -169,14 +232,18 @@ def build(out_dir: pathlib.Path, base_url=None):
     out_dir.mkdir(parents=True, exist_ok=True)
     written = []
 
-    for route, filename, builder, _prio, _freq, bg in PAGES:
-        body = builder()
+    page_rows = list(rows())
+    for row in page_rows:
+        out_path = out_dir / row["filename"]
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        body = row["builder"]()
         if base_url:
             body = body.replace(SITE, site)
-        (out_dir / filename).write_text(body, encoding="utf-8")
-        written.append(filename)
+        out_path.write_text(body, encoding="utf-8")
+        written.append(row["filename"])
 
-    # 404
+    # 404. One document, served for every locale: the Spanish pages are translations of
+    # pages that exist, and a missing URL is missing in both languages.
     (out_dir / "404.html").write_text(
         content_directory.not_found().replace(SITE, site) if base_url
         else content_directory.not_found(),
@@ -185,17 +252,18 @@ def build(out_dir: pathlib.Path, base_url=None):
     written.append("404.html")
 
     # sitemap
-    rows = []
-    for route, filename, _b, prio, freq, _bg in PAGES:
-        loc = site + _slug_route(route)
-        rows.append(
+    sitemap_rows = []
+    for row in page_rows:
+        loc = site + row["route"]
+        sitemap_rows.append(
             f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{TODAY}</lastmod>\n"
-            f"    <changefreq>{freq}</changefreq>\n    <priority>{prio}</priority>\n  </url>"
+            f"    <changefreq>{row['changefreq']}</changefreq>\n"
+            f"    <priority>{row['priority']}</priority>\n  </url>"
         )
     (out_dir / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "\n".join(rows)
+        + "\n".join(sitemap_rows)
         + "\n</urlset>\n",
         encoding="utf-8",
     )
@@ -241,11 +309,18 @@ KEY_FACTS = [
     "The global CI World Jam Map at contactimprov.com carries the world's jam listings, including a Florida page.",
 ]
 
+LOCALE_NOTE = (
+    "Seven core pages are also published in Spanish under /es/. The Spanish pages are "
+    "translations of their English counterparts and make no claim the English page does "
+    "not make; where a page is English-only it is absent from /es/ rather than machine-"
+    "translated. The English page is the x-default of every pair."
+)
+
 
 def _page_index(site):
     lines = []
-    for route, _f, _b, _p, _fr, _bg in PAGES:
-        lines.append(f"- {site}{_slug_route(route)}")
+    for row in rows():
+        lines.append(f"- {site}{row['route']}  ({row['lang']})")
     return "\n".join(lines)
 
 
@@ -254,6 +329,10 @@ def llms_txt(site):
     return f"""# Miami Contact Improv
 
 > {LLMS_INTRO}
+
+## Languages
+
+{LOCALE_NOTE}
 
 ## Key facts
 
@@ -282,14 +361,18 @@ def llms_full(site):
         "",
         LLMS_INTRO,
         "",
+        "## Languages",
+        "",
+        LOCALE_NOTE,
+        "",
         "## Key facts",
         "",
         "\n".join(f"- {f}" for f in KEY_FACTS),
         "",
     ]
-    for route, filename, _b, _p, _fr, _bg in PAGES:
-        html_src = (pathlib.Path(OUT_DIR) / filename).read_text(encoding="utf-8")
-        parts.append(f"\n---\n\n## {site}{_slug_route(route)}\n")
+    for row in rows():
+        html_src = (pathlib.Path(OUT_DIR) / row["filename"]).read_text(encoding="utf-8")
+        parts.append(f"\n---\n\n## {site}{row['route']}\n")
         parts.append(to_text(html_src))
     return "\n".join(parts) + "\n"
 
