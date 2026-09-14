@@ -31,7 +31,7 @@ NAV = [
 FOOTER_COLS = [
     ("Start here", [
         ("What is Contact Improvisation?", "/what-is-contact-improvisation"),
-        ("Your first jam", "/classes#first-jam"),
+        ("Your first jam, step by step", "/your-first-jam"),
         ("Glossary of CI terms", "/glossary"),
         ("History of CI", "/history"),
     ]),
@@ -39,6 +39,7 @@ FOOTER_COLS = [
         ("The Miami scene", "/miami"),
         ("Jams and open practice", "/jams"),
         ("Classes and workshops", "/classes"),
+        ("Keep practising", "/keep-practising"),
         ("Teachers and organisers", "/directory#teachers"),
     ]),
     ("Watch", [

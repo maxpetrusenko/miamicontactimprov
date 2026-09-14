@@ -83,7 +83,7 @@ def miami():
       <h2>Questions about CI in Miami</h2>
       {faq_html}
     </div>
-    {band("Know something this page does not?", "If you teach, host, organise or simply dance in South Florida, tell us and it goes on the map. Corrections are as welcome as additions, including removing something that has stopped.", [("Submit a listing", "/about#submit", "primary"), ("The directory", "/directory", "secondary")])}
+    {band("Know something this page does not?", "If you teach, host, organise or simply dance in South Florida, tell us and it goes on the map. Corrections are as welcome as additions, including removing something that has stopped.", [("Submit a listing", "/about#submit", "primary"), ("The directory", "/directory", "secondary"), ("Keep practising", "/keep-practising", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Contact Improvisation in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/miami")}
   </div>
 </section>
@@ -190,7 +190,7 @@ def directory():
       <h2>Questions about the directory</h2>
       {faq_html}
     </div>
-    {band("Add yourself", "No fee, no membership, no committee. If you teach, host or organise in South Florida, this page exists to point at you.", [("Submit a listing", "/about#submit", "primary"), ("The Miami scene", "/miami", "secondary")])}
+    {band("Add yourself", "No fee, no membership, no committee. If you teach, host or organise in South Florida, this page exists to point at you.", [("Submit a listing", "/about#submit", "primary"), ("The Miami scene", "/miami", "secondary"), ("Keep practising", "/keep-practising", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Contact Improvisation directory</em>. miamicontactimprov.com. https://miamicontactimprov.com/directory")}
   </div>
 </section>
@@ -259,7 +259,7 @@ def faq():
          "Miami has one recurring all-levels class we could verify from the organiser's own page, plus jams that come and go. This page lists only what was checked, with the date it was checked.",
          MIAMI_FAQ),
         ("Practical questions",
-         "Cost, company, fitness and whether you can simply watch: the questions people ask before their first session, answered without a sales pitch.",
+         "Cost, company, fitness and whether you can simply watch: the questions people ask before their first session, answered without a sales pitch. The evening itself is walked through on <a href=\"/your-first-jam\">your first jam, step by step</a>, and the weeks after it are on <a href=\"/keep-practising\">keep practising</a>.",
          buyer_faq),
         ("This directory and site",
          "There is no membership, no paid listing and no central register, because Contact Improvisation has no certification body. Everything here was checked against the organiser's own page.",

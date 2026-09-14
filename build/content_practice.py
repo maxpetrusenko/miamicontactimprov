@@ -103,6 +103,8 @@ def jams():
       ])}
       <h2>Spotters and safety</h2>
       <p>Sessions where lifts are circulating often keep one or two people outside the dance as <strong>spotters</strong>: standing close, hands free, watching for a fall that needs slowing. It is one of the few roles in a jam that is technical rather than social, and new dancers are usually welcome to learn it. If you are not sure whether you can safely take someone's weight, you cannot, and saying so is the correct answer.</p>
+      <h2>Before and after your first visit</h2>
+      <p>What actually happens when you walk in &mdash; arriving, the opening circle, the first ten minutes of dancing, the lines you can say when you want to stop and when to leave &mdash; is on <a href="/your-first-jam">your first jam, step by step</a>. What to do in the weeks after it, including the weeks when nothing is running, is on <a href="/keep-practising">keep practising</a>.</p>
       <h2>Questions about jams</h2>
       {faq_html}
     </div>
@@ -153,7 +155,7 @@ def classes():
       <p><strong>The warm-up.</strong> Stand still and listen to the small adjustments your body makes to stay upright. This is not a warm-up for the real thing; it is the real thing at low amplitude.</p>
       <p><strong>Your first dance.</strong> Look at someone. If they look back, you are dancing. Start with a hand, a shoulder, or simply standing nearby. Keep one point of contact. Let one of you slowly give weight and see what the floor does.</p>
       <p><strong>Ending.</strong> Stop when you want to. Step back, nod, walk to the edge. No explanation needed and none expected, in either direction.</p>
-      <p><strong>After.</strong> You will probably be tired in a way that is not athletic tired. Drink water. Come back.</p>
+      <p><strong>After.</strong> You will probably be tired in a way that is not athletic tired. Drink water. <a href="/keep-practising">Come back</a> &mdash; and see what happens after the first visit.</p>
       <h2>What teachers actually teach</h2>
       <p>A good beginner series covers the same handful of things, whatever the teacher's style.</p>
       {facts([
@@ -174,6 +176,8 @@ def classes():
         <p>One recurring Contact Improvisation class in Miami-Dade could be verified from its own listings when this page was last checked: <strong>Contact Improv &mdash; ALL LEVELS</strong> at Dance Arts Miami, 250 NE 61st Street, Miami, 33137, on Tuesdays from 6:00 to 7:00 PM. It is advertised as covering connection, weight sharing, momentum and spontaneous partnering, and no partner is needed. Because it is published as a multi-date series on Eventbrite and mirrored on Meetup, confirm the current week there rather than trusting this page.</p>
         <p>Beyond that class, the realistic routes into the form in Miami are the <a href="/jams">jams, camps and adjacent practice</a> listed elsewhere on this site. If you would rather learn in a structured way and no class is running near you, a contemporary dance or improvisation class at any Miami studio will teach you most of the body literacy, and the jams will teach you the rest.</p>
       </div>
+      <h2>After the first one</h2>
+      <p>What to do in the weeks after your first session, including the weeks when nothing is running, is on the <a href="/keep-practising">keep-practising page</a>. A fuller walkthrough of the evening itself &mdash; arriving, the opening circle, the first ten minutes of dancing, and the lines you can say when you want to stop &mdash; is on <a href="/your-first-jam">your first jam, step by step</a>.</p>
       <h2>Questions people ask before their first session</h2>
       {faq_html}
     </div>
@@ -273,7 +277,7 @@ def safety():
       <h2>Questions about safety</h2>
       {faq_html}
     </div>
-    {band("A jam that takes this seriously", "The sessions worth your time say their protocol out loud at the start of every session. If yours does not, ask why.", [("Find a jam", "/jams", "primary"), ("Read about jams", "/jams", "secondary")])}
+    {band("A jam that takes this seriously", "The sessions worth your time say their protocol out loud at the start of every session. If yours does not, ask why.", [("Find a jam", "/jams", "primary"), ("Your first jam, step by step", "/your-first-jam", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Safety and consent in Contact Improvisation</em>. miamicontactimprov.com. https://miamicontactimprov.com/safety-and-consent")}
   </div>
 </section>
@@ -331,6 +335,173 @@ def videos():
         "Contact Improvisation Videos (22) | Free Films & Documentary",
         "Contact Improvisation on film: performance work, jam footage and documentary records worth watching before your first session.",
         "/videos",
+        body,
+        jsonld=jsonld,
+    )
+
+
+# --------------------------------------------------------------- stage pages
+# /your-first-jam owns the first-visit stage (what actually happens when you walk
+# in); /keep-practising owns the after stage (how the practice continues).
+# Neither page carries Event schema. A recurring, organiser-set session modelled
+# as an Event would publish a date this site cannot keep true, which is the rule
+# that keeps the listings honest. Session entries carry the modality the
+# organiser states and the date the source was checked, and rank nothing.
+
+SESSIONS_RANK_NOTE = (
+    "The modality in each entry above is the one the organiser states about their own session, "
+    "and every entry carries the date its source was last opened and read: "
+    f"<strong>{LAST_CHECKED}</strong>. This page ranks nothing. The entries appear in the order "
+    "they were verified, none of them is paid for, and this site recommends none of them over "
+    "another."
+)
+
+
+def your_first_jam():
+    sessions = listings.sessions_block() or listings.sessions_or_none()
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">The first time</p>
+    <h1>Your first contact improv jam, step by step.</h1>
+    <p class="lede">Nobody at a jam is assessing you. You arrive, someone states the rules, dancing starts and stops around you, and you take part as much or as little as you want.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("You arrive, you warm up, and there is usually a short circle where the people holding the room state the consent protocol. Then dancing starts and stops around you. You are not required to dance with anyone. Sitting at the edge for the whole session is a normal part of a jam, and leaving early is always fine. There is no teacher.")}
+    <div class="prose">
+      <h2>Arriving</h2>
+      <p>Getting there before the opening circle makes the evening easier, because that is where the room's rules are stated and where a newcomer is easiest to include. Arriving after it is usually fine: walk in, find a place at the edge, and join when you are ready. Nobody is keeping a register.</p>
+      <p>Change into what you will dance in, leave your bag against the wall, fill your bottle, and spend a few minutes on the floor before anything starts. Organisers expect people to arrive not knowing anybody. That is the ordinary case rather than the awkward one.</p>
+      <h2>The opening circle</h2>
+      <p>Most jams begin with two or three minutes of standing or sitting in a circle. Whoever holds the room states the protocol: consent is continuous, anyone may decline anything without giving a reason, the edge is for resting, nobody teaches unless they were asked to, and nobody is filmed without agreeing to it. Anyone in the circle may add a boundary or a note.</p>
+      <p>The sessions worth your time state their protocol out loud at the start of every session. A jam with no circle and no stated protocol is telling you something about the room.</p>
+      <h2>Your first ten minutes of dancing</h2>
+      <p>A warm-up usually comes first: standing still and following the small adjustments your body makes to stay upright. That is the practice at low volume rather than a formality before the real thing.</p>
+      <p>Then dancing starts around you, often without any signal at all. A dance begins with a look, an offered hand, or two people already moving near each other. Watching from the edge for twenty minutes is a normal way to begin, and so is beginning immediately. Most of what an experienced dancer does in the first minutes is listen rather than move. Beginning is not a performance.</p>
+      <h2>What is expected of you</h2>
+      <ul>
+        <li>Keep the contact point singular. Two hands and a hip at once is grappling, not CI.</li>
+        <li>Keep your own feet available. If you cannot land, you cannot safely take weight.</li>
+        <li>Roll out of falls rather than bracing. The floor is the biggest partner in the room.</li>
+        <li>Say no when you mean no, and accept no without asking why.</li>
+        <li>Leave the dance when it is over, including mid-phrase, without apologising.</li>
+        <li>Do not teach unless you were asked to. A jam is not a class.</li>
+      </ul>
+      <h2>What to bring</h2>
+      {facts([
+        ("Clothing", "Loose, opaque, covers back, shoulders and knees. No zips, buckles or rough seams"),
+        ("Feet", "Bare or soft non-slip socks. No shoes on the floor"),
+        ("Water", "A full bottle. The floor is hot and humid in Miami"),
+        ("Towel", "One. You will need it"),
+        ("Jewellery", "Leave it off. Rings, watches and necklaces catch and cut"),
+        ("Phone", "Silenced, face down, off the floor or at the edge"),
+      ])}
+      <h2>What you can say</h2>
+      <p>These lines are complete on their own, and none of them needs a reason attached to it. Declining is a trained skill in this form rather than a social cost.</p>
+      <blockquote>
+        <p>"Not right now."</p>
+        <p>"Can we go slower?"</p>
+        <p>"I'm going to stop here."</p>
+        <p>"I'd rather sit this one out."</p>
+      </blockquote>
+      <p>A partner who asks why you said no is answering a question about themselves, and you are free to walk to the edge without replying.</p>
+      <h2>When to leave</h2>
+      <p>A dance ends when either partner says so, including mid-phrase and including a lift that is still being set up. The session ends for you whenever you decide: people leave after twenty minutes and people stay for three hours, and both are ordinary. Say goodbye to whoever you were dancing with, or do not.</p>
+      <h2>If something goes wrong</h2>
+      <p>Speak to the organiser during or after the session. Most jams name one person who holds the room, and acting on a boundary violation is that person's job rather than a favour. An organiser who will not act tells you what you need to know about returning. Your rights in the room and the physical-safety habits are set out on <a href="/safety-and-consent">safety and consent</a>.</p>
+    </div>
+    {sessions}
+    <div class="prose">
+      <p>{SESSIONS_RANK_NOTE}</p>
+      <h2>Practical questions</h2>
+      <p>Cost, coming on your own, fitness, watching instead of dancing and the beginner path are answered one line each on the <a href="/faq">question page</a>. How a whole session usually runs is on <a href="/jams">jams</a>, and what a beginner class actually teaches is on <a href="/classes">classes</a>. If you have never read anything about the form, start with <a href="/what-is-contact-improvisation">what Contact Improvisation is</a>.</p>
+    </div>
+    {band("Ready to go?", "Every session above links to the organiser's own page, which is the only source that knows this week's schedule.", [("Jams in Miami", "/jams", "primary"), ("Classes and workshops", "/classes", "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Your first contact improv jam, step by step</em>. miamicontactimprov.com. https://miamicontactimprov.com/your-first-jam")}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation(),
+        schema.webpage(
+            "/your-first-jam",
+            "Your first contact improv jam, step by step",
+            "What actually happens at a first Contact Improvisation jam in Miami: arriving, the opening circle, the first ten minutes of dancing, what you can say, what to bring, and when to leave.",
+            date_modified=LAST_CHECKED_ISO,
+        ),
+        schema.breadcrumb("/your-first-jam", "Your first jam"),
+    )
+    return page(
+        "Your First Contact Improv Jam [Step-by-Step] | Walkthrough",
+        "What happens at a first Contact Improvisation jam: arriving, the opening circle, the first ten minutes, the lines you can say, what to bring, and when to leave.",
+        "/your-first-jam",
+        body,
+        jsonld=jsonld,
+    )
+
+
+def keep_practising():
+    sessions = listings.sessions_block() or listings.sessions_or_none()
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">After the first time</p>
+    <h1>How to keep practising contact improvisation in Miami.</h1>
+    <p class="lede">The part that follows your first visit: what to do between jams, why the second one feels different, and what to do in the weeks when nothing is running.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("You keep practising by going back. Contact Improvisation is learned in the room rather than between sessions, so the honest answer is a weekly jam or class, plus a little solo practice for the weeks when nothing is running. This page covers the part after your first visit, including the weeks when the answer is 'nothing is on'.")}
+    <div class="prose">
+      <h2>Practising on your own</h2>
+      <p>The <a href="/glossary#small-dance">small dance</a> is the home version of the whole form: stand still, eyes soft, and follow the micro-adjustments your body makes to stay upright. Two minutes is enough to start.</p>
+      <p>From there, floor work and falling practice. Rolling along the floor without pushing yourself with your hands, and learning to meet the ground by rolling rather than catching yourself. It is unglamorous, and it is where most of the safety in a jam actually comes from. <a href="/safety-and-consent">Safety and consent</a> covers the mechanics in more detail.</p>
+      <h2>Practising with a partner</h2>
+      <p>The form is practised by two people, so at some point you need one. The route is the room rather than an app: dance with people at a jam, and afterwards simply ask whether they would want to practise outside it. Plenty of people want a practice partner and never ask.</p>
+      <p>Agree two things before you start: where on the body you are working, and that either of you can stop at any time. Twenty minutes of weight sharing on a floor with no music is a complete practice.</p>
+      <h2>The second visit</h2>
+      <p>The second visit is easier and stranger than the first. Easier, because you know the shape of the evening and where the water is. Stranger, because you now have a body memory of what a dance feels like, and the gap between that and the beginning of the next one is palpable.</p>
+      <p>Most people who stop doing CI stop between the first and third visit. Going back twice is usually enough to make it a habit.</p>
+      <h2>If nothing is running this week</h2>
+      <p>Miami has no central CI calendar, so "is there a jam tonight?" has no static answer, and this site does not guess or publish a date it has not checked. The places that can answer are the organisers themselves, whose own pages and direct messages are the only authoritative source, and the <a href="/jams">jams page</a> where each entry shows the date it was last checked.</p>
+      <p>The global CI World Jam Map keeps a <a href="https://www.contactimprov.com/florida.html" rel="noopener nofollow">Florida page</a> of the community's own listings, and it is honest about being patchy. The <a href="/directory">directory</a> here lists the studios, organisers and adjacent practices that are current and answer a message.</p>
+      <h2>Becoming part of the room</h2>
+      <p>A scene with no institution is maintained by whoever shows up early. Three things turn attendance into membership: arrive at the start, because the opening circle is where the room's rules are set and where a newcomer is easiest to include. Offer to help set up or pack down, since the people doing that are the people who know what is happening next month. And when you are ready, host.</p>
+      <p>Most jams in the world exist because one person booked a room, so <a href="/miami#start-one">starting one in Miami</a> is the actual mechanism rather than a consolation prize. If you know where the dancing is this month, <a href="/about#submit">tell this site</a> and it goes on the map.</p>
+      <h2>The rhythm of a year in Miami</h2>
+      <p>Practice here comes in layers. A weekly class or jam is the floor. Workshops sit above it. Once a year, in February, Love Burn on Virginia Key brings Camp Contact, which runs contact improvisation, acro yoga, ecstatic dance and authentic relating as its programme.</p>
+      <p>That camp is the largest concentration of contact improvisation that happens in Miami in a year, and it is a festival rather than a class. Dates move, so read the organiser's own page; this page publishes no dates at all.</p>
+    </div>
+    {sessions}
+    <div class="prose">
+      <p>{SESSIONS_RANK_NOTE}</p>
+      <h2>What this page will not do</h2>
+      <p>It will not give you a calendar. A date that has not been verified against the organiser's own page does not appear on this site, because an out-of-date listing is worse than no listing. A class teaches the skills a jam assumes, and <a href="/classes">classes and workshops</a> covers how to judge one.</p>
+    </div>
+    {band("Where this week's dancing actually is", "The organisers' own pages are the only current source, and each entry above links to one.", [("Jams in Miami", "/jams", "primary"), ("Teachers and organisers", "/directory", "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>How to keep practising Contact Improvisation in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/keep-practising")}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation(),
+        schema.webpage(
+            "/keep-practising",
+            "How to keep practising Contact Improvisation in Miami",
+            "What to do after a first Contact Improvisation jam in Miami: practising alone and with a partner, the second visit, the weeks when nothing is running, and how to stay informed.",
+            date_modified=LAST_CHECKED_ISO,
+        ),
+        schema.breadcrumb("/keep-practising", "Keep practising"),
+    )
+    return page(
+        "Keep Practising Contact Improv [2026 Guide] | Next Steps",
+        "What to do after your first contact improv jam in Miami: practising alone and with a partner, the second visit, weeks when nothing is running, and staying informed.",
+        "/keep-practising",
         body,
         jsonld=jsonld,
     )

@@ -31,6 +31,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://miamicontactimprov.com/your-first-jam</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://miamicontactimprov.com/keep-practising</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://miamicontactimprov.com/videos</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>
