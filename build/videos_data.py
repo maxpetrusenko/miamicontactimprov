@@ -24,7 +24,7 @@ VIDEOS = [
     # ---------------- start here
     ("H8JiB2Nv5Qo", "youtube", "Contact Improvisation: a couple of basic exercises",
      "OKI", "2016-09-18", "9:37", "foundations",
-     "The plainest demonstration in the set. Two dancers working through the underlying weight exchange, "
+     "The plainest demonstration in the set. Two dancers working through the underlying weight sharing, "
      "useful the week before your first session."),
     ("9FeSDsmIeHA", "youtube", "Contact Improvisation 1972",
      "klubki", "2011-09-03", "9:31", "foundations",

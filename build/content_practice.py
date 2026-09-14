@@ -1,12 +1,12 @@
 """Practice pages: jams, classes, safety and consent, video room."""
 
-from shell import answer, band, cards, cite_block, facts, page
+from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, cards, cite_block, facts, page
 import schema
 import listings
 import videos_data
 
 FIRST_JAM_FAQ = [
-    ("What do I wear to a contact improv jam?",
+    ("What do I wear to a Contact Improvisation jam?",
      "Loose clothing that covers your back, shoulders and knees, since those are the usual contact points. Avoid zips, buckles, hard seams and anything with a rough texture. Bare feet or soft non-slip socks. Bring water."),
     ("Do I have to dance with anyone?",
      "No. Sitting at the edge is a normal part of a jam, and dancing solo is part of the form. You may decline any invitation, at any point, without giving a reason, and you may end a dance mid-movement."),
@@ -25,7 +25,7 @@ FIRST_JAM_FAQ = [
 ]
 
 JAMS_FAQ = [
-    ("What is a contact improv jam?",
+    ("What is a Contact Improvisation jam?",
      "A jam is an open, unguided Contact Improvisation session. There is no teacher and little or no music. People arrive, dance with one or more partners or alone, rest at the edge, and leave when they are done. It is the basic social form of Contact Improvisation."),
     ("What is the difference between an open jam and a closed jam?",
      "An open jam accepts anyone, including first-timers. A closed, experienced or advanced jam assumes prior practice, usually because the dancing moves fast and relies on shared safety habits. Listings should state which one it is."),
@@ -52,7 +52,7 @@ def jams():
 
 <section class="section">
   <div class="wrap">
-    {answer("A contact improv jam is an open, unguided session where people practise Contact Improvisation together. There is no teacher and usually no music. Participants arrive and leave freely, dance with whoever is willing, sit at the edge to rest and watch, and stop at any time. Jams are the primary way the form is practised worldwide, and in Miami they sit alongside a small number of recurring classes and festival camps.")}
+    {answer("A Contact Improvisation (CI) jam is an open, unguided session where people practise Contact Improvisation together. There is no teacher and usually no music. Participants arrive and leave freely, dance with whoever is willing, sit at the edge to rest and watch, and stop at any time. Jams are the primary way the form is practised worldwide, and in Miami they sit alongside a small number of recurring classes and festival camps.")}
   </div>
 </section>
 
@@ -64,12 +64,23 @@ def jams():
 
 <section class="section">
   <div class="wrap">
+    <h2>How to check a listing is still current</h2>
+    <div class="prose">
+      <p>Miami has no central CI calendar, so "is there a jam tonight?" has no static answer and a page like this one goes stale the moment a room or a schedule changes. Every session above carries the date its source was last opened and read: <strong>{LAST_CHECKED}</strong>. Treat an old date as a lead to check rather than a fact.</p>
+      <p>Three things settle it. Open the organiser's own page or account, which is the only authoritative source and is linked from each entry. Look for a date of its own: a recurring session whose source has not been posted to in months has usually stopped, and an undated listing is evidence of nothing. Then ask, by direct message, before travelling to a session — organisers answer, and they would rather tell you than have you arrive at a locked door.</p>
+      <p>What this page will not do is guess. A stale listing published as current is worse than an empty one, so an entry comes down when its source goes quiet, and a session nobody could verify is never presented as running.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
     <h2>How a jam usually runs</h2>
     <div class="prose">
       <p>Formats vary, but most jams follow a recognisable shape.</p>
       <p><strong>Arrival.</strong> People change, stretch, greet each other, and find a place on the floor. Someone who is hosting opens a circle.</p>
       <p><strong>The circle.</strong> Two or three minutes. The host states the protocol: consent is continuous, you may decline anything, the edge is for resting, and here is where the water is. Anyone may add a boundary or announce something, such as an injury or that they are leaving early.</p>
-      <p><strong>Warm-up.</strong> Often a short guided sequence or the small dance, standing still and following the body's micro-adjustments. If there is a teacher present, they may offer twenty minutes of material before the open dancing begins.</p>
+      <p><strong>Warm-up.</strong> Often a short guided sequence, then a few minutes of <strong>small dance</strong>: standing still and following the body's micro-adjustments. If there is a teacher present, they may offer twenty minutes of material before the open dancing begins.</p>
       <p><strong>The open jam.</strong> The long middle. Dances start with a look, a hand, or simply the two of you already moving. They end when either partner stops. Resting at the edge between dances is normal.</p>
       <p><strong>Closing.</strong> Some jams end with a circle, a moment of stillness, or nothing at all. People drift out.</p>
       <h2>What is expected of you</h2>
@@ -105,7 +116,8 @@ def jams():
         schema.webpage(
             "/jams",
             "Contact improv jams in Miami",
-            "What a contact improv jam is, how a session usually runs, what to bring, and the jams and open practice sessions confirmed in Miami and South Florida.",
+            "What a Contact Improvisation jam is, how a session usually runs, what to bring, and how to check a listing is still current, with the confirmed jams and open practice sessions in Miami and South Florida.",
+            date_modified=LAST_CHECKED_ISO,
         ),
         schema.breadcrumb("/jams", "Jams"),
         schema.faq(JAMS_FAQ),
@@ -113,7 +125,7 @@ def jams():
     )
     return page(
         "Contact Improv Jams in Miami [Step-by-Step] | What to Expect",
-        "What a contact improv jam is and how a session runs, plus the open practice sessions confirmed in Miami and South Florida. What to wear, what to bring, how to leave a dance.",
+        "What a Contact Improvisation jam is, how a session runs, how to check a listing is still current, and where to dance in Miami. What to bring, and when to leave.",
         "/jams",
         body,
         jsonld=jsonld,
@@ -133,7 +145,7 @@ def classes():
 
 <section class="section">
   <div class="wrap">
-    {answer("A Contact Improvisation class teaches the underlying skills: how to share weight without collapsing, how to roll out of a fall, how to read your partner's momentum, and how to say no. Beginner sessions assume no dance training. Most people attend classes for a few weeks and then add a weekly jam, because the form is learned mostly by dancing rather than by instruction.")}
+    {answer("A Contact Improvisation (CI) class teaches the underlying skills: how to share weight without collapsing, how to roll out of a fall, how to read your partner's momentum, and how to say no. Beginner sessions assume no dance training. Most people attend classes for a few weeks and then add a weekly jam, because the form is learned mostly by dancing rather than by instruction.")}
     <div class="prose">
       <h2 id="first-jam">Your first jam, step by step</h2>
       <p><strong>Before.</strong> Message the organiser and say you are new. Ask three things: is it open to beginners, what is the door fee, and is there a warm-up before the open dancing. All three answers should be easy.</p>
@@ -212,7 +224,7 @@ SAFETY_FAQ = [
      "Contact Improvisation is not a sexual practice, a dating venue, a massage service, an acrobatics display, or a space for uninvited instruction. Touching, holding or moving a partner in ways they have not agreed to is not part of this form, and jams address it directly."),
     ("What do I do if something goes wrong in a jam?",
      "Speak to the organiser during or after the session. Most jams name a person who holds the room and is responsible for intervening. If an organiser will not act on a boundary violation, that is information about whether to return."),
-    ("Is there a code of conduct for contact improv?",
+    ("Is there a code of conduct for Contact Improvisation?",
      "There is no global one, because there is no global body. Individual scenes and jams write their own. The shared expectations are: continuous consent, the right to decline anything, respect for the edge, no teaching uninvited, and no recording without asking."),
 ]
 
@@ -230,7 +242,7 @@ def safety():
 
 <section class="section">
   <div class="wrap">
-    {answer("In Contact Improvisation, consent is continuous rather than given once. Any dancer may decline an invitation, pause, slow down, change what they are doing or leave a dance at any point, without explanation. Jams are unguided and unsupervised, so the person hosting the session is responsible for stating the protocol and acting on violations.")}
+    {answer("In Contact Improvisation (CI), consent is continuous rather than given once. Any dancer may decline an invitation, pause, slow down, change what they are doing or leave a dance at any point, without explanation. Jams are unguided and unsupervised, so the person hosting the session is responsible for stating the protocol and acting on violations.")}
     <div class="prose">
       <h2>Your rights in the room</h2>
       <ul>
@@ -297,7 +309,7 @@ def videos():
 
 <section class="section">
   <div class="wrap">
-    {answer("Contact Improvisation on video falls into three useful categories: performance work, where trained dancers push the form to its physical limits; jam footage, which shows what an ordinary session actually looks like; and documentary and teaching material, which explains the principles behind what you are seeing.")}
+    {answer("Contact Improvisation (CI) on video falls into three useful categories: performance work, where trained dancers push the form to its physical limits; jam footage, which shows what an ordinary session actually looks like; and documentary and teaching material, which explains the principles behind what you are seeing.")}
     {videos_data.gallery()}
     {videos_data.credits()}
     {band("Watched enough", "Nothing on this page will teach you what two minutes on a floor with another person will.", [("Jams in Miami", "/jams", "primary"), ("First jam walkthrough", "/classes#first-jam", "secondary")])}

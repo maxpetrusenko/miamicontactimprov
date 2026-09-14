@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
 import content_practice  # noqa: E402
+import schema  # noqa: E402
 import shell  # noqa: E402
 import videos_data  # noqa: E402
 
@@ -211,7 +212,12 @@ def build(out_dir: pathlib.Path, base_url=None):
 # ------------------------------------------------------------------ llms.txt
 
 LLMS_INTRO = (
-    "Miami Contact Improv is an independent, non-commercial community resource that maps "
+    # Line 1 of llms.txt carries the entity disambiguation, so an answer engine
+    # reading only the top of the file cannot mistake this site for a studio, a
+    # paid directory, or for miamiimprov.com (a comedy theatre).
+    "Miami Contact Improv is " + schema.DISAMBIGUATION + " and is not affiliated with "
+    "miamiimprov.com, the comedy theatre that dominates search for the bare word 'improv'.\n"
+    "It is an independent, non-commercial community resource that maps "
     "Contact Improvisation practice across Miami-Dade and Broward County, Florida. It covers "
     "what the form is, how a jam works, safety and consent, the form's history, the local "
     "scene, a verified video room and a directory of organisers and global resources.\n\n"
