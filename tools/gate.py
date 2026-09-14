@@ -342,6 +342,68 @@ def check_assets(site_dir):
     measured("assets.raster_checked", 6)
 
 
+# ---------------------------------------------------------------- disambiguation
+def _schema_constant(name):
+    """Read a constant out of build/schema.py. Empty string when it is gone.
+
+    Asserting on the exported constant rather than on a copy of the sentence is
+    what stops this regressing: a substring test over a served page passes while
+    the constant is deleted and an inline literal silently replaces it.
+    """
+    build = pathlib.Path(__file__).resolve().parent.parent / "build"
+    if not (build / "schema.py").is_file():
+        return ""
+    if str(build) not in sys.path:
+        sys.path.insert(0, str(build))
+    try:
+        import schema as _schema
+    except Exception:  # noqa: BLE001
+        return ""
+    return getattr(_schema, name, "")
+
+
+def check_disambiguation(site_dir, pages):
+    """The Organization node and llms.txt must both carry the entity disambiguation.
+
+    Without it a model can read this site as a studio, a paid directory, or as
+    miamiimprov.com (a comedy theatre), which is a real liability on this domain.
+    """
+    phrase = _schema_constant("DISAMBIGUATION")
+    if not phrase:
+        add(ERROR, "disambiguation", "build/schema.py",
+            "the DISAMBIGUATION constant is missing or empty; the entity "
+            "disambiguation has been dropped")
+        return
+    n = 0
+    for page, src in pages.items():
+        for raw in LD_RE.findall(src):
+            try:
+                data = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            for node in (data.get("@graph") or [data]):
+                if node.get("@type") != "Organization":
+                    continue
+                n += 1
+                dd = node.get("disambiguatingDescription") or ""
+                if not dd:
+                    add(ERROR, "disambiguation", page,
+                        "Organization has no disambiguatingDescription property")
+                elif phrase.lower() not in dd.lower():
+                    add(ERROR, "disambiguation", page,
+                        f"Organization.disambiguatingDescription does not state '{phrase}'")
+    measured("disambiguation.organization_nodes", n)
+
+    llms = (site_dir / "llms.txt").read_text(encoding="utf-8")
+    # The summary line an answer engine reads first, not a substring anywhere in
+    # the file (which a comment would satisfy).
+    summary = next((ln for ln in llms.splitlines() if ln.startswith("> ")), "")
+    measured("disambiguation.llms_summary_lines", 1 if summary else 0)
+    if phrase.lower() not in summary.lower():
+        add(ERROR, "disambiguation", "llms.txt",
+            f"llms.txt summary line does not state '{phrase}'")
+
+
 # ---------------------------------------------------------------- aria / a11y basics
 def check_a11y(pages):
     n = 0
@@ -395,6 +457,7 @@ def main():
     check_canonical_forms(site_dir, pages)
     check_assets(site_dir)
     check_a11y(pages)
+    check_disambiguation(site_dir, pages)
 
     bands = Counter(b for b, *_ in findings)
     if not args.quiet:
