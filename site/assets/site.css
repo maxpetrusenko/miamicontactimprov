@@ -236,3 +236,22 @@ a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 
   .card:hover, .btn:hover { transform: none; }
   #bgwrap video { display: none; }
 }
+
+/* ---------------------------------------------------------------- language switcher
+   NOTE: site/assets/site.css is a hand-maintained SOURCE file, not generated output.
+   Nothing in build/ writes it (build/make_assets.py writes only the rasters), which is
+   why editing it here is correct and does not get overwritten. Bump the ?v= query in
+   shell.STYLESHEET when this changes, or returning visitors keep the 7-day cached copy. */
+.lang-switch {
+  display: flex; align-items: center; gap: 2px; flex-shrink: 0; margin-left: auto;
+}
+.lang-switch .lang-item {
+  font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 6px 9px; border-radius: 999px;
+  color: var(--muted); opacity: 0.82; text-decoration: none; white-space: nowrap;
+}
+.lang-switch a.lang-item:hover { color: var(--ink); opacity: 1; background: rgba(245, 242, 234, 0.09); text-decoration: none; }
+.lang-switch .lang-item.is-current { color: var(--accent); opacity: 1; }
+@media (max-width: 560px) {
+  .lang-switch .lang-item { font-size: 0.68rem; padding: 6px 7px; letter-spacing: 0.05em; }
+}

@@ -2,25 +2,80 @@
 
 import json
 
+import locales
+
 SITE = "https://miamicontactimprov.com"
 ORG_ID = SITE + "/#organisation"
 SITE_ID = SITE + "/#website"
+ORG_NAME = "Miami Contact Improv"
 
-# One canonical scope sentence and one disambiguation phrase, used by the schema
-# below AND by llms.txt in build/build.py. tools/gate.py asserts on
-# DISAMBIGUATION, so a page or discovery file that drops it fails the build.
-SITE_SENTENCE = (
-    "Miami Contact Improv is an independent, non-commercial community resource "
-    "mapping Contact Improvisation practice across Miami-Dade and Broward County, Florida."
-)
-DISAMBIGUATION = "not a studio, organiser or membership body"
-DISAMBIGUATING_DESCRIPTION = (
-    SITE_SENTENCE
-    + " It is "
-    + DISAMBIGUATION
-    + ": it runs no sessions, takes no bookings and charges no listing fee, and it is not "
-    "miamiimprov.com, the comedy theatre that dominates search for the bare word 'improv'."
-)
+# One canonical scope sentence and one disambiguation phrase PER LOCALE. These are the
+# single source for the schema below, for the footer (shell.SITE_SENTENCE) and for
+# llms.txt in build/build.py, and tools/gate.py reads the map back out of this module,
+# so a page or discovery file that drops the disambiguation fails the build.
+#
+# The Spanish entries are translations of the identical claim, not a second claim:
+# "no es un estudio, organizador ni organismo de membresía" asserts exactly what
+# "not a studio, organiser or membership body" asserts, and nothing more.
+SITE_SENTENCE_BY_LANG = {
+    "en": (
+        "Miami Contact Improv is an independent, non-commercial community resource "
+        "mapping Contact Improvisation practice across Miami-Dade and Broward County, Florida."
+    ),
+    "es": (
+        "Miami Contact Improv es un recurso comunitario independiente y sin ánimo de lucro "
+        "que traza un mapa de la práctica de la Improvisación de Contacto en los condados "
+        "de Miami-Dade y Broward, Florida."
+    ),
+}
+
+DISAMBIGUATION_BY_LANG = {
+    "en": "not a studio, organiser or membership body",
+    "es": "no es un estudio, organizador ni organismo de membresía",
+}
+
+_DISAMBIGUATING_TAIL_BY_LANG = {
+    "en": (
+        ": it runs no sessions, takes no bookings and charges no listing fee, and it is not "
+        "miamiimprov.com, the comedy theatre that dominates search for the bare word 'improv'."
+    ),
+    "es": (
+        ": no organiza sesiones, no acepta reservas y no cobra por publicar, y no es "
+        "miamiimprov.com, el teatro de comedia que domina las búsquedas de la palabra "
+        "'improv'."
+    ),
+}
+
+
+def _sentence(lang):
+    return SITE_SENTENCE_BY_LANG.get(lang, SITE_SENTENCE_BY_LANG["en"])
+
+
+def disambiguation(lang):
+    return DISAMBIGUATION_BY_LANG.get(lang, DISAMBIGUATION_BY_LANG["en"])
+
+
+def disambiguating_description(lang):
+    """Compose the sentence from the scope sentence + this locale's disambiguation phrase.
+
+    The Spanish phrase already carries its own negation ("no es un estudio..."), because
+    that is the substring the gate asserts and a reader needs the whole claim. So the
+    Spanish branch capitalises it rather than prefixing another "No es" — which is
+    exactly the "No es no es un estudio" this produced before it was caught.
+    """
+    tail = _DISAMBIGUATING_TAIL_BY_LANG.get(lang, _DISAMBIGUATING_TAIL_BY_LANG["en"])
+    if lang == "en":
+        return _sentence(lang) + " It is " + disambiguation("en") + tail
+    phrase = disambiguation(lang)
+    return _sentence(lang) + " " + phrase[:1].upper() + phrase[1:] + tail
+
+
+# Backwards-compatible singular names. The English string stays reachable under the
+# name existing callers and the gate already use, so removing it would be the change
+# that breaks the check rather than the change that keeps it honest.
+SITE_SENTENCE = SITE_SENTENCE_BY_LANG["en"]
+DISAMBIGUATION = DISAMBIGUATION_BY_LANG["en"]
+DISAMBIGUATING_DESCRIPTION = disambiguating_description("en")
 
 
 def _graph(nodes):
@@ -31,18 +86,15 @@ def _graph(nodes):
     )
 
 
-def organisation():
+def organisation(lang="en"):
     return {
         "@type": "Organization",
         "@id": ORG_ID,
-        "name": "Miami Contact Improv",
+        "name": ORG_NAME,
         "alternateName": ["Miami CI", "miamicontactimprov.com"],
         "url": SITE + "/",
-        "description": (
-            "An independent, non-commercial community resource mapping Contact Improvisation "
-            "practice across Miami-Dade and Broward County, Florida."
-        ),
-        "disambiguatingDescription": DISAMBIGUATING_DESCRIPTION,
+        "description": _sentence(lang),
+        "disambiguatingDescription": disambiguating_description(lang),
         "foundingDate": "2026-09-13",
         "areaServed": [
             {"@type": "AdministrativeArea", "name": "Miami-Dade County, Florida"},
@@ -72,17 +124,17 @@ def organisation():
             "email": "hello@miamicontactimprov.com",
             "availableLanguage": ["en", "es"],
         },
-        "inLanguage": "en-US",
+        "inLanguage": locales.SCHEMA_LANG.get(lang, "en-US"),
     }
 
 
-def website():
+def website(lang="en"):
     return {
         "@type": "WebSite",
         "@id": SITE_ID,
         "url": SITE + "/",
-        "name": "Miami Contact Improv",
-        "inLanguage": "en-US",
+        "name": ORG_NAME,
+        "inLanguage": locales.SCHEMA_LANG.get(lang, "en-US"),
         "publisher": {"@id": ORG_ID},
         "description": (
             "Jams, classes, teachers and video for Contact Improvisation in Miami, "
@@ -91,7 +143,8 @@ def website():
     }
 
 
-def webpage(path, title, description, *, primary_image=None, about=None, date_modified="2026-09-13"):
+def webpage(path, title, description, *, primary_image=None, about=None,
+            date_modified="2026-09-13", lang="en"):
     url = SITE + ("/" if path == "/" else path)
     node = {
         "@type": "WebPage",
@@ -100,7 +153,7 @@ def webpage(path, title, description, *, primary_image=None, about=None, date_mo
         "name": title,
         "description": description,
         "isPartOf": {"@id": SITE_ID},
-        "inLanguage": "en-US",
+        "inLanguage": locales.SCHEMA_LANG.get(lang, "en-US"),
         "datePublished": "2026-09-13",
         "dateModified": date_modified,
         "publisher": {"@id": ORG_ID},
@@ -112,22 +165,25 @@ def webpage(path, title, description, *, primary_image=None, about=None, date_mo
     return node
 
 
-def breadcrumb(path, label):
-    """Trail is always Home > <label>."""
+def breadcrumb(path, label, lang="en"):
+    """Trail is always Home > <label>. "Home" is translated, because a Spanish reader
+    reading "Home" learns nothing about where the link goes."""
     url = SITE + ("/" if path == "/" else path)
+    root = "Inicio" if lang == "es" else "Home"
     return {
         "@type": "BreadcrumbList",
         "@id": url + "#breadcrumb",
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 1, "name": root, "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": label, "item": url},
         ],
     }
 
 
-def faq(entries):
+def faq(entries, lang="en"):
     return {
         "@type": "FAQPage",
+        "inLanguage": locales.SCHEMA_LANG.get(lang, "en-US"),
         "mainEntity": [
             {
                 "@type": "Question",
@@ -173,7 +229,7 @@ def defined_terms(terms, path="/glossary", alternates=None):
     }
 
 
-def item_list(path, name, items):
+def item_list(path, name, items, lang="en"):
     """items: list of (name, url, description). `path` may carry its own #fragment."""
     anchor = f"#{path.split('#', 1)[1]}" if "#" in path else "#list"
     page = path.split("#", 1)[0]
@@ -181,6 +237,7 @@ def item_list(path, name, items):
         "@type": "ItemList",
         "@id": SITE + page + anchor,
         "name": name,
+        "inLanguage": locales.SCHEMA_LANG.get(lang, "en-US"),
         "itemListOrder": "https://schema.org/ItemListUnordered",
         "numberOfItems": len(items),
         "itemListElement": [
