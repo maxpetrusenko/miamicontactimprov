@@ -11,8 +11,8 @@ NAME = "Miami Contact Improv"
 TAGLINE = "A working map of Contact Improvisation in Miami"
 
 # Bump when the local listings in build/listings.py are re-checked against source.
-LAST_CHECKED = "13 September 2026"
-LAST_CHECKED_ISO = "2026-09-13"
+LAST_CHECKED = "14 September 2026"
+LAST_CHECKED_ISO = "2026-09-14"
 
 # The site's scope and nature, stated one way everywhere (footer, schema, llms.txt).
 # schema.py owns the string; the footer must not carry a second version of it.
@@ -37,6 +37,7 @@ FOOTER_COLS = [
     ]),
     ("In Miami", [
         ("The Miami scene", "/miami"),
+        ("Miami-Dade and Broward jam list", "/miami-jams"),
         ("Jams and open practice", "/jams"),
         ("Classes and workshops", "/classes"),
         ("Keep practising", "/keep-practising"),
