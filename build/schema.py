@@ -6,6 +6,22 @@ SITE = "https://miamicontactimprov.com"
 ORG_ID = SITE + "/#organisation"
 SITE_ID = SITE + "/#website"
 
+# One canonical scope sentence and one disambiguation phrase, used by the schema
+# below AND by llms.txt in build/build.py. tools/gate.py asserts on
+# DISAMBIGUATION, so a page or discovery file that drops it fails the build.
+SITE_SENTENCE = (
+    "Miami Contact Improv is an independent, non-commercial community resource "
+    "mapping Contact Improvisation practice across Miami-Dade and Broward County, Florida."
+)
+DISAMBIGUATION = "not a studio, organiser or membership body"
+DISAMBIGUATING_DESCRIPTION = (
+    SITE_SENTENCE
+    + " It is "
+    + DISAMBIGUATION
+    + ": it runs no sessions, takes no bookings and charges no listing fee, and it is not "
+    "miamiimprov.com, the comedy theatre that dominates search for the bare word 'improv'."
+)
+
 
 def _graph(nodes):
     return (
@@ -26,6 +42,7 @@ def organisation():
             "An independent, non-commercial community resource mapping Contact Improvisation "
             "practice across Miami-Dade and Broward County, Florida."
         ),
+        "disambiguatingDescription": DISAMBIGUATING_DESCRIPTION,
         "foundingDate": "2026-09-13",
         "areaServed": [
             {"@type": "AdministrativeArea", "name": "Miami-Dade County, Florida"},
@@ -122,7 +139,26 @@ def faq(entries):
     }
 
 
-def defined_terms(terms, path="/glossary"):
+def defined_terms(terms, path="/glossary", alternates=None):
+    """terms: list of (slug, name, definition). alternates: {slug: alternateName}.
+
+    One @id per term site-wide. A retired synonym stays retrievable as an
+    alternateName rather than becoming a second competing DefinedTerm.
+    """
+    alternates = alternates or {}
+
+    def term_node(slug, name, definition):
+        node = {
+            "@type": "DefinedTerm",
+            "@id": SITE + path + "#" + slug,
+            "name": name,
+            "description": definition,
+            "inDefinedTermSet": {"@id": SITE + path + "#terms"},
+        }
+        if alternates.get(slug):
+            node["alternateName"] = alternates[slug]
+        return node
+
     return {
         "@type": "DefinedTermSet",
         "@id": SITE + path + "#terms",
@@ -132,14 +168,7 @@ def defined_terms(terms, path="/glossary"):
             "underscore, weight sharing, landing, spotting and related terms."
         ),
         "hasDefinedTerm": [
-            {
-                "@type": "DefinedTerm",
-                "@id": SITE + path + "#" + slug,
-                "name": name,
-                "description": definition,
-                "inDefinedTermSet": {"@id": SITE + path + "#terms"},
-            }
-            for slug, name, definition in terms
+            term_node(slug, name, definition) for slug, name, definition in terms
         ],
     }
 

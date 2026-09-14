@@ -33,21 +33,21 @@ SESSIONS = [
     ),
     (
         "Kama Flight \u2014 Flight Workshop",
-        "Contact-adjacent (acro yoga, Thai massage, contact improv)",
+        "Contact-adjacent (acro yoga, Thai massage, Contact Improvisation)",
         "Miami",
         "Skanda Yoga, Miami, FL",
         "October 18, 2026 and November 15, 2026",
         "Published on the organiser's own product pages",
         "https://kamaflight.com/products/flight-workshop-miami-fl-october-18-2026",
         VERIFIED,
-        "Described by the organisers as a fusion of acro yoga, Thai massage and contact improv. Proceeds "
+        "Described by the organisers as a fusion of acro yoga, Thai massage and Contact Improvisation. Proceeds "
         "fund the Kama Flight Foundation, a registered 501(c)(3) nonprofit. Booked in pairs with friends "
         "welcome, which makes it a gentler first step than an open jam if physical contact with strangers "
         "is the thing giving you pause.",
     ),
     (
         "Kama Flight \u2014 jams and Kama Floor workshops",
-        "Contact-adjacent (acro yoga, Thai massage, contact improv)",
+        "Contact-adjacent (acro yoga, Thai massage, Contact Improvisation)",
         "Miami Beach",
         "Private residence, 2345 N Bay Road, Miami Beach, FL 33140 (parking on Alton Road)",
         "Recurring; dates published individually",
@@ -104,7 +104,7 @@ ORGS = [
         "Miami and Miami Beach",
         "https://kamaflight.com/",
         VERIFIED,
-        "Acro yoga, Thai massage and contact improv. Runs workshops, jams and teacher trainings, and "
+        "Acro yoga, Thai massage and Contact Improvisation. Runs workshops, jams and teacher trainings, and "
         "publishes its own code of conduct.",
     ),
     (

@@ -6,10 +6,10 @@ import listings
 
 MIAMI_FAQ = [
     ("Is there contact improvisation in Miami?",
-     "Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and contact improv, and Camp Contact brings contact improvisation to the Love Burn festival on Virginia Key each February. Contact improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution."),
+     "Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and Contact Improvisation, and Camp Contact brings Contact Improvisation to the Love Burn festival on Virginia Key each February. Contact Improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution."),
     ("Why does searching for 'improv Miami' not find this?",
      "Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented, and it is why this site spells the whole thing out."),
-    ("Where do people dance contact improv in Miami?",
+    ("Where do people dance Contact Improvisation in Miami?",
      "Rented studio space, a residence in Miami Beach, a warehouse or wellness venue, and outdoors at Virginia Key during the annual burn. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not."),
     ("Do I need a partner to attend?",
      "No, and bringing one is not required. Jams are designed so that people arrive alone and dance with whoever is willing. Attending with a partner is fine, but you are not expected to spend the session with them."),
@@ -37,7 +37,7 @@ def miami():
 
 <section class="section">
   <div class="wrap">
-    {answer("Contact Improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution. Miami has no standing CI venue or central calendar. Practice has historically run through rented studio space, such as the community jam listed at Excello Dance Space, and through sections of Miami's wider contemporary, physically integrated and somatic movement community. Because the form has no licensing body, the scene is whatever the people in it build.")}
+    {answer("Contact Improvisation (CI) has been practised in South Florida for decades, organised by individuals rather than through any institution. Miami has no standing CI venue or central calendar. Practice has historically run through rented studio space, such as the community jam listed at Excello Dance Space, and through sections of Miami's wider contemporary, physically integrated and somatic movement community. Because the form has no licensing body, the scene is whatever the people in it build.")}
     {facts([
       ("Country", "United States"),
       ("State", "Florida"),
@@ -177,7 +177,7 @@ def directory():
 
 <section class="section">
   <div class="wrap">
-    {answer("Contact Improvisation has no central directory because it has no central body. Local listings are held by the organisers themselves. The closest thing to a global index is the CI World Jam Map at contactimprov.com, which lists sessions by country and state, including a Florida page covering Miami, Sarasota, Gainesville and Jacksonville.")}
+    {answer("Contact Improvisation (CI) has no central directory because it has no central body. Local listings are held by the organisers themselves. The closest thing to a global index is the CI World Jam Map at contactimprov.com, which lists sessions by country and state, including a Florida page covering Miami, Sarasota, Gainesville and Jacksonville.")}
     <div class="prose">
       <h2>International resources</h2>
       <p>These are the sites that actually hold the form's listings, archives and gatherings. Each one was opened and checked when it was added here.</p>
@@ -222,20 +222,54 @@ def faq():
     from content_core import WHATIS_FAQ, HISTORY_FAQ
     from content_practice import FIRST_JAM_FAQ, JAMS_FAQ, SAFETY_FAQ
 
+    # Buyer questions the audit found missing. Each is phrased to stand on its
+    # own rather than repeat a question already answered in another bucket.
+    buyer_faq = [
+        ("What does it cost to start Contact Improvisation in Miami?",
+         "Cost sits with whoever runs the session, not with this site. Community jams are commonly free, donation-based, or carry a small door fee that covers the room hire. Classes and workshops are priced individually by the teacher or the studio. Ask before you arrive and there will be nothing to be surprised by."),
+        ("Can I come on my own, or should I bring a partner?",
+         "Come on your own. Most people at a jam arrive alone, and the form is built for one person meeting another. Bringing a partner is fine, but you are not expected to spend the session dancing with them, and nobody will ask why you came by yourself."),
+        ("Do I need to be fit or flexible?",
+         "Neither is a prerequisite. Contact Improvisation works from structure and gravity rather than from strength or range of movement, and beginners' sessions start from standing and rolling rather than from lifts. Adaptations are normal, and agreeing them with a partner before a dance is part of the practice."),
+        ("Can I just watch and not dance?",
+         "Yes. Sitting at the edge is a normal way to spend a jam, and watching is participation rather than absence. You may decline any invitation without giving a reason, and you can join in at any point, late, or not at all."),
+        ("I have never danced. What is the beginner path?",
+         "Start with a beginners' class if you want to be taught, or with an open jam if you would rather learn in the room. Both are legitimate entry points. A class teaches the skills a jam assumes; an open jam accepts first-timers by definition. Nothing commits you to coming back."),
+    ]
+
+    # One capsule per bucket, so lifting an H2 block yields an answer rather than
+    # a topic label. Every fact below is already published elsewhere on the site.
     groups = [
-        ("About the practice", WHATIS_FAQ),
-        ("Starting out", FIRST_JAM_FAQ),
-        ("Jams and sessions", JAMS_FAQ),
-        ("Safety and consent", SAFETY_FAQ),
-        ("History and origins", HISTORY_FAQ),
-        ("Miami", MIAMI_FAQ),
-        ("This directory and site", DIRECTORY_FAQ),
+        ("About the practice",
+         "Contact Improvisation (CI) is an improvised partnered dance form created by Steve Paxton in 1972, built on a rolling point of contact and shared weight. It has no certification body and no central authority.",
+         WHATIS_FAQ),
+        ("Starting out",
+         "You can start with no dance experience. Wear loose clothing that covers your back, shoulders and knees, arrive for the opening circle, and remember that you can decline any dance without giving a reason.",
+         FIRST_JAM_FAQ),
+        ("Jams and sessions",
+         "A jam is open, unguided practice: no teacher, often no music, and no obligation to dance with anyone. A class teaches the skills a jam assumes; a workshop is time-boxed study.",
+         JAMS_FAQ),
+        ("Safety and consent",
+         "Consent in Contact Improvisation is continuous rather than given once: any dancer can pause, slow down or end a dance at any moment without explanation.",
+         SAFETY_FAQ),
+        ("History and origins",
+         "Steve Paxton developed Contact Improvisation in 1972 in the United States, and it spread through touring, teaching and a paper newsletter rather than through any organisation.",
+         HISTORY_FAQ),
+        ("Miami",
+         "Miami has one recurring all-levels class we could verify from the organiser's own page, plus jams that come and go. This page lists only what was checked, with the date it was checked.",
+         MIAMI_FAQ),
+        ("Practical questions",
+         "Cost, company, fitness and whether you can simply watch: the questions people ask before their first session, answered without a sales pitch.",
+         buyer_faq),
+        ("This directory and site",
+         "There is no membership, no paid listing and no central register, because Contact Improvisation has no certification body. Everything here was checked against the organiser's own page.",
+         DIRECTORY_FAQ),
     ]
     blocks = []
     all_entries = []
-    for title, entries in groups:
+    for title, capsule, entries in groups:
         qs = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in entries)
-        blocks.append(f"<h2>{title}</h2>{qs}")
+        blocks.append(f"<h2>{title}</h2><p>{capsule}</p>{qs}")
         all_entries.extend(entries)
     body = f"""
 <section class="hero">
@@ -287,7 +321,7 @@ def about():
 
 <section class="section">
   <div class="wrap">
-    {answer("miamicontactimprov.com is an independent community resource that maps Contact Improvisation practice across Miami-Dade and Broward County. It publishes what can be verified, states plainly what cannot, and accepts corrections from anyone in the scene. It does not run sessions, take bookings, or charge for listings.")}
+    {answer("miamicontactimprov.com is an independent community resource that maps Contact Improvisation (CI) practice across Miami-Dade and Broward County. It publishes what can be verified, states plainly what cannot, and accepts corrections from anyone in the scene. It does not run sessions, take bookings, or charge for listings.")}
     <div class="prose">
       <h2>Why it exists</h2>
       <p>Contact Improvisation has no federation, no licence and no central organisation. That openness is the reason it spread to every continent, and it is also the reason a city like Miami can have a decades-long intermittent practice without anything online to show for it. When the form has no institution, the map has to be built by hand.</p>
@@ -352,7 +386,7 @@ def not_found():
   <div class="wrap">
     <p class="eyebrow">404</p>
     <h1>That page is not here.</h1>
-    <p class="lede">Either it moved, or it never existed, or a link to it is wrong. The pages below cover most of what people come here for.</p>
+    <p class="lede">Either it moved, or it never existed, or a link to it is wrong. Contact Improvisation (CI) is what this site documents; the pages below cover most of what people come here for.</p>
     <div class="btn-row">
       <a class="btn primary" href="/">Home</a>
       <a class="btn secondary" href="/miami">Contact Improvisation in Miami</a>

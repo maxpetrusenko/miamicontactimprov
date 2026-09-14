@@ -4,12 +4,19 @@ Every page is rendered through here so the head, nav and footer exist in exactly
 one place. Editing the nav means editing NAV below and re-running build.py.
 """
 
+import schema
+
 SITE = "https://miamicontactimprov.com"
 NAME = "Miami Contact Improv"
 TAGLINE = "A working map of Contact Improvisation in Miami"
 
 # Bump when the local listings in build/listings.py are re-checked against source.
 LAST_CHECKED = "13 September 2026"
+LAST_CHECKED_ISO = "2026-09-13"
+
+# The site's scope and nature, stated one way everywhere (footer, schema, llms.txt).
+# schema.py owns the string; the footer must not carry a second version of it.
+SITE_SENTENCE = schema.SITE_SENTENCE
 
 NAV = [
     ("What is CI", "/what-is-contact-improvisation"),
@@ -123,7 +130,7 @@ def footer():
       {''.join(cols)}
     </div>
     <div class="colophon">
-      <span>{NAME} &middot; an independent, non-commercial resource for the Miami dance community.</span>
+      <span>{SITE_SENTENCE}</span>
       <span>Local listings last checked {LAST_CHECKED}. Contact Improvisation has no central authority, no licence and no membership. This site is one map of it, not the map.</span>
     </div>
   </div>

@@ -1,6 +1,7 @@
 # Miami Contact Improv — full text
 
-Miami Contact Improv is an independent, non-commercial community resource that maps Contact Improvisation practice across Miami-Dade and Broward County, Florida. It covers what the form is, how a jam works, safety and consent, the form's history, the local scene, a verified video room and a directory of organisers and global resources.
+Miami Contact Improv is not a studio, organiser or membership body and is not affiliated with miamiimprov.com, the comedy theatre that dominates search for the bare word 'improv'.
+It is an independent, non-commercial community resource that maps Contact Improvisation practice across Miami-Dade and Broward County, Florida. It covers what the form is, how a jam works, safety and consent, the form's history, the local scene, a verified video room and a directory of organisers and global resources.
 
 It has no membership, no booking function and no commercial interest in any listing. Every local fact is either verified against the organiser's own published information or explicitly marked as unverified. Quotation with attribution to https://miamicontactimprov.com is welcome.
 
@@ -200,7 +201,7 @@ Miami is a city of borrowed rooms and unofficial scenes. Contact improvisation h
 
 Short answer
 
-Contact Improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution. Miami has no standing CI venue or central calendar. Practice has historically run through rented studio space, such as the community jam listed at Excello Dance Space, and through sections of Miami's wider contemporary, physically integrated and somatic movement community. Because the form has no licensing body, the scene is whatever the people in it build.
+Contact Improvisation (CI) has been practised in South Florida for decades, organised by individuals rather than through any institution. Miami has no standing CI venue or central calendar. Practice has historically run through rented studio space, such as the community jam listed at Excello Dance Space, and through sections of Miami's wider contemporary, physically integrated and somatic movement community. Because the form has no licensing body, the scene is whatever the people in it build.
 
  Country United States 
 
@@ -282,13 +283,13 @@ Questions about CI in Miami
 
 Is there contact improvisation in Miami?
 
-Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and contact improv, and Camp Contact brings contact improvisation to the Love Burn festival on Virginia Key each February. Contact improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution.
+Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and Contact Improvisation, and Camp Contact brings Contact Improvisation to the Love Burn festival on Virginia Key each February. Contact Improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution.
 
 Why does searching for 'improv Miami' not find this?
 
 Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented, and it is why this site spells the whole thing out.
 
-Where do people dance contact improv in Miami?
+Where do people dance Contact Improvisation in Miami?
 
 Rented studio space, a residence in Miami Beach, a warehouse or wellness venue, and outdoors at Virginia Key during the annual burn. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not.
 
@@ -336,7 +337,7 @@ A jam is where Contact Improvisation actually lives. No instructor, no set music
 
 Short answer
 
-A contact improv jam is an open, unguided session where people practise Contact Improvisation together. There is no teacher and usually no music. Participants arrive and leave freely, dance with whoever is willing, sit at the edge to rest and watch, and stop at any time. Jams are the primary way the form is practised worldwide, and in Miami they sit alongside a small number of recurring classes and festival camps.
+A Contact Improvisation (CI) jam is an open, unguided session where people practise Contact Improvisation together. There is no teacher and usually no music. Participants arrive and leave freely, dance with whoever is willing, sit at the edge to rest and watch, and stop at any time. Jams are the primary way the form is practised worldwide, and in Miami they sit alongside a small number of recurring classes and festival camps.
 
 Recurring sessions in Miami we have verified
 
@@ -352,17 +353,17 @@ The most established recurring Contact Improvisation class found in Miami-Dade. 
 
  The organiser's own listing · checked 2026-09-13
 
- Kama Flight — Flight Workshop · Contact-adjacent (acro yoga, Thai massage, contact improv)
+ Kama Flight — Flight Workshop · Contact-adjacent (acro yoga, Thai massage, Contact Improvisation)
 
 Skanda Yoga, Miami, FL
 
 October 18, 2026 and November 15, 2026. Published on the organiser's own product pages.
 
-Described by the organisers as a fusion of acro yoga, Thai massage and contact improv. Proceeds fund the Kama Flight Foundation, a registered 501(c)(3) nonprofit. Booked in pairs with friends welcome, which makes it a gentler first step than an open jam if physical contact with strangers is the thing giving you pause.
+Described by the organisers as a fusion of acro yoga, Thai massage and Contact Improvisation. Proceeds fund the Kama Flight Foundation, a registered 501(c)(3) nonprofit. Booked in pairs with friends welcome, which makes it a gentler first step than an open jam if physical contact with strangers is the thing giving you pause.
 
  The organiser's own listing · checked 2026-09-13
 
- Kama Flight — jams and Kama Floor workshops · Contact-adjacent (acro yoga, Thai massage, contact improv)
+ Kama Flight — jams and Kama Floor workshops · Contact-adjacent (acro yoga, Thai massage, Contact Improvisation)
 
 Private residence, 2345 N Bay Road, Miami Beach, FL 33140 (parking on Alton Road)
 
@@ -382,6 +383,14 @@ Love Burn is Miami's Burning Man regional, held on Virginia Key, and Camp Contac
 
  The organiser's own listing · checked 2026-09-13
 
+How to check a listing is still current
+
+Miami has no central CI calendar, so "is there a jam tonight?" has no static answer and a page like this one goes stale the moment a room or a schedule changes. Every session above carries the date its source was last opened and read: 13 September 2026 . Treat an old date as a lead to check rather than a fact.
+
+Three things settle it. Open the organiser's own page or account, which is the only authoritative source and is linked from each entry. Look for a date of its own: a recurring session whose source has not been posted to in months has usually stopped, and an undated listing is evidence of nothing. Then ask, by direct message, before travelling to a session — organisers answer, and they would rather tell you than have you arrive at a locked door.
+
+What this page will not do is guess. A stale listing published as current is worse than an empty one, so an entry comes down when its source goes quiet, and a session nobody could verify is never presented as running.
+
 How a jam usually runs
 
 Formats vary, but most jams follow a recognisable shape.
@@ -390,7 +399,7 @@ Formats vary, but most jams follow a recognisable shape.
 
  The circle. Two or three minutes. The host states the protocol: consent is continuous, you may decline anything, the edge is for resting, and here is where the water is. Anyone may add a boundary or announce something, such as an injury or that they are leaving early.
 
- Warm-up. Often a short guided sequence or the small dance, standing still and following the body's micro-adjustments. If there is a teacher present, they may offer twenty minutes of material before the open dancing begins.
+ Warm-up. Often a short guided sequence, then a few minutes of small dance : standing still and following the body's micro-adjustments. If there is a teacher present, they may offer twenty minutes of material before the open dancing begins.
 
  The open jam. The long middle. Dances start with a look, a hand, or simply the two of you already moving. They end when either partner stops. Resting at the edge between dances is normal.
 
@@ -430,7 +439,7 @@ Sessions where lifts are circulating often keep one or two people outside the da
 
 Questions about jams
 
-What is a contact improv jam?
+What is a Contact Improvisation jam?
 
 A jam is an open, unguided Contact Improvisation session. There is no teacher and little or no music. People arrive, dance with one or more partners or alone, rest at the edge, and leave when they are done. It is the basic social form of Contact Improvisation.
 
@@ -474,7 +483,7 @@ You can start Contact Improvisation with no dance background at all. A beginners
 
 Short answer
 
-A Contact Improvisation class teaches the underlying skills: how to share weight without collapsing, how to roll out of a fall, how to read your partner's momentum, and how to say no. Beginner sessions assume no dance training. Most people attend classes for a few weeks and then add a weekly jam, because the form is learned mostly by dancing rather than by instruction.
+A Contact Improvisation (CI) class teaches the underlying skills: how to share weight without collapsing, how to roll out of a fall, how to read your partner's momentum, and how to say no. Beginner sessions assume no dance training. Most people attend classes for a few weeks and then add a weekly jam, because the form is learned mostly by dancing rather than by instruction.
 
 Your first jam, step by step
 
@@ -520,7 +529,7 @@ Beyond that class, the realistic routes into the form in Miami are the jams, cam
 
 Questions people ask before their first session
 
-What do I wear to a contact improv jam?
+What do I wear to a Contact Improvisation jam?
 
 Loose clothing that covers your back, shoulders and knees, since those are the usual contact points. Avoid zips, buckles, hard seams and anything with a rough texture. Bare feet or soft non-slip socks. Bring water.
 
@@ -576,14 +585,14 @@ Contact Improvisation is difficult to describe and immediately recognisable on f
 
 Short answer
 
-Contact Improvisation on video falls into three useful categories: performance work, where trained dancers push the form to its physical limits; jam footage, which shows what an ordinary session actually looks like; and documentary and teaching material, which explains the principles behind what you are seeing.
+Contact Improvisation (CI) on video falls into three useful categories: performance work, where trained dancers push the form to its physical limits; jam footage, which shows what an ordinary session actually looks like; and documentary and teaching material, which explains the principles behind what you are seeing.
 
 Start here
 
 If you have never seen this dance, watch these three first.
 
  Contact Improvisation: a couple of basic exercises OKI · 9:37 · youtube 
-The plainest demonstration in the set. Two dancers working through the underlying weight exchange, useful the week before your first session.
+The plainest demonstration in the set. Two dancers working through the underlying weight sharing, useful the week before your first session.
 
  Contact Improvisation 1972 klubki · 9:31 · youtube 
 Archive material from the founding year, uploaded decades later. Watch it for how little it resembles a performance and how much it resembles standing around until something happens.
@@ -732,7 +741,7 @@ Local organisers and studios first, then the international resources that carry 
 
 Short answer
 
-Contact Improvisation has no central directory because it has no central body. Local listings are held by the organisers themselves. The closest thing to a global index is the CI World Jam Map at contactimprov.com, which lists sessions by country and state, including a Florida page covering Miami, Sarasota, Gainesville and Jacksonville.
+Contact Improvisation (CI) has no central directory because it has no central body. Local listings are held by the organisers themselves. The closest thing to a global index is the CI World Jam Map at contactimprov.com, which lists sessions by country and state, including a Florida page covering Miami, Sarasota, Gainesville and Jacksonville.
 
 International resources
 
@@ -797,7 +806,7 @@ Checked 2026-09-13
 
 Miami and Miami Beach
 
-Acro yoga, Thai massage and contact improv. Runs workshops, jams and teacher trainings, and publishes its own code of conduct.
+Acro yoga, Thai massage and Contact Improvisation. Runs workshops, jams and teacher trainings, and publishes its own code of conduct.
 
 Checked 2026-09-13
 
@@ -887,7 +896,11 @@ Contact Improvisation has its own working language. None of it is required to da
 
 The short version
 
-The core Contact Improvisation vocabulary is: contact (the point where two bodies touch), weight sharing (giving and receiving body weight), the small dance (the standing practice that opens a session), a score (a stated constraint), the jam (an open unguided session) and spotting (standing ready to catch a fall).
+The core Contact Improvisation (CI) vocabulary is: contact (the point where two bodies touch), weight sharing (giving and receiving body weight), the small dance (the standing practice that opens a session, following the body's micro-adjustments rather than holding still), a score (a stated constraint), the jam (an open unguided session) and spotting (standing ready to catch a fall).
+
+Terms people use in a jam
+
+The working vocabulary of Contact Improvisation, in one sentence each. None of it is required to dance; knowing it makes the first jam far less opaque.
 
 Contact Improvisation (CI)
 
@@ -903,11 +916,11 @@ A stated constraint that gives an improvisation a shape, such as dancing only be
 
 Small dance
 
-A solo standing practice of noticing the micro-adjustments the body makes to stay upright, used to begin a session.
+Small dance is the standing practice that opens a session: you stand still and follow the micro-adjustments the body makes to stay upright, rather than trying to hold still.
 
 Weight sharing
 
-Deliberately giving part or all of your weight to a partner and taking theirs, with the support of the skeleton and the floor rather than muscle.
+Deliberately giving part or all of your weight to a partner and taking theirs, with the support of the skeleton and the floor rather than muscle. It is the core mechanic of the form: one dancer gives weight, the other receives it, and the roles trade continuously.
 
 Spotting
 
@@ -916,10 +929,6 @@ Standing ready, hands free, near a dancing pair, so that if a fall goes wrong th
 Underscore
 
 A long-form group score developed by Nancy Stark Smith, moving through around twenty named phases and used to shape an entire practice session or festival.
-
-Small dance
-
-The standing meditation that opens a session, in which you follow the body's micro-adjustments rather than trying to hold still.
 
 Landing
 
@@ -936,10 +945,6 @@ The perimeter of the room where people rest, watch, drink water and re-enter. Wa
 Contact point
 
 The single place where two bodies touch. Keeping it singular is what stops the dance becoming a grapple.
-
-Weight exchange
-
-The core mechanic: one dancer gives weight, the other receives it, and the roles trade continuously.
 
 Duet
 
@@ -977,7 +982,7 @@ It started in a college gymnasium in Ohio, was named in a New York gallery, and 
 
 Short answer
 
-Contact Improvisation was developed by the American dancer and choreographer Steve Paxton in 1972. It emerged from a residency at Oberlin College in January 1972 and a set of performances at the John Weber Gallery in New York in June 1972, and it was influenced by modern dance, aikido and somatic practices. The form was never trademarked and has no licensing body.
+Contact Improvisation (CI) was developed by the American dancer and choreographer Steve Paxton in 1972. It emerged from a residency at Oberlin College in January 1972 and a set of performances at the John Weber Gallery in New York in June 1972, and it was influenced by modern dance, aikido and somatic practices. The form was never trademarked and has no licensing body.
 
 January 1972, Oberlin College
 
@@ -1055,7 +1060,7 @@ Contact Improvisation puts people in close physical contact and asks them to mov
 
 Short answer
 
-In Contact Improvisation, consent is continuous rather than given once. Any dancer may decline an invitation, pause, slow down, change what they are doing or leave a dance at any point, without explanation. Jams are unguided and unsupervised, so the person hosting the session is responsible for stating the protocol and acting on violations.
+In Contact Improvisation (CI), consent is continuous rather than given once. Any dancer may decline an invitation, pause, slow down, change what they are doing or leave a dance at any point, without explanation. Jams are unguided and unsupervised, so the person hosting the session is responsible for stating the protocol and acting on violations.
 
 Your rights in the room
 
@@ -1123,7 +1128,7 @@ What do I do if something goes wrong in a jam?
 
 Speak to the organiser during or after the session. Most jams name a person who holds the room and is responsible for intervening. If an organiser will not act on a boundary violation, that is information about whether to return.
 
-Is there a code of conduct for contact improv?
+Is there a code of conduct for Contact Improvisation?
 
 There is no global one, because there is no global body. Individual scenes and jams write their own. The shared expectations are: continuous consent, the right to decline anything, respect for the edge, no teaching uninvited, and no recording without asking.
 
@@ -1150,6 +1155,8 @@ Everything people ask about this dance.
 Answered in the first sentence, in plain language, without the mystique.
 
 About the practice
+
+Contact Improvisation (CI) is an improvised partnered dance form created by Steve Paxton in 1972, built on a rolling point of contact and shared weight. It has no certification body and no central authority.
 
 What is Contact Improvisation?
 
@@ -1185,7 +1192,9 @@ Because listening to your partner's weight is part of the practice, and music co
 
 Starting out
 
-What do I wear to a contact improv jam?
+You can start with no dance experience. Wear loose clothing that covers your back, shoulders and knees, arrive for the opening circle, and remember that you can decline any dance without giving a reason.
+
+What do I wear to a Contact Improvisation jam?
 
 Loose clothing that covers your back, shoulders and knees, since those are the usual contact points. Avoid zips, buckles, hard seams and anything with a rough texture. Bare feet or soft non-slip socks. Bring water.
 
@@ -1219,7 +1228,9 @@ Many people with injuries and chronic conditions practise CI, sometimes with ada
 
 Jams and sessions
 
-What is a contact improv jam?
+A jam is open, unguided practice: no teacher, often no music, and no obligation to dance with anyone. A class teaches the skills a jam assumes; a workshop is time-boxed study.
+
+What is a Contact Improvisation jam?
 
 A jam is an open, unguided Contact Improvisation session. There is no teacher and little or no music. People arrive, dance with one or more partners or alone, rest at the edge, and leave when they are done. It is the basic social form of Contact Improvisation.
 
@@ -1241,6 +1252,8 @@ Usually a small door fee or a donation to cover the room, set by the organiser. 
 
 Safety and consent
 
+Consent in Contact Improvisation is continuous rather than given once: any dancer can pause, slow down or end a dance at any moment without explanation.
+
 Is contact improvisation safe?
 
 Contact Improvisation carries the normal risks of a partnered physical practice: falls, collisions, strained joints and the occasional bruise. The form manages these deliberately, through rolling exits rather than bracing, keeping your own feet available, keeping a single contact point, warming up, and having spotters near lifts. Serious injury is uncommon but not impossible, particularly in fast experienced jams.
@@ -1261,11 +1274,13 @@ What do I do if something goes wrong in a jam?
 
 Speak to the organiser during or after the session. Most jams name a person who holds the room and is responsible for intervening. If an organiser will not act on a boundary violation, that is information about whether to return.
 
-Is there a code of conduct for contact improv?
+Is there a code of conduct for Contact Improvisation?
 
 There is no global one, because there is no global body. Individual scenes and jams write their own. The shared expectations are: continuous consent, the right to decline anything, respect for the edge, no teaching uninvited, and no recording without asking.
 
 History and origins
+
+Steve Paxton developed Contact Improvisation in 1972 in the United States, and it spread through touring, teaching and a paper newsletter rather than through any organisation.
 
 Who invented Contact Improvisation?
 
@@ -1285,15 +1300,17 @@ The group around the earliest performances in New York in 1972 included Nancy St
 
 Miami
 
+Miami has one recurring all-levels class we could verify from the organiser's own page, plus jams that come and go. This page lists only what was checked, with the date it was checked.
+
 Is there contact improvisation in Miami?
 
-Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and contact improv, and Camp Contact brings contact improvisation to the Love Burn festival on Virginia Key each February. Contact improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution.
+Yes. A recurring all-levels Contact Improvisation class runs weekly on Tuesdays at Dance Arts Miami, 250 NE 61st Street. Beyond that, Miami's contact practice sits inside a wider movement community: Kama Flight runs contact-adjacent jams and workshops that fuse acro yoga, Thai massage and Contact Improvisation, and Camp Contact brings Contact Improvisation to the Love Burn festival on Virginia Key each February. Contact Improvisation has been practised in South Florida for decades, organised by individuals rather than through any institution.
 
 Why does searching for 'improv Miami' not find this?
 
 Because in Miami, as in most cities, the word improv belongs to comedy theatre. Searching 'improv Miami' returns comedy clubs in Doral and Dania Beach. The dance form is found under its full name, 'contact improvisation', or as 'contact improv'. That naming collision is one reason the Miami dance scene is under-documented, and it is why this site spells the whole thing out.
 
-Where do people dance contact improv in Miami?
+Where do people dance Contact Improvisation in Miami?
 
 Rented studio space, a residence in Miami Beach, a warehouse or wellness venue, and outdoors at Virginia Key during the annual burn. Miami's practice follows the same pattern as every other city: someone books a room for two hours, tells people, and a jam exists. The rooms change; the format does not.
 
@@ -1317,7 +1334,33 @@ How do I start a jam in Miami?
 
 Book a studio for a recurring two-hour slot, choose whether it is open or experienced, write the protocol down and say it out loud at the start of every session, set a door fee that covers the room, and list it somewhere public. Two hours a week and a consistent room is the entire infrastructure.
 
+Practical questions
+
+Cost, company, fitness and whether you can simply watch: the questions people ask before their first session, answered without a sales pitch.
+
+What does it cost to start Contact Improvisation in Miami?
+
+Cost sits with whoever runs the session, not with this site. Community jams are commonly free, donation-based, or carry a small door fee that covers the room hire. Classes and workshops are priced individually by the teacher or the studio. Ask before you arrive and there will be nothing to be surprised by.
+
+Can I come on my own, or should I bring a partner?
+
+Come on your own. Most people at a jam arrive alone, and the form is built for one person meeting another. Bringing a partner is fine, but you are not expected to spend the session dancing with them, and nobody will ask why you came by yourself.
+
+Do I need to be fit or flexible?
+
+Neither is a prerequisite. Contact Improvisation works from structure and gravity rather than from strength or range of movement, and beginners' sessions start from standing and rolling rather than from lifts. Adaptations are normal, and agreeing them with a partner before a dance is part of the practice.
+
+Can I just watch and not dance?
+
+Yes. Sitting at the edge is a normal way to spend a jam, and watching is participation rather than absence. You may decline any invitation without giving a reason, and you can join in at any point, late, or not at all.
+
+I have never danced. What is the beginner path?
+
+Start with a beginners' class if you want to be taught, or with an open jam if you would rather learn in the room. Both are legitimate entry points. A class teaches the skills a jam assumes; an open jam accepts first-timers by definition. Nothing commits you to coming back.
+
 This directory and site
+
+There is no membership, no paid listing and no central register, because Contact Improvisation has no certification body. Everything here was checked against the organiser's own page.
 
 Who teaches contact improvisation in Miami?
 
@@ -1359,7 +1402,7 @@ An independent, non-commercial reference for Contact Improvisation in Miami. No 
 
 Short answer
 
-miamicontactimprov.com is an independent community resource that maps Contact Improvisation practice across Miami-Dade and Broward County. It publishes what can be verified, states plainly what cannot, and accepts corrections from anyone in the scene. It does not run sessions, take bookings, or charge for listings.
+miamicontactimprov.com is an independent community resource that maps Contact Improvisation (CI) practice across Miami-Dade and Broward County. It publishes what can be verified, states plainly what cannot, and accepts corrections from anyone in the scene. It does not run sessions, take bookings, or charge for listings.
 
 Why it exists
 

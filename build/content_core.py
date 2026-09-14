@@ -115,12 +115,19 @@ WHATIS_TERMS = [
     ("score", "Score",
      "A stated constraint that gives an improvisation a shape, such as dancing only below the hips, or following the point of contact without interrupting it."),
     ("small-dance", "Small dance",
-     "A solo standing practice of noticing the micro-adjustments the body makes to stay upright, used to begin a session."),
+     "Small dance is the standing practice that opens a session: you stand still and follow the micro-adjustments the body makes to stay upright, rather than trying to hold still."),
     ("weight-sharing", "Weight sharing",
-     "Deliberately giving part or all of your weight to a partner and taking theirs, with the support of the skeleton and the floor rather than muscle."),
+     "Deliberately giving part or all of your weight to a partner and taking theirs, with the support of the skeleton and the floor rather than muscle. It is the core mechanic of the form: one dancer gives weight, the other receives it, and the roles trade continuously."),
     ("spotting", "Spotting",
      "Standing ready, hands free, near a dancing pair, so that if a fall goes wrong there is someone in reach to slow it."),
 ]
+
+# A retired synonym stays retrievable as an alternateName on the canonical term,
+# so the glossary holds one DefinedTerm per term rather than two competing ones.
+TERM_ALTERNATES = {
+    "small-dance": "the small dance",
+    "weight-sharing": "weight exchange",
+}
 
 WHATIS_FAQ = [
     ("What is Contact Improvisation?",
@@ -188,11 +195,13 @@ def what_is():
             "/what-is-contact-improvisation",
             "What is Contact Improvisation?",
             "Contact Improvisation defined: history, principles, what a jam is, why there is no licensing body, and what happens in the first five minutes.",
-            about={"@id": schema.SITE + "/#place"},
+            about=[
+                {"@id": schema.SITE + "/#place"},
+                {"@id": schema.SITE + "/glossary#terms"},
+            ],
         ),
         schema.breadcrumb("/what-is-contact-improvisation", "What is Contact Improvisation?"),
         schema.faq(WHATIS_FAQ),
-        schema.defined_terms(WHATIS_TERMS, "/what-is-contact-improvisation"),
     )
     return page(
         "What Is Contact Improvisation? [Step-by-Step Guide]",
@@ -229,7 +238,7 @@ def history():
 
 <section class="section">
   <div class="wrap">
-    {answer("Contact Improvisation was developed by the American dancer and choreographer Steve Paxton in 1972. It emerged from a residency at Oberlin College in January 1972 and a set of performances at the John Weber Gallery in New York in June 1972, and it was influenced by modern dance, aikido and somatic practices. The form was never trademarked and has no licensing body.")}
+    {answer("Contact Improvisation (CI) was developed by the American dancer and choreographer Steve Paxton in 1972. It emerged from a residency at Oberlin College in January 1972 and a set of performances at the John Weber Gallery in New York in June 1972, and it was influenced by modern dance, aikido and somatic practices. The form was never trademarked and has no licensing body.")}
     <div class="prose">
       <h2>January 1972, Oberlin College</h2>
       <p>The improvisational collective Grand Union was in residency at Oberlin College in Ohio. Paxton, a member of that group, had been running what he called a soft class in the early mornings, part meditation and part mild exercise. During the residency he made a work called <strong>Magnesium</strong> for eleven men on mats, in which they threw, caught, flung and fell among one another continuously, ending in several minutes of quiet standing. He had already asked a student who was watching, Nancy Stark Smith, to stay in touch if he ever worked this way again.</p>
@@ -289,8 +298,6 @@ def glossary():
     extra = [
         ("underscore", "Underscore",
          "A long-form group score developed by Nancy Stark Smith, moving through around twenty named phases and used to shape an entire practice session or festival."),
-        ("the-small-dance", "Small dance",
-         "The standing meditation that opens a session, in which you follow the body's micro-adjustments rather than trying to hold still."),
         ("landing", "Landing",
          "Arriving on the floor from a fall or a lift, usually by rolling through the contact point so the floor takes the weight progressively."),
         ("solo", "Solo",
@@ -299,8 +306,6 @@ def glossary():
          "The perimeter of the room where people rest, watch, drink water and re-enter. Watching from the edge is participation, not absence."),
         ("contact point", "Contact point",
          "The single place where two bodies touch. Keeping it singular is what stops the dance becoming a grapple."),
-        ("weight exchange", "Weight exchange",
-         "The core mechanic: one dancer gives weight, the other receives it, and the roles trade continuously."),
         ("duet", "Duet",
          "Two dancers. The basic unit of the form, though CI also happens in trios and larger groups."),
         ("open jam", "Open jam",
@@ -320,8 +325,10 @@ def glossary():
 
 <section class="section">
   <div class="wrap">
-    {answer("The core Contact Improvisation vocabulary is: <strong>contact</strong> (the point where two bodies touch), <strong>weight sharing</strong> (giving and receiving body weight), the <strong>small dance</strong> (the standing practice that opens a session), a <strong>score</strong> (a stated constraint), the <strong>jam</strong> (an open unguided session) and <strong>spotting</strong> (standing ready to catch a fall).", "The short version")}
+    {answer("The core Contact Improvisation (CI) vocabulary is: <strong>contact</strong> (the point where two bodies touch), <strong>weight sharing</strong> (giving and receiving body weight), the <strong>small dance</strong> (the standing practice that opens a session, following the body's micro-adjustments rather than holding still), a <strong>score</strong> (a stated constraint), the <strong>jam</strong> (an open unguided session) and <strong>spotting</strong> (standing ready to catch a fall).", "The short version")}
     <div class="prose">
+      <h2>Terms people use in a jam</h2>
+      <p>The working vocabulary of Contact Improvisation, in one sentence each. None of it is required to dance; knowing it makes the first jam far less opaque.</p>
       {''.join(rows)}
       {extra_html}
     </div>
@@ -339,7 +346,7 @@ def glossary():
             "Working vocabulary of Contact Improvisation: jam, score, small dance, underscore, weight sharing, spotting, landing and the edge.",
         ),
         schema.breadcrumb("/glossary", "Glossary"),
-        schema.defined_terms(terms),
+        schema.defined_terms(terms, alternates=TERM_ALTERNATES),
     )
     return page(
         "Contact Improvisation Glossary [Checklist] | Jam, Score & More",
