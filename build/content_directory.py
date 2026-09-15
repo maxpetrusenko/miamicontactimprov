@@ -356,6 +356,8 @@ def about():
         <li>It is not affiliated with contactimprov.com, Contact Quarterly or any festival.</li>
         <li>It does not mediate disputes between dancers or organisers.</li>
       </ul>
+      <h2>Who maintains it</h2>
+      <p>Built and maintained by <a href="https://www.maxpetrusenko.com" rel="me noopener">Max Petrusenko</a> as an independent project. No listing on this site is paid for, sponsored, or promoted, and nothing here is for sale.</p>
     </div>
     {band("The page is only as good as the room", "If you know where the dancing is this month, that is the single most useful thing you can send.", [("Email us", "mailto:hello@miamicontactimprov.com", "primary"), ("Read the Miami page", "/miami", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>About</em>. miamicontactimprov.com. https://miamicontactimprov.com/about")}
