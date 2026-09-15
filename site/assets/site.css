@@ -230,6 +230,10 @@ a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 
 .site-footer a { color: var(--sage); font-size: 0.9rem; }
 .site-footer a:hover { color: var(--accent); }
 .site-footer .colophon { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 10px 26px; justify-content: space-between; }
+.site-footer .footer-projects { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; font-size: 0.86rem; }
+.site-footer .footer-projects-title { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+.site-footer .footer-projects a { color: var(--muted); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.site-footer .footer-projects a:hover { color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
