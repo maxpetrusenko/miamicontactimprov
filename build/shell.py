@@ -42,6 +42,20 @@ NAV = [
 
 NAV_CTA = {"en": ("Submit a jam", "/about#submit"), "es": ("Publica tu sesión", "/es/acerca-de#submit")}
 
+# Properties Max owns and runs. One canonical host each, rendered on every page so
+# every crawled URL carries the outbound link rather than a single about page.
+# Miami Contact Improv itself is deliberately absent from its own footer.
+PROJECT_HEADING = {"en": "Projects", "es": "Proyectos"}
+PROJECT_LINKS = [
+    ("Max Petrusenko", "https://www.maxpetrusenko.com"),
+    ("GeoAnalyzer", "https://geo-analyzer.com"),
+    ("Unfollow X", "https://unfollow-x.com"),
+    ("SMM Agent", "https://smmagent.app"),
+    ("SMMClaw", "https://smmclaw.app"),
+    ("ClawPoster", "https://clawposter.app"),
+    ("Max Wiki", "https://wiki.maxpetrusenko.com"),
+]
+
 FOOTER_COLS = [
     ("start", {
         "en": "Start here",
@@ -78,7 +92,7 @@ FOOTER_COLS = [
     ]),
 ]
 
-STYLESHEET = "/assets/site.css?v=2"
+STYLESHEET = "/assets/site.css?v=3"
 
 
 def _nav_href(slug, lang):
@@ -262,6 +276,13 @@ def footer(lang="en"):
     <div class="footer-grid">
       {''.join(cols)}
     </div>
+    <nav class="footer-projects" aria-label="{PROJECT_HEADING.get(lang, PROJECT_HEADING['en'])}">
+      <span class="footer-projects-title">{PROJECT_HEADING.get(lang, PROJECT_HEADING['en'])}</span>
+      {''.join(
+          f'<a href="{href}" target="_blank" rel="noopener">{label}</a>'
+          for label, href in PROJECT_LINKS
+      )}
+    </nav>
     <div class="colophon">
       <span>{sentence}</span>
       <span>{colophon}</span>
