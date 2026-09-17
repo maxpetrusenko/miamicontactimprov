@@ -15,8 +15,12 @@ ORG_NAME = "Miami Contact Improv"
 # so a page or discovery file that drops the disambiguation fails the build.
 #
 # The Spanish entries are translations of the identical claim, not a second claim:
-# "no es un estudio, organizador ni organismo de membresía" asserts exactly what
-# "not a studio, organiser or membership body" asserts, and nothing more.
+# "no es un estudio ni organismo de membresía" asserts exactly what "not a studio or
+# membership body" asserts, and nothing more.
+#
+# "organiser" left the phrase on 2026-09-17, when the site's maintainer started a weekly
+# jam of his own (build/listings.py, FRIDAY_JAM_NAME). A property that hosts a session
+# cannot describe itself as running none, so the tail now says exactly what it hosts.
 SITE_SENTENCE_BY_LANG = {
     "en": (
         "Miami Contact Improv is an independent, non-commercial community resource "
@@ -30,19 +34,21 @@ SITE_SENTENCE_BY_LANG = {
 }
 
 DISAMBIGUATION_BY_LANG = {
-    "en": "not a studio, organiser or membership body",
-    "es": "no es un estudio, organizador ni organismo de membresía",
+    "en": "not a studio or membership body",
+    "es": "no es un estudio ni organismo de membresía",
 }
 
 _DISAMBIGUATING_TAIL_BY_LANG = {
     "en": (
-        ": it runs no sessions, takes no bookings and charges no listing fee, and it is not "
+        ": it hosts one weekly community jam, on Fridays in Miami, listed on the same "
+        "terms as every other session; it takes no bookings, charges no listing fee, and it is not "
         "miamiimprov.com, the comedy theatre that dominates search for the bare word 'improv'."
     ),
     "es": (
-        ": no organiza sesiones, no acepta reservas y no cobra por publicar, y no es "
-        "miamiimprov.com, el teatro de comedia que domina las búsquedas de la palabra "
-        "'improv'."
+        ": organiza una única jam comunitaria semanal, los viernes en Miami, publicada "
+        "en las mismas condiciones que cualquier otra sesión; no acepta reservas, no cobra por "
+        "publicar, y no es miamiimprov.com, el teatro de comedia que domina las búsquedas de la "
+        "palabra 'improv'."
     ),
 }
 
@@ -107,6 +113,7 @@ def organisation(lang="en"):
             {"@type": "City", "name": "Hialeah"},
             {"@type": "City", "name": "Doral"},
             {"@type": "City", "name": "Fort Lauderdale"},
+            {"@type": "City", "name": "Hallandale Beach"},
         ],
         "knowsAbout": [
             "contact improvisation",

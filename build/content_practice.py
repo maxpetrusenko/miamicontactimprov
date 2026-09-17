@@ -66,7 +66,7 @@ def jams():
   <div class="wrap">
     <h2>How to check a listing is still current</h2>
     <div class="prose">
-      <p>Miami has no central CI calendar, so "is there a jam tonight?" has no static answer and a page like this one goes stale the moment a room or a schedule changes. Every session above carries the date its source was last opened and read: <strong>{LAST_CHECKED}</strong>. Treat an old date as a lead to check rather than a fact.</p>
+      <p>Miami has no central CI calendar, so "is there a jam tonight?" has no static answer and a page like this one goes stale the moment a room or a schedule changes. Every session above carries the date its source was last opened and read; the third-party listings were last re-checked on <strong>{LAST_CHECKED}</strong>. Treat an old date as a lead to check rather than a fact.</p>
       <p>Three things settle it. Open the organiser's own page or account, which is the only authoritative source and is linked from each entry. Look for a date of its own: a recurring session whose source has not been posted to in months has usually stopped, and an undated listing is evidence of nothing. Then ask, by direct message, before travelling to a session — organisers answer, and they would rather tell you than have you arrive at a locked door.</p>
       <p>What this page will not do is guess. A stale listing published as current is worse than an empty one, so an entry comes down when its source goes quiet, and a session nobody could verify is never presented as running.</p>
     </div>
@@ -353,8 +353,8 @@ def videos():
 
 SESSIONS_RANK_NOTE = (
     "The modality in each entry above is the one the organiser states about their own session, "
-    "and every entry carries the date its source was last opened and read: "
-    f"<strong>{LAST_CHECKED}</strong>. This page ranks nothing. The entries appear in the order "
+    "and every entry carries the date its source was last opened and read; the third-party "
+    f"listings were last re-checked on <strong>{LAST_CHECKED}</strong>. This page ranks nothing. The entries appear in the order "
     "they were verified, none of them is paid for, and this site recommends none of them over "
     "another."
 )
@@ -505,6 +505,107 @@ def keep_practising():
         "Keep Practising Contact Improv [2026 Guide] | Next Steps",
         "What to do after your first contact improv jam in Miami: practising alone and with a partner, the second visit, weeks when nothing is running, and staying informed.",
         "/keep-practising",
+        body,
+        jsonld=jsonld,
+    )
+
+
+# ---------------------------------------------------------------- the Friday jam
+FRIDAY_JAM_FAQ = [
+    ("Do I need a partner or any experience for the Friday jam?",
+     "No. It is an open, all-levels jam. Most people arrive alone, the warm-up starts from standing and rolling rather than lifts, and you may sit at the edge and watch for as long as you like. First-timers are expected, not tolerated."),
+    ("Do I have to book?",
+     "No. There is no ticket and no list. Come to the door at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, between 7:00 and 7:15 PM so you catch the opening circle. Arriving later is fine; leaving early always is."),
+    ("How much is it, and how does the sliding scale work?",
+     "$20 at the door, on a sliding scale of $20 to $50. Pay what you can within that range and nobody will ask where you landed. The money covers the studio; the jam is not run for profit."),
+    ("Where exactly is it?",
+     "On the north edge of Miami: Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, just past Aventura on US-1. The postcode is Hallandale Beach, Broward County, and the site prints it that way because an address is copied, not rounded. Miami Contact Improv covers both Miami-Dade and Broward."),
+    ("Who runs it?",
+     "Max Petrusenko, who also maintains this website. That is why this session is listed with a disclosure on every page that carries it, and why it is ranked no higher than any other entry."),
+    ("What should I wear and bring?",
+     "Loose clothing that covers your back, shoulders and knees, no zips or buckles, bare feet or soft socks, a full water bottle and a towel. Leave rings, watches and necklaces off. Details are on the jams page."),
+    ("Is there music?",
+     "Sometimes quiet music during the warm-up, usually none in the open jam. Contact Improvisation is danced to the partner, not the track."),
+    ("Can I just come and watch?",
+     "Yes. Watching from the edge is participation in this form, and nobody will pull you onto the floor. Tell the host at the circle that you are watching tonight and that is the end of the conversation."),
+]
+
+
+def friday_jam():
+    faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in FRIDAY_JAM_FAQ)
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Fridays &middot; 7:00&ndash;9:00 PM &middot; Miami</p>
+    <h1>The Friday jam in Miami.</h1>
+    <p class="lede">A weekly open Contact Improvisation jam at Inner Motion Dance Studio on the north edge of Miami. No partner, no experience, no booking. First session Friday 2 October 2026.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
+      <a class="btn secondary" href="/your-first-jam">Never been to a jam?</a>
+    </div>
+    <p class="micro">$20 at the door, sliding scale $20&ndash;50. Hosted by Max Petrusenko, who also runs this site.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("The Friday jam is a weekly, open, all-levels Contact Improvisation jam in Miami, held at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, every Friday from 7:00 to 9:00 PM, starting 2 October 2026. It costs $20 at the door on a sliding scale of $20 to $50, needs no partner, no prior experience and no booking, and is hosted by Max Petrusenko, the maintainer of miamicontactimprov.com.")}
+    {facts([
+      ("When", "Every Friday, 7:00–9:00 PM"),
+      ("First session", "Friday 2 October 2026"),
+      ("Where", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
+      ("Area", "North edge of Miami, just past Aventura on US-1"),
+      ("Cost", "$20 at the door, sliding scale $20–$50"),
+      ("Booking", "None. Come to the door"),
+      ("Who it is for", "Open and all levels. First-timers welcome, watching is fine"),
+      ("Host", "Max Petrusenko"),
+      ("Language", "English and Spanish"),
+      ("Questions", "hello@miamicontactimprov.com"),
+    ])}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>How the evening runs</h2>
+    <div class="prose">
+      <p><strong>7:00.</strong> Doors. Change, drink water, find a place on the floor. Shoes stay off the dance floor.</p>
+      <p><strong>7:10, the circle.</strong> A few minutes. The host says who is holding the room and states the protocol: consent is continuous, you may decline anything without a reason, the edge is for resting and watching, nobody teaches uninvited, nobody films without asking. Anyone can add a boundary or say they are leaving early. If it is your first time, say so; the room will meet you accordingly.</p>
+      <p><strong>Warm-up.</strong> A guided sequence from standing and the floor, then a few minutes of <strong>small dance</strong>. On some Fridays a short piece of material follows; it is offered, not required.</p>
+      <p><strong>The open jam.</strong> The long middle of the evening, usually with no music. Dances begin with a look or a hand and end when either person stops. Resting between dances is normal. Solo dancing is part of the form.</p>
+      <p><strong>8:50, closing.</strong> A short circle or a moment of stillness, then out by 9:00 so the studio can close.</p>
+      <h2>The sliding scale</h2>
+      <p>The door is $20 and the scale runs to $50. The lower end covers the room when enough people come; the upper end is for anyone who can carry more of it and would like the jam to keep running. Choose in private, hand it over, done. Nobody is turned away from a first jam over money: if $20 is the barrier this week, come anyway and say so at the door.</p>
+      <h2>Getting there</h2>
+      <p>Inner Motion Dance Studio is at 216 NE 1st Ave in Hallandale Beach, just east of US-1 (Federal Highway) and north of Hallandale Beach Boulevard. From Miami it is the first city over the county line after Aventura; from Fort Lauderdale it is south of Hollywood. If you need parking or access details before you come, <a href="mailto:hello@miamicontactimprov.com">email</a> and you will get an answer before Friday.</p>
+      <h2>Who is holding the room</h2>
+      <p>Max Petrusenko hosts the jam. He also builds and maintains this website, which is why this page reads as the organiser describing his own session, and why the <a href="/miami-jams">Miami-Dade and Broward jam list</a> carries the same disclosure next to the entry. The rest of this site lists other people's sessions on the strength of their own published pages; this one is listed on the strength of this page, and it will come down the week it stops running rather than sit here looking current.</p>
+      <h2>Ground rules</h2>
+      <p>The full version is on <a href="/safety-and-consent">safety and consent</a>. The short version: keep the contact point singular, keep your own feet available, roll out of falls rather than bracing, say no when you mean no and accept no without asking why, leave a dance when it is over, and do not teach unless asked.</p>
+      <h2>Questions about the Friday jam</h2>
+      {faq_html}
+    </div>
+    {band("Coming this Friday?", "You do not need to tell anyone. If you want to ask something first, one email is enough and it gets answered before the weekend.", [("Email the host", "mailto:hello@miamicontactimprov.com", "primary"), ("Your first jam, step by step", "/your-first-jam", "secondary"), ("All verified sessions", "/miami-jams", "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>The Friday jam in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/friday-jam")}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation(),
+        schema.webpage(
+            "/friday-jam",
+            "Friday Contact Improv Jam in Miami",
+            "A weekly open, all-levels Contact Improvisation jam in Miami at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, Fridays 7:00 to 9:00 PM from 2 October 2026. $20 at the door on a sliding scale of $20 to $50. Hosted by Max Petrusenko.",
+            date_modified=listings.FRIDAY_JAM_VERIFIED,
+        ),
+        schema.breadcrumb("/friday-jam", "Friday jam"),
+        schema.faq(FRIDAY_JAM_FAQ),
+        listings.friday_jam_event(),
+    )
+    return page(
+        "Friday Contact Improv Jam in Miami [Weekly 7–9 PM]",
+        "Weekly open Contact Improvisation jam in Miami, Fridays 7 to 9 PM at Inner Motion Dance Studio, 216 NE 1st Ave. $20 sliding scale, no partner or booking. From 2 October 2026.",
+        "/friday-jam",
         body,
         jsonld=jsonld,
     )
