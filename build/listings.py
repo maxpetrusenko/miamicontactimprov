@@ -20,6 +20,11 @@ VERIFIED = "2026-09-13"
 # Sessions in Miami-Dade and Broward: re-opened and re-read on this date.
 SESSIONS_VERIFIED = "2026-09-14"
 
+# The Friday jam this site hosts: the date its schedule was set down by the organiser.
+FRIDAY_JAM_VERIFIED = "2026-09-17"
+FRIDAY_JAM_NAME = "Friday Contact Improv Jam \u2014 Hallandale Beach"
+FRIDAY_JAM_FIRST_DATE = "2026-10-02"
+
 # name, modality, city, venue, schedule, cost, url, verified, note
 # name, modality, city, venue, schedule, cost, url, verified, note
 SESSIONS = [
@@ -126,6 +131,24 @@ SESSIONS = [
         "improvisation, and this site will not imply otherwise. The venue's own events page publishes sound "
         "baths and breathwork but not this dance, so the directory listing above is the source to check.",
     ),
+    (
+        "Friday Contact Improv Jam \u2014 Hallandale Beach",
+        "Contact Improvisation",
+        "Hallandale Beach, Broward County",
+        "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009",
+        "Weekly, Fridays 7:00\u20139:00 PM, from Friday 2 October 2026",
+        "$20 at the door, on a sliding scale of $20\u2013$50; pay what you can within that range",
+        "https://miamicontactimprov.com/friday-jam",
+        FRIDAY_JAM_VERIFIED,
+        "The one session this site runs itself. It is hosted by Max Petrusenko, who also maintains "
+        "miamicontactimprov.com, so the disclosure comes first: this entry is the organiser describing his "
+        "own jam, on the same terms as every other entry on this page and ranked no higher for it. An open, "
+        "all-levels Contact Improvisation jam with a short opening circle, a warm-up and open dancing until "
+        "nine; no partner and no experience needed, and no booking, you come to the door. Hallandale Beach is "
+        "in Broward County, a few minutes north of the Miami-Dade line on US-1. Inner Motion Dance Studio's "
+        "own public schedule did not yet show this session when it was opened on the checked date, so the "
+        "source linked here is this site's own page for the jam, which is where the schedule is kept current.",
+    ),
 ]
 
 
@@ -134,6 +157,10 @@ SESSIONS = [
 # asserts that every session names an organiser here and that nothing here is orphaned,
 # so the two cannot drift apart.
 SESSION_ORGANISERS = {
+    FRIDAY_JAM_NAME: (
+        "Max Petrusenko, who also maintains this site",
+        "https://www.maxpetrusenko.com",
+    ),
     "Contact Improv \u2014 ALL LEVELS": (
         "Esther Frances & Dmitry Krasnyanskiy, hosted at Dance Arts Miami",
         "https://www.eventbrite.com/e/contact-improv-all-levels-tickets-1999219825315",
@@ -383,6 +410,69 @@ EVENT_ORGS = {
 }
 
 
+def friday_jam_event():
+    """The recurring Event for the jam this site hosts.
+
+    This is the one Event on the property whose organiser is the site itself, so it is
+    built here rather than through EVENT_DATES: a weekly session is one Event with an
+    eventSchedule, not a fresh dated node per Friday, and the offer is the sliding
+    scale the organiser actually charges.
+    """
+    return {
+        "@type": "Event",
+        "@id": f"{schema.SITE}/friday-jam#event",
+        "name": FRIDAY_JAM_NAME,
+        "description": (
+            "A weekly open, all-levels Contact Improvisation jam in Hallandale Beach, Broward County, "
+            "hosted by Max Petrusenko at Inner Motion Dance Studio. Fridays 7:00 to 9:00 PM from "
+            "2 October 2026. $20 at the door on a sliding scale of $20 to $50. No partner, no "
+            "experience and no booking needed."
+        ),
+        "startDate": FRIDAY_JAM_FIRST_DATE + "T19:00:00-04:00",
+        "endDate": FRIDAY_JAM_FIRST_DATE + "T21:00:00-04:00",
+        "eventSchedule": {
+            "@type": "Schedule",
+            "byDay": "https://schema.org/Friday",
+            "startTime": "19:00",
+            "endTime": "21:00",
+            "startDate": FRIDAY_JAM_FIRST_DATE,
+            "repeatFrequency": "P1W",
+            "scheduleTimezone": "America/New_York",
+        },
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+            "@type": "Place",
+            "name": "Inner Motion Dance Studio",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "216 NE 1st Ave",
+                "addressLocality": "Hallandale Beach",
+                "addressRegion": "FL",
+                "postalCode": "33009",
+                "addressCountry": "US",
+            },
+        },
+        "organizer": {
+            "@type": "Person",
+            "name": "Max Petrusenko",
+            "url": "https://www.maxpetrusenko.com",
+            "affiliation": {"@id": schema.ORG_ID},
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "20",
+            "priceCurrency": "USD",
+            "description": "Sliding scale $20 to $50, paid at the door",
+            "availability": "https://schema.org/InStock",
+            "url": schema.SITE + "/friday-jam",
+        },
+        "isAccessibleForFree": False,
+        "url": schema.SITE + "/friday-jam",
+        "image": schema.SITE + "/assets/og.png",
+    }
+
+
 def events_schema():
     """Only occurrences with a date read off the organiser's own page are emitted.
 
@@ -425,7 +515,8 @@ def events_schema():
             if meta["ticketed"] is not None:
                 node["isAccessibleForFree"] = not meta["ticketed"]
             nodes.append(node)
-    return nodes or None
+    nodes.append(friday_jam_event())
+    return nodes
 
 
 def course_schema():

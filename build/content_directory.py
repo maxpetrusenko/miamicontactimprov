@@ -50,7 +50,7 @@ def miami():
     ])}
     <div class="prose">
       <h2>The honest state of it</h2>
-      <p>It is worth being direct, because most city guides are not. Miami's contact improvisation scene is small and largely undocumented online. What exists is real but scattered: one weekly all-levels class at Dance Arts Miami, a contact-adjacent jam and workshop programme run by Kama Flight out of Miami Beach, and Camp Contact bringing contact improvisation to Love Burn on Virginia Key each February. Those four things are what this site could verify, and they are listed on <a href="/jams">the jams page</a> with their sources and the date each was checked.</p>
+      <p>It is worth being direct, because most city guides are not. Miami's contact improvisation scene is small and largely undocumented online. What exists is real but scattered: one weekly all-levels class at Dance Arts Miami, a contact-adjacent jam and workshop programme run by Kama Flight out of Miami Beach, Camp Contact bringing contact improvisation to Love Burn on Virginia Key each February, and, from October 2026, a weekly open jam on Fridays at Inner Motion Dance Studio in Hallandale Beach, just over the Broward line, which the maintainer of this site hosts himself. Those are what this site could verify, and they are listed on <a href="/jams">the jams page</a> with their sources and the date each was checked; the <a href="/friday-jam">Friday jam</a> carries a disclosure wherever it appears because the organiser and the publisher are the same person.</p>
       <p>The rest of the picture is thinner than a directory would like. The global CI World Jam Map carries a monthly Monday community jam at Excello Dance Space with rotating facilitators and a ten dollar door; that listing is undated and this site does not present it as current. Miami's older CI organising ran through platforms that no longer exist: a Yahoo Group and a Tribe.net community, both of which shut down with their hosts. Miami's physically integrated dance company, Karen Peterson Dancers, is active and current and has long been part of the city's improvisational and partner-work landscape, which is why it appears in the directory rather than being written off with the dead links.</p>
       <h2>Where the answer actually lives</h2>
       <p>Nobody can tell you where the jam is tonight from a static web page. The places that can:</p>
@@ -315,13 +315,13 @@ def about():
   <div class="wrap">
     <p class="eyebrow">About</p>
     <h1>What this site is, and what it is not.</h1>
-    <p class="lede">An independent, non-commercial reference for Contact Improvisation in Miami. No membership, no commission, no studio behind it, no organiser to promote.</p>
+    <p class="lede">An independent, non-commercial reference for Contact Improvisation in Miami. No membership, no commission, no studio behind it. It hosts one weekly jam of its own, and says so wherever that jam appears.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    {answer("miamicontactimprov.com is an independent community resource that maps Contact Improvisation (CI) practice across Miami-Dade and Broward County. It publishes what can be verified, states plainly what cannot, and accepts corrections from anyone in the scene. It does not run sessions, take bookings, or charge for listings.")}
+    {answer("miamicontactimprov.com is an independent community resource that maps Contact Improvisation (CI) practice across Miami-Dade and Broward County. It publishes what can be verified, states plainly what cannot, and accepts corrections from anyone in the scene. It hosts one session, the Friday jam in Hallandale Beach, listed on the same terms as every other entry; it takes no bookings and charges nothing for listings.")}
     <div class="prose">
       <h2>Why it exists</h2>
       <p>Contact Improvisation has no federation, no licence and no central organisation. That openness is the reason it spread to every continent, and it is also the reason a city like Miami can have a decades-long intermittent practice without anything online to show for it. When the form has no institution, the map has to be built by hand.</p>
@@ -347,17 +347,19 @@ def about():
       ])}
       <p>What to send for a teacher listing: your name, your city, what you teach, and a link to your own page. If you would rather not be listed anywhere, say so and we will remove you without asking why.</p>
       <p>If you own a film embedded in the <a href="/videos">video room</a> and would prefer it not to be, one line is enough. It comes down the same day.</p>
+      <h2 id="our-jam">The one session this site runs</h2>
+      <p>Since October 2026 the maintainer of this site hosts a weekly open Contact Improvisation jam on Fridays, 7:00 to 9:00 PM, at Inner Motion Dance Studio in Hallandale Beach. It is on the <a href="/friday-jam">Friday jam</a> page and on the <a href="/miami-jams">jam list</a>, where the entry names its organiser like every other one. It is not ranked above other sessions, it is not the reason the other sessions are listed, and it comes down the week it stops. Everything else on this site is somebody else's session, published on the strength of their own page.</p>
       <h2>Corrections</h2>
       <p>If something here is wrong, it is more useful to tell us than to ignore it. Corrections that remove a claim are as welcome as ones that add a session, and the page is changed rather than annotated.</p>
       <h2>What this site is not</h2>
       <ul>
-        <li>It is not a studio, a booking service or a school.</li>
+        <li>It is not a studio, a booking service or a school. It hosts one jam and nothing else.</li>
         <li>It does not vet, certify or endorse teachers. Nobody can, in this form.</li>
         <li>It is not affiliated with contactimprov.com, Contact Quarterly or any festival.</li>
         <li>It does not mediate disputes between dancers or organisers.</li>
       </ul>
       <h2>Who maintains it</h2>
-      <p>Built and maintained by <a href="https://www.maxpetrusenko.com" rel="me noopener">Max Petrusenko</a> as an independent project. No listing on this site is paid for, sponsored, or promoted, and nothing here is for sale.</p>
+      <p>Built and maintained by <a href="https://www.maxpetrusenko.com" rel="me noopener">Max Petrusenko</a> as an independent project, and he hosts the Friday jam. No listing on this site is paid for, sponsored, or promoted, and nothing here is for sale.</p>
     </div>
     {band("The page is only as good as the room", "If you know where the dancing is this month, that is the single most useful thing you can send.", [("Email us", "mailto:hello@miamicontactimprov.com", "primary"), ("Read the Miami page", "/miami", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>About</em>. miamicontactimprov.com. https://miamicontactimprov.com/about")}

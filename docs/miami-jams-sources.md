@@ -135,6 +135,21 @@ is the inaugural.
 
 ---
 
+### Friday Contact Improv Jam — Hallandale Beach (this site's own session)
+
+Added 2026-09-17. This is the one entry whose organiser is the maintainer of this site, so
+its "source" is the organiser stating the schedule directly rather than a third-party page
+that was opened and read. The disclosure is printed in the entry itself and on every page
+that carries it.
+
+| URL | Status | Taken from it |
+|---|---|---|
+| (organiser, direct, 2026-09-17) | — | **Weekly, Fridays 7:00–9:00 PM**, **first session Friday 2 October 2026**, **$20 at the door on a sliding scale $20–$50**, host **Max Petrusenko**, no booking. The organiser first wrote "October 1"; 1 October 2026 is a Thursday, so the first Friday, 2 October, is what is published and was confirmed back to him |
+| `https://inner-motion.gymdesk.com/` | `200` | Venue **Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009**, phone 954-371-4620. **Negative result:** the public schedule showed bachata, salsa and team sessions and no contact improvisation entry on 2026-09-17, which is why the listing links this site's own `/friday-jam` page as the place the schedule is kept current |
+| `https://miamicontactimprov.com/friday-jam` | built by `build/content_practice.py` | The page the listing links. Carries the recurring `Event` (`listings.friday_jam_event()`), the sliding scale and the disclosure |
+
+---
+
 ## 4. Broward: what was searched and did not exist
 
 Searched against organiser pages, Eventbrite, Meetup and the conscious-dance directories:
@@ -248,8 +263,9 @@ limit was not bypassed).
 
 ## 9. Known gaps in this page
 
-- **Broward has no Contact Improvisation entry, because none could be verified.** The two
-  Broward entries are conscious dance and are labelled as such every time they appear.
+- **Broward's only Contact Improvisation entry is this site's own Friday jam** (from
+  2026-09-17). No third-party CI session in Broward could be verified. The other two Broward
+  entries are conscious dance and are labelled as such every time they appear.
 - **The `Sold Out` ambiguity** on both Kama Flight workshop pages is unresolved.
 - **The Love Burn year** is unresolved; the camp page prints no year beside its dates.
 - **The October Ecstatic Dance Fort Lauderdale edition** is not confirmed; only the

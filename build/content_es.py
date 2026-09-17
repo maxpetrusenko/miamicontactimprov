@@ -43,6 +43,7 @@ import videos_data
 R_HOME = "/es/"
 R_WHATIS = "/es/que-es-la-improvisacion-de-contacto"
 R_JAMS = "/es/jams"
+R_FRIDAY = "/es/jam-de-los-viernes"
 R_FIRST = "/es/tu-primera-jam"
 R_LIST = "/es/jams-miami-dade-broward"
 R_FAQ = "/es/preguntas-frecuentes"
@@ -122,7 +123,8 @@ def _sessions_block():
         "cuándo es, cuánto cuesta y qué tipo de práctica es en realidad, y cada una lleva la "
         "fecha en que se abrió y se leyó su fuente. Aparecen en el orden en que se verificaron. "
         "Esta página no clasifica nada: ninguna entrada está pagada y ninguna se recomienda por "
-        "encima de otra.</p>"
+        "encima de otra. Una de ellas, la jam de los viernes en Hallandale Beach, la organiza quien "
+        "mantiene este sitio; su entrada lo dice y se le aplican las mismas reglas que al resto.</p>"
         f'<p>{LIST_VALUE_NOTE}</p>'
         f'<ul class="dir-list">{_session_items()}</ul></div>'
     )
@@ -142,10 +144,11 @@ def home():
     <h1>Dos personas, un punto de contacto compartido, y lo que pase después.</h1>
     <p class="lede">La Improvisación de Contacto es una forma de danza que puedes empezar hoy y no terminar de aprender nunca. Este sitio es el mapa de trabajo de dónde ocurre en Miami: las jams, las clases, quienes enseñan, el vocabulario y la historia que hay detrás.</p>
     <div class="btn-row">
-      <a class="btn primary" href="{R_JAMS}">Encuéntralo en Miami</a>
+      <a class="btn primary" href="{R_FRIDAY}">Jam de los viernes, 7&ndash;9 PM, Hallandale Beach</a>
+      <a class="btn secondary" href="{R_JAMS}">Encuéntralo en Miami</a>
       <a class="btn secondary" href="{R_WHATIS}">¿Qué es la IC?</a>
     </div>
-    <p class="micro">Sin membresía. Sin autoridad central. Este es un recurso comunitario, no un estudio.</p>
+    <p class="micro">Sin membresía. Sin autoridad central. Un recurso comunitario que además organiza una jam semanal.</p>
   </div>
 </section>
 
@@ -172,6 +175,7 @@ def home():
   <div class="wrap">
     <h2>Empieza desde donde estás</h2>
     {cards([
+      ("Este viernes", "La jam de los viernes", "Jam abierta semanal en Inner Motion Dance Studio, Hallandale Beach, de 7 a 9 PM. Escala de 20 a 50 dólares, sin pareja, sin reserva. Primera sesión el 2 de octubre de 2026.", R_FRIDAY),
       ("Nunca lo he hecho", "Mirar primero, bailar después", "Cómo se ve una jam desde dentro, y por qué mirar es una forma legítima de participar.", R_FIRST),
       ("Busco una sesión", "Jams y práctica abierta", "Qué es una jam abierta, cómo suele funcionar la sala y qué decir al llegar.", R_JAMS),
       ("Quiero que me enseñen", "Clases y talleres", "Series para principiantes, talleres e intensivos, y qué mirar en quien enseña.", R_CLASSES),
@@ -359,7 +363,7 @@ def jams():
   <div class="wrap">
     <h2>Cómo comprobar que una entrada sigue vigente</h2>
     <div class="prose">
-      <p>Miami no tiene un calendario central de IC, así que &laquo;¿hay jam hoy?&raquo; no tiene una respuesta fija y una página como esta queda desactualizada en el momento en que cambia una sala o un horario. Cada sesión de arriba lleva la fecha en que se abrió y se leyó su fuente: <strong>{LAST_CHECKED_BY_LANG['es']}</strong>. Trata una fecha antigua como una pista que hay que comprobar, no como un hecho.</p>
+      <p>Miami no tiene un calendario central de IC, así que &laquo;¿hay jam hoy?&raquo; no tiene una respuesta fija y una página como esta queda desactualizada en el momento en que cambia una sala o un horario. Cada sesión de arriba lleva la fecha en que se abrió y se leyó su fuente; las entradas de terceros se volvieron a comprobar por última vez el <strong>{LAST_CHECKED_BY_LANG['es']}</strong>. Trata una fecha antigua como una pista que hay que comprobar, no como un hecho.</p>
       <p>Tres cosas lo resuelven. Abre la propia página o cuenta de quien organiza, que es la única fuente con autoridad y está enlazada en cada entrada. Busca una fecha propia: una sesión recurrente cuya fuente no se ha actualizado en meses normalmente ha parado, y una lista sin fecha no es prueba de nada. Y luego pregunta, por mensaje directo, antes de desplazarte a una sesión: quienes organizan contestan, y prefieren decírtelo a que llegues a una puerta cerrada.</p>
       <p>Lo que esta página no hará es adivinar. Una lista desactualizada publicada como actual es peor que una vacía, así que una entrada se retira cuando su fuente calla, y una sesión que nadie pudo verificar nunca se presenta como en marcha.</p>
     </div>
@@ -440,8 +444,9 @@ def your_first_jam():
     sessions = _sessions_for_stage()
     rank_note = (
         "La modalidad de cada entrada de arriba es la que quien organiza declara sobre su "
-        "propia sesión, y cada entrada lleva la fecha en que se abrió y se leyó su fuente: "
-        f"<strong>{LAST_CHECKED_BY_LANG['es']}</strong>. Esta página no clasifica nada. Las "
+        "propia sesión, y cada entrada lleva la fecha en que se abrió y se leyó su fuente; las "
+        f"entradas de terceros se volvieron a comprobar el <strong>{LAST_CHECKED_BY_LANG['es']}</strong>. "
+        "Esta página no clasifica nada. Las "
         "entradas aparecen en el orden en que se verificaron, ninguna está pagada y este sitio "
         "no recomienda ninguna por encima de otra."
     )
@@ -559,13 +564,13 @@ def miami_jams():
   <div class="wrap">
     <p class="eyebrow">Miami-Dade y Broward</p>
     <h1>Cada sesión de improvisación de contacto en Miami-Dade y Broward que pudimos verificar.</h1>
-    <p class="lede">Seis entradas, cada una con quien la organiza, la sala, el precio, la modalidad y la fecha en que se comprobó. Más las dos cosas que casi todas las listas se equivocan sobre Florida, y un relato honesto de la jam de Broward que no pudimos encontrar.</p>
+    <p class="lede">{len(listings.SESSIONS)} entradas, cada una con quien la organiza, la sala, el precio, la modalidad y la fecha en que se comprobó. Más las dos cosas que casi todas las listas se equivocan sobre Florida, y un relato honesto de lo que no pudimos encontrar.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    {answer("La práctica recurrente de Improvisación de Contacto que pudimos verificar en Miami-Dade y Broward es una clase semanal de todos los niveles en Dance Arts Miami los martes por la tarde-noche, dos talleres con fecha en Miami de una práctica adyacente al contacto que fusiona acro yoga, masaje tailandés y contact improv, un campamento anual de festival en Virginia Key, y dos encuentros recurrentes de danza consciente en el condado de Broward que anuncian un componente de contact improv entre otras prácticas. No se pudo verificar ninguna jam ni clase recurrente de Improvisación de Contacto en el condado de Broward a partir de una fuente que publique sobre sí misma. Cada entrada de abajo nombra la página en la que se leyó y la fecha en que se comprobó.", SHORT)}
+    {answer("La práctica recurrente de Improvisación de Contacto que pudimos verificar en Miami-Dade y Broward es una clase semanal de todos los niveles en Dance Arts Miami los martes por la tarde-noche, una jam abierta semanal los viernes por la tarde-noche en Inner Motion Dance Studio, en Hallandale Beach, desde el 2 de octubre de 2026, que organiza quien mantiene este sitio, dos talleres con fecha en Miami de una práctica adyacente al contacto que fusiona acro yoga, masaje tailandés y contact improv, un campamento anual de festival en Virginia Key, y dos encuentros recurrentes de danza consciente en el condado de Broward que anuncian un componente de contact improv entre otras prácticas. No se pudo verificar ninguna otra jam ni clase de Improvisación de Contacto en el condado de Broward a partir de una fuente que publique sobre sí misma. Cada entrada de abajo nombra la página en la que se leyó y la fecha en que se comprobó.", SHORT)}
     <div class="prose">
       <p>Última actualización: <strong>14 de septiembre de 2026</strong>. Cada entrada lleva su propia fecha de comprobación, y una sesión cuya fuente ha dejado de publicar sale de esta página en lugar de quedarse aquí pareciendo vigente.</p>
       <p>{LIST_VALUE_NOTE}</p>
@@ -598,8 +603,8 @@ def miami_jams():
     <div class="prose">
       <h2>Qué no está en esta página, y por qué</h2>
       <p>La mayor parte de una página de listados es la parte que nadie ve. Estas son las cosas que se buscaron, se abrieron cuando fue posible y se dejaron fuera.</p>
-      <h3>Una jam de improvisación de contacto en el condado de Broward</h3>
-      <p>No encontrada. Se buscó en Fort Lauderdale, Hollywood, Davie, Pembroke Pines, Sunrise, Plantation, Weston, Coral Springs, Hallandale Beach y Miramar, contra páginas de organizadores, listados de Eventbrite y Meetup, y directorios de danza consciente. Lo que hay en Broward es danza extática, que sí está en esta página con su modalidad declarada, y un puñado de profesores que se describen a sí mismos como de Improvisación de Contacto en el propio directorio de miembros del World Jam Map y que no publican sesión, sala ni fecha. Un nombre en un directorio no es una jam, así que no se lista aquí.</p>
+      <h3>Una jam de improvisación de contacto en el condado de Broward organizada por otra persona</h3>
+      <p>No encontrada. La única jam de Broward en esta página, los viernes en Hallandale Beach, la puso en marcha quien mantiene este sitio, y aparece arriba apoyándose en la propia página de este sitio y no en la de un tercero. Más allá de ella: se buscó en Fort Lauderdale, Hollywood, Davie, Pembroke Pines, Sunrise, Plantation, Weston, Coral Springs, Hallandale Beach y Miramar, contra páginas de organizadores, listados de Eventbrite y Meetup, y directorios de danza consciente. Lo que hay en Broward es danza extática, que sí está en esta página con su modalidad declarada, y un puñado de profesores que se describen a sí mismos como de Improvisación de Contacto en el propio directorio de miembros del World Jam Map y que no publican sesión, sala ni fecha. Un nombre en un directorio no es una jam, así que no se lista aquí.</p>
       <h3>Los departamentos universitarios de danza como puerta de entrada</h3>
       <p>FIU, Miami Dade College, New World School of the Arts y la Universidad de Miami publican programas de danza, y las páginas a las que se pudo llegar son portales de matrícula o descripciones de cursos. Ninguna publica una sesión pública y recurrente de improvisación de contacto, y ninguna es una superficie de listados, así que ninguna se lista y ninguna se trata como un lugar donde anunciarse. Si un departamento abre una sesión comunitaria, eso sí es algo real que listar y nos gustaría saberlo.</p>
       <h3>Todo lo que se escribe 'improv' y no es esto</h3>
@@ -616,7 +621,7 @@ def miami_jams():
       <h2>Cómo usar esta lista</h2>
       <p>Trata cada entrada como una pista con fecha y no como un hecho. Abre el enlace de la fuente, que es la página o el listado de quien organiza, y busca una fecha propia: una sesión recurrente cuya fuente no se ha actualizado en meses normalmente ha parado, y un listado sin fecha no es prueba de nada. Después manda un mensaje antes de desplazarte. Quien organiza contesta, y prefiere decírtelo a que llegues a una puerta cerrada.</p>
       <p>Cómo es de verdad asistir a cada sesión y cómo transcurre una jam desde el círculo de apertura hasta el último baile está en <a href="{R_JAMS}">jams</a> y <a href="{R_FIRST}">tu primera jam, paso a paso</a>. Qué hacer en las semanas siguientes a la primera está en <a href="{R_KEEP}">seguir practicando</a>. Qué es la Improvisación de Contacto, si nunca has leído nada sobre ella, empieza en <a href="{R_WHATIS}">qué es la Improvisación de Contacto</a>.</p>
-      <p>Esta página no organiza ninguna de estas sesiones, no cobra por listarlas y no las clasifica. Es un mapa de una escena sin autoridad central, y no es el mapa.</p>
+      <p>Esta página no cobra por listar ninguna de estas sesiones y no las clasifica. Una de ellas, la jam de los viernes, la organiza la persona que mantiene esta página, y su entrada lo dice. Es un mapa de una escena sin autoridad central, y no es el mapa.</p>
     </div>
     {band("¿Organizas una sesión en Miami-Dade o Broward?", "Manda el horario, la sala, el precio y dónde lo publicas. Una entrada aquí significa una sola cosa: quien la organiza lo publica y nosotros comprobamos la página. No es un aval.", [("Publicar una sesión", R_SUBMIT, "primary"), ("El directorio más amplio", R_DIRECTORY, "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Jams y clases de contact improv en Miami-Dade y Broward</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/jams-miami-dade-broward", CITE)}
@@ -922,7 +927,7 @@ def miami():
     ])}
     <div class="prose">
       <h2>El estado honesto de esto</h2>
-      <p>Merece la pena ser directo, porque la mayoría de las guías de ciudad no lo son. La escena de improvisación de contacto de Miami es pequeña y está poco documentada en internet. Lo que existe es real pero disperso: una clase semanal de todos los niveles en Dance Arts Miami, un programa de jams y talleres adyacente al contacto que Kama Flight lleva desde Miami Beach, y Camp Contact llevando la improvisación de contacto a Love Burn en Virginia Key cada febrero. Esas son las cosas que este sitio pudo verificar, y están listadas en <a href="{R_JAMS}">la página de jams</a> con sus fuentes y la fecha en que se comprobó cada una.</p>
+      <p>Merece la pena ser directo, porque la mayoría de las guías de ciudad no lo son. La escena de improvisación de contacto de Miami es pequeña y está poco documentada en internet. Lo que existe es real pero disperso: una clase semanal de todos los niveles en Dance Arts Miami, un programa de jams y talleres adyacente al contacto que Kama Flight lleva desde Miami Beach, Camp Contact llevando la improvisación de contacto a Love Burn en Virginia Key cada febrero y, desde octubre de 2026, una jam abierta semanal los viernes en Inner Motion Dance Studio, en Hallandale Beach, justo pasada la línea de Broward, que organiza quien mantiene este sitio. Esas son las cosas que este sitio pudo verificar, y están listadas en <a href="{R_JAMS}">la página de jams</a> con sus fuentes y la fecha en que se comprobó cada una; la <a href="{R_FRIDAY}">jam de los viernes</a> lleva una aclaración allí donde aparece porque quien organiza y quien publica son la misma persona.</p>
       <p>El resto del cuadro es más fino de lo que a un directorio le gustaría. El mapa mundial CI World Jam Map contiene una jam comunitaria de lunes mensual en Excello Dance Space, con facilitadores rotativos y una entrada de diez dólares; ese listado no lleva fecha y este sitio no lo presenta como vigente. La organización de IC más antigua de Miami pasó por plataformas que ya no existen: un Yahoo Group y una comunidad de Tribe.net, ambas cerradas con sus servidores. La compañía de danza físicamente integrada de Miami, Karen Peterson Dancers, está activa y vigente y lleva mucho tiempo formando parte del paisaje improvisativo y de trabajo en pareja de la ciudad, y por eso aparece en el directorio y no se descarta junto a los enlaces muertos.</p>
       <h2>Dónde vive de verdad la respuesta</h2>
       <p>Nadie puede decirte desde una página web estática dónde está la jam esta noche. Los lugares que sí pueden:</p>
@@ -1372,8 +1377,9 @@ def keep_practising():
     sessions = _sessions_for_stage()
     rank_note = (
         "La modalidad de cada entrada de arriba es la que quien organiza declara sobre su "
-        "propia sesión, y cada entrada lleva la fecha en que se abrió y se leyó su fuente: "
-        f"<strong>{LAST_CHECKED_BY_LANG['es']}</strong>. Esta página no clasifica nada. Las "
+        "propia sesión, y cada entrada lleva la fecha en que se abrió y se leyó su fuente; las "
+        f"entradas de terceros se volvieron a comprobar el <strong>{LAST_CHECKED_BY_LANG['es']}</strong>. "
+        "Esta página no clasifica nada. Las "
         "entradas aparecen en el orden en que se verificaron, ninguna está pagada y este sitio "
         "no recomienda ninguna por encima de otra."
     )
@@ -1512,13 +1518,13 @@ def about():
   <div class="wrap">
     <p class="eyebrow">Acerca de</p>
     <h1>Qué es este sitio, y qué no es.</h1>
-    <p class="lede">Una referencia independiente y sin ánimo de lucro sobre la Improvisación de Contacto en Miami. Sin membresía, sin comisión, sin estudio detrás y sin ningún organizador que promocionar.</p>
+    <p class="lede">Una referencia independiente y sin ánimo de lucro sobre la Improvisación de Contacto en Miami. Sin membresía, sin comisión, sin estudio detrás. Organiza una única jam semanal propia, y lo dice allí donde esa jam aparece.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    {answer("miamicontactimprov.com es un recurso comunitario independiente que traza un mapa de la práctica de la Improvisación de Contacto (IC) en los condados de Miami-Dade y Broward. Publica lo que se puede verificar, dice con claridad lo que no, y acepta correcciones de cualquiera que esté en la escena. No organiza sesiones, no acepta reservas y no cobra por publicar.", SHORT)}
+    {answer("miamicontactimprov.com es un recurso comunitario independiente que traza un mapa de la práctica de la Improvisación de Contacto (IC) en los condados de Miami-Dade y Broward. Publica lo que se puede verificar, dice con claridad lo que no, y acepta correcciones de cualquiera que esté en la escena. Organiza una sola sesión, la jam de los viernes en Hallandale Beach, publicada en las mismas condiciones que cualquier otra entrada; no acepta reservas y no cobra nada por publicar.", SHORT)}
     <div class="prose">
       <h2>Por qué existe</h2>
       <p>La Improvisación de Contacto no tiene federación, ni licencia, ni organización central. Esa apertura es la razón de que se extendiera a todos los continentes, y es también la razón de que una ciudad como Miami pueda tener una práctica intermitente de décadas sin nada en internet que lo demuestre. Cuando la forma no tiene institución, el mapa hay que construirlo a mano.</p>
@@ -1544,11 +1550,13 @@ def about():
       ])}
       <p>Qué mandar para una entrada de profesorado: tu nombre, tu ciudad, qué enseñas y un enlace a tu propia página. Si prefieres no aparecer en ningún sitio, dilo y te retiramos sin preguntar por qué.</p>
       <p>Si eres propietario de un filme incrustado en la <a href="{R_VIDEOS}">sala de vídeo</a> y prefieres que no lo esté, una línea basta. Baja el mismo día.</p>
+      <h2 id="our-jam">La única sesión que organiza este sitio</h2>
+      <p>Desde octubre de 2026, quien mantiene este sitio organiza una jam abierta y semanal de Improvisación de Contacto los viernes, de 7:00 a 9:00 PM, en Inner Motion Dance Studio, en Hallandale Beach. Está en la página de la <a href="{R_FRIDAY}">jam de los viernes</a> y en la <a href="{R_LIST}">lista de jams</a>, donde la entrada nombra a quien la organiza como cualquier otra. No va por encima de las demás sesiones, no es la razón de que las demás estén listadas, y se retira la semana en que deje de celebrarse. Todo lo demás en este sitio es la sesión de otra persona, publicada apoyándose en su propia página.</p>
       <h2>Correcciones</h2>
       <p>Si algo de aquí está mal, es más útil decírnoslo que ignorarlo. Las correcciones que retiran una afirmación son tan bienvenidas como las que añaden una sesión, y la página se cambia en lugar de anotarse.</p>
       <h2>Qué no es este sitio</h2>
       <ul>
-        <li>No es un estudio, ni un servicio de reservas, ni una escuela.</li>
+        <li>No es un estudio, ni un servicio de reservas, ni una escuela. Organiza una jam y nada más.</li>
         <li>No evalúa, no certifica ni avala a profesorado. Nadie puede, en esta forma.</li>
         <li>No está afiliado a contactimprov.com, a Contact Quarterly ni a ningún festival.</li>
         <li>No media en disputas entre bailarinas o entre organizadores.</li>
@@ -1579,3 +1587,106 @@ def about():
     )
 
 
+
+
+# ---------------------------------------------------------------- la jam de los viernes
+FRIDAY_JAM_FAQ_ES = [
+    ("¿Necesito pareja o experiencia para la jam de los viernes?",
+     "No. Es una jam abierta y de todos los niveles. La mayoría llega sola, el calentamiento empieza de pie y en el suelo y no con cargadas, y puedes sentarte al borde a mirar todo el tiempo que quieras. A quien viene por primera vez se le espera, no se le tolera."),
+    ("¿Hay que reservar?",
+     "No. No hay entrada ni lista. Ven a la puerta de Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, entre las 7:00 y las 7:15 PM para llegar al círculo de apertura. Llegar más tarde está bien; irse antes, siempre."),
+    ("¿Cuánto cuesta y cómo funciona la escala?",
+     "20 dólares en la puerta, en una escala de 20 a 50. Paga lo que puedas dentro de ese rango y nadie te va a preguntar dónde te quedaste. El dinero cubre el estudio; la jam no se organiza con ánimo de lucro."),
+    ("¿Hallandale Beach está en Miami?",
+     "No. Hallandale Beach es la ciudad más al sur del condado de Broward, a pocos minutos al norte de la línea con Miami-Dade por la US-1, entre Aventura y Hollywood. Miami Contact Improv cubre los dos condados, y esta es ahora mismo la única jam recurrente de Improvisación de Contacto que se pudo verificar en Broward."),
+    ("¿Quién la organiza?",
+     "Max Petrusenko, que también mantiene esta web. Por eso esta sesión aparece con una aclaración en cada página que la lista, y por eso no va por encima de ninguna otra entrada."),
+    ("¿Qué ropa llevo y qué traigo?",
+     "Ropa suelta que cubra espalda, hombros y rodillas, sin cremalleras ni hebillas, pies descalzos o calcetines blandos, una botella de agua llena y una toalla. Deja anillos, relojes y collares fuera. Los detalles están en la página de jams."),
+    ("¿Hay música?",
+     "A veces música baja durante el calentamiento, normalmente ninguna en la jam abierta. La Improvisación de Contacto se baila con la pareja, no con la pista."),
+    ("¿Puedo venir solo a mirar?",
+     "Sí. Mirar desde el borde es participar en esta forma, y nadie te va a sacar a la pista. Di en el círculo que hoy vienes a mirar y ahí se acaba la conversación."),
+]
+
+
+def friday_jam():
+    faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in FRIDAY_JAM_FAQ_ES)
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Viernes &middot; 7:00&ndash;9:00 PM &middot; Hallandale Beach</p>
+    <h1>La jam de los viernes.</h1>
+    <p class="lede">Una jam abierta y semanal de Improvisación de Contacto en Inner Motion Dance Studio, en Hallandale Beach, del lado de Broward de la línea del condado. Sin pareja, sin experiencia, sin reserva. Primera sesión: viernes 2 de octubre de 2026.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
+      <a class="btn secondary" href="{R_FIRST}">¿Nunca has ido a una jam?</a>
+    </div>
+    <p class="micro">20 dólares en la puerta, escala de 20 a 50. La organiza Max Petrusenko, que también lleva este sitio.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("La jam de los viernes es una jam semanal, abierta y de todos los niveles de Improvisación de Contacto en Hallandale Beach, Florida, en Inner Motion Dance Studio, 216 NE 1st Ave, todos los viernes de 7:00 a 9:00 PM a partir del 2 de octubre de 2026. Cuesta 20 dólares en la puerta en una escala de 20 a 50, no requiere pareja, experiencia previa ni reserva, y la organiza Max Petrusenko, quien mantiene miamicontactimprov.com.", SHORT)}
+    {facts([
+      ("Cuándo", "Todos los viernes, 7:00–9:00 PM"),
+      ("Primera sesión", "Viernes 2 de octubre de 2026"),
+      ("Dónde", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
+      ("Condado", "Broward, a pocos minutos al norte de la línea con Miami-Dade por la US-1"),
+      ("Precio", "20 dólares en la puerta, escala de 20 a 50"),
+      ("Reserva", "Ninguna. Ven a la puerta"),
+      ("Para quién", "Abierta y de todos los niveles. Se espera a quien viene por primera vez; mirar está bien"),
+      ("Organiza", "Max Petrusenko"),
+      ("Idioma", "Español e inglés"),
+      ("Preguntas", "hello@miamicontactimprov.com"),
+    ])}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Cómo transcurre la tarde</h2>
+    <div class="prose">
+      <p><strong>7:00.</strong> Se abre. Cámbiate, bebe agua, busca un sitio en el suelo. Los zapatos se quedan fuera de la pista.</p>
+      <p><strong>7:10, el círculo.</strong> Unos minutos. Quien organiza dice quién sostiene la sala y enuncia el protocolo: el consentimiento es continuo, puedes rechazar cualquier cosa sin dar razones, el borde es para descansar y mirar, nadie enseña sin que se lo pidan, nadie graba sin preguntar. Cualquiera puede añadir un límite o avisar de que se va antes. Si es tu primera vez, dilo; la sala te recibe en consecuencia.</p>
+      <p><strong>Calentamiento.</strong> Una secuencia guiada de pie y en el suelo, y después unos minutos de <strong>pequeña danza</strong>. Algunos viernes sigue una pieza corta de material; se ofrece, no se exige.</p>
+      <p><strong>La jam abierta.</strong> El tramo largo de la tarde, normalmente sin música. Las danzas empiezan con una mirada o una mano y terminan cuando cualquiera de las dos personas para. Descansar entre danzas es normal. Bailar en solitario forma parte de la forma.</p>
+      <p><strong>8:50, cierre.</strong> Un círculo breve o un momento de quietud, y fuera a las 9:00 para que el estudio pueda cerrar.</p>
+      <h2>La escala de precios</h2>
+      <p>La puerta son 20 dólares y la escala llega a 50. El extremo bajo cubre la sala cuando viene gente suficiente; el alto es para quien pueda cargar con más y quiera que la jam siga en pie. Elige en privado, entrégalo, listo. A nadie se le deja fuera de una primera jam por dinero: si esta semana los 20 dólares son la barrera, ven igual y dilo en la puerta.</p>
+      <h2>Cómo llegar</h2>
+      <p>Inner Motion Dance Studio está en el 216 NE 1st Ave de Hallandale Beach, justo al este de la US-1 (Federal Highway) y al norte de Hallandale Beach Boulevard. Desde Miami es la primera ciudad pasada la línea del condado después de Aventura; desde Fort Lauderdale queda al sur de Hollywood. Si necesitas datos de aparcamiento o de acceso antes de venir, <a href="mailto:hello@miamicontactimprov.com">escribe</a> y tendrás respuesta antes del viernes.</p>
+      <h2>Quién sostiene la sala</h2>
+      <p>Max Petrusenko organiza la jam. También construye y mantiene esta web, y por eso esta página se lee como quien organiza describiendo su propia sesión, y por eso la <a href="{R_LIST}">lista de jams de Miami-Dade y Broward</a> lleva la misma aclaración junto a la entrada. El resto de este sitio publica las sesiones de otras personas apoyándose en sus propias páginas; esta se publica apoyándose en esta página, y se retirará la semana en que deje de celebrarse en lugar de quedarse aquí pareciendo vigente.</p>
+      <h2>Reglas básicas</h2>
+      <p>La versión completa está en <a href="{R_SAFETY}">seguridad y consentimiento</a>. La corta: mantén un solo punto de contacto, ten tus pies disponibles, rueda al caer en lugar de frenar con los brazos, di que no cuando quieras decir que no y acepta un no sin preguntar por qué, sal de una danza cuando termine, y no enseñes si no te lo piden.</p>
+      <h2>Preguntas sobre la jam de los viernes</h2>
+      {faq_html}
+    </div>
+    {band("¿Vienes este viernes?", "No hace falta avisar a nadie. Si quieres preguntar algo antes, con un correo basta y se responde antes del fin de semana.", [("Escribe a quien organiza", "mailto:hello@miamicontactimprov.com", "primary"), ("Tu primera jam, paso a paso", R_FIRST, "secondary"), ("Todas las sesiones verificadas", R_LIST, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>La jam de los viernes, Hallandale Beach</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/jam-de-los-viernes", CITE)}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation(lang="es"),
+        schema.webpage(
+            R_FRIDAY,
+            "Jam de Improvisación de Contacto de los viernes, Hallandale Beach",
+            "Una jam semanal, abierta y de todos los niveles de Improvisación de Contacto en Inner Motion Dance Studio, Hallandale Beach, los viernes de 7:00 a 9:00 PM desde el 2 de octubre de 2026. 20 dólares en la puerta, escala de 20 a 50. La organiza Max Petrusenko.",
+            date_modified=listings.FRIDAY_JAM_VERIFIED,
+            lang="es",
+        ),
+        schema.breadcrumb(R_FRIDAY, "Jam de los viernes", lang="es"),
+        schema.faq(FRIDAY_JAM_FAQ_ES, lang="es"),
+        listings.friday_jam_event(),
+    )
+    return page(
+        "Jam de Improvisación de Contacto los viernes, Hallandale Beach",
+        "Jam abierta y semanal de Improvisación de Contacto en Hallandale Beach, viernes de 7 a 9 PM en Inner Motion Dance Studio. De 20 a 50 dólares, sin pareja ni reserva.",
+        R_FRIDAY,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
