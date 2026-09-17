@@ -22,7 +22,7 @@ SESSIONS_VERIFIED = "2026-09-14"
 
 # The Friday jam this site hosts: the date its schedule was set down by the organiser.
 FRIDAY_JAM_VERIFIED = "2026-09-17"
-FRIDAY_JAM_NAME = "Friday Contact Improv Jam \u2014 Hallandale Beach"
+FRIDAY_JAM_NAME = "Miami Contact Improv \u2014 Friday Jam"
 FRIDAY_JAM_FIRST_DATE = "2026-10-02"
 
 # name, modality, city, venue, schedule, cost, url, verified, note
@@ -132,9 +132,9 @@ SESSIONS = [
         "baths and breathwork but not this dance, so the directory listing above is the source to check.",
     ),
     (
-        "Friday Contact Improv Jam \u2014 Hallandale Beach",
+        "Miami Contact Improv \u2014 Friday Jam",
         "Contact Improvisation",
-        "Hallandale Beach, Broward County",
+        "Miami, north edge: Hallandale Beach",
         "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009",
         "Weekly, Fridays 7:00\u20139:00 PM, from Friday 2 October 2026",
         "$20 at the door, on a sliding scale of $20\u2013$50; pay what you can within that range",
@@ -144,8 +144,8 @@ SESSIONS = [
         "miamicontactimprov.com, so the disclosure comes first: this entry is the organiser describing his "
         "own jam, on the same terms as every other entry on this page and ranked no higher for it. An open, "
         "all-levels Contact Improvisation jam with a short opening circle, a warm-up and open dancing until "
-        "nine; no partner and no experience needed, and no booking, you come to the door. Hallandale Beach is "
-        "in Broward County, a few minutes north of the Miami-Dade line on US-1. Inner Motion Dance Studio's "
+        "nine; no partner and no experience needed, and no booking, you come to the door. The studio is on the "
+        "north edge of Miami, in Hallandale Beach, just past Aventura on US-1. Inner Motion Dance Studio's "
         "own public schedule did not yet show this session when it was opened on the checked date, so the "
         "source linked here is this site's own page for the jam, which is where the schedule is kept current.",
     ),
@@ -423,7 +423,7 @@ def friday_jam_event():
         "@id": f"{schema.SITE}/friday-jam#event",
         "name": FRIDAY_JAM_NAME,
         "description": (
-            "A weekly open, all-levels Contact Improvisation jam in Hallandale Beach, Broward County, "
+            "A weekly open, all-levels Contact Improvisation jam in Miami, "
             "hosted by Max Petrusenko at Inner Motion Dance Studio. Fridays 7:00 to 9:00 PM from "
             "2 October 2026. $20 at the door on a sliding scale of $20 to $50. No partner, no "
             "experience and no booking needed."

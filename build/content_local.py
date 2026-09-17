@@ -82,7 +82,7 @@ def _sessions_block():
         f"<p>{_count()} entries. Each one names who runs it, where it is, when it is, what it costs and what kind "
         "of practice it actually is, and each carries the date its source was opened and read. This page ranks "
         "nothing: none of these is paid for, and no entry is recommended over another. One of them, the Friday "
-        "jam in Hallandale Beach, is hosted by the maintainer of this site; its entry says so, and it is held to "
+        "jam in Miami, is hosted by the maintainer of this site; its entry says so, and it is held to "
         "the same rules as the rest.</p>"
         f'<ul class="dir-list">{_session_items()}</ul></div>'
     )
@@ -101,7 +101,7 @@ def miami_jams():
 
 <section class="section">
   <div class="wrap">
-    {answer("The recurring Contact Improvisation practice we could verify in Miami-Dade and Broward is one weekly all-levels class at Dance Arts Miami on Tuesday evenings, one weekly open jam on Friday evenings at Inner Motion Dance Studio in Hallandale Beach from 2 October 2026, which is hosted by the maintainer of this site, two dated workshops in Miami from a contact-adjacent practice that fuses acro yoga, Thai massage and contact improv, one annual festival camp on Virginia Key, and two recurring conscious-dance gatherings in Broward County that advertise a contact improv component among other practices. No other Contact Improvisation jam or class in Broward County could be verified from a source that publishes about itself. Every entry below names the page it was read on and the date it was checked.")}
+    {answer("The recurring Contact Improvisation practice we could verify in Miami-Dade and Broward is one weekly all-levels class at Dance Arts Miami on Tuesday evenings, one weekly open jam on Friday evenings at Inner Motion Dance Studio on the north edge of Miami, in Hallandale Beach, from 2 October 2026, which is hosted by the maintainer of this site, two dated workshops in Miami from a contact-adjacent practice that fuses acro yoga, Thai massage and contact improv, one annual festival camp on Virginia Key, and two recurring conscious-dance gatherings in Broward County that advertise a contact improv component among other practices. No other Contact Improvisation jam or class in Broward County could be verified from a source that publishes about itself. Every entry below names the page it was read on and the date it was checked.")}
     <div class="prose">
       <p>Last updated <strong>14 September 2026</strong>. Every entry carries its own checked date, and a
       session whose source has gone quiet comes off this page rather than sitting here looking current.</p>
@@ -135,7 +135,7 @@ def miami_jams():
       <h2>What is not on this page, and why</h2>
       <p>Most of a listing page is the part nobody sees. These are the things that were searched for, opened where possible, and left out.</p>
       <h3>A contact improvisation jam in Broward County run by anyone else</h3>
-      <p>Not found. The one Broward jam on this page, Fridays in Hallandale Beach, was started by the maintainer of this site, and it is listed above on the strength of this site's own page rather than a third party's. Beyond it: Fort Lauderdale, Hollywood, Davie, Pembroke Pines, Sunrise, Plantation, Weston, Coral Springs, Hallandale Beach and Miramar were all searched, against organiser pages, the Eventbrite and Meetup listings, and the conscious-dance directories. What Broward has is ecstatic dance, which is on this page with its modality stated, and a handful of self-described Contact Improvisation teachers in the World Jam Map's own member directory who publish no session, no room and no date. A name in a directory is not a jam, so it is not listed here.</p>
+      <p>Not found. The one jam on this page with a Broward address, the Friday jam on the north edge of Miami in Hallandale Beach, was started by the maintainer of this site, and it is listed above on the strength of this site's own page rather than a third party's. Beyond it: Fort Lauderdale, Hollywood, Davie, Pembroke Pines, Sunrise, Plantation, Weston, Coral Springs, Hallandale Beach and Miramar were all searched, against organiser pages, the Eventbrite and Meetup listings, and the conscious-dance directories. What Broward has is ecstatic dance, which is on this page with its modality stated, and a handful of self-described Contact Improvisation teachers in the World Jam Map's own member directory who publish no session, no room and no date. A name in a directory is not a jam, so it is not listed here.</p>
       <h3>University dance departments as a route in</h3>
       <p>FIU, Miami Dade College, New World School of the Arts and the University of Miami all publish dance programmes, and the pages that could be reached are student registration portals or course descriptions. None of them publishes a public, recurring contact improvisation session, and none of them is a listings surface, so none is listed and none is treated as a place to advertise. If a department does open a community session, that is a real thing to list and we would like to hear about it.</p>
       <h3>Everything spelled 'improv' that is not this</h3>

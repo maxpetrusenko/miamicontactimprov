@@ -15,7 +15,7 @@ def home():
     <h1>Two people, one shared point of contact, and whatever happens next.</h1>
     <p class="lede">Contact Improvisation is a dance form you can start tonight and never finish learning. This site is the working map of where it happens in Miami: the jams, the classes, the teachers, the vocabulary, and the history behind it.</p>
     <div class="btn-row">
-      <a class="btn primary" href="/friday-jam">Friday jam, 7&ndash;9 PM, Hallandale Beach</a>
+      <a class="btn primary" href="/friday-jam">Friday jam, 7&ndash;9 PM, Miami</a>
       <a class="btn secondary" href="/miami">Find it in Miami</a>
       <a class="btn secondary" href="/what-is-contact-improvisation">What is CI?</a>
     </div>
@@ -46,7 +46,7 @@ def home():
   <div class="wrap">
     <h2>Start from where you are</h2>
     {cards([
-      ("This Friday", "The Friday jam", "Weekly open jam at Inner Motion Dance Studio, Hallandale Beach, 7 to 9 PM. $20 sliding scale, no partner, no booking. First session 2 October 2026.", "/friday-jam"),
+      ("This Friday", "The Friday jam", "Weekly open jam at Inner Motion Dance Studio, north Miami, 7 to 9 PM. $20 sliding scale, no partner, no booking. First session 2 October 2026.", "/friday-jam"),
       ("Never done it", "Watch first, then dance", "What a jam actually looks like from the inside, and why watching is a legitimate way to participate.", "/classes#first-jam"),
       ("Looking for a session", "Jams and open practice", "What an open jam is, how the room usually runs, and what to say when you arrive.", "/jams"),
       ("Want teaching", "Classes and workshops", "Beginner series, workshops and intensives, plus what to look for in a teacher.", "/classes"),

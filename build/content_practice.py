@@ -518,8 +518,8 @@ FRIDAY_JAM_FAQ = [
      "No. There is no ticket and no list. Come to the door at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, between 7:00 and 7:15 PM so you catch the opening circle. Arriving later is fine; leaving early always is."),
     ("How much is it, and how does the sliding scale work?",
      "$20 at the door, on a sliding scale of $20 to $50. Pay what you can within that range and nobody will ask where you landed. The money covers the studio; the jam is not run for profit."),
-    ("Is Hallandale Beach in Miami?",
-     "No. Hallandale Beach is the southernmost city in Broward County, a few minutes north of the Miami-Dade line on US-1, between Aventura and Hollywood. Miami Contact Improv covers both counties, and this is currently the only recurring Contact Improvisation jam either could verify in Broward."),
+    ("Where exactly is it?",
+     "On the north edge of Miami: Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, just past Aventura on US-1. The postcode is Hallandale Beach, Broward County, and the site prints it that way because an address is copied, not rounded. Miami Contact Improv covers both Miami-Dade and Broward."),
     ("Who runs it?",
      "Max Petrusenko, who also maintains this website. That is why this session is listed with a disclosure on every page that carries it, and why it is ranked no higher than any other entry."),
     ("What should I wear and bring?",
@@ -536,9 +536,9 @@ def friday_jam():
     body = f"""
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">Fridays &middot; 7:00&ndash;9:00 PM &middot; Hallandale Beach</p>
-    <h1>The Friday jam.</h1>
-    <p class="lede">A weekly open Contact Improvisation jam at Inner Motion Dance Studio in Hallandale Beach, on the Broward side of the county line. No partner, no experience, no booking. First session Friday 2 October 2026.</p>
+    <p class="eyebrow">Fridays &middot; 7:00&ndash;9:00 PM &middot; Miami</p>
+    <h1>The Friday jam in Miami.</h1>
+    <p class="lede">A weekly open Contact Improvisation jam at Inner Motion Dance Studio on the north edge of Miami. No partner, no experience, no booking. First session Friday 2 October 2026.</p>
     <div class="btn-row">
       <a class="btn primary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
       <a class="btn secondary" href="/your-first-jam">Never been to a jam?</a>
@@ -549,12 +549,12 @@ def friday_jam():
 
 <section class="section">
   <div class="wrap">
-    {answer("The Friday jam is a weekly, open, all-levels Contact Improvisation jam in Hallandale Beach, Florida, held at Inner Motion Dance Studio, 216 NE 1st Ave, every Friday from 7:00 to 9:00 PM, starting 2 October 2026. It costs $20 at the door on a sliding scale of $20 to $50, needs no partner, no prior experience and no booking, and is hosted by Max Petrusenko, the maintainer of miamicontactimprov.com.")}
+    {answer("The Friday jam is a weekly, open, all-levels Contact Improvisation jam in Miami, held at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, every Friday from 7:00 to 9:00 PM, starting 2 October 2026. It costs $20 at the door on a sliding scale of $20 to $50, needs no partner, no prior experience and no booking, and is hosted by Max Petrusenko, the maintainer of miamicontactimprov.com.")}
     {facts([
       ("When", "Every Friday, 7:00–9:00 PM"),
       ("First session", "Friday 2 October 2026"),
       ("Where", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
-      ("County", "Broward, a few minutes north of the Miami-Dade line on US-1"),
+      ("Area", "North edge of Miami, just past Aventura on US-1"),
       ("Cost", "$20 at the door, sliding scale $20–$50"),
       ("Booking", "None. Come to the door"),
       ("Who it is for", "Open and all levels. First-timers welcome, watching is fine"),
@@ -586,7 +586,7 @@ def friday_jam():
       {faq_html}
     </div>
     {band("Coming this Friday?", "You do not need to tell anyone. If you want to ask something first, one email is enough and it gets answered before the weekend.", [("Email the host", "mailto:hello@miamicontactimprov.com", "primary"), ("Your first jam, step by step", "/your-first-jam", "secondary"), ("All verified sessions", "/miami-jams", "secondary")])}
-    {cite_block("Miami Contact Improv (2026). <em>The Friday jam, Hallandale Beach</em>. miamicontactimprov.com. https://miamicontactimprov.com/friday-jam")}
+    {cite_block("Miami Contact Improv (2026). <em>The Friday jam in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/friday-jam")}
   </div>
 </section>
 """
@@ -594,8 +594,8 @@ def friday_jam():
         schema.organisation(),
         schema.webpage(
             "/friday-jam",
-            "Friday Contact Improv Jam, Hallandale Beach",
-            "A weekly open, all-levels Contact Improvisation jam at Inner Motion Dance Studio, Hallandale Beach, Fridays 7:00 to 9:00 PM from 2 October 2026. $20 at the door on a sliding scale of $20 to $50. Hosted by Max Petrusenko.",
+            "Friday Contact Improv Jam in Miami",
+            "A weekly open, all-levels Contact Improvisation jam in Miami at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, Fridays 7:00 to 9:00 PM from 2 October 2026. $20 at the door on a sliding scale of $20 to $50. Hosted by Max Petrusenko.",
             date_modified=listings.FRIDAY_JAM_VERIFIED,
         ),
         schema.breadcrumb("/friday-jam", "Friday jam"),
@@ -603,8 +603,8 @@ def friday_jam():
         listings.friday_jam_event(),
     )
     return page(
-        "Friday Contact Improv Jam, Hallandale Beach [Weekly 7–9 PM]",
-        "Weekly open Contact Improvisation jam in Hallandale Beach, Fridays 7 to 9 PM at Inner Motion Dance Studio. $20 sliding scale, no partner or booking. From 2 October 2026.",
+        "Friday Contact Improv Jam in Miami [Weekly 7–9 PM]",
+        "Weekly open Contact Improvisation jam in Miami, Fridays 7 to 9 PM at Inner Motion Dance Studio, 216 NE 1st Ave. $20 sliding scale, no partner or booking. From 2 October 2026.",
         "/friday-jam",
         body,
         jsonld=jsonld,

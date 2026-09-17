@@ -72,7 +72,7 @@ FOOTER_COLS = [
         "en": "In Miami",
         "es": "En Miami",
     }, [
-        ("friday-jam", {"en": "Friday jam, Hallandale Beach", "es": "Jam de los viernes, Hallandale Beach"}),
+        ("friday-jam", {"en": "Friday jam, Miami", "es": "Jam de los viernes, Miami"}),
         ("miami", {"en": "The Miami scene", "es": "La escena de Miami"}),
         ("miami-jams", {"en": "Miami-Dade and Broward jam list", "es": "Lista de jams de Miami-Dade y Broward"}),
         ("jams", {"en": "Jams and open practice", "es": "Jams y práctica abierta"}),

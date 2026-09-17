@@ -135,7 +135,7 @@ is the inaugural.
 
 ---
 
-### Friday Contact Improv Jam — Hallandale Beach (this site's own session)
+### Miami Contact Improv — Friday Jam (this site's own session)
 
 Added 2026-09-17. This is the one entry whose organiser is the maintainer of this site, so
 its "source" is the organiser stating the schedule directly rather than a third-party page
