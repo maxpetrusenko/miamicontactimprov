@@ -1,0 +1,188 @@
+name: SEO Indexing Gate
+
+# Pre-deploy indexing gate for miamicontactimprov.com (Python static build → Cloudflare Pages).
+#
+# Shape copied from the estate template, not invented here:
+#   appDevelopment-tech/maxpetrusenko.com:.github/workflows/seo-indexing-gate.yml
+# The checker is the canonical manager/scripts/web-seo-check.py, vendored verbatim
+# into .github/scripts/ (see the sha256 note at the bottom of this header).
+#
+# What it catches before Google does: canonical pointing at another URL
+# ("Alternate page with proper canonical tag"), missing canonical, robots.txt
+# blocking, `Sitemap:` in robots.txt naming a DIFFERENT host, sitemap URLs that
+# 404 or 3xx, noindex pages that are still listed in the sitemap, broken
+# og:image, SVG-only/small favicon, missing viewport, duplicate/absent
+# title+description, and invalid or duplicate-FAQPage JSON-LD.
+#
+#   push → main        : build site/ then --dir check on that output (no network,
+#                        no Cloudflare rate-limit risk). Blocks on errors.
+#   pull_request       : same build + --dir check. Deliberately NOT path-filtered:
+#                        a required status check that only runs on matching paths
+#                        blocks every merge on the PRs it skips. This is also what
+#                        makes the gate provably run before a merge — the PR that
+#                        adds this workflow executes it.
+#   workflow_dispatch  : LIVE crawl of production (--url, --max 60).
+#   schedule (weekly)   : LIVE crawl of production. PUBLIC repo, so GitHub-hosted
+#                        Actions minutes are free and the weekly cadence belongs
+#                        here. (The private properties in the estate get their
+#                        weekly cadence from the local watchdog
+#                        ~/.hermes/scripts/seo-index-weekly.sh instead, because
+#                        scheduled lanes in private repos stopped when the
+#                        account's Actions minutes ran out.)
+#
+# The build job is skipped on the cron (`if: github.event_name != 'schedule'`):
+# the scheduled run is about what production is serving, and rebuilding the site
+# on a timer buys the crawl nothing.
+#
+# Usage: python3 .github/scripts/web-seo-check.py --dir site --url <base>
+# Exit contract: 0 = pass, 1 = errors (block), 2 = warnings only.
+# No `|| true` anywhere in this file.
+#
+# Gate provenance — refresh with:
+#   shasum -a 256 .github/scripts/web-seo-check.py
+# and compare against
+#   manager/scripts/web-seo-check.py
+# A vendored checker that has drifted from the canonical one still exits 0; it
+# just stops catching the newest check (southfloridaqigong's copy was missing
+# robots-sitemap-crosshost for exactly that reason).
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'build/**'
+      - 'site/**'
+      - 'tools/**'
+      - '.github/scripts/web-seo-check.py'
+      - '.github/workflows/seo-indexing-gate.yml'
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # Mondays 09:17 UTC. Off the hour on purpose: GitHub's scheduled queue is
+    # busiest at :00 and a delayed cron reads as a broken cron.
+    - cron: '17 9 * * 1'
+
+concurrency:
+  group: seo-indexing-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  SITE_URL: https://miamicontactimprov.com
+
+jobs:
+  local-build-check:
+    name: Local build SEO check (pre-deploy)
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build dependencies
+        run: python3 -m pip install --quiet pillow
+
+      - name: Build assets
+        run: python3 build/make_assets.py
+
+      - name: Build site
+        run: python3 build/build.py --out site
+
+      - name: Assert the gate has a surface to read
+        run: |
+          set -euo pipefail
+          # Recursive on purpose: /es/ is a locale, not an exception.
+          pages=$(find site -name '*.html' | wc -l | tr -d ' ')
+          echo "rendered pages: $pages"
+          if [ "$pages" -lt 20 ]; then
+            echo "::error::expected at least 20 rendered pages, measured $pages — the gate would otherwise report success while reading nothing"
+            exit 1
+          fi
+          for f in robots.txt sitemap.xml index.html; do
+            test -s "site/$f" || { echo "::error::missing build output: site/$f"; exit 1; }
+          done
+
+      - name: Negative control - the gate must reject a known-bad page
+        run: |
+          set -euo pipefail
+          # Proves the gate is still load-bearing. A validator that quietly
+          # stopped failing would pass every other step here and protect nothing.
+          # Requires exit 1 AND the expected [noindex] line: any other exit 1
+          # would mean the fixture broke the tool rather than tripped a rule.
+          rm -rf /tmp/seo-negative && cp -R site /tmp/seo-negative
+          python3 - <<'PY'
+          import pathlib, re
+          p = pathlib.Path('/tmp/seo-negative/index.html')
+          h = p.read_text(encoding='utf-8')
+          assert 'content="noindex"' not in h, "the fixture already contains the defect"
+          new, n = re.subn(r'(<head[^>]*>)', r'\1\n<meta name="robots" content="noindex">', h, count=1)
+          assert n == 1, "could not find a <head> to inject the defect into"
+          p.write_text(new, encoding='utf-8')
+          PY
+          set +e
+          python3 .github/scripts/web-seo-check.py \
+            --dir /tmp/seo-negative \
+            --url "${SITE_URL}" > /tmp/negative-control.txt 2>&1
+          code=$?
+          set -e
+          if [ "$code" -ne 1 ]; then
+            echo "::error::negative control FAILED - expected exit 1 on a page carrying <meta name=robots content=noindex>, got $code"
+            cat /tmp/negative-control.txt
+            exit 1
+          fi
+          if ! grep -q '\[noindex\]' /tmp/negative-control.txt; then
+            echo "::error::negative control FAILED - exited 1 without the expected [noindex] error"
+            cat /tmp/negative-control.txt
+            exit 1
+          fi
+          echo "negative control OK - the gate exited 1 on a deliberately de-indexed page"
+          grep -E '\[noindex\]|errors:' /tmp/negative-control.txt | head -3
+
+      - name: Run SEO indexing gate (dir mode)
+        run: |
+          python3 .github/scripts/web-seo-check.py \
+            --dir site \
+            --url "${SITE_URL}" \
+            --json /tmp/seo-report.json
+        # exit 1 blocks; exit 2 (warnings) is reported but allowed
+
+      - name: Upload SEO report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-report
+          path: /tmp/seo-report.json
+
+  live-check:
+    name: Live site SEO check (post-deploy)
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run SEO indexing gate (live mode)
+        run: |
+          python3 .github/scripts/web-seo-check.py \
+            --url "${SITE_URL}" \
+            --max 60 \
+            --delay 0.3 \
+            --json /tmp/seo-live-report.json
+        # --max 60 bounds the crawl; serial + 503 retry keeps it Cloudflare-safe.
+
+      - name: Upload live SEO report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-live-report
+          path: /tmp/seo-live-report.json
