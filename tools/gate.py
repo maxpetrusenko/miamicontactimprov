@@ -735,7 +735,12 @@ def _all_typed_nodes(src):
         for node in (data.get("@graph") or [data]):
             out.append(node)
             _nested_typed_nodes(node, out)
-    return out
+    # Dedupe by identity: a top-level node with @type is appended above AND re-appended by
+    # _nested_typed_nodes, so every @graph node used to be visited twice. That doubled every
+    # finding and every count that walks this list (two identical errors for one defect, on a
+    # gate whose whole job is to be read), and it made a "must appear once" rule see a
+    # duplicate that the page never had.
+    return list({id(node): node for node in out}.values())
 
 
 def _credit_names(node):
