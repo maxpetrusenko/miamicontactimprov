@@ -14,6 +14,7 @@ Usage:  python3 tools/gate.py [--site site] [--report-only]
 """
 
 import argparse
+import datetime
 import json
 import pathlib
 import re
@@ -87,6 +88,10 @@ REQUIRED = {
     "ListItem": ["position"],
     "Question": ["name", "acceptedAnswer"],
     "DefinedTerm": ["name", "description"],
+    # The type Search Console reported on.  Google requires price/priceCurrency on
+    # an Offer; availability/url/validFrom stay in the recommended band, checked by
+    # check_event_offers.
+    "Offer": ["price", "priceCurrency"],
 }
 
 # A video plays from somewhere. Someone else's film is embedded from the platform
@@ -106,7 +111,11 @@ ALT_RE = re.compile(r'<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">')
 # walking these, REQUIRED["VideoObject"] and REQUIRED["ListItem"] applied to nothing
 # at all: the VideoObjects sit in ItemList.itemListElement[].item, so the check was
 # green while measuring nothing.
-NESTED_KEYS = ("itemListElement", "item", "mainEntity", "hasDefinedTerm")
+NESTED_KEYS = ("itemListElement", "item", "mainEntity", "hasDefinedTerm",
+               "offers")
+#   "offers" was missing, so a REQUIRED["Offer"] row would have applied to nothing --
+#   the same silent-no-op shape as the VideoObject/ListItem bug this tuple was added
+#   for.  A negative control proves the row now fires.
 
 
 def _nested_typed_nodes(obj, out):
@@ -226,9 +235,20 @@ SITEMAP_LOC_RE = re.compile(r"<loc>(.*?)</loc>")
 # value in ISO-8601. So an Event offer here must carry a parseable validFrom - a value
 # Google cannot read is the same finding with extra steps - and the shape is checked here
 # rather than trusted to the builder.
-ISO8601_RE = re.compile(
-    r"^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?)?$"
-)
+def _iso8601_ok(value):
+    """True when `value` is an ISO-8601 date/datetime Python can actually parse.
+
+    The shape-only regex this replaces accepted 9999-99-99T99:99, which is the kind of value
+    Google silently discards -- and a validator that accepts what the consumer rejects is worse
+    than none, because it moves the finding out of CI and into Search Console.
+    """
+    try:
+        datetime.datetime.fromisoformat(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+
+
 
 
 def _event_offers(node):
@@ -263,11 +283,15 @@ def check_event_offers(pages):
                 offers += 1
                 value = offer.get("validFrom")
                 if not value:
-                    add(ERROR, "event-offers", page,
+                    # WARN, not ERROR: Google reports a missing validFrom as a NON-critical
+                    # issue, and the shared table bands `validFrom` under recommended.
+                    # Erroring here made this repo stricter than the estate policy and would
+                    # have blocked a deploy over a suggestion.
+                    add(WARN, "event-offers", page,
                         f"Event {label!r} offer has no validFrom - Search Console reports this as "
                         f"a structured-data issue and the offer loses its detail in results")
                     continue
-                if not ISO8601_RE.match(str(value)):
+                if not _iso8601_ok(value):
                     add(ERROR, "event-offers", page,
                         f"Event {label!r} offer validFrom {value!r} is not an ISO-8601 value, so "
                         f"Google reads it as missing")

@@ -11,8 +11,10 @@ Every entry carries its own checked date. Every source URL, and the HTTP status 
 was read at, is recorded in docs/miami-jams-sources.md.
 """
 
+import datetime
 import html
 import schema
+from zoneinfo import ZoneInfo
 
 # Org and adjacent-practice entries: the date their own pages were last opened and read.
 VERIFIED = "2026-09-13"
@@ -24,6 +26,21 @@ SESSIONS_VERIFIED = "2026-09-14"
 FRIDAY_JAM_VERIFIED = "2026-09-17"
 FRIDAY_JAM_NAME = "Miami Contact Improv \u2014 Friday Jam"
 FRIDAY_JAM_FIRST_DATE = "2026-10-02"
+
+_ET = ZoneInfo("America/New_York")
+
+
+def _jam_datetime(date_str, hhmm):
+    """`date_str` at `hhmm` in America/New_York, as ISO-8601 with the offset true then.
+
+    These offsets were hardcoded as `-04:00`. That is right for the jam's first Friday and
+    wrong from 2026-11-01, when the zone drops to -05:00: every published start time, end
+    time and offer-validity window would have shifted by an hour, silently, with nothing in
+    the repo changing and nothing in the gate to notice -- both values are valid ISO-8601.
+    """
+    year, month, day = (int(part) for part in date_str.split("-"))
+    hour, minute = (int(part) for part in hhmm.split(":"))
+    return datetime.datetime(year, month, day, hour, minute, tzinfo=_ET).isoformat()
 
 # name, modality, city, venue, schedule, cost, url, verified, note
 # name, modality, city, venue, schedule, cost, url, verified, note
@@ -428,8 +445,8 @@ def friday_jam_event():
             "2 October 2026. $20 at the door on a sliding scale of $20 to $50. No partner, no "
             "experience and no booking needed."
         ),
-        "startDate": FRIDAY_JAM_FIRST_DATE + "T19:00:00-04:00",
-        "endDate": FRIDAY_JAM_FIRST_DATE + "T21:00:00-04:00",
+        "startDate": _jam_datetime(FRIDAY_JAM_FIRST_DATE, "19:00"),
+        "endDate": _jam_datetime(FRIDAY_JAM_FIRST_DATE, "21:00"),
         "eventSchedule": {
             "@type": "Schedule",
             "byDay": "https://schema.org/Friday",
@@ -473,7 +490,7 @@ def friday_jam_event():
             "priceCurrency": "USD",
             "description": "Sliding scale $20 to $50, paid at the door",
             "availability": "https://schema.org/InStock",
-            "validFrom": FRIDAY_JAM_FIRST_DATE + "T19:00:00-04:00",
+            "validFrom": _jam_datetime(FRIDAY_JAM_FIRST_DATE, "19:00"),
             "url": schema.SITE + "/friday-jam",
         },
         "isAccessibleForFree": False,
