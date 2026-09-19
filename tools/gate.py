@@ -34,6 +34,9 @@ def measured(name, n):
     if n == 0:
         add(ERROR, "measurement", "-",
             f"check '{name}' measured 0 items; a check that verifies nothing must not be green")
+        # Exit 2 without a word is a dead end in a CI log: the finding list is printed by
+        # main(), and main() never runs. Say which check measured nothing before leaving.
+        print(f"gate could not run: check '{name}' measured 0 items", file=sys.stderr)
         raise SystemExit(2)
 
 
@@ -211,6 +214,74 @@ TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S)
 DESC_RE = re.compile(r'<meta name="description" content="([^"]*)">')
 H1_RE = re.compile(r"<h1\b")
 SITEMAP_LOC_RE = re.compile(r"<loc>(.*?)</loc>")
+
+
+# ---------------------------------------------------------------- event offers
+# The one structured-data issue Google Search Console has ever reported against this
+# property is `Missing field "validFrom" (in "offers")` on the Friday jam's Event. The
+# offer shipped with availability alone, because the jam is a pay-at-the-door fee and
+# there is no on-sale window to publish. Google's Event documentation uses the two fields
+# as a pair: `availability` for a ticket that is on sale, `validFrom` ("the date and time
+# when tickets go on sale", DateTime, ISO-8601) for one that is not yet, and it wants the
+# value in ISO-8601. So an Event offer here must carry a parseable validFrom - a value
+# Google cannot read is the same finding with extra steps - and the shape is checked here
+# rather than trusted to the builder.
+ISO8601_RE = re.compile(
+    r"^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?)?$"
+)
+
+
+def _event_offers(node):
+    """Every offer dict hanging off an Event node, however it is nested."""
+    offers = node.get("offers")
+    if isinstance(offers, dict):
+        return [offers]
+    if isinstance(offers, list):
+        return [o for o in offers if isinstance(o, dict)]
+    return []
+
+
+def check_event_offers(pages):
+    """An Event offer without a validFrom is the GSC finding; do not ship another.
+
+    Counted on Events, not on offers: the site may honestly carry zero ticketed events
+    (every listing free, or the jam stopped), and a rule that exits 2 in that state
+    would fail a legitimate build. The offer count is recorded either way, so a run that
+    checked no offer at all is visible in `measured:` instead of silently green.
+    """
+    events = 0
+    offers = 0
+    for page, src in pages.items():
+        for node in _all_typed_nodes(src):
+            types = node.get("@type")
+            types = types if isinstance(types, list) else [types]
+            if "Event" not in types:
+                continue
+            events += 1
+            label = str(node.get("name", "?"))[:44]
+            for offer in _event_offers(node):
+                offers += 1
+                value = offer.get("validFrom")
+                if not value:
+                    add(ERROR, "event-offers", page,
+                        f"Event {label!r} offer has no validFrom - Search Console reports this as "
+                        f"a structured-data issue and the offer loses its detail in results")
+                    continue
+                if not ISO8601_RE.match(str(value)):
+                    add(ERROR, "event-offers", page,
+                        f"Event {label!r} offer validFrom {value!r} is not an ISO-8601 value, so "
+                        f"Google reads it as missing")
+                    continue
+                if "T" not in str(value):
+                    add(WARN, "event-offers", page,
+                        f"Event {label!r} offer validFrom {value!r} carries no time; the field is "
+                        f"documented as a DateTime")
+                if not offer.get("availability"):
+                    add(WARN, "event-offers", page,
+                        f"Event {label!r} offer has validFrom but no availability, so nothing "
+                        f"says the ticket can be bought")
+    measured("event-offers.events", events)
+    counts["event-offers.offers"] = offers
 
 
 def check_seo(pages, site_dir, canonicals_seen):
@@ -956,6 +1027,7 @@ def main():
 
     check_html_structure(pages)
     check_jsonld(pages)
+    check_event_offers(pages)
     check_seo(pages, site_dir, {})
     check_title_width(pages)
     check_sitemap(site_dir, pages)
