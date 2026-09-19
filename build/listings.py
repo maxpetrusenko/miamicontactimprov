@@ -459,12 +459,21 @@ def friday_jam_event():
             "url": "https://www.maxpetrusenko.com",
             "affiliation": {"@id": schema.ORG_ID},
         },
+        # Google flags an Event offer that carries no `validFrom` ("the date and time when
+        # tickets go on sale", DateTime, ISO-8601) and Search Console reported exactly that
+        # against this node: "Missing field validFrom (in offers)". There is no advance sale
+        # here - the page says "no booking, come to the door" - so there is no on-sale date to
+        # publish. The first session's start is the moment the door price first exists, which
+        # is the only truthful datetime available. Do not backdate it to the day the page was
+        # published or the listing was checked: that would claim a sale that never opened.
+        # If the jam ever takes bookings in advance, replace this with the real on-sale time.
         "offers": {
             "@type": "Offer",
             "price": "20",
             "priceCurrency": "USD",
             "description": "Sliding scale $20 to $50, paid at the door",
             "availability": "https://schema.org/InStock",
+            "validFrom": FRIDAY_JAM_FIRST_DATE + "T19:00:00-04:00",
             "url": schema.SITE + "/friday-jam",
         },
         "isAccessibleForFree": False,
