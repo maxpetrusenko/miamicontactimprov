@@ -30,7 +30,31 @@ import shell  # noqa: E402
 import videos_data  # noqa: E402
 
 SITE = shell.SITE
-TODAY = "2026-09-14"
+def _sitemap_lastmod():
+    """The sitemap's lastmod: when this site's content last changed.
+
+    This was `TODAY = "2026-09-14"`, a literal somebody bumped by hand. Two commits landed on
+    2026-09-19 -- the Event/offer `validFrom` fix and the gate change -- the pages went live, and
+    every URL still advertised 2026-09-14, so the one mechanical freshness signal Google has said
+    nothing had changed. Derived from git so it cannot rot; falls back to today when the build has
+    no history (an exported tarball), which is still true -- the build is happening now.
+    """
+    import datetime as _dt
+    import os as _os
+    import subprocess as _sp
+    here = _os.path.dirname(_os.path.abspath(__file__))
+    for cmd in (["git", "log", "-1", "--format=%cs", "--", here],
+                ["git", "log", "-1", "--format=%cs"]):
+        try:
+            r = _sp.run(cmd, cwd=here, capture_output=True, text=True, timeout=10)
+        except (OSError, _sp.SubprocessError):
+            break
+        if r.returncode == 0 and r.stdout.strip():
+            return r.stdout.strip()
+    return _dt.date.today().isoformat()
+
+
+TODAY = _sitemap_lastmod()
 
 # slug, locale, builder, sitemap priority, changefreq, background video id
 PAGES = [
