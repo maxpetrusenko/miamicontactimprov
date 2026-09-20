@@ -26,21 +26,41 @@ SESSIONS_VERIFIED = "2026-09-14"
 FRIDAY_JAM_VERIFIED = "2026-09-17"
 FRIDAY_JAM_NAME = "Miami Contact Improv \u2014 Friday Jam"
 FRIDAY_JAM_FIRST_DATE = "2026-10-02"
+# The jam's own door times, in America/New_York. Named because three places need them and
+# they must agree: startDate, endDate and the eventSchedule on the built Event, and the
+# gate's expectation of what the served endDate should be. A literal repeated in four places
+# is how a session ends up published as 7-to-9 on the page and 19:00-to-21:00 on one node.
+FRIDAY_JAM_START = "19:00"
+FRIDAY_JAM_END = "21:00"
+# The @id of the jam's Event node. A constant rather than an f-string inside the builder
+# because tools/gate.py has to know which served node is the jam's without calling the
+# builder: if the expectation were derived from the built node, deleting the node would
+# delete the expectation that it exists.
+FRIDAY_JAM_EVENT_ID = "https://miamicontactimprov.com/friday-jam#event"
 
 _ET = ZoneInfo("America/New_York")
 
 
-def _jam_datetime(date_str, hhmm):
+def _local_datetime(date_str, hhmm):
     """`date_str` at `hhmm` in America/New_York, as ISO-8601 with the offset true then.
 
     These offsets were hardcoded as `-04:00`. That is right for the jam's first Friday and
     wrong from 2026-11-01, when the zone drops to -05:00: every published start time, end
     time and offer-validity window would have shifted by an hour, silently, with nothing in
     the repo changing and nothing in the gate to notice -- both values are valid ISO-8601.
+
+    Named `_local_datetime` rather than the narrower `_jam_datetime` it used to be: the dated
+    workshops in EVENT_DATES publish their own start and end times (3:00-4:30 PM), so this
+    builds their startDate and endDate as well, and the old name described one caller instead
+    of the job.
     """
     year, month, day = (int(part) for part in date_str.split("-"))
     hour, minute = (int(part) for part in hhmm.split(":"))
     return datetime.datetime(year, month, day, hour, minute, tzinfo=_ET).isoformat()
+
+
+# Kept so nothing that still calls the old name silently breaks.
+_jam_datetime = _local_datetime
 
 # name, modality, city, venue, schedule, cost, url, verified, note
 # name, modality, city, venue, schedule, cost, url, verified, note
@@ -395,13 +415,36 @@ def _parse(s):
     return out
 
 
+# name -> [(date, location, start HH:MM, end HH:MM)], in America/New_York, from the
+# organiser's own page for that occurrence. The times are the source's own, recorded in
+# docs/miami-jams-sources.md: Kama Flight publishes "Time: 3:00-4:30 PM" on each dated
+# product page, and the Ecstatic Dance listing prints "Saturday, September 26 - 7 PM -
+# 11:59 PM" ("4 hours 59 minutes"). They are here rather than in prose because an Event that
+# carries an endDate Google cannot check against a start is the "Time or date is incorrect"
+# failure; both are built from this one row, so they cannot disagree.
+#
+# An empty start or end time is a valid, honest state: the occurrence then publishes a
+# date-only (or start-only) Event, exactly as the source does. No occurrence here is in
+# that state, and tools/gate.py enforces that the served node carries an endDate whenever
+# this row declares an end time.
+#
+# NO offers are built for these occurrences even where the source publishes a price. Kama
+# Flight publishes one - "Partner Pair (Admission for Two) - $50.00" on both product pages -
+# and an offer without an on-sale datetime is the exact Search Console finding
+# (Missing field "validFrom") this repo closed on the Friday jam, so shipping one would
+# trade a missing `offers` for a missing `validFrom` and add a permanent warning here.
+# No source publishes an on-sale date, and the comment on friday_jam_event() in this module
+# forbids backfilling validFrom with the date the listing was checked. The Ecstatic Dance
+# entry publishes no price at all ("No price string on the page"), so no offer exists for it
+# under any reading. The prices themselves are published in prose on /miami-jams under the
+# Cost label; only the machine-readable offer is withheld, and it is withheld knowingly.
 EVENT_DATES = {
     "Kama Flight \u2014 Flight Workshop": [
-        ("2026-10-18", "Skanda Yoga, Miami, FL"),
-        ("2026-11-15", "Skanda Yoga, Miami, FL"),
+        ("2026-10-18", "Skanda Yoga, Miami, FL", "15:00", "16:30"),
+        ("2026-11-15", "Skanda Yoga, Miami, FL", "15:00", "16:30"),
     ],
     "Ecstatic Dance Miami \u2014 Full Moon Immersion": [
-        ("2026-09-26", "Hollywood Lakes, Hollywood, FL"),
+        ("2026-09-26", "Hollywood Lakes, Hollywood, FL", "19:00", "23:59"),
     ],
 }
 
@@ -426,6 +469,54 @@ EVENT_ORGS = {
     },
 }
 
+# Session -> (schema type, name, url) for `performer`: who is on at this session.
+#
+# The first question a rich result for an Event answers is "who is this", and `performer` is
+# the property Google reads for it. On this property it can only ever carry what a source
+# actually publishes, so the table is short and its gaps are the point:
+#
+#   * The Friday jam is the one session whose page names the person who holds it - "Max
+#     Petrusenko hosts the jam" - so it is a Person, and the same host node that
+#     friday_jam_event() builds its organizer from.
+#   * For the three third-party dated occurrences the sources name an organisation and no
+#     individual: Kama Flight publishes its own workshop page and describes the form, and
+#     Ecstatic Dance Miami publishes its own listing. Neither names a teacher or a
+#     facilitator, and this site does not invent one - /classes says in as many words that no
+#     Miami-based Contact Improvisation teacher could be confirmed from published
+#     information. So the organisation is what gets named.
+#
+# Google's Event documentation asks for a Person or a PerformingGroup here; schema.org's
+# range is Person or Organization. The organisation entries are therefore schema-valid and
+# may simply not render as a performer in the event experience. Typing a studio as a
+# PerformingGroup would be the false version of the same field, and omitting it would leave
+# the field Google asked for empty on three of four Events, so the organisation stands.
+#
+# tools/gate.py asserts that the served node carries exactly the performer this table names,
+# and build/listings check asserts that no session can emit a dated Event without an entry
+# here - a new occurrence has to record the decision rather than inherit one.
+EVENT_PERFORMERS = {
+    FRIDAY_JAM_NAME: ("Person", "Max Petrusenko", "https://www.maxpetrusenko.com"),
+    "Kama Flight \u2014 Flight Workshop": (
+        "Organization", "Kama Flight", "https://kamaflight.com/",
+    ),
+    "Ecstatic Dance Miami \u2014 Full Moon Immersion": (
+        "Organization", "Ecstatic Dance Miami", "https://ecstaticdancemiami.com/",
+    ),
+}
+
+
+def performer_node(name):
+    """The `performer` node for a session, or None when no source names one.
+
+    One builder for the field so a Session cannot be published with a performer the table
+    does not name.
+    """
+    entry = EVENT_PERFORMERS.get(name)
+    if not entry:
+        return None
+    node_type, node_name, node_url = entry
+    return {"@type": node_type, "name": node_name, "url": node_url}
+
 
 def friday_jam_event():
     """The recurring Event for the jam this site hosts.
@@ -434,10 +525,16 @@ def friday_jam_event():
     built here rather than through EVENT_DATES: a weekly session is one Event with an
     eventSchedule, not a fresh dated node per Friday, and the offer is the sliding
     scale the organiser actually charges.
+
+    organizer and performer are both built from the one EVENT_PERFORMERS row for this jam -
+    the person the page names as holding it - so the two cannot drift into naming different
+    people, and the gate compares the served performer back against that row.
     """
+    _host_type, host_name, host_url = EVENT_PERFORMERS[FRIDAY_JAM_NAME]
+    host = {"@type": _host_type, "name": host_name, "url": host_url}
     return {
         "@type": "Event",
-        "@id": f"{schema.SITE}/friday-jam#event",
+        "@id": FRIDAY_JAM_EVENT_ID,
         "name": FRIDAY_JAM_NAME,
         "description": (
             "A weekly open, all-levels Contact Improvisation jam in Miami, "
@@ -445,13 +542,13 @@ def friday_jam_event():
             "2 October 2026. $20 at the door on a sliding scale of $20 to $50. No partner, no "
             "experience and no booking needed."
         ),
-        "startDate": _jam_datetime(FRIDAY_JAM_FIRST_DATE, "19:00"),
-        "endDate": _jam_datetime(FRIDAY_JAM_FIRST_DATE, "21:00"),
+        "startDate": _local_datetime(FRIDAY_JAM_FIRST_DATE, FRIDAY_JAM_START),
+        "endDate": _local_datetime(FRIDAY_JAM_FIRST_DATE, FRIDAY_JAM_END),
         "eventSchedule": {
             "@type": "Schedule",
             "byDay": "https://schema.org/Friday",
-            "startTime": "19:00",
-            "endTime": "21:00",
+            "startTime": FRIDAY_JAM_START,
+            "endTime": FRIDAY_JAM_END,
             "startDate": FRIDAY_JAM_FIRST_DATE,
             "repeatFrequency": "P1W",
             "scheduleTimezone": "America/New_York",
@@ -470,12 +567,8 @@ def friday_jam_event():
                 "addressCountry": "US",
             },
         },
-        "organizer": {
-            "@type": "Person",
-            "name": "Max Petrusenko",
-            "url": "https://www.maxpetrusenko.com",
-            "affiliation": {"@id": schema.ORG_ID},
-        },
+        "organizer": {**host, "affiliation": {"@id": schema.ORG_ID}},
+        "performer": host,
         # Google flags an Event offer that carries no `validFrom` ("the date and time when
         # tickets go on sale", DateTime, ISO-8601) and Search Console reported exactly that
         # against this node: "Missing field validFrom (in offers)". There is no advance sale
@@ -490,7 +583,7 @@ def friday_jam_event():
             "priceCurrency": "USD",
             "description": "Sliding scale $20 to $50, paid at the door",
             "availability": "https://schema.org/InStock",
-            "validFrom": _jam_datetime(FRIDAY_JAM_FIRST_DATE, "19:00"),
+            "validFrom": _local_datetime(FRIDAY_JAM_FIRST_DATE, FRIDAY_JAM_START),
             "url": schema.SITE + "/friday-jam",
         },
         "isAccessibleForFree": False,
@@ -504,6 +597,11 @@ def events_schema():
 
     An occurrence with no EVENT_ORGS entry is skipped rather than attributed to a
     default organiser, and `ticketed` is written only where the price is published.
+
+    startDate and endDate are built from the same EVENT_DATES row so they cannot disagree,
+    and each carries the zone offset true on that date (15 November 2026 is EST). The
+    performer comes from EVENT_PERFORMERS and is absent - not guessed - when no source names
+    one, which is why performer_node() may return None here.
     """
     nodes = []
     for name, modality, city, venue, schedule, cost, url, verified, note in SESSIONS:
@@ -511,13 +609,14 @@ def events_schema():
         meta = EVENT_ORGS.get(name)
         if not dates or not meta:
             continue
-        for iso, location in dates:
+        performer = performer_node(name)
+        for iso, location, start_hhmm, end_hhmm in dates:
             node = {
                 "@type": "Event",
                 "@id": f"{schema.SITE}/jams#{iso}-{meta['slug']}",
                 "name": name,
                 "description": note,
-                "startDate": iso,
+                "startDate": _local_datetime(iso, start_hhmm) if start_hhmm else iso,
                 "eventStatus": "https://schema.org/EventScheduled",
                 "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
                 "location": {
@@ -538,6 +637,10 @@ def events_schema():
                 "url": url,
                 "image": schema.SITE + "/assets/og.png",
             }
+            if end_hhmm:
+                node["endDate"] = _local_datetime(iso, end_hhmm)
+            if performer:
+                node["performer"] = performer
             if meta["ticketed"] is not None:
                 node["isAccessibleForFree"] = not meta["ticketed"]
             nodes.append(node)

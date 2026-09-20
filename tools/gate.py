@@ -308,6 +308,193 @@ def check_event_offers(pages):
     counts["event-offers.offers"] = offers
 
 
+# ---------------------------------------------------------------- event dates and performers
+# Search Console's URL Inspection API reported `Missing field "endDate"` and `Missing field
+# "performer"` against the Events on /jams and /miami-jams, and `Missing field "performer"`
+# against the Friday jam in both locales. Both fields are built in build/listings.py -
+# EVENT_DATES carries the start and end time each occurrence's own page publishes,
+# EVENT_PERFORMERS names who is on at each session - so both are enforced here against the
+# same rows that produced them, and the field is compared rather than merely counted.
+#
+# What this check deliberately does NOT do is demand an endDate or a performer the data does
+# not have. An occurrence whose source publishes no end time is an honest state: the Event
+# then carries a start only. A session whose source names no performer is an honest state
+# too: listings.performer_node() returns None and no claim is made. In both cases the
+# ABSENCE in the table is the contract, so a value appearing in the markup anyway is a
+# finding - which is the shape that stops anyone backfilling the field with a guess.
+#
+# Every applied expectation is counted. The headline rules are enforced per Event, so a page
+# that carries an Event the tables do not explain fails here rather than passing unmeasured.
+TIME_FIELD_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
+
+
+def _iso_or_none(value):
+    try:
+        return datetime.datetime.fromisoformat(str(value))
+    except (ValueError, TypeError):
+        return None
+
+
+def _performer_names(node):
+    """(type, name) for every performer this Event names, inline or by name alone."""
+    performer = node.get("performer")
+    items = performer if isinstance(performer, list) else [performer]
+    out = []
+    for item in items:
+        if isinstance(item, dict) and item.get("name"):
+            out.append((item.get("@type"), str(item["name"])))
+        elif isinstance(item, str) and item:
+            out.append((None, item))
+    return out
+
+
+def _event_expectations(listings):
+    """Event @id -> (session, date, start HH:MM|None, end HH:MM|None) from build/listings.py."""
+    dates = getattr(listings, "EVENT_DATES", {}) or {}
+    orgs = getattr(listings, "EVENT_ORGS", {}) or {}
+    expected = {}
+    for name, occurrences in dates.items():
+        slug = (orgs.get(name) or {}).get("slug", "")
+        if not slug:
+            continue
+        for occurrence in occurrences:
+            expected[f"{SITE_ROOT}/jams#{occurrence[0]}-{slug}"] = (
+                name, str(occurrence[0]),
+                occurrence[2] if len(occurrence) > 2 else None,
+                occurrence[3] if len(occurrence) > 3 else None,
+            )
+    jam_id = getattr(listings, "FRIDAY_JAM_EVENT_ID", "")
+    jam_name = getattr(listings, "FRIDAY_JAM_NAME", "")
+    jam_date = getattr(listings, "FRIDAY_JAM_FIRST_DATE", "")
+    if jam_id and jam_name and jam_date:
+        # Neither the @id nor the dates come from the built node, on purpose: if the builder
+        # stopped emitting the jam's Event, an expectation read off that node would vanish
+        # with it and this check would quietly stop covering it.
+        expected[jam_id] = (
+            jam_name, str(jam_date),
+            getattr(listings, "FRIDAY_JAM_START", None) or None,
+            getattr(listings, "FRIDAY_JAM_END", None) or None,
+        )
+    return expected
+
+
+def check_event_details(pages):
+    """endDate and performer, measured against the listing rows that support them."""
+    listings = _import_build_module("listings")
+    if listings is None:
+        add(ERROR, "event-details", "build/listings.py",
+            "cannot import build/listings.py; the Event endDate/performer contract is unverified")
+        return
+    expected = _event_expectations(listings)
+    performers = getattr(listings, "EVENT_PERFORMERS", {}) or {}
+    if not isinstance(performers, dict):
+        add(ERROR, "event-details", "build/listings.py", "EVENT_PERFORMERS is not a dict")
+        performers = {}
+    if not expected:
+        add(ERROR, "event-details", "build/listings.py",
+            "no dated occurrence and no Friday jam to check: this check would verify no Event")
+
+    events = 0
+    dates_required = 0
+    performers_required = 0
+    for page, src in pages.items():
+        for node in _all_typed_nodes(src):
+            types = node.get("@type")
+            types = types if isinstance(types, list) else [types]
+            if "Event" not in types:
+                continue
+            events += 1
+            label = str(node.get("name", "?"))[:44]
+            node_id = node.get("@id")
+            row = expected.get(node_id)
+            if row is None:
+                add(ERROR, "event-details", page,
+                    f"Event {label!r} (@id {node_id!r}) matches no dated occurrence in "
+                    f"build/listings.py, so nothing on this page says when it runs")
+            else:
+                _session, iso, start_hhmm, end_hhmm = row
+                start_dt = _iso_or_none(node.get("startDate"))
+                if start_dt is None:
+                    add(ERROR, "event-dates", page,
+                        f"Event {label!r} startDate {node.get('startDate')!r} is not an ISO-8601 "
+                        f"value, so Google reads it as missing")
+                else:
+                    if start_dt.date().isoformat() != iso:
+                        add(ERROR, "event-dates", page,
+                            f"Event {label!r} starts on {start_dt.date().isoformat()} but the "
+                            f"occurrence in build/listings.py is dated {iso}")
+                    if start_hhmm and start_dt.strftime("%H:%M") != start_hhmm:
+                        add(ERROR, "event-dates", page,
+                            f"Event {label!r} startDate carries {start_dt.strftime('%H:%M')} but "
+                            f"the source publishes {start_hhmm}")
+                end_raw = node.get("endDate")
+                if end_hhmm:
+                    dates_required += 1
+                    if not end_raw:
+                        add(ERROR, "event-dates", page,
+                            f"Event {label!r} carries no endDate: the source for this occurrence "
+                            f"publishes an end time ({end_hhmm}) and Search Console reports the "
+                            f"missing field")
+                        continue
+                    end_dt = _iso_or_none(end_raw)
+                    if end_dt is None:
+                        add(ERROR, "event-dates", page,
+                            f"Event {label!r} endDate {end_raw!r} is not an ISO-8601 value, so "
+                            f"Google reads it as missing")
+                    else:
+                        if end_dt.date().isoformat() != iso:
+                            add(ERROR, "event-dates", page,
+                                f"Event {label!r} ends on {end_dt.date().isoformat()} but the "
+                                f"occurrence is dated {iso}")
+                        if end_dt.strftime("%H:%M") != end_hhmm:
+                            add(ERROR, "event-dates", page,
+                                f"Event {label!r} endDate carries {end_dt.strftime('%H:%M')} but "
+                                f"the source publishes {end_hhmm}")
+                        if start_dt is not None and end_dt <= start_dt:
+                            add(ERROR, "event-dates", page,
+                                f"Event {label!r} ends at or before it starts "
+                                f"({start_dt.isoformat()} -> {end_dt.isoformat()})")
+                elif end_raw:
+                    add(ERROR, "event-dates", page,
+                        f"Event {label!r} carries endDate {end_raw!r} but no source for this "
+                        f"occurrence publishes an end time")
+            entry = performers.get(node.get("name"))
+            named = _performer_names(node)
+            if entry is None:
+                if named:
+                    add(ERROR, "event-performers", page,
+                        f"Event {label!r} names a performer ({named[0][1]!r}) that "
+                        f"build/listings.py does not: no source for that credit is recorded")
+                continue
+            performers_required += 1
+            want_type, want_name, _want_url = entry
+            if not named:
+                add(ERROR, "event-performers", page,
+                    f"Event {label!r} carries no performer; build/listings.py names "
+                    f"{want_name!r} for it and Search Console reports the missing field")
+                continue
+            matches = [(t, n) for t, n in named if n == want_name]
+            if not matches:
+                add(ERROR, "event-performers", page,
+                    f"Event {label!r} credits {[n for _t, n in named]} as its performer but "
+                    f"build/listings.py names {want_name!r}")
+                continue
+            for got_type, _n in matches:
+                if got_type and str(got_type) != want_type:
+                    add(ERROR, "event-performers", page,
+                        f"Event {label!r} performer {want_name!r} is typed {got_type!r} but "
+                        f"build/listings.py records {want_type!r}")
+    measured("event-details.events", events)
+    counts["event-details.enddates_required"] = dates_required
+    counts["event-details.performers_required"] = performers_required
+    if dates_required == 0 or performers_required == 0:
+        # Not fatal on its own - the tables would have to have been emptied, which
+        # check_local_listings() fails on - but it must never be invisible.
+        add(WARN, "event-details", "build/listings.py",
+            f"enforced {dates_required} endDate and {performers_required} performer "
+            f"expectations; one of them was zero")
+
+
 def check_seo(pages, site_dir, canonicals_seen):
     for page, src in pages.items():
         hits = sorted(
@@ -676,6 +863,12 @@ def check_local_listings():
 
     dates = getattr(listings, "EVENT_DATES", {})
     event_orgs = getattr(listings, "EVENT_ORGS", {})
+    performers = getattr(listings, "EVENT_PERFORMERS", {})
+    checks += 1
+    if not isinstance(performers, dict):
+        bad("build/listings.py",
+            "EVENT_PERFORMERS is missing or not a dict, so no Event can name who is on")
+        performers = {}
     for name, occurrences in (dates.items() if isinstance(dates, dict) else []):
         checks += 1
         if name not in names:
@@ -683,13 +876,43 @@ def check_local_listings():
         if name not in event_orgs:
             bad(name, "a dated occurrence has no EVENT_ORGS entry, so an Event would publish "
                       "under a guessed organiser")
-        for iso, location in occurrences:
+        # A dated Event has to name a performer or say on the record that the source names
+        # none. Without this, a new occurrence would publish with the field missing and the
+        # gate would read green, which is the silent no-op shape this whole file is about.
+        checks += 1
+        if name not in performers:
+            bad(name, "a dated occurrence has no EVENT_PERFORMERS entry, so whether it names "
+                      "a performer would be decided by omission")
+        for occurrence in occurrences:
+            checks += 1
+            if len(occurrence) != 4:
+                bad(name, f"occurrence row has {len(occurrence)} fields, expected 4: "
+                          f"(date, location, start HH:MM, end HH:MM)")
+                continue
+            iso, location, start_hhmm, end_hhmm = occurrence
             checks += 1
             if not DATE_FIELD_RE.match(str(iso)):
                 bad(name, f"occurrence date is not YYYY-MM-DD: {iso!r}")
             checks += 1
             if not str(location).strip():
                 bad(name, "occurrence has no location string")
+            for label, hhmm in (("start", start_hhmm), ("end", end_hhmm)):
+                checks += 1
+                if hhmm and not TIME_FIELD_RE.match(str(hhmm)):
+                    bad(name, f"occurrence {label} time is not HH:MM: {hhmm!r}")
+            checks += 1
+            if str(start_hhmm) and str(end_hhmm) and str(end_hhmm) <= str(start_hhmm):
+                bad(name, f"occurrence ends at or before it starts ({start_hhmm} -> {end_hhmm})")
+
+    # The Friday jam is an Event as well, and the same rule applies to it.
+    checks += 1
+    jam = getattr(listings, "FRIDAY_JAM_NAME", "")
+    if jam and jam not in performers:
+        bad(jam, "the Friday jam has no EVENT_PERFORMERS entry")
+    for name in sorted(performers):
+        checks += 1
+        if name not in names:
+            bad(name, "EVENT_PERFORMERS entry matches no session (orphaned performer)")
 
     measured("local-listings.constraints", checks)
 
@@ -1057,6 +1280,7 @@ def main():
     check_html_structure(pages)
     check_jsonld(pages)
     check_event_offers(pages)
+    check_event_details(pages)
     check_seo(pages, site_dir, {})
     check_title_width(pages)
     check_sitemap(site_dir, pages)

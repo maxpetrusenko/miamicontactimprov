@@ -69,6 +69,9 @@ jobs:
           echo "pages naming the canonical host: $n of $total"
           test "$n" -eq "$total" || { echo "::error::not every page declares the canonical host"; exit 1; }
 
+      - name: Negative control (the Event endDate/performer rules must reject a stripped page)
+        run: python3 tools/negative_control_events.py --site site
+
       - name: Deploy to Cloudflare Pages
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         env:
