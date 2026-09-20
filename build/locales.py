@@ -64,11 +64,22 @@ ROUTES = {
     "glossary": {"en": "/glossary", "es": "/es/glosario"},
     "history": {"en": "/history", "es": "/es/historia"},
     "about": {"en": "/about", "es": "/es/acerca-de"},
+    "events": {"en": "/events"},
+    "contact": {"en": "/contact"},
+    "blog": {"en": "/blog/"},
+    "blog-first-jam": {"en": "/blog/five-things-before-your-first-jam"},
+    "blog-weight-sharing": {"en": "/blog/weight-sharing-explained"},
+    "blog-falling": {"en": "/blog/how-to-fall-without-getting-hurt"},
+    "blog-consent": {"en": "/blog/consent-and-saying-no-mid-dance"},
+    "blog-no-music": {"en": "/blog/why-there-is-no-music-at-a-jam"},
 }
 
 # The order the pages are written, ranked and listed in llms.txt. Purely presentational.
 ORDER = [
     ("home", "en"), ("home", "es"),
+    ("events", "en"), ("contact", "en"),
+    ("blog", "en"), ("blog-first-jam", "en"), ("blog-weight-sharing", "en"),
+    ("blog-falling", "en"), ("blog-consent", "en"), ("blog-no-music", "en"),
     ("what-is-contact-improvisation", "en"), ("what-is-contact-improvisation", "es"),
     ("miami", "en"), ("miami", "es"),
     ("miami-jams", "en"), ("miami-jams", "es"),

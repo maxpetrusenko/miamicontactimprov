@@ -29,7 +29,12 @@ tools/gate.py   the gate. exit 0 clean, 1 findings, 2 gate could not run.
 python3 build/make_assets.py
 python3 build/build.py --out site
 python3 tools/gate.py --site site
+python3 tools/serve.py          # http://localhost:8000 — clean URLs, like production
 ```
+
+Use `tools/serve.py`, not `python3 -m http.server`: the site uses clean URLs (`/events`,
+not `/events.html`). Cloudflare Pages resolves those in production; a plain file server
+does not, so every nav and footer link 404s under it.
 
 `tools/gate.py` is fail-closed and will be wired into CI ahead of the deploy.
 A check that measures zero items exits 2 rather than passing.

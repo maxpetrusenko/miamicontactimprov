@@ -36,6 +36,7 @@ from shell import (
 import listings
 import schema
 import videos_data
+import content_marketing as cm
 
 # The Spanish routes, mirroring build/locales.py. Kept as literals here so a link in
 # Spanish prose is visible where it is written; tools/gate.py fails the build if any of
@@ -137,75 +138,76 @@ def _sessions_for_stage():
 
 # ---------------------------------------------------------------- home
 def home():
+    ig_embeds = "".join(cm.ig_embed(u) for u in cm.IG_POSTS)
     body = f"""
-<section class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Miami &middot; Miami Beach &middot; South Florida</p>
-    <h1>Dos personas, un punto de contacto compartido, y lo que pase después.</h1>
-    <p class="lede">La Improvisación de Contacto es una forma de danza que puedes empezar hoy y no terminar de aprender nunca. Este sitio es el mapa de trabajo de dónde ocurre en Miami: las jams, las clases, quienes enseñan, el vocabulario y la historia que hay detrás.</p>
+<div class="mci-hero" id="mci-hero">
+  <div class="mci-hero-copy">
+    <h1 class="mci-h">
+      <span id="mci-w1">MUÉVETE.</span>
+      <span id="mci-w2">ESCUCHA.</span>
+      <span id="mci-w3" class="accent">IMPROVISA.</span>
+    </h1>
+    <p class="lede">Una jam semanal de contact improv en Miami &mdash; donde la danza se encuentra con el contacto, la confianza y el juego. No hace falta experiencia, solo un cuerpo con curiosidad.</p>
     <div class="btn-row">
-      <a class="btn primary" href="{R_FRIDAY}">Jam de los viernes, 7&ndash;9 PM, Miami</a>
-      <a class="btn secondary" href="{R_JAMS}">Encuéntralo en Miami</a>
-      <a class="btn secondary" href="{R_WHATIS}">¿Qué es la IC?</a>
-    </div>
-    <p class="micro">Sin membresía. Sin autoridad central. Un recurso comunitario que además organiza una jam semanal.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    {answer("La Improvisación de Contacto (IC), conocida internacionalmente como <em>contact improvisation</em> o <em>CI</em>, es una forma de danza en pareja construida a partir de un único punto de contacto en movimiento, normalmente la espalda o los hombros, a través del cual dos personas comparten peso y siguen la gravedad, el momento y el impulso en lugar de una coreografía. Comenzó en Estados Unidos en 1972 con el bailarín y coreógrafo Steve Paxton, y no tiene organismo que la licencie, ni uniforme, ni programa fijo. En Miami se practica en jams, clases y talleres en los condados de Miami-Dade y Broward.", SHORT)}
-    {facts([
-      ("Qué es", "Una danza improvisada en pareja alrededor del peso compartido y un punto de contacto rodante"),
-      ("Cuándo empezó", "1972, Estados Unidos, desarrollada por Steve Paxton"),
-      ("Quién puede practicarla", "Cualquiera. Para empezar no hacen falta formación en danza, pareja ni flexibilidad"),
-      ("Qué es una jam", "Una sesión abierta y sin guía. Se llega y se sale cuando se quiere, se baila o se mira"),
-      ("Cuánto cuesta en Miami", "Lo fija quien organiza. Las jams comunitarias suelen ser económicas o a donación"),
-      ("Qué hay que llevar", "Ropa cómoda, agua, pies descalzos o calzado blando, y disposición a decir no"),
-      ("Dónde ocurre aquí", "Estudios, centros culturales, parques y playas en Miami-Dade y Broward"),
-    ])}
-    <div class="prose">
-      <p>La forma es deliberadamente abierta. No hay federación que certifique quién puede enseñarla, ni organismo que decida qué cuenta como tal. Por eso la escena de una ciudad se construye con personas que organizan por su cuenta y salas prestadas, y no con una institución única; y por eso un mapa como este resulta útil.</p>
-    </div>
-    {cite_block("Miami Contact Improv (2026). <em>Improvisación de Contacto en Miami</em>. miamicontactimprov.com. Recuperado de https://miamicontactimprov.com/es/", CITE)}
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2>Empieza desde donde estás</h2>
-    {cards([
-      ("Este viernes", "La jam de los viernes", "Jam abierta semanal en Inner Motion Dance Studio, al norte de Miami, de 7 a 9 PM. Escala de 20 a 50 dólares, sin pareja, sin reserva. Primera sesión el 2 de octubre de 2026.", R_FRIDAY),
-      ("Nunca lo he hecho", "Mirar primero, bailar después", "Cómo se ve una jam desde dentro, y por qué mirar es una forma legítima de participar.", R_FIRST),
-      ("Busco una sesión", "Jams y práctica abierta", "Qué es una jam abierta, cómo suele funcionar la sala y qué decir al llegar.", R_JAMS),
-      ("Quiero que me enseñen", "Clases y talleres", "Series para principiantes, talleres e intensivos, y qué mirar en quien enseña.", R_CLASSES),
-      ("Aprender el vocabulario", "Glosario", "Jam, score, small dance, underscore, spotting, compartir peso y el resto del vocabulario de trabajo.", R_GLOSSARY),
-      ("Curiosidad por la forma", "Historia y principios", "De dónde viene la IC, quién la construyó y qué ideas tomó del aikido, la danza posmoderna y la somática.", R_HISTORY),
-      ("Necesito las reglas básicas", "Seguridad y consentimiento", "Límites, spotting, qué se espera de ti y qué puedes rechazar siempre.", R_SAFETY),
-    ])}
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2>Por qué una jam no es una clase</h2>
-    <div class="prose">
-      <p>Una <strong>clase</strong> te da una habilidad. Una <strong>jam</strong> te da la situación en la que esa habilidad se vuelve útil. La mayoría de las jams no tienen profesor y tienen poca o ninguna música; la gente llega, encuentra pareja o baila sola, y se va cuando termina. Normalmente hay un borde de la sala para sentarse, mirar y descansar, y usarlo es lo normal, no una descortesía.</p>
-      <p>Si solo has bailado coreografías fijas, los primeros veinte minutos de una jam pueden parecer sin forma. Ayuda saber que eso es la forma, y no su fracaso. No estás esperando instrucciones: estás escuchando a un cuerpo que ya sabe caer sin hacerse daño y volver a levantarse.</p>
+      <a class="btn primary" href="{R_JAMS}">Ver próximas jams &nbsp;&rarr;</a>
+      <a class="btn secondary" href="{cm.IG}" target="_blank" rel="noopener">@miamicontactimprov</a>
     </div>
   </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2>La única regla que sostiene todas las demás</h2>
-    <div class="prose">
-      <p>La Improvisación de Contacto funciona porque cualquiera de las dos personas puede parar en cualquier momento, por cualquier motivo, sin explicación. Quien está siendo levantado puede poner un pie en el suelo. Quien está siendo sostenido puede apartarse. La danza continúa. Quienes la practican llaman a esto la negociación, y ocurre a través del peso, la respiración y pequeñas señales físicas mucho antes de que alguien hable.</p>
-      <p>Escrito suena abstracto. En la sala es lo más práctico que vas a aprender, y es la razón por la que vuelve gente que nunca se había considerado bailarina.</p>
+  <div class="mci-hero-stage">
+    <div class="mci-layer mci-disc" id="mci-disc" aria-hidden="true"></div>
+    <div class="mci-layer mci-ring" id="mci-ring" aria-hidden="true"></div>
+    <div class="mci-layer mci-dot-1" id="mci-dot1" aria-hidden="true"></div>
+    <div class="mci-layer mci-dot-2" id="mci-dot2" aria-hidden="true"></div>
+    <div class="mci-logo-float" id="mci-logo-float">
+      <img id="mci-logo" class="mci-hero-photo" src="{cm.IMG}/c7.jpg" alt="Una mano que se extiende, bajo una luz cálida y suave">
     </div>
-    {band("¿Nuevo en Miami o nuevo en esto?", "Dinos que existes y te añadimos al mapa. Jams, clases, profesorado, estudios, festivales y grupos de práctica recurrente tienen cabida aquí.", [("Publica una entrada", R_SUBMIT, "primary"), ("Leer el directorio", R_DIRECTORY, "secondary")])}
+    <a class="mci-layer mci-stamp" id="mci-stamp" href="{R_FRIDAY}" aria-label="Primera jam, 2 de octubre, viernes 7 PM">
+      <span class="small">Primera jam</span>
+      <span class="big mci-h">2 OCT</span>
+      <span class="small">Vie &middot; 7 PM</span>
+    </a>
+    <div class="mci-layer mci-chip mci-chip-1" id="mci-chip1">Viernes &middot; 7&ndash;9 PM</div>
+    <div class="mci-layer mci-chip mci-chip-2" id="mci-chip2">Clase + Jam abierta</div>
   </div>
-</section>
+</div>
+
+<div class="mci-panel-wrap">
+  <div class="mci-panel">
+    <div><p class="label mci-h">CUÁNDO</p><p>Todos los viernes, desde el 2 oct<br>7:00 &ndash; 9:00 PM<br>Clase, luego Jam abierta</p></div>
+    <div><p class="label mci-h">DÓNDE</p><p>Inner Motion Dance Studio<br>216 NE 1st Ave, Hallandale Beach, FL</p></div>
+    <div><p class="label mci-h">QUIÉN</p><p>Todos los niveles, todos los cuerpos.<br>Ven solo/a o con quien quieras.</p></div>
+  </div>
+</div>
+
+<div class="mci-block mci-reveal">
+  <p class="mci-eyebrow">Qué es</p>
+  <h2 class="mci-h">UNA DANZA HECHA DE PESO, CONTACTO Y MOMENTO COMPARTIDO.</h2>
+  <p class="body">El contact improv es una danza improvisada que nace del contacto físico &mdash; dos o más cuerpos explorando juntos el equilibrio, el peso compartido y el momento, instante a instante. Sin coreografía, sin espejos, sin presión de actuar.</p>
+  <div class="mci-cards">
+    <div class="mci-mini"><p class="t mci-h">7:00 &middot; CLASE</p><p>Calentamiento guiado y herramientas &mdash; rodar, compartir peso, caer sin hacerse daño.</p></div>
+    <div class="mci-mini"><p class="t mci-h">7:45 &middot; JAM ABIERTA</p><p>Danza libre. Entra, siéntate, mira &mdash; todo es bienvenido.</p></div>
+    <div class="mci-mini"><p class="t mci-h">$20 &ndash; $50</p><p>Escala móvil &mdash; paga lo que puedas. Ropa cómoda, sin zapatos.</p></div>
+  </div>
+  <div class="mci-actions">
+    <a class="mci-textlink" href="https://www.youtube.com/watch?v=q4wUEiHowSU" target="_blank" rel="noopener">&#9654; Ver: qué es el contact improv</a>
+  </div>
+</div>
+
+<div class="mci-photos mci-reveal">
+  <div class="mci-tile"><img src="{cm.IMG}/p1.jpg" alt="Dos bailarines en un apoyo inclinado, en blanco y negro" loading="lazy"><span class="chip">JAM DE LOS VIERNES</span></div>
+  <div class="mci-tile"><img src="{cm.IMG}/p4.jpg" alt="Una bailarina girando, larga exposición en blanco y negro" loading="lazy"><span class="chip">CLASE</span></div>
+  <div class="mci-tile"><img src="{cm.IMG}/p3.jpg" alt="Dos bailarines entrelazados en la penumbra, en blanco y negro" loading="lazy"><span class="chip">JAM ABIERTA</span></div>
+  <div class="mci-tile"><img src="{cm.IMG}/p7.jpg" alt="Una mano que se extiende bajo una luz suave" loading="lazy"><span class="chip">COMUNIDAD</span></div>
+</div>
+
+<div class="mci-ig mci-reveal">
+  <div class="mci-ig-head">
+    <h2 class="mci-h">EN INSTAGRAM</h2>
+  </div>
+  <div class="ig-embeds">{ig_embeds}</div>
+</div>
+
+{cm._gallery("band-home.jpg", "Dos bailarines moviéndose juntos en larga exposición, en blanco y negro", "¿NUEVO POR AQUÍ? VEN COMO ERES.", "Síguenos en Instagram para recordatorios de jams, fotos y novedades.", f'<a class="mci-pill terracotta" href="{cm.IG}" target="_blank" rel="noopener">{cm.IG_GLYPH}<span>@miamicontactimprov</span></a>', tall=True)}
 """
     jsonld = schema.render(
         schema.organisation("es"),
@@ -213,30 +215,27 @@ def home():
         schema.webpage(
             R_HOME,
             "Improvisación de Contacto en Miami | Miami Contact Improv",
-            "Improvisación de Contacto en Miami: jams, clases, quién enseña, vídeo e historia. Un mapa comunitario e independiente de la IC en Miami-Dade y Broward.",
+            "Una jam semanal de contact improv en Miami: clase y luego jam abierta todos los viernes, de 7 a 9 PM, en Inner Motion Dance Studio. Todos los niveles.",
             lang="es",
         ),
         {
             "@type": "Place",
             "@id": schema.SITE + "/#place",
             "name": "Miami, Florida",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Miami",
-                "addressRegion": "FL",
-                "addressCountry": "US",
-            },
+            "address": {"@type": "PostalAddress", "addressLocality": "Miami", "addressRegion": "FL", "addressCountry": "US"},
             "geo": {"@type": "GeoCoordinates", "latitude": 25.7617, "longitude": -80.1918},
         },
+        listings.friday_jam_event(),
     )
     return page(
-        "Improvisación de Contacto en Miami [Guía 2026]",
-        "Improvisación de Contacto en Miami: qué es, dónde están las jams, quién la enseña y cómo empezar. Un mapa comunitario de la IC en Miami-Dade y Broward.",
+        "Contact Improv en Miami | Jam semanal y clase",
+        "Una jam semanal de contact improv en Miami: clase y luego jam abierta todos los viernes, de 7 a 9 PM, en Inner Motion Dance Studio. Sin experiencia previa.",
         R_HOME,
         body,
-        jsonld=jsonld,
         lang="es",
+        jsonld=jsonld,
     )
+
 
 
 # ---------------------------------------------------------------- what is CI

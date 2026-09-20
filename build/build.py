@@ -23,6 +23,8 @@ import content_core  # noqa: E402
 import content_directory  # noqa: E402
 import content_es  # noqa: E402
 import content_local  # noqa: E402
+import content_blog  # noqa: E402
+import content_marketing  # noqa: E402
 import content_practice  # noqa: E402
 import locales  # noqa: E402
 import schema  # noqa: E402
@@ -58,7 +60,7 @@ TODAY = _sitemap_lastmod()
 
 # slug, locale, builder, sitemap priority, changefreq, background video id
 PAGES = [
-    ("home", "en", content_core.home, "1.0", "weekly", videos_data.HERO_VIDEO_ID),
+    ("home", "en", content_marketing.home, "1.0", "weekly", None),
     ("what-is-contact-improvisation", "en", content_core.what_is, "0.9", "monthly", None),
     ("miami", "en", content_directory.miami, "0.9", "weekly", None),
     ("miami-jams", "en", content_local.miami_jams, "0.9", "weekly", None),
@@ -73,7 +75,15 @@ PAGES = [
     ("history", "en", content_core.history, "0.6", "yearly", None),
     ("safety-and-consent", "en", content_practice.safety, "0.6", "yearly", None),
     ("faq", "en", content_directory.faq, "0.7", "monthly", None),
-    ("about", "en", content_directory.about, "0.5", "yearly", None),
+    ("about", "en", content_marketing.about, "0.5", "yearly", None),
+    ("events", "en", content_marketing.events, "0.9", "weekly", None),
+    ("contact", "en", content_marketing.contact, "0.6", "monthly", None),
+    ("blog", "en", content_blog.index, "0.7", "weekly", None),
+    ("blog-first-jam", "en", content_blog.first_jam, "0.6", "monthly", None),
+    ("blog-weight-sharing", "en", content_blog.weight_sharing, "0.6", "monthly", None),
+    ("blog-falling", "en", content_blog.falling, "0.6", "monthly", None),
+    ("blog-consent", "en", content_blog.consent, "0.6", "monthly", None),
+    ("blog-no-music", "en", content_blog.no_music, "0.6", "monthly", None),
     # Spanish. Same slug, second locale: each of these is a first-class route with its
     # own canonical, its own sitemap entry and its own side of the hreflang pair.
     ("home", "es", content_es.home, "1.0", "weekly", None),
@@ -232,7 +242,6 @@ REDIRECT_ALIASES = """# Clean-URL safety net. Cloudflare Pages serves /miami.htm
 /contact-improvisation      /what-is-contact-improvisation    301
 /contact-improvisation-miami /miami                           301
 /safety                     /safety-and-consent               301
-/contact                    /about                            301
 /teachers                   /directory                        301
 """
 
@@ -247,6 +256,10 @@ def redirects_file():
         if row["filename"] == "index.html":
             continue
         lines.append(f"/{row['filename']}  {row['route']}  301")
+        if row["filename"].endswith(".html") and not row["filename"].endswith("index.html"):
+            stem = row["filename"][:-5]
+            lines.append(f"/{stem}/index.html  {row['route']}  301")
+            lines.append(f"/{stem}/  {row['route']}  301")
     # A locale directory is reachable with and without its trailing slash. Collapse it,
     # the same way the .html form is collapsed, rather than serving two URLs per page.
     for lang in locales.LOCALES:
@@ -275,6 +288,14 @@ def build(out_dir: pathlib.Path, base_url=None):
             body = body.replace(SITE, site)
         out_path.write_text(body, encoding="utf-8")
         written.append(row["filename"])
+        # Clean-URL fallback for plain file servers (python -m http.server, S3, a USB
+        # stick): /events -> 301 -> /events/ -> events/index.html. Production never
+        # serves the copy, because _redirects collapses /events/ to /events first.
+        if row["filename"].endswith(".html") and not row["filename"].endswith("index.html"):
+            alias = out_dir / row["filename"][:-5] / "index.html"
+            alias.parent.mkdir(parents=True, exist_ok=True)
+            alias.write_text(body, encoding="utf-8")
+            written.append(alias.relative_to(out_dir).as_posix())
 
     # 404. One document, served for every locale: the Spanish pages are translations of
     # pages that exist, and a missing URL is missing in both languages.
@@ -341,10 +362,11 @@ KEY_FACTS = [
     "Consent in CI is continuous: any dancer may decline, pause or leave at any point.",
     "Miami has no central CI venue or calendar; practice runs through individual organisers, studios and Miami's wider contemporary and somatic dance community.",
     "The global CI World Jam Map at contactimprov.com carries the world's jam listings, including a Florida page.",
+    "Miami Contact Improv hosts a weekly class followed by an open jam every Friday, 7:00 to 9:00 PM, at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, from 2 October 2026. $20 at the door on a $20 to $50 sliding scale; no partner, experience or booking needed.",
 ]
 
 LOCALE_NOTE = (
-    "Every public page is published in both English and Spanish, 30 pages in total. The "
+    "The library pages are published in both English and Spanish; the Events, Contact and Blog pages are English only. The "
     "Spanish pages under /es/ are translations of their English counterparts and make no "
     "claim the English page does not make; a page is never machine-translated, and a page "
     "that is not translated is absent from /es/ rather than generated. The English page is "

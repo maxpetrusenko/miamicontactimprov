@@ -7,7 +7,7 @@ It has no membership, no booking function and no commercial interest in any list
 
 ## Languages
 
-Every public page is published in both English and Spanish, 30 pages in total. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
+The library pages are published in both English and Spanish; the Events, Contact and Blog pages are English only. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
 
 ## Key facts
 
@@ -18,6 +18,7 @@ Every public page is published in both English and Spanish, 30 pages in total. T
 - Consent in CI is continuous: any dancer may decline, pause or leave at any point.
 - Miami has no central CI venue or calendar; practice runs through individual organisers, studios and Miami's wider contemporary and somatic dance community.
 - The global CI World Jam Map at contactimprov.com carries the world's jam listings, including a Florida page.
+- Miami Contact Improv hosts a weekly class followed by an open jam every Friday, 7:00 to 9:00 PM, at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, from 2 October 2026. $20 at the door on a $20 to $50 sliding scale; no partner, experience or booking needed.
 
 
 ---
@@ -26,90 +27,74 @@ Every public page is published in both English and Spanish, 30 pages in total. T
 
 id="main">
 
-Miami · Miami Beach · South Florida
+ MOVE. 
+ LISTEN. 
+ IMPROVISE. 
 
-Two people, one shared point of contact, and whatever happens next.
+A weekly contact improv jam in Miami — where dance meets touch, trust, and play. No experience needed, just a curious body.
 
-Contact Improvisation is a dance form you can start tonight and never finish learning. This site is the working map of where it happens in Miami: the jams, the classes, the teachers, the vocabulary, and the history behind it.
+ See upcoming jams  → 
+ @miamicontactimprov 
 
- Friday jam, 7–9 PM, Miami 
- Find it in Miami 
- What is CI? 
+ First jam 
+ OCT 2 
+ Fri · 7 PM 
 
-No membership. No central authority. A community resource that also hosts one weekly jam.
+Fridays · 7–9 PM
 
-What is contact improvisation in Miami?
+Class + Open Jam
 
-Contact Improvisation (CI) is a partnered dance form built from a single moving point of contact, usually the back or shoulders, through which two dancers share weight and follow gravity, momentum and impulse instead of choreography. It began in the United States in 1972 with the dancer and choreographer Steve Paxton, and it has no licensing body, no required uniform and no fixed syllabus. In Miami it is practised in jams, classes and workshops across Miami-Dade and Broward County.
+WHEN
 
- What it is An improvised partnered dance around shared weight and a rolling point of contact 
+Every Friday, starting Oct 2
+7:00 – 9:00 PM
+Class, then Open Jam
 
- When it started 1972, United States, developed by Steve Paxton 
+WHERE
 
- Who can do it Anyone. No dance training, partner or flexibility required to begin 
+Inner Motion Dance Studio
+216 NE 1st Ave, Hallandale Beach, FL
 
- What a jam is An open, unguided dance session. Come and go, dance or watch 
+WHO
 
- What it costs in Miami Set by each organiser. Community jams are typically low-cost or donation-based 
+All levels, all bodies.
+Come solo or bring a friend.
 
- What you need Loose clothes, water, bare or soft feet, and a willingness to say no 
+What is it
 
- Where it happens here Studios, cultural centres, parks and beaches across Miami-Dade and Broward 
+A DANCE FORM BUILT ON WEIGHT, TOUCH & SHARED MOMENTUM.
 
-The form is deliberately open. There is no federation that certifies who may teach it, and no governing body that decides what counts. That is why a city scene is built out of individual organisers and borrowed rooms rather than a single institution, and why a map like this one is useful.
+Contact improv is an improvised dance form rooted in physical contact — two or more bodies exploring balance, weight-sharing, and momentum together, moment to moment. No choreography, no mirrors, no performance pressure.
 
-Cite this page
+7:00 · CLASS
 
-Miami Contact Improv (2026). Contact Improvisation in Miami . miamicontactimprov.com. Retrieved from https://miamicontactimprov.com/
+Guided warm-up and skills — rolling, weight-sharing, safe falling.
 
-Start from where you are
+7:45 · OPEN JAM
 
- This Friday 
-The Friday jam
+Free-form dancing. Join in, sit out, watch — everything is welcome.
 
-Weekly open jam at Inner Motion Dance Studio, north Miami, 7 to 9 PM. $20 sliding scale, no partner, no booking. First session 2 October 2026.
- Never done it 
-Watch first, then dance
+$20 – $50
 
-What a jam actually looks like from the inside, and why watching is a legitimate way to participate.
- Looking for a session 
-Jams and open practice
+Sliding scale — pay what fits. Bring comfy clothes, no shoes needed.
 
-What an open jam is, how the room usually runs, and what to say when you arrive.
- Want teaching 
-Classes and workshops
+ ▶ Watch: what is contact improv 
 
-Beginner series, workshops and intensives, plus what to look for in a teacher.
- Learning the words 
-Glossary
+ FRIDAY JAM 
 
-Jam, score, small dance, underscore, spotting, weight sharing, and the rest of the working vocabulary.
- Curious about the form 
-History and principles
+ CLASS 
 
-Where CI came from, who built it, and the ideas it borrowed from aikido, postmodern dance and somatics.
- Need the ground rules 
-Safety and consent
+ OPEN JAM 
 
-Boundaries, spotting, what is expected of you and what you may always refuse.
+ COMMUNITY 
 
-Why a jam is not a class
+ON INSTAGRAM
 
-A class gives you a skill. A jam gives you the situation in which the skill becomes useful. Most jams have no teacher and little or no music; people arrive, find a partner or dance alone, and leave when they are done. There is usually an edge of the room for sitting, watching and resting, and using it is normal rather than rude.
+NEW HERE? COME AS YOU ARE.
 
-If you have only ever danced in set choreography, the first twenty minutes of a jam can feel formless. It helps to know that this is the form, not a failure of it. You are not waiting for instruction. You are listening to a body that already knows how to fall safely and stand up again.
+Follow along on Instagram for jam reminders, photos, and updates.
 
-The one rule that carries everything else
-
-Contact Improvisation works because either dancer can stop at any point, for any reason, without explanation. A lifted partner can put a foot down. A held partner can step away. The dance continues. Practitioners call this the negotiation, and it happens through weight, breath and small physical signals long before anyone speaks.
-
-Written down it sounds abstract. In the room it is the most practical thing you will learn, and it is why people who have never considered themselves dancers keep coming back.
-
-New to Miami, or new to this?
-
-Tell us you exist and we will add you to the map. Jams, classes, teachers, studios, festivals and recurring practice groups all belong here.
-
- Submit a listing Read the directory
+ @miamicontactimprov
 
 ---
 
@@ -2101,87 +2086,385 @@ Miami Contact Improv (2026). Frequently asked questions . miamicontactimprov.com
 
 id="main">
 
-About
+About the practice
 
-What this site is, and what it is not.
+WHAT IS CONTACT IMPROV?
 
-An independent, non-commercial reference for Contact Improvisation in Miami. No membership, no commission, no studio behind it. It hosts one weekly jam of its own, and says so wherever that jam appears.
+Contact improvisation is an improvised dance form built on physical contact between two or more moving bodies. Rather than following set steps, dancers respond in real time to weight, momentum, and touch — rolling, lifting, falling, and catching as the moment calls for it.
 
-Short answer
+Miami Contact Improv is a community jam for anyone curious about the form — dancers, movers, and total beginners alike. Every week starts with a short class to warm up the tools, followed by an open jam where anyone can dance. Anyone can stop at any moment, for any reason — the dance simply continues. Want the longer version? Read what contact improvisation is , or how safety and consent work in the room.
 
-miamicontactimprov.com is an independent community resource that maps Contact Improvisation (CI) practice across Miami-Dade and Broward County. It publishes what can be verified, states plainly what cannot, and accepts corrections from anyone in the scene. It hosts one session, the Friday jam in Miami, listed on the same terms as every other entry; it takes no bookings and charges nothing for listings.
+The practice
 
-Why it exists
+NO CHOREOGRAPHY. NO MIRRORS. NO PRESSURE.
 
-Contact Improvisation has no federation, no licence and no central organisation. That openness is the reason it spread to every continent, and it is also the reason a city like Miami can have a decades-long intermittent practice without anything online to show for it. When the form has no institution, the map has to be built by hand.
+Just weight, momentum and touch, shared moment to moment — and the freedom to stop whenever you need to.
 
-The global CI World Jam Map at contactimprov.com has done that at world scale since the 1990s. This site does it at one-city scale, with more detail than a global listing can carry, and it links back to the world map rather than competing with it.
+Facilitator
 
-How listings work here
+MAX PETRUSENKO
 
-Everything published is checked against the organiser's own published information first.
+Facilitator · Somatic practitioner
 
-If a session cannot be verified, it is listed as unverified or left off, never guessed.
+Max hosts the weekly Miami Contact Improv jam and works as a somatic practitioner between South Florida and Bali. His approach to contact improv centres on presence — listening through weight, momentum, and touch — with clear, ongoing consent at the heart of every session.
 
-Nothing is paid. There is no sponsored listing and no affiliate arrangement.
+He also co-creates blindfolded movement experiences with Blindfold Miami, exploring how we move and connect when sight steps aside.
 
-Removals are normal. Sessions end, studios close, organisers move on, and the page is corrected.
+ @max.petrusenko 
+ Somatic work → 
 
-Accuracy matters more than completeness. A short honest page beats a long wrong one.
+FAQ
 
-Submit, correct, or remove a listing
+ Do I need dance experience? + 
+No. Most people who come have zero dance background. We start every session with a short class covering the basics of weight-sharing and safe falling.
 
-Email hello@miamicontactimprov.com , or reply to any account this site publishes from. English or Spanish, either is fine.
+ What should I wear? + 
+Comfortable clothes you can move in. No shoes — we dance barefoot or in socks. Avoid zippers, buckles, or jewellery that could catch on a partner.
 
-What to send for a jam or a class:
+ Is it a partner dance like tango? + 
+No fixed roles or steps — contact improv is improvised. You will dance with many different people over a session, and no partner is required to attend.
 
- Name What the session is called 
+ How much does it cost? + 
+The weekly jam is $20–$50 sliding scale — pay what fits your budget. Special workshops may have a set price, listed on the event page.
 
- Where Studio or venue name, and the city 
+About this site & listings
 
- When Day, time and how often 
+miamicontactimprov.com is an independent, non-commercial community resource. It hosts the weekly jam above and also maps the wider Contact Improvisation scene across Miami-Dade and Broward — jams, classes and teachers — publishing only what can be verified and saying plainly what cannot.
 
- Cost Door fee, donation, or free 
+Run a jam, class or workshop in South Florida? Email hello@miamicontactimprov.com and we will add it to the directory . A listing is free, is never ranked, and links to your own page.
 
- Who it is for Open to everyone, or prior experience assumed 
+---
 
- Link Your own page, calendar entry or social account 
+## https://miamicontactimprov.com/events
 
-What to send for a teacher listing: your name, your city, what you teach, and a link to your own page. If you would rather not be listed anywhere, say so and we will remove you without asking why.
+id="main">
 
-If you own a film embedded in the video room and would prefer it not to be, one line is enough. It comes down the same day.
+Jams & workshops
 
-The one session this site runs
+UPCOMING EVENTS
 
-Since October 2026 the maintainer of this site hosts a weekly open Contact Improvisation jam on Fridays, 7:00 to 9:00 PM, at Inner Motion Dance Studio in Miami (216 NE 1st Ave, Hallandale Beach). It is on the Friday jam page and on the jam list , where the entry names its organiser like every other one. It is not ranked above other sessions, it is not the reason the other sessions are listed, and it comes down the week it stops. Everything else on this site is somebody else's session, published on the strength of their own page.
+WEEKLY JAM
 
-Corrections
+Every Friday from Oct 2, 2026 · 7:00–9:00 PM
+Class 7:00–7:45, Open Jam 7:45–9:00
+Inner Motion Dance Studio · 216 NE 1st Ave, Hallandale Beach
+ Full details → 
 
-If something here is wrong, it is more useful to tell us than to ignore it. Corrections that remove a claim are as welcome as ones that add a session, and the page is changed rather than annotated.
+ $20 – $50 sliding scale 
 
-What this site is not
+Registered events
 
-It is not a studio, a booking service or a school. It hosts one jam and nothing else.
+ EVENTBRITE 
 
-It does not vet, certify or endorse teachers. Nobody can, in this form.
+Ticketed sessions
 
-It is not affiliated with contactimprov.com, Contact Quarterly or any festival.
+Online registration will open here once ticketing is live. The weekly jam needs no booking — just come to the door.
 
-It does not mediate disputes between dancers or organisers.
+ LUMA 
 
-Who maintains it
+Special workshops
 
-Built and maintained by Max Petrusenko as an independent project, and he hosts the Friday jam. No listing on this site is paid for, sponsored, or promoted, and nothing here is for sale.
+One-off workshops and intensives will be bookable here. In the meantime, follow Instagram for announcements.
 
-The page is only as good as the room
+Every Friday
 
-If you know where the dancing is this month, that is the single most useful thing you can send.
+THE ROOM IS THE TEACHING.
 
- Email us Read the Miami page 
+A short class to warm up the tools, then an open jam where anyone can dance. Come solo or bring a friend.
+
+ About the jam → 
+
+More Contact Improv in Miami
+
+ Verified list 
+Miami & Broward jams
+
+Every recurring Contact Improv session we could verify across Miami-Dade and Broward, with sources and checked dates.
+
+ Learn 
+Classes & workshops
+
+Where to take a class, what to expect, and what to look for in a teacher.
+
+ New here 
+Your first jam
+
+Step by step: what to wear, when to arrive, and what actually happens in the room.
+
+Follow Instagram for the fastest updates on jam changes and special events.
+
+ @miamicontactimprov
+
+---
+
+## https://miamicontactimprov.com/contact
+
+id="main">
+
+Say hi
+
+GET IN TOUCH
+
+Questions about a jam, want to bring a group, or interested in facilitating a workshop? Reach out — or find us on Instagram for the fastest reply. You can also email hello@miamicontactimprov.com .
+
+ @miamicontactimprov 
+
+JOIN THE MAILING LIST
+
+ Sign up 
+
+Sign-up opens your email app with a message to us — we add you by hand and never share your address.
+
+---
+
+## https://miamicontactimprov.com/blog/
+
+id="main">
+
+Blog
+
+NOTES FROM THE FLOOR
+
+Short, practical pieces about Contact Improvisation: what a jam is actually like, how the weight-sharing works, how to fall, and how the room stays safe. Written for this site, for people who are new to it.
+
+ 5 min read 
+Five things nobody tells you before your first jam
+
+What actually happens at a contact improv jam, and the five things that make the first one easier: sitting out, the awkward start, leaving a dance, and what to bring.
+ 6 min read 
+Weight-sharing, explained
+
+Giving weight, receiving weight, and the rolling point of contact: the one mechanic every contact improv dance is built on, and the mistake almost every beginner makes.
+ 6 min read 
+How to fall without getting hurt
+
+Falling is not a mistake in contact improv, it is a skill: lowering your centre, rolling instead of stopping, keeping your feet available, and why spotting exists.
+ 5 min read 
+Dancing with strangers: consent and saying no mid-dance
+
+Consent in contact improv is continuous, mostly physical and always revocable: how the negotiation works, what a good jam does about it, and what to do if something feels off.
+ 4 min read 
+Why there is (usually) no music at a jam
+
+Silence at a contact improv jam is not an oversight: music covers the information the dance runs on, and dancing without it changes how you move and listen.
+
+Reading is the easy part
+
+The form makes sense in a room, about ten minutes in. Come to the Friday jam and find out.
+
+ See upcoming jams Your first jam, step by step
+
+---
+
+## https://miamicontactimprov.com/blog/five-things-before-your-first-jam
+
+id="main">
+
+ Blog · 5 min read
+
+FIVE THINGS NOBODY TELLS YOU BEFORE YOUR FIRST JAM
+
+Most guides to a first jam tell you what to wear. That part is easy: loose clothes, bare feet, no jewellery. What they skip is the part that trips people up, which is the first twenty minutes of standing in a room full of strangers who all seem to know what they are doing. Here is what would have helped.
+
+1. Sitting out is participation
+
+Every jam has an edge: a wall, a row of mats, somewhere people sit with water and watch. Newcomers often treat the edge as failure, as if the only real way to be at a jam is to be in the middle of it. It is the opposite. Watching is how you learn what the room does, how people enter and leave a dance, how a lift actually happens. Some of the most experienced dancers spend half the evening on the edge. Sit there first. Nobody is counting.
+
+2. Nobody is watching you
+
+This is the hardest one to believe and the most useful. In a jam, everyone dancing is busy with the weight in front of them. The attention in the room points inward, at the point of contact, not outward at whoever just walked in. The feeling of being observed is real, but it is coming from you. It fades faster than you expect, usually the first time someone gives you their weight and you realise you are too busy not dropping them to care how you look.
+
+3. The awkward start is the form, not a failure of it
+
+If you have only danced choreography, or only danced at parties with music, the opening of a jam can feel formless. People stand still. Someone rolls slowly on the floor. Two people lean back to back and do not appear to move. You are waiting for something to begin. It has begun. Contact Improvisation is built on listening, and listening looks like nothing from the outside. Give it ten minutes before you decide anything.
+
+4. You can leave any dance, at any moment, without a reason
+
+This is the rule that carries everything else. A lifted partner can put a foot down. A held partner can step away. You do not owe anyone an explanation, and a partner who needs one is the problem, not you. Good jams say this out loud in an opening circle; the ones this site lists do. Read the safety and consent page before you go so it is already in your body when you need it.
+
+5. You will be closer to strangers than at any party
+
+Someone's whole weight may end up on your back. Your head may rest on a stranger's hip. That is the practice, and it is neither romantic nor athletic in the way it looks from outside; it is mostly a conversation about balance. Knowing that in advance makes the first close moment a relief rather than a shock. And if it is not a relief, see point four.
+
+When you are ready, the step-by-step is on your first jam , and the room this site hosts is the Friday jam .
+
+New here? Come as you are.
+
+A short class, then an open jam. All levels, no partner needed.
+
+ See upcoming jams More from the blog 
 
 Cite this page
 
-Miami Contact Improv (2026). About . miamicontactimprov.com. https://miamicontactimprov.com/about
+Miami Contact Improv (2026). Five things nobody tells you before your first jam . miamicontactimprov.com. https://miamicontactimprov.com/blog/five-things-before-your-first-jam
+
+---
+
+## https://miamicontactimprov.com/blog/weight-sharing-explained
+
+id="main">
+
+ Blog · 6 min read
+
+WEIGHT-SHARING, EXPLAINED
+
+Strip Contact Improvisation down to one mechanic and this is it: one dancer gives some of their weight, the other receives it, and the roles trade continuously through a point of contact that moves. Everything else in the form, the lifts, the rolls, the falls, the moments that look like flying, is this one exchange at a different scale.
+
+Giving weight is not leaning
+
+The beginner version of giving weight is leaning: you tip toward a partner and hope. Leaning keeps your own muscles braced and your own feet planted, which means you have not actually given anything. Your partner feels a push, not a weight. Giving weight means letting part of your mass genuinely rest on someone else's structure, so that if they stepped away you would have to move. It is uncomfortable at first precisely because it is real.
+
+Receiving weight goes through the skeleton, not the arms
+
+The other half of the exchange is where most injuries and most of the strain come from. Receiving a partner's weight in your arms, or by tensing your shoulders, works for about a minute and then hurts. Receiving it through the skeleton, stacking their weight over your hips, your legs and the floor, works all night. The image many teachers use is that you are not holding your partner up; you are giving them a floor that happens to be at an angle.
+
+The point of contact rolls
+
+What makes this a dance rather than a static lean is that the point where two bodies touch does not stay put. It rolls: from a shoulder blade across the back, over a hip, down a thigh. Following that rolling point, keeping it singular and continuous, is the actual skill of the form. When the point of contact splits into several, a hand here and a knee there, the dance tends to become a grapple. When it stays one and keeps moving, the lifts happen on their own because both bodies arrive in the right arrangement without anyone deciding to lift.
+
+The mistake: muscling it
+
+Almost every beginner tries to make the dance happen with strength. It is understandable, because strength is what most of us have used to move other people before. It also does not work, and it is tiring for everyone. The exchange runs on gravity and momentum. If you are working hard, you are usually fighting one of those instead of using it. The correction is almost always the same: lower, slower, and closer to the floor.
+
+Two ways to practise it
+
+Back to back with a partner, both standing, and slowly trade who is leaning on whom, without using hands. Then one of you on hands and knees as a stable table while the other lays their torso across your back and lets go of their own effort. Both are dull to watch and enormously informative to do. Every class covers them; the vocabulary is in the glossary , and the longer picture of the form is on what Contact Improvisation is .
+
+New here? Come as you are.
+
+A short class, then an open jam. All levels, no partner needed.
+
+ See upcoming jams More from the blog 
+
+Cite this page
+
+Miami Contact Improv (2026). Weight-sharing, explained . miamicontactimprov.com. https://miamicontactimprov.com/blog/weight-sharing-explained
+
+---
+
+## https://miamicontactimprov.com/blog/how-to-fall-without-getting-hurt
+
+id="main">
+
+ Blog · 6 min read
+
+HOW TO FALL WITHOUT GETTING HURT
+
+In most physical practices a fall is the thing that went wrong. In Contact Improvisation it is a technique, practised deliberately, and the dancers who look most at ease in a jam are usually the ones who have fallen the most. The reason is simple: once you trust that you can get to the floor without harm, you stop bracing against it, and everything above the floor gets lighter.
+
+Lower your centre before anything else
+
+The distance you fall is the distance from your centre of gravity to the ground. Standing tall, that is a long way. Bent at the knees with your hips low, it is not. Most of what looks like fearless falling in experienced dancers is simply that they were never very far from the floor to begin with. If you feel a fall coming, go down first, on purpose, and the fall becomes a small one.
+
+Roll, do not stop
+
+A fall hurts when it ends abruptly: a knee hitting, a hand out stiff, a hip landing square. It does not hurt when the energy keeps travelling. The skill is to convert the downward motion into rotation, so that you arrive on the floor already rolling away from the point of impact. Rolling spreads the force across a curve of your body instead of a corner of it. In a class you will spend a lot of time rolling from kneeling and from sitting, precisely so that when a real fall comes, rolling is what your body reaches for.
+
+Exhale
+
+People hold their breath when they fall. A held breath stiffens the torso, and a stiff torso lands like a plank. Breathing out on the way down softens the whole structure. It sounds too simple to matter. It matters more than almost anything else on this list.
+
+Keep your feet available
+
+In a lift or a lean, the safest position is one where you could put a foot down if you needed to. Dancers talk about keeping your feet available, or keeping a landing gear. Giving your weight fully does not mean surrendering the ability to catch yourself. The two coexist, and a good partner will never put you somewhere you cannot get out of on your own.
+
+Why spotting exists
+
+At many jams one or two people stand near a dancing pair, hands free, not dancing. They are spotting: ready to slow a fall that goes wrong. You will not always see it because it is meant to be unobtrusive, and you can do it yourself from your first evening. It is a way of participating that asks nothing of your body and teaches you a great deal about where falls come from.
+
+The rest of the ground rules, including what you can always refuse, are on safety and consent . If you want to learn falling in a taught setting before trying it in a jam, the classes page is where to look.
+
+New here? Come as you are.
+
+A short class, then an open jam. All levels, no partner needed.
+
+ See upcoming jams More from the blog 
+
+Cite this page
+
+Miami Contact Improv (2026). How to fall without getting hurt . miamicontactimprov.com. https://miamicontactimprov.com/blog/how-to-fall-without-getting-hurt
+
+---
+
+## https://miamicontactimprov.com/blog/consent-and-saying-no-mid-dance
+
+id="main">
+
+ Blog · 5 min read
+
+DANCING WITH STRANGERS: CONSENT AND SAYING NO MID-DANCE
+
+Contact Improvisation is a form in which touch is the medium, and it happens mostly between people who have never met. That combination is why the form takes consent more seriously, and more practically, than almost any other movement practice. The short version: you can stop any dance at any moment for any reason, and the dance continues without you. The longer version is worth reading before you go.
+
+Consent here is continuous, not a checkbox
+
+In many settings consent is something you give once, at the start. In a jam it is renegotiated the whole time, because the dance is changing the whole time. Agreeing to a lean is not agreeing to a lift. Agreeing to dance now is not agreeing to dance in ten minutes. Practitioners call this the negotiation, and it runs through weight, breath and small physical signals long before anyone says a word.
+
+Most of it is physical, and that is fine
+
+You do not need to announce a boundary to hold one. Taking your weight back, putting a foot down, softening out of a lift, turning away: these are all complete sentences in the form's language, and an experienced partner reads them instantly. Words are welcome too. "Not that" or "slower" or "I'm done" said quietly mid-dance is normal and nobody will think twice about it.
+
+Leaving a dance is not rude
+
+Newcomers often stay in a dance they have stopped enjoying because leaving feels like an insult. It is not. Dances in a jam are short and fluid, people drift in and out of them constantly, and ending one is as ordinary as ending a conversation at a party. The only person who takes it personally is the one who should not have been dancing with you in the first place.
+
+What a good jam does about it
+
+A well-run jam does not leave this to chance. It opens with a short circle where the ground rules are said aloud, it names someone you can talk to if something is off, and it treats a partner who ignores a no as a problem for the whole room, not a private matter. When you are choosing a jam, whether the organiser does these things tells you more than anything else about it.
+
+If something feels wrong
+
+Leave the dance. Go to the edge. If it was more than awkward, tell the organiser that evening, not next week. You will not be the first person to raise it, and raising it is how a room stays safe for the next newcomer. The full ground rules for this site's own jam, and what you may always refuse, are on safety and consent ; other common questions are on the FAQ .
+
+New here? Come as you are.
+
+A short class, then an open jam. All levels, no partner needed.
+
+ See upcoming jams More from the blog 
+
+Cite this page
+
+Miami Contact Improv (2026). Dancing with strangers: consent and saying no mid-dance . miamicontactimprov.com. https://miamicontactimprov.com/blog/consent-and-saying-no-mid-dance
+
+---
+
+## https://miamicontactimprov.com/blog/why-there-is-no-music-at-a-jam
+
+id="main">
+
+ Blog · 4 min read
+
+WHY THERE IS (USUALLY) NO MUSIC AT A JAM
+
+The first thing many people notice at a jam is the quiet. No playlist, no beat to move to, sometimes no sound at all beyond breathing and the occasional thud of a body meeting the floor. It reads as awkward for about a quarter of an hour. Then it reads as the point.
+
+Music covers the information the dance runs on
+
+Contact Improvisation is built on listening to a partner's weight: the small shifts, the moment they commit, the instant before a lift resolves. That listening is partly through the skin and partly through the ears. Breath, the sound of a foot finding the floor, the change in how someone's weight settles: all of it is quieter than a track and most of it disappears under one. Take the music away and the room gets suddenly, usefully loud in a different way.
+
+A beat tells you what to do; silence asks
+
+Music, especially music with a pulse, organises movement for you. That is its pleasure and, in this form, its problem. Two people moving to the same beat are not really improvising together; they are both following the same third thing. Without it, the only timing available is the one you make between you, which is the whole exercise.
+
+It is not a rule
+
+Plenty of jams use a single ambient set, a live musician who plays with the room rather than at it, or music for one part of the evening and none for the rest. There is no authority in this form to forbid any of it. Silence is a default rather than a doctrine, and organisers choose it because it makes the dance easier to hear, not because sound is banned.
+
+What to do with the self-consciousness
+
+The quiet makes some newcomers feel watched, as if the absence of music leaves nothing to hide behind. Two things help. First, look around: nobody is listening to you, they are listening to whoever they are touching. Second, move slower than feels natural. Speed is what makes silence feel exposed. Slowness turns it into something closer to concentration.
+
+Where the silence came from is part of the form's history, which is on the history page . How a jam runs from the moment you arrive is on jams and open practice .
+
+New here? Come as you are.
+
+A short class, then an open jam. All levels, no partner needed.
+
+ See upcoming jams More from the blog 
+
+Cite this page
+
+Miami Contact Improv (2026). Why there is (usually) no music at a jam . miamicontactimprov.com. https://miamicontactimprov.com/blog/why-there-is-no-music-at-a-jam
 
 ---
 
@@ -2189,90 +2472,74 @@ Miami Contact Improv (2026). About . miamicontactimprov.com. https://miamicontac
 
 id="main">
 
-Miami · Miami Beach · South Florida
+ MUÉVETE. 
+ ESCUCHA. 
+ IMPROVISA. 
 
-Dos personas, un punto de contacto compartido, y lo que pase después.
+Una jam semanal de contact improv en Miami — donde la danza se encuentra con el contacto, la confianza y el juego. No hace falta experiencia, solo un cuerpo con curiosidad.
 
-La Improvisación de Contacto es una forma de danza que puedes empezar hoy y no terminar de aprender nunca. Este sitio es el mapa de trabajo de dónde ocurre en Miami: las jams, las clases, quienes enseñan, el vocabulario y la historia que hay detrás.
+ Ver próximas jams  → 
+ @miamicontactimprov 
 
- Jam de los viernes, 7–9 PM, Miami 
- Encuéntralo en Miami 
- ¿Qué es la IC? 
+ Primera jam 
+ 2 OCT 
+ Vie · 7 PM 
 
-Sin membresía. Sin autoridad central. Un recurso comunitario que además organiza una jam semanal.
+Viernes · 7–9 PM
 
-Respuesta breve
+Clase + Jam abierta
 
-La Improvisación de Contacto (IC), conocida internacionalmente como contact improvisation o CI , es una forma de danza en pareja construida a partir de un único punto de contacto en movimiento, normalmente la espalda o los hombros, a través del cual dos personas comparten peso y siguen la gravedad, el momento y el impulso en lugar de una coreografía. Comenzó en Estados Unidos en 1972 con el bailarín y coreógrafo Steve Paxton, y no tiene organismo que la licencie, ni uniforme, ni programa fijo. En Miami se practica en jams, clases y talleres en los condados de Miami-Dade y Broward.
+CUÁNDO
 
- Qué es Una danza improvisada en pareja alrededor del peso compartido y un punto de contacto rodante 
+Todos los viernes, desde el 2 oct
+7:00 – 9:00 PM
+Clase, luego Jam abierta
 
- Cuándo empezó 1972, Estados Unidos, desarrollada por Steve Paxton 
+DÓNDE
 
- Quién puede practicarla Cualquiera. Para empezar no hacen falta formación en danza, pareja ni flexibilidad 
+Inner Motion Dance Studio
+216 NE 1st Ave, Hallandale Beach, FL
 
- Qué es una jam Una sesión abierta y sin guía. Se llega y se sale cuando se quiere, se baila o se mira 
+QUIÉN
 
- Cuánto cuesta en Miami Lo fija quien organiza. Las jams comunitarias suelen ser económicas o a donación 
+Todos los niveles, todos los cuerpos.
+Ven solo/a o con quien quieras.
 
- Qué hay que llevar Ropa cómoda, agua, pies descalzos o calzado blando, y disposición a decir no 
+Qué es
 
- Dónde ocurre aquí Estudios, centros culturales, parques y playas en Miami-Dade y Broward 
+UNA DANZA HECHA DE PESO, CONTACTO Y MOMENTO COMPARTIDO.
 
-La forma es deliberadamente abierta. No hay federación que certifique quién puede enseñarla, ni organismo que decida qué cuenta como tal. Por eso la escena de una ciudad se construye con personas que organizan por su cuenta y salas prestadas, y no con una institución única; y por eso un mapa como este resulta útil.
+El contact improv es una danza improvisada que nace del contacto físico — dos o más cuerpos explorando juntos el equilibrio, el peso compartido y el momento, instante a instante. Sin coreografía, sin espejos, sin presión de actuar.
 
-Cita esta página
+7:00 · CLASE
 
-Miami Contact Improv (2026). Improvisación de Contacto en Miami . miamicontactimprov.com. Recuperado de https://miamicontactimprov.com/es/
+Calentamiento guiado y herramientas — rodar, compartir peso, caer sin hacerse daño.
 
-Empieza desde donde estás
+7:45 · JAM ABIERTA
 
- Este viernes 
-La jam de los viernes
+Danza libre. Entra, siéntate, mira — todo es bienvenido.
 
-Jam abierta semanal en Inner Motion Dance Studio, al norte de Miami, de 7 a 9 PM. Escala de 20 a 50 dólares, sin pareja, sin reserva. Primera sesión el 2 de octubre de 2026.
- Nunca lo he hecho 
-Mirar primero, bailar después
+$20 – $50
 
-Cómo se ve una jam desde dentro, y por qué mirar es una forma legítima de participar.
- Busco una sesión 
-Jams y práctica abierta
+Escala móvil — paga lo que puedas. Ropa cómoda, sin zapatos.
 
-Qué es una jam abierta, cómo suele funcionar la sala y qué decir al llegar.
- Quiero que me enseñen 
-Clases y talleres
+ ▶ Ver: qué es el contact improv 
 
-Series para principiantes, talleres e intensivos, y qué mirar en quien enseña.
- Aprender el vocabulario 
-Glosario
+ JAM DE LOS VIERNES 
 
-Jam, score, small dance, underscore, spotting, compartir peso y el resto del vocabulario de trabajo.
- Curiosidad por la forma 
-Historia y principios
+ CLASE 
 
-De dónde viene la IC, quién la construyó y qué ideas tomó del aikido, la danza posmoderna y la somática.
- Necesito las reglas básicas 
-Seguridad y consentimiento
+ JAM ABIERTA 
 
-Límites, spotting, qué se espera de ti y qué puedes rechazar siempre.
+ COMUNIDAD 
 
-Por qué una jam no es una clase
+EN INSTAGRAM
 
-Una clase te da una habilidad. Una jam te da la situación en la que esa habilidad se vuelve útil. La mayoría de las jams no tienen profesor y tienen poca o ninguna música; la gente llega, encuentra pareja o baila sola, y se va cuando termina. Normalmente hay un borde de la sala para sentarse, mirar y descansar, y usarlo es lo normal, no una descortesía.
+¿NUEVO POR AQUÍ? VEN COMO ERES.
 
-Si solo has bailado coreografías fijas, los primeros veinte minutos de una jam pueden parecer sin forma. Ayuda saber que eso es la forma, y no su fracaso. No estás esperando instrucciones: estás escuchando a un cuerpo que ya sabe caer sin hacerse daño y volver a levantarse.
+Síguenos en Instagram para recordatorios de jams, fotos y novedades.
 
-La única regla que sostiene todas las demás
-
-La Improvisación de Contacto funciona porque cualquiera de las dos personas puede parar en cualquier momento, por cualquier motivo, sin explicación. Quien está siendo levantado puede poner un pie en el suelo. Quien está siendo sostenido puede apartarse. La danza continúa. Quienes la practican llaman a esto la negociación, y ocurre a través del peso, la respiración y pequeñas señales físicas mucho antes de que alguien hable.
-
-Escrito suena abstracto. En la sala es lo más práctico que vas a aprender, y es la razón por la que vuelve gente que nunca se había considerado bailarina.
-
-¿Nuevo en Miami o nuevo en esto?
-
-Dinos que existes y te añadimos al mapa. Jams, clases, profesorado, estudios, festivales y grupos de práctica recurrente tienen cabida aquí.
-
- Publica una entrada Leer el directorio
+ @miamicontactimprov
 
 ---
 

@@ -99,6 +99,7 @@ def organisation(lang="en"):
         "name": ORG_NAME,
         "alternateName": ["Miami CI", "miamicontactimprov.com"],
         "url": SITE + "/",
+        "sameAs": ["https://www.instagram.com/miamicontactimprov/"],
         "description": _sentence(lang),
         "disambiguatingDescription": disambiguating_description(lang),
         "foundingDate": "2026-09-13",

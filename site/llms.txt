@@ -7,7 +7,7 @@ It has no membership, no booking function and no commercial interest in any list
 
 ## Languages
 
-Every public page is published in both English and Spanish, 30 pages in total. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
+The library pages are published in both English and Spanish; the Events, Contact and Blog pages are English only. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
 
 ## Key facts
 
@@ -18,6 +18,7 @@ Every public page is published in both English and Spanish, 30 pages in total. T
 - Consent in CI is continuous: any dancer may decline, pause or leave at any point.
 - Miami has no central CI venue or calendar; practice runs through individual organisers, studios and Miami's wider contemporary and somatic dance community.
 - The global CI World Jam Map at contactimprov.com carries the world's jam listings, including a Florida page.
+- Miami Contact Improv hosts a weekly class followed by an open jam every Friday, 7:00 to 9:00 PM, at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, from 2 October 2026. $20 at the door on a $20 to $50 sliding scale; no partner, experience or booking needed.
 
 ## Pages
 
@@ -37,6 +38,14 @@ Every public page is published in both English and Spanish, 30 pages in total. T
 - https://miamicontactimprov.com/safety-and-consent  (en)
 - https://miamicontactimprov.com/faq  (en)
 - https://miamicontactimprov.com/about  (en)
+- https://miamicontactimprov.com/events  (en)
+- https://miamicontactimprov.com/contact  (en)
+- https://miamicontactimprov.com/blog/  (en)
+- https://miamicontactimprov.com/blog/five-things-before-your-first-jam  (en)
+- https://miamicontactimprov.com/blog/weight-sharing-explained  (en)
+- https://miamicontactimprov.com/blog/how-to-fall-without-getting-hurt  (en)
+- https://miamicontactimprov.com/blog/consent-and-saying-no-mid-dance  (en)
+- https://miamicontactimprov.com/blog/why-there-is-no-music-at-a-jam  (en)
 - https://miamicontactimprov.com/es/  (es)
 - https://miamicontactimprov.com/es/que-es-la-improvisacion-de-contacto  (es)
 - https://miamicontactimprov.com/es/miami  (es)

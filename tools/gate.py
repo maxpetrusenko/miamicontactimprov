@@ -212,7 +212,7 @@ def check_jsonld(pages):
 PLACEHOLDERS_CASED = [r"\bTODO\b", r"\bTBD\b", r"\bFIXME\b", r"\bXXX\b"]
 PLACEHOLDERS = [
     r"lorem ipsum", r"Replace with", r"\bFirst name\b", r"\bLast name\b",
-    r"YYYY-MM-DD", r"2026-MM-DD", r"\bplaceholder\b", r"\bLorem\b", r"\[insert",
+    r"YYYY-MM-DD", r"2026-MM-DD", r"\bplaceholder(?!=)", r"\bLorem\b", r"\[insert",
 ]
 # Two patterns, because the two classes of marker need different matching. The
 # phrase-like ones are safe case-insensitively; the shouted ones are not.
