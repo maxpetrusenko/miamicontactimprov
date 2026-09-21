@@ -139,7 +139,7 @@ def page_slug(path):
     return slug or "home"
 
 
-def subscribe_form(lang="en", source="", uid="page"):
+def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     """The newsletter form. One markup, every locale, every placement.
 
     It posts JSON to the Worker and writes its own result line. With JavaScript off the
@@ -149,14 +149,21 @@ def subscribe_form(lang="en", source="", uid="page"):
     `source` travels with the signup. The Worker sends the welcome email and the 10%
     code only when the source starts with `miamicontactimprov`, so the value here is
     what decides whether a reader gets the code.
+
+    `label` and `button` replace the shared copy for a form whose offer is written for
+    the page it sits on. The label is the sentence the reader answers and this site has
+    no separate hint line under the field, so a page that offers the next dates rather
+    than the monthly email says so in the label itself and nowhere else.
     """
     copy = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])
     field_id = f"subscribe-{uid}"
+    text = label or copy["label"]
+    action = button or copy["button"]
     return f"""<form class="subscribe-form" data-source="{_attr(source)}" data-endpoint="{SUBSCRIBE_ENDPOINT}" data-sending="{_attr(copy['sending'])}" data-ok="{_attr(copy['ok'])}" data-error="{_attr(copy['error'])}">
-  <label class="subscribe-label" for="{field_id}">{copy['label']}</label>
+  <label class="subscribe-label" for="{field_id}">{text}</label>
   <div class="subscribe-row">
     <input id="{field_id}" name="email" type="email" inputmode="email" autocomplete="email" required>
-    <button class="btn primary" type="submit">{copy['button']}</button>
+    <button class="btn primary" type="submit">{action}</button>
   </div>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>"""

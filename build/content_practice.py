@@ -746,3 +746,91 @@ def fundamentals():
         body,
         jsonld=jsonld,
     )
+
+
+# ------------------------------------------------------------------ start
+# The line above the one field on /start, and the offer the page reports with a signup.
+# Written once: the sentence a reader answers here is the sentence the record of that
+# signup carries, so the funnel report can tell which offer earned an address.
+START_OFFER = "Not ready for this Friday? Get the next dates and 10% off when you are."
+
+
+def start():
+    """The page the Instagram bio and the door QR point at: one field, two ways in.
+
+    This is not a page about the form that happens to ask for an address. It exists to
+    turn a reader who has never heard of Contact Improvisation into a subscriber, so it
+    opens with what arrives by email, restates the series, and asks once. The site does
+    not print helper text, so the offer is the form's own label: one sentence, no
+    second line telling the reader what the field is for.
+
+    The dates come from the series' EVENT_DATES row, which is also what /fundamentals
+    and the eight Events on /jams are built from, so the two pages cannot advertise
+    different Fridays. "See next class" points at /fundamentals rather than at Luma:
+    registration runs on Luma and the Luma event does not exist yet, so the series page
+    is the booking address until it does. See FUNDAMENTALS_URL in build/listings.py,
+    which is the one place that address is written down.
+    """
+    occurrences = listings.EVENT_DATES[listings.FUNDAMENTALS_NAME]
+    first, last = listings.date_label(occurrences[0][0]), listings.date_label(occurrences[-1][0])
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Start here &middot; Miami &middot; no partner needed</p>
+    <h1>New to Contact Improvisation?</h1>
+    <p class="lede">Get the next Miami classes, one useful CI video a month, and 10% off your first class.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="/fundamentals">See next class</a>
+    </div>
+    <div class="subscribe-block">
+      {subscribe_form("en", source="miamicontactimprov:start", uid="start", label=START_OFFER, button="Send me the dates")}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("Leave your email and the next class dates arrive, with one video a month and a 10% code for your first class. After that it is one email a month, and replying to any of them takes you off the list. No partner and no experience are needed for any of it.", label="What arrives by email")}
+    {facts([
+      ("What arrives", "The next dates by email, one CI video a month, and the 10% code for your first class"),
+      ("After that", "One email a month, and a reply to any of them takes you off the list"),
+      ("Next classes", f"Fridays, 7:00&ndash;9:00 PM, from {first} to {last}"),
+      ("Where", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
+      ("Cost", "$20&ndash;$50 sliding scale for each class, paid at the door or booked on Luma"),
+      ("Wear", "Clothes you can roll in, water, bare feet or soft socks"),
+      ("To start", "No partner and no experience: drop into any of the eight classes"),
+      ("Who runs it", "Max Petrusenko, who also maintains this site"),
+    ])}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="prose">
+      <p>Contact Improvisation is an improvised dance for two or more people, built on a single point of contact that keeps moving. Weight travels through bone instead of being held by grip, and momentum gets followed rather than watched. There are no steps to learn first, which is why somebody who has never danced can be dancing properly inside the first hour, and no partner to bring.</p>
+      <p>This site is a working map of the form in Miami: what runs, where, what it costs and who runs it. <a href="/what-is-contact-improvisation">What Contact Improvisation is</a> covers the dance itself, and <a href="/your-first-jam">your first jam</a> walks through the evening hour by hour.</p>
+      <p>The class series runs eight Fridays at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, 7:00 to 9:00 PM, from {first} to {last}. Each class stands on its own, so dropping into any one of the eight works. <a href="/fundamentals">The eight dates, what the classes cover and what they cost</a>.</p>
+      <p>Max Petrusenko teaches the series and also maintains this website, so this page reads as the organiser describing his own class. The <a href="/miami-jams">Miami-Dade and Broward jam list</a> carries the same disclosure beside its entry.</p>
+    </div>
+    {band("Come to one, or come to all eight.", "Paying at the door needs no booking, and the door price sits on the series page. If you would rather ask something first, one email is enough.", [("The eight Fridays", "/fundamentals", "primary"), ("Your first jam, step by step", "/your-first-jam", "secondary"), ("All verified sessions", "/miami-jams", "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>New to Contact Improvisation in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/start")}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation(),
+        schema.webpage(
+            "/start",
+            "New to Contact Improvisation in Miami",
+            "The next Contact Improvisation class dates in Miami by email, one CI video a month and 10% off a first class. Fridays 7:00 to 9:00 PM at Inner Motion Dance Studio, Hallandale Beach, from 2 October 2026.",
+            date_modified=listings.FUNDAMENTALS_VERIFIED,
+        ),
+        schema.breadcrumb("/start", "Start"),
+    )
+    return page(
+        "New to Contact Improvisation? Start in Miami",
+        "Get the next Contact Improvisation class dates in Miami by email, one video a month and 10% off your first class. No partner and no experience needed.",
+        "/start",
+        body,
+        jsonld=jsonld,
+    )

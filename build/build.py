@@ -59,6 +59,7 @@ TODAY = _sitemap_lastmod()
 # slug, locale, builder, sitemap priority, changefreq, background video id
 PAGES = [
     ("home", "en", content_core.home, "1.0", "weekly", videos_data.HERO_VIDEO_ID),
+    ("start", "en", content_practice.start, "0.9", "weekly", None),
     ("what-is-contact-improvisation", "en", content_core.what_is, "0.9", "monthly", None),
     ("miami", "en", content_directory.miami, "0.9", "weekly", None),
     ("miami-jams", "en", content_local.miami_jams, "0.9", "weekly", None),
@@ -78,6 +79,7 @@ PAGES = [
     # Spanish. Same slug, second locale: each of these is a first-class route with its
     # own canonical, its own sitemap entry and its own side of the hreflang pair.
     ("home", "es", content_es.home, "1.0", "weekly", None),
+    ("start", "es", content_es.start, "0.9", "weekly", None),
     ("what-is-contact-improvisation", "es", content_es.what_is, "0.9", "monthly", None),
     ("miami", "es", content_es.miami, "0.9", "weekly", None),
     ("miami-jams", "es", content_es.miami_jams, "0.8", "weekly", None),
@@ -346,7 +348,7 @@ KEY_FACTS = [
 ]
 
 LOCALE_NOTE = (
-    "Every public page is published in both English and Spanish, 34 pages in total. The "
+    "Every public page is published in both English and Spanish, 36 pages in total. The "
     "Spanish pages under /es/ are translations of their English counterparts and make no "
     "claim the English page does not make; a page is never machine-translated, and a page "
     "that is not translated is absent from /es/ rather than generated. The English page is "

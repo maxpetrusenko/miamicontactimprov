@@ -43,6 +43,7 @@ SWITCHER_LABEL = "Language / Idioma"
 # entry, a redirect rule and an hreflang pair automatically.
 ROUTES = {
     "home": {"en": "/", "es": "/es/"},
+    "start": {"en": "/start", "es": "/es/empezar"},
     "what-is-contact-improvisation": {
         "en": "/what-is-contact-improvisation",
         "es": "/es/que-es-la-improvisacion-de-contacto",
@@ -70,6 +71,7 @@ ROUTES = {
 # The order the pages are written, ranked and listed in llms.txt. Purely presentational.
 ORDER = [
     ("home", "en"), ("home", "es"),
+    ("start", "en"), ("start", "es"),
     ("what-is-contact-improvisation", "en"), ("what-is-contact-improvisation", "es"),
     ("miami", "en"), ("miami", "es"),
     ("miami-jams", "en"), ("miami-jams", "es"),

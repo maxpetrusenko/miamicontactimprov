@@ -42,6 +42,7 @@ import videos_data
 # Spanish prose is visible where it is written; tools/gate.py fails the build if any of
 # them stops resolving to a file.
 R_HOME = "/es/"
+R_START = "/es/empezar"
 R_WHATIS = "/es/que-es-la-improvisacion-de-contacto"
 R_JAMS = "/es/jams"
 R_FRIDAY = "/es/jam-de-los-viernes"
@@ -1829,6 +1830,103 @@ def fundamentals():
         "Fundamentos de Improvisación de Contacto en Miami",
         "Ocho clases de Improvisación de Contacto para principiantes en Hallandale Beach, del 2 de octubre al 20 de noviembre de 2026, los viernes de 7 a 9 PM.",
         R_FUND,
+        body,
+        jsonld=jsonld,
+        lang="es",
+    )
+
+
+# ------------------------------------------------------------------ empezar
+# La línea que va encima del único campo de /es/empezar, y la oferta que la página
+# declara junto a cada suscripción. Escrita una sola vez: la frase que responde quien
+# lee es la frase que queda guardada con esa dirección.
+START_OFFER_ES = "¿Todavía no puedes este viernes? Recibe las próximas fechas y el 10% cuando puedas."
+
+
+def start():
+    """La página a la que apuntan la biografía de Instagram y el QR de la puerta.
+
+    No es una página sobre la forma que además pide un correo: existe para convertir en
+    suscriptor a quien nunca ha oído hablar de la Improvisación de Contacto, así que
+    abre con lo que llega por correo, repite las clases de la serie y pide una sola vez.
+    El sitio no imprime texto de ayuda, así que la oferta es la etiqueta del propio
+    formulario: una frase, sin una segunda línea explicando para qué es el campo.
+
+    Las fechas salen de la fila de EVENT_DATES de la serie, de la que también salen
+    /fundamentos y los ocho Event de /jams, así que las dos páginas no pueden anunciar
+    viernes distintos. "Ver la próxima clase" lleva a /fundamentos y no a Luma: la
+    reserva va por Luma y el evento de Luma todavía no existe, así que la página de la
+    serie es la dirección de reserva hasta que exista. Ver FUNDAMENTALS_URL en
+    build/listings.py, que es donde esa dirección está escrita.
+
+    Esta página no lleva el nodo Course ni el FAQ: el Course es prosa en inglés y las
+    preguntas de la serie ya están publicadas en /es/fundamentos, que es la página que
+    las responde. Aquí solo se nombra la serie y se enlaza.
+    """
+    occurrences = listings.EVENT_DATES[listings.FUNDAMENTALS_NAME]
+    first, last = (
+        listings.date_label(occurrences[0][0], "es"),
+        listings.date_label(occurrences[-1][0], "es"),
+    )
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Empieza aquí &middot; Miami &middot; sin pareja</p>
+    <h1>¿Nuevo en la Improvisación de Contacto?</h1>
+    <p class="lede">Recibe las próximas clases en Miami, un vídeo útil de IC al mes y un 10% en tu primera clase.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="{R_FUND}">Ver la próxima clase</a>
+    </div>
+    <div class="subscribe-block">
+      {subscribe_form("es", source="miamicontactimprov:es-empezar", uid="es-empezar", label=START_OFFER_ES, button="Enviarme las fechas")}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("Deja tu correo y recibes las próximas fechas de las clases en Miami, un vídeo de IC al mes y un código del 10% para tu primera clase. Después es un correo al mes, y responder a cualquiera de ellos te saca de la lista. Para nada de esto hace falta pareja ni experiencia.", label="Qué llega por correo")}
+    {facts([
+      ("Qué llega", "Las próximas fechas por correo, un vídeo de IC al mes y el código del 10% para tu primera clase"),
+      ("Después", "Un correo al mes, y responder a cualquiera te saca de la lista"),
+      ("Próximas clases", f"Viernes, 7:00&ndash;9:00 PM, del {first} al {last}"),
+      ("Dónde", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
+      ("Precio", "Escala de 20 a 50 dólares por clase, pagados en la puerta o reservados en Luma"),
+      ("Qué llevar", "Ropa que puedas rodar, agua, pies descalzos o calcetines blandos"),
+      ("Para empezar", "Sin pareja y sin experiencia: se entra a cualquiera de las ocho clases"),
+      ("Quién la organiza", "Max Petrusenko, que también mantiene este sitio"),
+    ])}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="prose">
+      <p>La Improvisación de Contacto (contact improvisation) es una danza improvisada de dos o más personas, construida sobre un único punto de contacto que no deja de moverse. El peso viaja por el hueso en lugar de sostenerse con la mano, y el momento se sigue en vez de mirarse. No hay pasos que aprender antes, y por eso alguien que nunca ha bailado puede estar bailando de verdad dentro de la primera hora, y no hay pareja que traer.</p>
+      <p>Este sitio es un mapa de la forma en Miami: qué se celebra, dónde, cuánto cuesta y quién lo organiza. <a href="{R_WHATIS}">Qué es la Improvisación de Contacto</a> cubre la danza en sí, y <a href="{R_FIRST}">tu primera jam</a> recorre la tarde paso a paso.</p>
+      <p>La serie de clases son ocho viernes en Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, de 7:00 a 9:00 PM, del {first} al {last}. Cada clase se sostiene sola, así que entrar a cualquiera de las ocho funciona. <a href="{R_FUND}">Las ocho fechas, el material y el precio</a>.</p>
+      <p>Max Petrusenko enseña la serie y también mantiene esta web, así que esta página se lee como quien organiza describiendo su propia clase. La <a href="{R_LIST}">lista de jams de Miami-Dade y Broward</a> lleva la misma aclaración junto a su entrada.</p>
+    </div>
+    {band("Ven a una, o a las ocho.", "Para pagar en la puerta no hace falta reservar, y el precio de la puerta está en la página de la serie. Si prefieres preguntar algo antes, con un correo basta.", [("Las ocho fechas", R_FUND, "primary"), ("Tu primera jam, paso a paso", R_FIRST, "secondary"), ("Todas las sesiones verificadas", R_LIST, "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Nuevo en la Improvisación de Contacto en Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/empezar", CITE)}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation(lang="es"),
+        schema.webpage(
+            R_START,
+            "Nuevo en la Improvisación de Contacto en Miami",
+            "Las próximas clases de Improvisación de Contacto en Miami por correo, un vídeo de IC al mes y un 10% en la primera clase. Viernes de 7 a 9 PM en Inner Motion Dance Studio, Hallandale Beach, desde el 2 de octubre de 2026.",
+            date_modified=listings.FUNDAMENTALS_VERIFIED,
+            lang="es",
+        ),
+        schema.breadcrumb(R_START, "Empezar", lang="es"),
+    )
+    return page(
+        "¿Nuevo en la Improvisación de Contacto? Empieza en Miami",
+        "Recibe las próximas clases de Improvisación de Contacto en Miami por correo, un vídeo al mes y un 10% en tu primera clase. Sin pareja y sin experiencia.",
+        R_START,
         body,
         jsonld=jsonld,
         lang="es",

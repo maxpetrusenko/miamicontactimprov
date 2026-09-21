@@ -7,7 +7,7 @@ It has no membership, no booking function and no commercial interest in any list
 
 ## Languages
 
-Every public page is published in both English and Spanish, 34 pages in total. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
+Every public page is published in both English and Spanish, 36 pages in total. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
 
 ## Key facts
 
@@ -110,6 +110,62 @@ New to Miami, or new to this?
 Tell us you exist and we will add you to the map. Jams, classes, teachers, studios, festivals and recurring practice groups all belong here.
 
  Submit a listing Read the directory
+
+---
+
+## https://miamicontactimprov.com/start
+
+id="main">
+
+Start here · Miami · no partner needed
+
+New to Contact Improvisation?
+
+Get the next Miami classes, one useful CI video a month, and 10% off your first class.
+
+ See next class 
+
+ Not ready for this Friday? Get the next dates and 10% off when you are. 
+
+ Send me the dates 
+
+What arrives by email
+
+Leave your email and the next class dates arrive, with one video a month and a 10% code for your first class. After that it is one email a month, and replying to any of them takes you off the list. No partner and no experience are needed for any of it.
+
+ What arrives The next dates by email, one CI video a month, and the 10% code for your first class 
+
+ After that One email a month, and a reply to any of them takes you off the list 
+
+ Next classes Fridays, 7:00–9:00 PM, from Friday 2 October 2026 to Friday 20 November 2026 
+
+ Where Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009 
+
+ Cost $20–$50 sliding scale for each class, paid at the door or booked on Luma 
+
+ Wear Clothes you can roll in, water, bare feet or soft socks 
+
+ To start No partner and no experience: drop into any of the eight classes 
+
+ Who runs it Max Petrusenko, who also maintains this site 
+
+Contact Improvisation is an improvised dance for two or more people, built on a single point of contact that keeps moving. Weight travels through bone instead of being held by grip, and momentum gets followed rather than watched. There are no steps to learn first, which is why somebody who has never danced can be dancing properly inside the first hour, and no partner to bring.
+
+This site is a working map of the form in Miami: what runs, where, what it costs and who runs it. What Contact Improvisation is covers the dance itself, and your first jam walks through the evening hour by hour.
+
+The class series runs eight Fridays at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, 7:00 to 9:00 PM, from Friday 2 October 2026 to Friday 20 November 2026. Each class stands on its own, so dropping into any one of the eight works. The eight dates, what the classes cover and what they cost .
+
+Max Petrusenko teaches the series and also maintains this website, so this page reads as the organiser describing his own class. The Miami-Dade and Broward jam list carries the same disclosure beside its entry.
+
+Come to one, or come to all eight.
+
+Paying at the door needs no booking, and the door price sits on the series page. If you would rather ask something first, one email is enough.
+
+ The eight Fridays Your first jam, step by step All verified sessions 
+
+Cite this page
+
+Miami Contact Improv (2026). New to Contact Improvisation in Miami . miamicontactimprov.com. https://miamicontactimprov.com/start
 
 ---
 
@@ -2468,6 +2524,62 @@ Escrito suena abstracto. En la sala es lo más práctico que vas a aprender, y e
 Dinos que existes y te añadimos al mapa. Jams, clases, profesorado, estudios, festivales y grupos de práctica recurrente tienen cabida aquí.
 
  Publica una entrada Leer el directorio
+
+---
+
+## https://miamicontactimprov.com/es/empezar
+
+id="main">
+
+Empieza aquí · Miami · sin pareja
+
+¿Nuevo en la Improvisación de Contacto?
+
+Recibe las próximas clases en Miami, un vídeo útil de IC al mes y un 10% en tu primera clase.
+
+ Ver la próxima clase 
+
+ ¿Todavía no puedes este viernes? Recibe las próximas fechas y el 10% cuando puedas. 
+
+ Enviarme las fechas 
+
+Qué llega por correo
+
+Deja tu correo y recibes las próximas fechas de las clases en Miami, un vídeo de IC al mes y un código del 10% para tu primera clase. Después es un correo al mes, y responder a cualquiera de ellos te saca de la lista. Para nada de esto hace falta pareja ni experiencia.
+
+ Qué llega Las próximas fechas por correo, un vídeo de IC al mes y el código del 10% para tu primera clase 
+
+ Después Un correo al mes, y responder a cualquiera te saca de la lista 
+
+ Próximas clases Viernes, 7:00–9:00 PM, del viernes 2 de octubre de 2026 al viernes 20 de noviembre de 2026 
+
+ Dónde Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009 
+
+ Precio Escala de 20 a 50 dólares por clase, pagados en la puerta o reservados en Luma 
+
+ Qué llevar Ropa que puedas rodar, agua, pies descalzos o calcetines blandos 
+
+ Para empezar Sin pareja y sin experiencia: se entra a cualquiera de las ocho clases 
+
+ Quién la organiza Max Petrusenko, que también mantiene este sitio 
+
+La Improvisación de Contacto (contact improvisation) es una danza improvisada de dos o más personas, construida sobre un único punto de contacto que no deja de moverse. El peso viaja por el hueso en lugar de sostenerse con la mano, y el momento se sigue en vez de mirarse. No hay pasos que aprender antes, y por eso alguien que nunca ha bailado puede estar bailando de verdad dentro de la primera hora, y no hay pareja que traer.
+
+Este sitio es un mapa de la forma en Miami: qué se celebra, dónde, cuánto cuesta y quién lo organiza. Qué es la Improvisación de Contacto cubre la danza en sí, y tu primera jam recorre la tarde paso a paso.
+
+La serie de clases son ocho viernes en Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, de 7:00 a 9:00 PM, del viernes 2 de octubre de 2026 al viernes 20 de noviembre de 2026. Cada clase se sostiene sola, así que entrar a cualquiera de las ocho funciona. Las ocho fechas, el material y el precio .
+
+Max Petrusenko enseña la serie y también mantiene esta web, así que esta página se lee como quien organiza describiendo su propia clase. La lista de jams de Miami-Dade y Broward lleva la misma aclaración junto a su entrada.
+
+Ven a una, o a las ocho.
+
+Para pagar en la puerta no hace falta reservar, y el precio de la puerta está en la página de la serie. Si prefieres preguntar algo antes, con un correo basta.
+
+ Las ocho fechas Tu primera jam, paso a paso Todas las sesiones verificadas 
+
+Cita esta página
+
+Miami Contact Improv (2026). Nuevo en la Improvisación de Contacto en Miami . miamicontactimprov.com. https://miamicontactimprov.com/es/empezar
 
 ---
 
