@@ -32,7 +32,7 @@ from shell import (
     cite_block,
     facts,
     page,
-    subscribe_form,
+    subscribe_block,
 )
 import listings
 import schema
@@ -1790,9 +1790,7 @@ def fundamentals():
       <p>Quien se suscribe al correo mensual tiene un 10% de descuento en cualquier clase; el código llega en el primer correo. Nada más en este sitio abre un descuento.</p>
       <p>Si esta semana los 20 dólares son la barrera, dilo antes de la clase. Un correo basta y se resuelve. A nadie se le deja fuera de una clase de fundamentos por dinero.</p>
 
-      <div class="subscribe-block">
-        {subscribe_form("es", source="miamicontactimprov:es-fundamentos", uid="es-fundamentos")}
-      </div>
+      {subscribe_block("es", source="miamicontactimprov:es-fundamentos", offer=START_OFFER_ES, uid="es-fundamentos")}
 
       <h2>Cómo llegar</h2>
       <p>Inner Motion Dance Studio está en el 216 NE 1st Ave de Hallandale Beach, justo al este de la US-1 (Federal Highway) y al norte de Hallandale Beach Boulevard. Desde Miami es la primera ciudad pasada la línea del condado después de Aventura; desde Fort Lauderdale queda al sur de Hollywood. Si necesitas datos de aparcamiento o de acceso antes de venir, <a href="mailto:hello@miamicontactimprov.com">escribe</a> y tendrás respuesta antes del viernes.</p>
@@ -1837,9 +1835,10 @@ def fundamentals():
 
 
 # ------------------------------------------------------------------ empezar
-# La línea que va encima del único campo de /es/empezar, y la oferta que la página
-# declara junto a cada suscripción. Escrita una sola vez: la frase que responde quien
-# lee es la frase que queda guardada con esa dirección.
+# La línea que va encima del único campo de /es/empezar, y la que lleva la sección de
+# precios de /es/fundamentos, donde quien lee acaba de enterarse del descuento. Escrita
+# una sola vez: la frase que responde quien lee es la frase que queda guardada con esa
+# dirección, así que el informe del embudo puede decir qué oferta consiguió el correo.
 START_OFFER_ES = "¿Todavía no puedes este viernes? Recibe las próximas fechas y el 10% cuando puedas."
 
 
@@ -1877,9 +1876,7 @@ def start():
     <div class="btn-row">
       <a class="btn primary" href="{R_FUND}">Ver la próxima clase</a>
     </div>
-    <div class="subscribe-block">
-      {subscribe_form("es", source="miamicontactimprov:es-empezar", uid="es-empezar", label=START_OFFER_ES, button="Enviarme las fechas")}
-    </div>
+    {subscribe_block("es", source="miamicontactimprov:es-empezar", offer=START_OFFER_ES, uid="es-empezar", button="Enviarme las fechas")}
   </div>
 </section>
 

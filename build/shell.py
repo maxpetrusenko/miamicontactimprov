@@ -159,7 +159,7 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     field_id = f"subscribe-{uid}"
     text = label or copy["label"]
     action = button or copy["button"]
-    return f"""<form class="subscribe-form" data-source="{_attr(source)}" data-endpoint="{SUBSCRIBE_ENDPOINT}" data-sending="{_attr(copy['sending'])}" data-ok="{_attr(copy['ok'])}" data-error="{_attr(copy['error'])}">
+    return f"""<form class="subscribe-form" data-source="{_attr(source)}" data-offer="{_attr(text)}" data-endpoint="{SUBSCRIBE_ENDPOINT}" data-sending="{_attr(copy['sending'])}" data-ok="{_attr(copy['ok'])}" data-error="{_attr(copy['error'])}">
   <label class="subscribe-label" for="{field_id}">{text}</label>
   <div class="subscribe-row">
     <input id="{field_id}" name="email" type="email" inputmode="email" autocomplete="email" required>
@@ -167,6 +167,27 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
   </div>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>"""
+
+
+def subscribe_block(lang, source, offer, uid, button=None, anchor=None):
+    """A subscribe form with the offer written for the page it sits on.
+
+    There is one form, one endpoint and one Worker. What changes page by page is the
+    sentence above the field and the source the signup is filed under, and those two
+    belong together: a page that offers the next dates cannot file its signups against
+    a page that offers something else. Putting both in one call is what keeps them
+    beside each other.
+
+    `button` replaces the shared button label for a page whose own call to action is the
+    email (the acquisition page's "send me the dates"), and `anchor` names the wrapper
+    for a page that links to its own form from further up.
+    """
+    ident = f' id="{anchor}"' if anchor else ""
+    return (
+        f'<div class="subscribe-block"{ident}>\n'
+        f"  {subscribe_form(lang, source=source, uid=uid, label=offer, button=button)}\n"
+        f"</div>"
+    )
 
 
 def _nav_href(slug, lang):

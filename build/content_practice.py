@@ -1,6 +1,6 @@
 """Practice pages: jams, classes, safety and consent, video room."""
 
-from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, cards, cite_block, facts, page, subscribe_form
+from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, cards, cite_block, facts, page, subscribe_block
 import schema
 import listings
 import videos_data
@@ -108,6 +108,7 @@ def jams():
       <h2>Questions about jams</h2>
       {faq_html}
     </div>
+    {subscribe_block("en", source="miamicontactimprov:jams", offer="New jam dates by email, one message a month.", uid="jams")}
     {band("Run a jam?", "Tell us the schedule, the room and the door fee and we will list it. This page exists to be corrected by the people who are actually in the room.", [("Submit a jam", "/about#submit", "primary"), ("Find a class", "/classes", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Contact improv jams in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/jams")}
   </div>
@@ -182,6 +183,7 @@ def classes():
       <h2>Questions people ask before their first session</h2>
       {faq_html}
     </div>
+    {subscribe_block("en", source="miamicontactimprov:classes", offer="New class dates by email, one message a month.", uid="classes")}
     {band("Find something this week", "Start with a jam, or a beginners' class if you would rather be taught first. Both are legitimate entry points.", [("Jams", "/jams", "primary"), ("Teachers and studios", "/directory", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Contact Improvisation classes and first jams</em>. miamicontactimprov.com. https://miamicontactimprov.com/classes")}
   </div>
@@ -320,6 +322,7 @@ def videos():
     {videos_data.in_production()}
     {videos_data.reference_section()}
     {videos_data.credits()}
+    {subscribe_block("en", source="miamicontactimprov:videos", offer="Want to try this in Miami? Get the next dates and one video a month.", uid="videos")}
     {band("Watched enough", "Nothing on this page will teach you what two minutes on a floor with another person will.", [("Jams in Miami", "/jams", "primary"), ("First jam walkthrough", "/classes#first-jam", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Contact Improvisation video room</em>. miamicontactimprov.com. https://miamicontactimprov.com/videos")}
   </div>
@@ -423,6 +426,7 @@ def your_first_jam():
       <h2>Practical questions</h2>
       <p>Cost, coming on your own, fitness, watching instead of dancing and the beginner path are answered one line each on the <a href="/faq">question page</a>. How a whole session usually runs is on <a href="/jams">jams</a>, and what a beginner class actually teaches is on <a href="/classes">classes</a>. If you have never read anything about the form, start with <a href="/what-is-contact-improvisation">what Contact Improvisation is</a>.</p>
     </div>
+    {subscribe_block("en", source="miamicontactimprov:your-first-jam", offer="Get the next dates by email, and one video a month.", uid="your-first-jam")}
     {band("Ready to go?", "Every session above links to the organiser's own page, which is the only source that knows this week's schedule.", [("Jams in Miami", "/jams", "primary"), ("Classes and workshops", "/classes", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Your first contact improv jam, step by step</em>. miamicontactimprov.com. https://miamicontactimprov.com/your-first-jam")}
   </div>
@@ -703,9 +707,7 @@ def fundamentals():
       <p>Subscribers to the monthly email get 10% off any class; the code arrives in the first email. Nothing else on this site unlocks a discount.</p>
       <p>If $20 is the reason you are not coming this week, say so before the class. One email is enough and it gets sorted. Nobody is turned away from a fundamentals class over money.</p>
 
-      <div class="subscribe-block">
-        {subscribe_form("en", source="miamicontactimprov:fundamentals", uid="fundamentals")}
-      </div>
+      {subscribe_block("en", source="miamicontactimprov:fundamentals", offer=START_OFFER, uid="fundamentals")}
 
       <h2>Getting there</h2>
     <p>Inner Motion Dance Studio is at 216 NE 1st Ave, Hallandale Beach, just east of US-1 (Federal Highway) and north of Hallandale Beach Boulevard. From Miami it is the first city past the county line after Aventura; from Fort Lauderdale it is south of Hollywood. If you need parking or access details before you come, <a href="mailto:hello@miamicontactimprov.com">email</a> and you will get an answer before Friday.</p>
@@ -749,9 +751,11 @@ def fundamentals():
 
 
 # ------------------------------------------------------------------ start
-# The line above the one field on /start, and the offer the page reports with a signup.
-# Written once: the sentence a reader answers here is the sentence the record of that
-# signup carries, so the funnel report can tell which offer earned an address.
+# The line above the one field on /start, carried by the two pages that have to catch a
+# reader who is not ready for this Friday: /start itself and the cost section of
+# /fundamentals, where the reader has just read what the discount is. Written once so
+# the sentence a reader answers is the sentence the record of that signup carries, and
+# so the funnel report can tell which offer earned an address.
 START_OFFER = "Not ready for this Friday? Get the next dates and 10% off when you are."
 
 
@@ -782,9 +786,7 @@ def start():
     <div class="btn-row">
       <a class="btn primary" href="/fundamentals">See next class</a>
     </div>
-    <div class="subscribe-block">
-      {subscribe_form("en", source="miamicontactimprov:start", uid="start", label=START_OFFER, button="Send me the dates")}
-    </div>
+    {subscribe_block("en", source="miamicontactimprov:start", offer=START_OFFER, uid="start", button="Send me the dates")}
   </div>
 </section>
 
