@@ -16,6 +16,8 @@ pages (what-is, jams, classes, history, glossary, safety, directory, videos and 
 Spanish tree) are kept reachable from the footer and inherit the same shell.
 """
 
+import pathlib
+
 import locales
 import schema
 
@@ -106,7 +108,19 @@ FOOTER_COLS = [
     ]),
 ]
 
-STYLESHEET = "/assets/site.css?v=4"
+def _css_version():
+    """Short content hash of site/assets/site.css, so the stylesheet URL changes whenever
+    the file does. Without this, the CDN kept serving a week-old cached site.css?v=4 while
+    the HTML moved on, and the live site rendered unstyled."""
+    import hashlib
+    p = pathlib.Path(__file__).resolve().parent.parent / "site" / "assets" / "site.css"
+    try:
+        return hashlib.md5(p.read_bytes()).hexdigest()[:8]
+    except OSError:
+        return "5"
+
+
+STYLESHEET = "/assets/site.css?v=" + _css_version()
 
 
 def _nav_href(slug, lang):

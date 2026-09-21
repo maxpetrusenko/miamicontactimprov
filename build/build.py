@@ -221,11 +221,11 @@ HEADERS = """/*
   Permissions-Policy: geolocation=(), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-/assets/site.css
-  Cache-Control: public, max-age=0, must-revalidate
-
 /assets/*
   Cache-Control: public, max-age=604800
+
+/assets/site.css
+  Cache-Control: public, max-age=0, must-revalidate
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
