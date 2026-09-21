@@ -10,6 +10,9 @@ Subcommands, one job each:
     report                      spend and clicks per ad from Meta, joined to our own
                                 signup, registration and attendance counts. Prints the
                                 table and sends Max the digest on Telegram.
+    prune --max-cpa 40 --min-spend 60
+                                pause the ads past the kill line. Pauses, never deletes.
+
 Nothing is written to Meta unless a token exists *and* `--live` is passed. Without both,
 the tool prints the exact requests it would send, one per line, and exits 0. Every object
 it does create is PAUSED, so a mistake costs a click in Ads Manager rather than money.
@@ -70,6 +73,8 @@ Usage:
     python3 tools/meta_ads.py launch --budget 40                 # dry run
     python3 tools/meta_ads.py launch --budget 40 --live          # token required
     python3 tools/meta_ads.py report
+    python3 tools/meta_ads.py prune --max-cpa 40 --min-spend 60  # dry run, then --live
+
 The operator's side of this - what Max does in Ads Manager, and what the repo does - is
 `docs/ads/meta-runbook.md`.
 """
@@ -100,6 +105,7 @@ HELP = {
     "plan": "print the campaign tree; no token needed",
     "launch": "create the campaign, ad set, creatives and ads, all paused",
     "report": "spend and clicks per ad, joined to our own signup counts",
+    "prune": "pause the ads past the kill line; deletes nothing",
 }
 
 
@@ -109,17 +115,14 @@ def slug(text: str) -> str:
     return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", text.lower())).strip("-")
 
 
-
 def ad_name(family: str, identity: str, fmt: str, day=None) -> str:
     """`ci_<family>_<identity>_<format>_<yyyymmdd>`, the name used in Ads Manager."""
     day = day or datetime.date.today()
     return f"ci_{slug(family)}_{slug(identity)}_{fmt}_{day:%Y%m%d}"
 
 
-
 def creative_name(family: str, identity: str, fmt: str) -> str:
     return f"{ad_name(family, identity, fmt)}_creative"
-
 
 
 def landing_url(bank: dict, family: str, name: str) -> str:
@@ -129,14 +132,12 @@ def landing_url(bank: dict, family: str, name: str) -> str:
     return bank["landing"].split("?")[0] + "?" + urllib.parse.urlencode(query)
 
 
-
 def load_bank() -> dict:
     """docs/ads/messages.yaml, through the standard-library reader."""
     bank = message_bank.load(BANK)
     if not bank.get("landing") or not bank.get("families"):
         raise SystemExit("messages.yaml has no landing address or no families")
     return bank
-
 
 
 def targets(bank: dict, exists=None):
@@ -168,7 +169,6 @@ def targets(bank: dict, exists=None):
     return rows, missing
 
 
-
 def launch_requests(account: str, rows, budget: float):
     """The full write list, in the order Meta needs it: campaign, ad set, then per ad.
 
@@ -187,7 +187,6 @@ def launch_requests(account: str, rows, budget: float):
 
 
 # -------------------------------------------------------------------------------- table
-
 def cells_for(row, counts) -> list:
     """One row of the report: Meta's numbers, then ours when we have them."""
     name = row.get("ad_name") or row.get("ad_id")
@@ -204,13 +203,11 @@ def cells_for(row, counts) -> list:
     return cells
 
 
-
 def print_table(rows, counts) -> None:
     print(" ".join(f"{head:>{width}}" for head, width in zip(HEAD, WIDTH)))
     for row in sorted(rows, key=lambda r: fetched(r, "spend"), reverse=True):
         cells = cells_for(row, counts)
         print(" ".join(f"{cell:>{width}}" for cell, width in zip(cells, WIDTH)))
-
 
 
 def digest(rows, counts, total, max_cpa, min_spend) -> str:
@@ -240,7 +237,6 @@ def digest(rows, counts, total, max_cpa, min_spend) -> str:
 
 
 # ------------------------------------------------------------------------------- commands
-
 def cmd_plan(args) -> int:
     bank = load_bank()
     rows, missing = targets(bank)
@@ -268,7 +264,6 @@ def cmd_plan(args) -> int:
         for path in missing:
             print(f"  {path.relative_to(ROOT)}")
     return 0
-
 
 
 def cmd_launch(args) -> int:
@@ -312,7 +307,6 @@ def cmd_launch(args) -> int:
     return 0
 
 
-
 def cmd_report(args) -> int:
     account = api.account_id()
     allowed, reason = api.write_allowed(args.live)
@@ -346,6 +340,44 @@ def cmd_report(args) -> int:
     return 0
 
 
+def cmd_prune(args) -> int:
+    account = api.account_id()
+    allowed, reason = api.write_allowed(args.live)
+    if not allowed:
+        print(f"dry run ({reason}): prune sends nothing")
+        print(api.render(api.list_adsets_request(account)))
+        print(api.render(api.insight_request(args.adset_id or
+                                             f"<ADSET_ID:{api.ADSET_NAME}>")))
+        print(api.render(api.pause_request("<AD_ID>")))
+        print(f"pauses one ad per row with no signups, or over ${args.max_cpa:.0f} per "
+              f"attendee, after ${args.min_spend:.0f} spent. Deletes nothing.")
+        return 0
+
+    token = api.secret(api.TOKEN_SECRET)
+    adset_id = api.resolve_adset(account, token, args.adset_id)
+    rows = api.graph(api.insight_request(adset_id), token).get("data") or []
+    names = [row.get("ad_name") or row.get("ad_id") for row in rows]
+    counts, why = api.attribution(names)
+    if why:
+        # Pausing on clicks alone would stop the ads that are working: a click is not a
+        # signup, and the question the test asks is which message brings people in.
+        print(f"pausing nothing: attribution unavailable ({why})", file=sys.stderr)
+        return 0
+    paused = 0
+    for row in rows:
+        name = row.get("ad_name") or row.get("ad_id")
+        own = counts.get(name) or {}
+        spend = fetched(row, "spend")
+        signups = int(own.get("signups") or 0)
+        attended = int(own.get("attended") or 0)
+        if past_kill_line(spend, signups, attended, args.max_cpa, args.min_spend):
+            api.graph(api.pause_request(row["ad_id"]), token)
+            print(f"paused  {name}  ${spend:.2f}, {signups} signups, {attended} attended")
+            paused += 1
+    print(f"{paused} paused of {len(rows)}: no signups, or over ${args.max_cpa:.0f} per "
+          f"attendee after ${args.min_spend:.0f} spent")
+    return 0
+
 
 def deliver(text: str) -> None:
     """Hand the digest to the gateway. Never a Graph endpoint, never from the site."""
@@ -358,7 +390,6 @@ def deliver(text: str) -> None:
 
 
 # ------------------------------------------------------------------------------ arithmetic
-
 def fetched(row, key) -> float:
     """A number out of a Graph row, where every number arrives as a string."""
     try:
@@ -367,11 +398,9 @@ def fetched(row, key) -> float:
         return 0.0
 
 
-
 def money(value, width=7) -> str:
     """Right-aligned money, or a dash. None is 'nothing happened', not zero dollars."""
     return f"{'-':>{width}}" if value is None else f"{value:>{width}.2f}"
-
 
 
 def cost_per(spend: float, count):
@@ -379,7 +408,6 @@ def cost_per(spend: float, count):
     if not count:
         return None
     return spend / count
-
 
 
 def past_kill_line(spend: float, signups: int, attended: int,
@@ -396,7 +424,6 @@ def past_kill_line(spend: float, signups: int, attended: int,
         return True
     per_attendee = cost_per(spend, attended)
     return per_attendee is not None and per_attendee > max_cpa
-
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -421,8 +448,12 @@ def build_parser() -> argparse.ArgumentParser:
     report.add_argument("--no-notify", dest="notify", action="store_false",
                         help="keep it on stdout, do not send the digest to Max")
 
+    prune = sub.add_parser("prune", help=HELP["prune"])
+    prune.add_argument("--max-cpa", type=float, default=40.0)
+    prune.add_argument("--min-spend", type=float, default=60.0)
+    prune.add_argument("--adset-id")
+    prune.add_argument("--live", action="store_true")
     return parser
-
 
 
 def main() -> int:
@@ -431,9 +462,9 @@ def main() -> int:
         "plan": cmd_plan,
         "launch": cmd_launch,
         "report": cmd_report,
+        "prune": cmd_prune,
     }
     return handlers[args.command](args)
-
 
 
 if __name__ == "__main__":

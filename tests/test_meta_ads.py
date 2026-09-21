@@ -95,7 +95,6 @@ class Bank(unittest.TestCase):
                 self.small(bad)
 
 
-
 class Naming(unittest.TestCase):
     def test_ad_name_is_the_documented_shape(self):
         self.assertEqual(
@@ -118,7 +117,6 @@ class Naming(unittest.TestCase):
                          meta_ads.ad_name("touch", "couples", "story") + "_creative")
 
 
-
 class Budget(unittest.TestCase):
     def test_dollars_become_subunits(self):
         self.assertEqual(api.minor_units(40), 4000)
@@ -128,7 +126,6 @@ class Budget(unittest.TestCase):
         for bad in (0, -5):
             with self.assertRaises(SystemExit):
                 api.minor_units(bad)
-
 
 
 class Plan(unittest.TestCase):
@@ -240,6 +237,27 @@ class Plan(unittest.TestCase):
         self.assertLess(len(line), 340)
 
 
+class KillLine(unittest.TestCase):
+    def test_nothing_is_judged_below_the_minimum_spend(self):
+        self.assertFalse(meta_ads.past_kill_line(20, 0, 0, 40, 60))
+
+    def test_no_signups_after_the_minimum_spend_is_killed(self):
+        self.assertTrue(meta_ads.past_kill_line(60, 0, 0, 40, 60))
+        self.assertTrue(meta_ads.past_kill_line(200, 0, 0, 40, 60))
+
+    def test_signups_with_no_class_yet_are_not_judged(self):
+        self.assertFalse(meta_ads.past_kill_line(500, 4, 0, 40, 60))
+
+    def test_cost_per_attendee_over_the_ceiling_is_killed(self):
+        self.assertFalse(meta_ads.past_kill_line(120, 6, 4, 40, 60))  # $30 each
+        self.assertTrue(meta_ads.past_kill_line(170, 6, 4, 40, 60))   # $42.50 each
+        self.assertFalse(meta_ads.past_kill_line(160, 6, 4, 40, 60))  # exactly $40
+
+    def test_cost_per_is_none_when_nothing_happened(self):
+        self.assertIsNone(meta_ads.cost_per(50, 0))
+        self.assertIsNone(meta_ads.cost_per(50, None))
+        self.assertEqual(meta_ads.cost_per(50, 4), 12.5)
+
 
 class Table(unittest.TestCase):
     def row(self, **overrides):
@@ -291,7 +309,6 @@ class Table(unittest.TestCase):
         self.assertIn("no attendees yet", text)
 
 
-
 class WriteGate(unittest.TestCase):
     def test_without_live_nothing_is_allowed(self):
         allowed, why = api.write_allowed(False)
@@ -322,10 +339,6 @@ class WriteGate(unittest.TestCase):
         with mock.patch.object(api.subprocess, "run", side_effect=OSError("no doppler")):
             api._SECRETS.clear()
             self.assertIsNone(api.secret("NOT_A_REAL_SECRET"))
-
-
-if __name__ == "__main__":
-    unittest.main()
 
 
 if __name__ == "__main__":
