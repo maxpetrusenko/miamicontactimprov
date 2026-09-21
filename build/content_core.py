@@ -19,7 +19,7 @@ def home():
       <a class="btn secondary" href="/miami">Find it in Miami</a>
       <a class="btn secondary" href="/what-is-contact-improvisation">What is CI?</a>
     </div>
-    <p class="micro">No membership. No central authority. A community resource that also hosts one weekly jam.</p>
+    <p class="micro">No membership. No central authority. A community resource that also runs a weekly jam and a beginners' class series.</p>
   </div>
 </section>
 
