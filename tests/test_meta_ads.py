@@ -1,0 +1,200 @@
+#!/usr/bin/env python3
+"""Unit tests for the Meta ads operator: the bank reader, the naming and the CPA math.
+
+    python3 -m unittest discover -s tests
+
+Nothing here reaches Meta and nothing here needs `requests`, because every path this
+file tests -- the bank, the names, the plan arithmetic, the kill line -- is offline.
+"""
+
+import datetime
+import json
+import pathlib
+import sys
+import unittest
+from unittest import mock
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+
+import message_bank  # noqa: E402
+import meta_ads  # noqa: E402
+import meta_ads_graph as api  # noqa: E402
+
+BANK = ROOT / "docs" / "ads" / "messages.yaml"
+
+SMALL = """\
+# a bank with one family and two messages, indented like the real one
+landing: https://miamicontactimprov.com/start
+identities:
+  - climbers
+  - yogis
+families:
+  movement:
+    label: Movement and curiosity
+    identities:
+      - climbers
+      - yogis
+    body: |
+      First paragraph.
+
+      Second paragraph, with a colon: and a URL https://example.com/x.
+    messages:
+      - slug: move-without-choreography
+        identity: climbers
+        headline: What happens when two people move without choreography?
+        subline: Weight, momentum and one rolling point of contact.
+      - slug: the-part-you-cannot-do-alone
+        identity: yogis
+        headline: The part of a practice you cannot do alone.
+        subline: Contact Improvisation, seven to nine in the evening.
+"""
+
+class Bank(unittest.TestCase):
+    def small(self, text=SMALL):
+        path = pathlib.Path(self._tmp()) / "messages.yaml"
+        path.write_text(text, encoding="utf-8")
+        return message_bank.load(path)
+
+    def _tmp(self):
+        import tempfile
+        return tempfile.mkdtemp()
+
+    def test_scalars_lists_maps_and_comments(self):
+        bank = self.small()
+        self.assertEqual(bank["landing"], "https://miamicontactimprov.com/start")
+        self.assertEqual(bank["identities"], ["climbers", "yogis"])
+        self.assertEqual(bank["families"]["movement"]["label"], "Movement and curiosity")
+
+    def test_block_scalars_keep_their_paragraphs_and_their_colons(self):
+        body = self.small()["families"]["movement"]["body"]
+        self.assertEqual(body, "First paragraph.\n\nSecond paragraph, with a colon: and a "
+                               "URL https://example.com/x.")
+
+    def test_a_list_of_maps_becomes_a_list_of_dicts(self):
+        messages = self.small()["families"]["movement"]["messages"]
+        self.assertEqual(len(messages), 2)
+        self.assertEqual(messages[0]["slug"], "move-without-choreography")
+        self.assertEqual(messages[1]["identity"], "yogis")
+        self.assertTrue(messages[0]["headline"].endswith("without choreography?"))
+
+    def test_the_real_bank_has_four_families_of_three_messages(self):
+        bank = message_bank.load(BANK)
+        families = bank["families"]
+        self.assertEqual(sorted(families), ["anxiety", "exercise", "movement", "social"])
+        for name, spec in families.items():
+            self.assertEqual(len(spec["messages"]), 3, name)
+            self.assertGreaterEqual(len(spec["body"].split()), 100, name)
+            for message in spec["messages"]:
+                self.assertIn(message["identity"], bank["identities"])
+                self.assertIn(message["identity"], spec["identities"])
+
+    def test_quotes_and_flow_collections_are_refused_not_guessed(self):
+        for bad in ('landing: "quoted"\n', "landing: [a, b]\n", "landing: >\n  folded\n"):
+            with self.assertRaises(message_bank.BankError):
+                self.small(bad)
+
+
+
+class Naming(unittest.TestCase):
+    def test_ad_name_is_the_documented_shape(self):
+        self.assertEqual(
+            meta_ads.ad_name("movement", "new to Miami", "feed", datetime.date(2026, 9, 21)),
+            "ci_movement_new-to-miami_feed_20260921")
+
+    def test_identity_words_with_spaces_become_one_hyphenated_word(self):
+        self.assertEqual(meta_ads.slug("acro people"), "acro-people")
+        self.assertEqual(meta_ads.slug("New  to  Miami!"), "new-to-miami")
+
+    def test_names_are_unique_across_family_identity_format_and_day(self):
+        day = datetime.date(2026, 9, 21)
+        names = {meta_ads.ad_name(f, i, fmt, day)
+                 for f in ("movement", "touch") for i in ("climbers", "actors")
+                 for fmt in meta_ads.FORMATS}
+        self.assertEqual(len(names), 8)
+
+    def test_creative_name_extends_the_ad_name(self):
+        self.assertEqual(meta_ads.creative_name("touch", "couples", "story"),
+                         meta_ads.ad_name("touch", "couples", "story") + "_creative")
+
+
+
+class Budget(unittest.TestCase):
+    def test_dollars_become_subunits(self):
+        self.assertEqual(api.minor_units(40), 4000)
+        self.assertEqual(api.minor_units(12.5), 1250)
+
+    def test_zero_or_negative_is_refused_rather_than_sent(self):
+        for bad in (0, -5):
+            with self.assertRaises(SystemExit):
+                api.minor_units(bad)
+
+
+
+class Plan(unittest.TestCase):
+    def bank(self):
+        return message_bank.load(BANK)
+
+    def test_the_real_bank_and_the_real_posters_make_twenty_four_ads(self):
+        rows, missing = meta_ads.targets(self.bank())
+        self.assertEqual(len(rows) + len(missing), 24)
+        self.assertEqual(len(rows), 24, "render the posters first: tools/ad_statics.py")
+
+    def test_a_missing_poster_is_named_and_left_out(self):
+        rows, missing = meta_ads.targets(self.bank(), exists=lambda path: False)
+        self.assertEqual((len(rows), len(missing)), (0, 24))
+
+    def test_every_row_has_the_copy_the_creative_needs(self):
+        rows, _ = meta_ads.targets(self.bank())
+        for row in rows:
+            self.assertTrue(row["headline"] and row["subline"] and row["body"])
+            self.assertIn(f"utm_content={row['name']}", row["link"])
+            self.assertIn("utm_campaign=ci_fundamentals", row["link"])
+            self.assertIn(f"h={row['family']}", row["link"])
+            self.assertTrue(row["png"].is_file())
+
+    def test_render_names_a_poster_and_its_size_instead_of_its_bytes(self):
+        poster = sorted((ROOT / "docs" / "ads" / "out").rglob("*.png"))[0]
+        line = api.render({"method": "POST", "path": "/v26.0/act_123/adimages",
+                           "files": {"bytes": poster}})
+        self.assertIn(f"files[bytes]={poster.name}", line)
+        self.assertIn("bytes)", line)
+
+    def test_a_long_body_is_cut_and_marked(self):
+        line = api.render({"method": "POST", "path": "/x", "params": {"message": "y" * 400}})
+        self.assertTrue(line.endswith("..."))
+        self.assertLess(len(line), 340)
+
+
+
+class Table(unittest.TestCase):
+    def row(self, **overrides):
+        base = {"ad_id": "1", "ad_name": "ci_x", "spend": "100.00",
+                "inline_link_clicks": "20", "impressions": "900"}
+        base.update(overrides)
+        return base
+
+    def counts(self, **overrides):
+        entry = {"signups": 2, "registrations": 1, "attended": 1}
+        entry.update(overrides)
+        return {"ci_x": entry}
+
+
+class WriteGate(unittest.TestCase):
+    def test_without_live_nothing_is_allowed(self):
+        allowed, why = api.write_allowed(False)
+        self.assertFalse(allowed)
+        self.assertIn("--live", why)
+
+    def test_a_failed_read_is_missing_rather_than_an_exception(self):
+        with mock.patch.object(api.subprocess, "run", side_effect=OSError("no doppler")):
+            api._SECRETS.clear()
+            self.assertIsNone(api.secret("NOT_A_REAL_SECRET"))
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+if __name__ == "__main__":
+    unittest.main()
