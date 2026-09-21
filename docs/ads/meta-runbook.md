@@ -1,9 +1,162 @@
 # Meta ads runbook
 
-The Slice 11 half of this runbook (campaign structure, naming, the weekly loop, what Max
-does in Ads Manager against what the repo produces) is not in the tree yet. The operator
-half below is the Slice 12 tool, `tools/meta_ads.py`. Append the Slice 11 section above it
-rather than editing it.
+Two halves. The creative half, from Slice 11, covers the posters, the landing page, the
+events and the weekly loop. The operator half, from Slice 12, is `tools/meta_ads.py` and
+what it does to the ad account. The split matters: the repo writes everything a reader
+sees, and the operator creates everything paused, so nothing spends money until Max says so.
+
+## The creative half
+
+### What the repo hands over
+
+| Artifact | Where it lives | What to do with it |
+| --- | --- | --- |
+| 24 posters | `docs/ads/out/<family>/<slug>-<identity>-<format>.png` | Upload the ones for the family you are launching. `uv run tools/ad_statics.py` rebuilds them and overwrites the same names |
+| Primary text | `body` in `docs/ads/messages.yaml`, one block for each family | Paste it as the ad's primary text, whole. The four blocks run 149 to 196 words |
+| Poster text | `headline` and `subline` in `docs/ads/messages.yaml` | Already rendered into the PNG. The headline is what the reader sees first |
+| Landing page | `site/start.html`, built from `build/content_practice.py` | The ad link points here. `?h=<family>` swaps the h1 and the line under it |
+| Events | `POST /api/events` on the `newsletter-api` Worker | Fires Lead, CompleteRegistration and Attend into the pixel |
+
+### Campaign structure
+
+| Setting | Value |
+| --- | --- |
+| Campaigns | one, named `ci_fundamentals`, with CBO |
+| Ad sets | one for the launch, plus a second for the zombie set |
+| Location | 25 miles around Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach |
+| Age | 21 to 60 |
+| Targeting | none. No interests, no lookalikes, no custom audiences at launch |
+| Ads | one for each poster, 24 in the bank today. The review suggests running 10 to 20 at a time, so launching a subset is a real choice |
+| Objective | Leads, optimised for the Lead event once the pixel has a day of history |
+| Second ad set | the zombie set. Ads that collected no spend move here on a small budget and get one more chance |
+
+The creative does the targeting. A poster aimed at climbers finds climbers, and the
+primary text describes the person rather than the class.
+
+### Budget and the kill rules
+
+The daily budget sits on the campaign and its current value is written in the operator
+half, in "Numbers this test commits to". The review's phrasing is $5 to $10 for each
+creative per day, and that is what it means when each ad is its own small test. Inside one
+CBO there is a single pool, so the number to watch is the one on the campaign, and the
+$60 threshold below only means something if the campaign can reach it inside a week.
+
+- Thursday, pause anything with zero signups after $30 spent.
+- Stop any concept that costs more than $40 for each attendee after $60 spent.
+- A first-timer is worth about $75. That is $30 for each of an expected 2.5 classes.
+- Cost for each attendee decides. CTR and cost for each signup are diagnostics, not
+  verdicts.
+- Sunday, move the budget to the winners and move the unspent ads to the zombie set.
+
+`prune --max-cpa 40 --min-spend 60` is the same line, executed.
+
+### Naming
+
+`ci_<family>_<identity>_<format>_<yyyymmdd>`
+
+- family is `movement`, `anxiety`, `social` or `exercise`
+- identity is one of the eight words with its spaces written as hyphens, so `new to Miami`
+  becomes `new-to-miami`
+- format is `feed` or `story`
+- date is the day the ad goes live, as `yyyymmdd`
+
+Examples: `ci_anxiety_new-to-miami_feed_20260928`,
+`ci_exercise_acro-people_story_20260928`.
+
+Those same words are in the poster's file name, so an ad in Ads Manager matches a PNG in
+the repo without opening either one.
+
+### The link every ad carries
+
+```
+https://miamicontactimprov.com/start?h=anxiety&src=meta&utm_source=meta&utm_medium=paid&utm_campaign=ci_fundamentals&utm_content=ci_anxiety_new-to-miami_feed_20260928
+```
+
+- `h` picks the headline and takes `movement`, `anxiety`, `social` or `exercise`. Anything
+  else, or nothing at all, leaves the page's own copy in place.
+- `src=meta` rides on the end of the signup source, which becomes
+  `miamicontactimprov:start:meta`. Paid signups land in the list with the welcome email,
+  and they stay separable from the ones that came off the door QR or the Instagram bio.
+- `utm_content` carries the ad name, which is what ties a signup record back to the poster
+  that produced it.
+
+The subscribe form reads all of it when someone submits, from the address they arrived on.
+Nothing needs setting up on the page.
+
+### Events
+
+Three events score the test.
+
+| Event | Means | Fired when |
+| --- | --- | --- |
+| Lead | a signup | right after a form submit the Worker accepted |
+| CompleteRegistration | a paid place in the series | the Luma guest export or the booking confirmation |
+| Attend | a body in the room | someone checks in at the door |
+
+Cost for each attendee is the number that decides spend, so Attend is the one to keep
+honest. It is a custom event name because Meta has no standard one, and it reads the same
+in Events Manager.
+
+The Worker sends these from the server. The site carries no pixel and sets no cookie, so
+`fbp` and `fbc` do not exist for us and the only match key is the address, hashed with
+SHA-256 inside the Worker. The hash is also the default event id, so a retried batch counts
+one person once.
+
+Create the pixel in Events Manager, then set the two secrets:
+
+```
+npx wrangler secret put META_PIXEL_ID
+npx wrangler secret put META_CAPI_TOKEN
+```
+
+Until both exist, `POST /api/events` logs the event and answers 202 with
+`forwarded: false`. That is not a failure. It is the endpoint saying it did its job and had
+nowhere to send the result.
+
+The admin token lives in Doppler as `NEWSLETTER_ADMIN_TOKEN` in `api_keys`, config `dev`.
+Keep it in an environment variable and out of the shell history.
+
+```
+export NEWSLETTER_ADMIN_TOKEN="$(doppler secrets get NEWSLETTER_ADMIN_TOKEN -p api_keys -c dev --plain)"
+curl -sS -X POST https://newsletter-api.max-petrusenko.workers.dev/api/events \
+  -H "Authorization: Bearer $NEWSLETTER_ADMIN_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"event":"Lead","email":"reader@example.com","event_source_url":"https://miamicontactimprov.com/start?h=anxiety"}'
+{"ok":true,"event":"Lead","forwarded":false}
+```
+
+The body takes `event`, `email`, and optionally `event_id`, `value`, `currency`,
+`event_source_url`, `client_ip_address` and `client_user_agent`. Send the last two only
+when they came off the attendee's own device. An address from Max's laptop tells Meta the
+wrong person was there, and that costs match quality instead of buying it.
+
+Set `META_TEST_EVENT_CODE` while rehearsing. Events carrying it stay out of the reported
+numbers.
+
+### The weekly loop
+
+| Day | Work |
+| --- | --- |
+| Monday, one hour | Read what won last week. Write new messages into `docs/ads/messages.yaml`, run `uv run tools/ad_statics.py`, upload the PNGs, then let the operator create the tree paused |
+| Thursday | Pause anything with zero signups after $30 spent |
+| Sunday | Move the budget to the winners, move the unspent ads to the zombie set, and copy the winning headline into the page |
+
+Copying the winning headline means two edits in one commit, then a rebuild. The poster copy
+lives in `docs/ads/messages.yaml`, and the page's own copy lives in
+`build/content_practice.py` at `START_HEADLINES`, where the first entry of a family is the
+default.
+
+### Who does what
+
+| In Ads Manager, by hand | In the repo |
+| --- | --- |
+| Attach the payment method and connect the Page | Produces the PNG, the headline and the primary text |
+| Flip an ad from paused to active | Never touches a live ad |
+| Pause an ad that missed its numbers | Never deletes anything |
+| Read spend, link clicks and cost for each attendee | Reads signups, registrations and attendance from its own records |
+
+Everything that changes what a reader sees ships from this repo. Everything that spends
+money waits for Max's hand on the switch.
 
 ## The operator, `tools/meta_ads.py`
 
