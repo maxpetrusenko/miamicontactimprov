@@ -235,6 +235,34 @@ a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 
 .site-footer .footer-projects a { color: var(--muted); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .site-footer .footer-projects a:hover { color: var(--ink); }
 
+/* ---------------------------------------------------------------- newsletter form
+   NOTE: like the rest of this file, hand-maintained. The label carries the offer, the
+   field and button share a row and wrap on small screens, and the status line is
+   written by the script in shell.body_script() after the POST.
+   Two placements: .subscribe-block inside a page, .footer-subscribe on every page. */
+.subscribe-block {
+  border: 1px solid var(--line-strong); border-radius: var(--radius);
+  background: rgba(20, 31, 28, 0.6); padding: 24px 26px; margin: 30px 0 0; max-width: var(--read);
+}
+.subscribe-form { max-width: 46ch; }
+.subscribe-label { display: block; font-size: 0.95rem; color: var(--sage); margin-bottom: 12px; }
+.subscribe-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.subscribe-row input[type="email"] {
+  flex: 1 1 220px; min-width: 0; padding: 12px 14px; font: inherit; font-size: 0.95rem;
+  color: var(--ink); background: rgba(12, 18, 16, 0.7);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+}
+.subscribe-row input[type="email"]::placeholder { color: var(--muted); }
+button.btn { border: none; font-family: inherit; cursor: pointer; }
+button.btn[disabled] { opacity: 0.6; cursor: default; }
+.subscribe-status { font-size: 0.86rem; color: var(--accent); margin-top: 10px; }
+.subscribe-status:empty { display: none; }
+.footer-subscribe { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); }
+.footer-subscribe h3 {
+  font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px; font-weight: 600;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .card:hover, .btn:hover { transform: none; }

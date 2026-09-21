@@ -32,6 +32,7 @@ from shell import (
     cite_block,
     facts,
     page,
+    subscribe_form,
 )
 import listings
 import schema
@@ -1787,6 +1788,10 @@ def fundamentals():
       <p>Cada clase son 20 dólares o más dentro de una escala que llega a 50. Paga lo que puedas dentro de ese rango y nadie te va a preguntar dónde te quedaste. El extremo bajo cubre la sala; el alto es para quien pueda cargar con más y quiera que la serie siga en pie.</p>
       <p>Si reservas en Luma y has llegado aquí primero, el código que te toca es <strong>WEBSITE</strong>. El boletín y el Instagram tienen los suyos, porque el sentido de un código es saber cuál de los tres canales merece que esto se repita.</p>
       <p>Si esta semana los 20 dólares son la barrera, dilo antes de la clase. Un correo basta y se resuelve. A nadie se le deja fuera de una clase de fundamentos por dinero.</p>
+
+      <div class="subscribe-block">
+        {subscribe_form("es", source="miamicontactimprov:es-fundamentos", uid="es-fundamentos")}
+      </div>
 
       <h2>Cómo llegar</h2>
       <p>Inner Motion Dance Studio está en el 216 NE 1st Ave de Hallandale Beach, justo al este de la US-1 (Federal Highway) y al norte de Hallandale Beach Boulevard. Desde Miami es la primera ciudad pasada la línea del condado después de Aventura; desde Fort Lauderdale queda al sur de Hollywood. Si necesitas datos de aparcamiento o de acceso antes de venir, <a href="mailto:hello@miamicontactimprov.com">escribe</a> y tendrás respuesta antes del viernes.</p>

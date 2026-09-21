@@ -97,7 +97,69 @@ FOOTER_COLS = [
     ]),
 ]
 
-STYLESHEET = "/assets/site.css?v=3"
+STYLESHEET = "/assets/site.css?v=4"
+
+
+# ---------------------------------------------------------------- newsletter form
+# The one endpoint a subscribe form may post to. Kept here so every form on the site
+# points at the same Worker, and so changing it is one edit.
+SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subscribe"
+
+# The form copy, per locale. The label carries the whole offer: the discount and the
+# send frequency, in one sentence. The discount code itself is never printed here; the
+# welcome email that follows a signup carries it.
+SUBSCRIBE_COPY = {
+    "en": {
+        "heading": "Newsletter",
+        "label": "Subscribe for 10% off the series, and one email a month.",
+        "button": "Subscribe",
+        "sending": "Sending.",
+        "ok": "You are on the list. The code is in the email that just went out.",
+        "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
+    },
+    "es": {
+        "heading": "Boletín",
+        "label": "Suscríbete para un 10% de descuento en la serie, y un correo al mes.",
+        "button": "Suscribirme",
+        "sending": "Enviando.",
+        "ok": "Ya estás en la lista. El código va en el correo que acaba de salir.",
+        "error": "No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.",
+    },
+}
+
+
+def _attr(text):
+    """Escape a string for use inside a double-quoted HTML attribute."""
+    return text.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
+
+
+def page_slug(path):
+    """A short, stable name for a page: what a signup source and a form id are built from."""
+    slug = (path or "/").strip("/").replace("/", "-")
+    return slug or "home"
+
+
+def subscribe_form(lang="en", source="", uid="page"):
+    """The newsletter form. One markup, every locale, every placement.
+
+    It posts JSON to the Worker and writes its own result line. With JavaScript off the
+    submit does nothing rather than promising something it cannot do, which is why the
+    markup carries no action attribute.
+
+    `source` travels with the signup. The Worker sends the welcome email and the 10%
+    code only when the source starts with `miamicontactimprov`, so the value here is
+    what decides whether a reader gets the code.
+    """
+    copy = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])
+    field_id = f"subscribe-{uid}"
+    return f"""<form class="subscribe-form" data-source="{_attr(source)}" data-endpoint="{SUBSCRIBE_ENDPOINT}" data-sending="{_attr(copy['sending'])}" data-ok="{_attr(copy['ok'])}" data-error="{_attr(copy['error'])}">
+  <label class="subscribe-label" for="{field_id}">{copy['label']}</label>
+  <div class="subscribe-row">
+    <input id="{field_id}" name="email" type="email" inputmode="email" autocomplete="email" required>
+    <button class="btn primary" type="submit">{copy['button']}</button>
+  </div>
+  <p class="subscribe-status" role="status" aria-live="polite"></p>
+</form>"""
 
 
 def _nav_href(slug, lang):
@@ -255,7 +317,20 @@ def header(current, lang="en"):
 </header>"""
 
 
-def footer(lang="en"):
+def footer(lang="en", path="/"):
+    """The footer, plus the newsletter form that sits on every page.
+
+    The form's source names the page it was submitted from, so a signup can be traced
+    to the page that produced it. It is the same value the in-page form on that page
+    sends, because the question a coupon code answers is which page earned it.
+    """
+    slug = page_slug(path)
+    subscribe = subscribe_form(
+        lang,
+        source=f"miamicontactimprov:{slug}",
+        uid=f"footer-{slug}",
+    )
+    subscribe_heading = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])["heading"]
     cols = []
     for _key, titles, items in FOOTER_COLS:
         title = titles.get(lang) or titles[locales.DEFAULT]
@@ -288,6 +363,10 @@ def footer(lang="en"):
           for label, href in PROJECT_LINKS
       )}
     </nav>
+    <div class="footer-subscribe">
+      <h3>{subscribe_heading}</h3>
+      {subscribe}
+    </div>
     <div class="colophon">
       <span>{sentence}</span>
       <span>{colophon}</span>
@@ -322,6 +401,37 @@ def body_script():
       window.addEventListener(ev, kick, { once: true, passive: true });
     });
   }
+  // Newsletter forms. The endpoint, the source and the result lines come from the
+  // form's own data attributes, so this runs unchanged on every page and in both
+  // locales. A signup that reaches the Worker is done: nothing is sent twice.
+  document.querySelectorAll('form.subscribe-form').forEach(function (form) {
+    var status = form.querySelector('.subscribe-status');
+    var button = form.querySelector('button[type="submit"]');
+    var input = form.querySelector('input[type="email"]');
+    var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (!input.value.trim()) { input.focus(); return; }
+      button.disabled = true;
+      say('sending');
+      fetch(form.getAttribute('data-endpoint'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: input.value.trim(),
+          consent: true,
+          source: form.getAttribute('data-source'),
+        }),
+      }).then(function (response) {
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          return response.ok && data.ok;
+        });
+      }).then(function (ok) {
+        if (ok) { form.reset(); say('ok'); }
+        else { say('error'); button.disabled = false; }
+      }).catch(function () { say('error'); button.disabled = false; });
+    });
+  });
 })();
 </script>
 </body>
@@ -374,7 +484,7 @@ def page(title, description, path, body, *, jsonld="", bg_video=None, bg_youtube
         + "\n<main id=\"main\">\n"
         + body
         + "\n</main>\n"
-        + footer(lang)
+        + footer(lang, path=path)
         + "\n</div>\n"
         + body_script()
     )

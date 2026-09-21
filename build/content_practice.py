@@ -1,6 +1,6 @@
 """Practice pages: jams, classes, safety and consent, video room."""
 
-from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, cards, cite_block, facts, page
+from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, cards, cite_block, facts, page, subscribe_form
 import schema
 import listings
 import videos_data
@@ -703,7 +703,11 @@ def fundamentals():
       <p>If you book on Luma and you arrived here first, <strong>WEBSITE</strong> is the code to use. The newsletter and Instagram have their own codes, because the point of a code is knowing which of them is worth doing this again for.</p>
       <p>If $20 is the reason you are not coming this week, say so before the class. One email is enough and it gets sorted. Nobody is turned away from a fundamentals class over money.</p>
 
-    <h2>Getting there</h2>
+      <div class="subscribe-block">
+        {subscribe_form("en", source="miamicontactimprov:fundamentals", uid="fundamentals")}
+      </div>
+
+      <h2>Getting there</h2>
     <p>Inner Motion Dance Studio is at 216 NE 1st Ave, Hallandale Beach, just east of US-1 (Federal Highway) and north of Hallandale Beach Boulevard. From Miami it is the first city past the county line after Aventura; from Fort Lauderdale it is south of Hollywood. If you need parking or access details before you come, <a href="mailto:hello@miamicontactimprov.com">email</a> and you will get an answer before Friday.</p>
 
     <h2>Who teaches it</h2>
