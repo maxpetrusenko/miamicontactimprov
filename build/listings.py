@@ -246,8 +246,8 @@ SESSIONS = [
         "Studio on the north edge of Miami: giving and taking weight, a rolling point of contact, falling, "
         "momentum, consent, and small dances that build toward an open score. Each class ends with an open "
         "dance, and you can drop into any of the eight, with no partner and no experience needed. "
-        "Registration runs through Luma, readers arriving from this site can use the code WEBSITE when "
-        "they book there, and payment at the door is accepted at every class. The series ends on 20 "
+        "Registration runs through Luma, subscribers to the monthly email get 10% off, and payment at the "
+        "door is accepted at every class. The series ends on 20 "
         "November 2026, so this entry comes down with it rather than sitting here looking current.",
     ),
 ]

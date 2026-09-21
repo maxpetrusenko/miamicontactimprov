@@ -1786,7 +1786,7 @@ def fundamentals():
 
       <h2>Cuánto cuesta una clase</h2>
       <p>Cada clase son 20 dólares o más dentro de una escala que llega a 50. Paga lo que puedas dentro de ese rango y nadie te va a preguntar dónde te quedaste. El extremo bajo cubre la sala; el alto es para quien pueda cargar con más y quiera que la serie siga en pie.</p>
-      <p>Si reservas en Luma y has llegado aquí primero, el código que te toca es <strong>WEBSITE</strong>. El boletín y el Instagram tienen los suyos, porque el sentido de un código es saber cuál de los tres canales merece que esto se repita.</p>
+      <p>Quien se suscribe al correo mensual tiene un 10% de descuento en cualquier clase; el código llega en el primer correo. Nada más en este sitio abre un descuento.</p>
       <p>Si esta semana los 20 dólares son la barrera, dilo antes de la clase. Un correo basta y se resuelve. A nadie se le deja fuera de una clase de fundamentos por dinero.</p>
 
       <div class="subscribe-block">
