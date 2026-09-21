@@ -5,6 +5,8 @@ Subcommands, one job each:
 
     plan                        print the campaign tree that the message bank and the
                                 posters on disk describe. Needs no token.
+    launch --budget 40          upload the posters, create the creatives, the campaign,
+                                the ad set and the ads. Everything is created PAUSED.
 Nothing is written to Meta unless a token exists *and* `--live` is passed. Without both,
 the tool prints the exact requests it would send, one per line, and exits 0. Every object
 it does create is PAUSED, so a mistake costs a click in Ads Manager rather than money.
@@ -62,6 +64,8 @@ which of them are present. Values are never printed, not even on failure.
 
 Usage:
     python3 tools/meta_ads.py plan
+    python3 tools/meta_ads.py launch --budget 40                 # dry run
+    python3 tools/meta_ads.py launch --budget 40 --live          # token required
 The operator's side of this - what Max does in Ads Manager, and what the repo does - is
 `docs/ads/meta-runbook.md`.
 """
@@ -84,6 +88,7 @@ FORMATS = ("feed", "story")
 
 HELP = {
     "plan": "print the campaign tree; no token needed",
+    "launch": "create the campaign, ad set, creatives and ads, all paused",
 }
 
 
@@ -153,6 +158,25 @@ def targets(bank: dict, exists=None):
 
 
 
+def launch_requests(account: str, rows, budget: float):
+    """The full write list, in the order Meta needs it: campaign, ad set, then per ad.
+
+    Image hashes and creative ids do not exist yet, so the creative and ad entries carry
+    placeholders. `cmd_launch --live` fills them in as each call returns.
+    """
+    adset_id = f"<ADSET_ID:{api.ADSET_NAME}>"
+    requests = [api.campaign_request(account, budget),
+                api.adset_request(account, f"<CAMPAIGN_ID:{api.CAMPAIGN_NAME}>")]
+    for row in rows:
+        requests.append(api.image_request(row, account))
+        requests.append(api.creative_request(row, account, f"<hash:{row['png'].name}>"))
+        requests.append(api.ad_request(row, account, adset_id,
+                                       f"<CREATIVE_ID:{row['name']}>"))
+    return requests
+
+
+# -------------------------------------------------------------------------------- table
+
 def cmd_plan(args) -> int:
     bank = load_bank()
     rows, missing = targets(bank)
@@ -183,6 +207,48 @@ def cmd_plan(args) -> int:
 
 
 
+def cmd_launch(args) -> int:
+    bank = load_bank()
+    rows, missing = targets(bank)
+    if not rows:
+        print("nothing to launch: no poster matched the message bank", file=sys.stderr)
+        return 2
+    if missing:
+        print(f"skipping {len(missing)} ad(s) with no poster on disk", file=sys.stderr)
+
+    account = api.account_id()
+    requests = launch_requests(account, rows, args.budget)
+
+    allowed, reason = api.write_allowed(args.live)
+    if not allowed:
+        print(f"dry run ({reason}): {len(requests)} write requests, nothing sent")
+        print(api.secret_report() + "\n")
+        for request in requests:
+            print(api.render(request))
+        print(f"\nwrite requests: {len(requests)}"
+              f"  (1 campaign + 1 ad set + 3 per ad x {len(rows)} ads)")
+        print(f"reads first: {api.render(api.list_adsets_request(account))}")
+        return 0
+
+    token = api.secret(api.TOKEN_SECRET)
+    print(f"live: {len(requests)} writes to act_{account}, everything PAUSED\n")
+    campaign_id = api.graph(api.campaign_request(account, args.budget), token)["id"]
+    print(f"  campaign {campaign_id}")
+    adset_id = api.graph(api.adset_request(account, campaign_id), token)["id"]
+    print(f"  ad set   {adset_id}")
+    for row in rows:
+        images = api.graph(api.image_request(row, account), token)["images"]
+        image_hash = next(iter(images.values()))["hash"]
+        creative_id = api.graph(api.creative_request(row, account, image_hash),
+                                token)["id"]
+        ad_id = api.graph(api.ad_request(row, account, adset_id, creative_id),
+                          token)["id"]
+        print(f"  ad       {ad_id}  {row['name']}")
+    print("\nall paused. Check the previews in Ads Manager, then set the campaign active.")
+    return 0
+
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="meta_ads.py", description="Meta ads operator for the CI Fundamentals series")
@@ -192,6 +258,11 @@ def build_parser() -> argparse.ArgumentParser:
     plan.add_argument("--budget", type=float, default=40,
                       help="campaign daily budget in dollars (default 40)")
 
+    launch = sub.add_parser("launch", help=HELP["launch"])
+    launch.add_argument("--budget", type=float, default=40)
+    launch.add_argument("--live", action="store_true",
+                        help="send the requests; without it, print them")
+
     return parser
 
 
@@ -200,6 +271,7 @@ def main() -> int:
     args = build_parser().parse_args()
     handlers = {
         "plan": cmd_plan,
+        "launch": cmd_launch,
     }
     return handlers[args.command](args)
 

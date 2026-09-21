@@ -153,6 +153,80 @@ class Plan(unittest.TestCase):
             self.assertIn(f"h={row['family']}", row["link"])
             self.assertTrue(row["png"].is_file())
 
+    def test_launch_list_is_two_objects_plus_three_calls_per_ad(self):
+        rows, _ = meta_ads.targets(self.bank())
+        requests = meta_ads.launch_requests("123", rows, 40)
+        self.assertEqual(len(requests), 2 + 3 * len(rows))
+        self.assertEqual({r["method"] for r in requests}, {"POST"})
+        self.assertEqual([r["path"] for r in requests[:2]],
+                         ["/v26.0/act_123/campaigns", "/v26.0/act_123/adsets"])
+        self.assertEqual([r["path"].split("/")[-1] for r in requests[2:5]],
+                         ["adimages", "adcreatives", "ads"])
+
+    def test_the_account_prefix_is_added_once(self):
+        self.assertEqual(api.act_id("123"), "act_123")
+        self.assertEqual(api.act_id("act_123"), "act_123")
+        self.assertEqual(api.campaign_request("act_123", 40)["path"],
+                         "/v26.0/act_123/campaigns")
+
+    def test_every_created_object_is_paused(self):
+        rows, _ = meta_ads.targets(self.bank())
+        statuses = {}
+        for request in meta_ads.launch_requests("123", rows, 40):
+            # Images and creatives carry no status of their own: the ad is what gets
+            # paused, and the creative only reaches Meta through a paused ad.
+            params = request.get("params") or {}
+            statuses[request["path"].split("/")[-1]] = params.get("status")
+        self.assertEqual(statuses["campaigns"], "PAUSED")
+        self.assertEqual(statuses["adsets"], "PAUSED")
+        self.assertEqual(statuses["ads"], "PAUSED")
+        self.assertIsNone(statuses["adcreatives"])
+
+    def test_each_ad_points_at_its_own_creative(self):
+        rows, _ = meta_ads.targets(self.bank())
+        requests = meta_ads.launch_requests("123", rows, 40)
+        creatives = [r for r in requests if r["path"].endswith("/adcreatives")]
+        ads = [r for r in requests if r["path"].endswith("/ads")]
+        self.assertEqual(len(creatives), len(rows))
+        self.assertEqual(len(ads), len(rows))
+        for ad, creative in zip(ads, creatives):
+            placeholder = json.loads(ad["params"]["creative"])["creative_id"]
+            self.assertEqual(placeholder, f"<CREATIVE_ID:{ad['params']['name']}>")
+            self.assertEqual(creative["params"]["name"],
+                             f"{ad['params']['name']}_creative")
+            self.assertEqual(ad["params"]["status"], "PAUSED")
+
+    def test_the_campaign_carries_the_budget_and_the_ad_set_does_not(self):
+        rows, _ = meta_ads.targets(self.bank())
+        campaign, adset = meta_ads.launch_requests("act123", rows, 40)[:2]
+        self.assertEqual(campaign["params"]["daily_budget"], "4000")
+        self.assertNotIn("daily_budget", adset["params"])
+
+    def test_targeting_is_broad_and_the_geo_is_the_studio(self):
+        rows, _ = meta_ads.targets(self.bank())
+        adset = meta_ads.launch_requests("act123", rows, 40)[1]
+        targeting = json.loads(adset["params"]["targeting"])
+        self.assertEqual(targeting["geo_locations"]["custom_locations"][0]["radius"], 25)
+        self.assertEqual((targeting["age_min"], targeting["age_max"]), (21, 60))
+        self.assertEqual(targeting["publisher_platforms"], ["facebook", "instagram"])
+
+    def test_the_creative_carries_the_link_the_hash_and_the_body(self):
+        rows, _ = meta_ads.targets(self.bank())
+        row = rows[0]
+        creative = api.creative_request(row, "act123", "hash123")
+        story = json.loads(creative["params"]["object_story_spec"])
+        self.assertEqual(story["link_data"]["image_hash"], "hash123")
+        self.assertEqual(story["link_data"]["link"], row["link"])
+        self.assertEqual(story["link_data"]["message"], row["body"])
+        self.assertEqual(story["link_data"]["name"], row["headline"])
+        self.assertIn("page_id", story)
+
+    def test_render_shows_the_verb_the_path_and_the_body(self):
+        line = api.render(api.campaign_request("act_123", 40))
+        self.assertTrue(line.startswith("POST /v26.0/act_123/campaigns"))
+        self.assertIn("name=ci_fundamentals", line)
+        self.assertIn("daily_budget=4000", line)
+
     def test_render_names_a_poster_and_its_size_instead_of_its_bytes(self):
         poster = sorted((ROOT / "docs" / "ads" / "out").rglob("*.png"))[0]
         line = api.render({"method": "POST", "path": "/v26.0/act_123/adimages",
@@ -185,6 +259,16 @@ class WriteGate(unittest.TestCase):
         allowed, why = api.write_allowed(False)
         self.assertFalse(allowed)
         self.assertIn("--live", why)
+
+    def test_with_live_but_no_token_nothing_is_allowed(self):
+        with mock.patch.object(api, "secret", return_value=None):
+            allowed, why = api.write_allowed(True)
+        self.assertFalse(allowed)
+        self.assertIn(api.TOKEN_SECRET, why)
+
+    def test_with_live_and_a_token_the_write_is_allowed(self):
+        with mock.patch.object(api, "secret", return_value="value"):
+            self.assertTrue(api.write_allowed(True)[0])
 
     def test_a_failed_read_is_missing_rather_than_an_exception(self):
         with mock.patch.object(api.subprocess, "run", side_effect=OSError("no doppler")):
