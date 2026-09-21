@@ -245,38 +245,22 @@
 </header>
 <main id="main">
 
-<div class="mci-hero" id="mci-hero">
-  <div class="mci-hero-copy">
-    <h1 class="mci-h">
-      <span id="mci-w1">MOVE.</span>
-      <span id="mci-w2">LISTEN.</span>
-      <span id="mci-w3" class="accent">IMPROVISE.</span>
-    </h1>
-    <p class="lede">A weekly contact improv jam in Miami &mdash; where dance meets touch, trust, and play. No experience needed, just a curious body.</p>
-    <div class="btn-row">
+<section class="mci-hero-full plain" id="mci-hero">
+  <div class="bg-wrap" id="mci-hero-bg"><img class="bg" src="/assets/img/hero-clean.jpg" alt="Two hands reaching toward each other against a pink sunset sky"></div>
+  <div class="veil"></div>
+  <div class="inner" id="mci-hero-inner">
+    <p class="eyebrow-l rise" style="--d:.15s">Every Friday &middot; 7&ndash;9 PM &middot; Hallandale Beach</p>
+    <h1 class="mci-h"><span class="rise" style="--d:.3s">MOVE.</span><span class="rise" style="--d:.42s">LISTEN.</span><span class="rise accent" style="--d:.54s">IMPROVISE.</span></h1>
+    <p class="lede rise" style="--d:.72s">A weekly contact improv class and open jam in Miami &mdash; where dance meets touch, trust, and play. No experience needed, just a curious body.</p>
+    <div class="btn-row rise" style="--d:.88s">
       <a class="btn primary" href="/events">See upcoming jams &nbsp;&rarr;</a>
       <a class="btn secondary" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener">@miamicontactimprov</a>
     </div>
   </div>
-  <div class="mci-hero-stage">
-    <div class="mci-layer mci-disc" id="mci-disc" aria-hidden="true"></div>
-    <div class="mci-layer mci-ring" id="mci-ring" aria-hidden="true"></div>
-    <div class="mci-layer mci-dot-1" id="mci-dot1" aria-hidden="true"></div>
-    <div class="mci-layer mci-dot-2" id="mci-dot2" aria-hidden="true"></div>
-    <div class="mci-logo-float" id="mci-logo-float">
-      <img id="mci-logo" class="mci-hero-photo" src="/assets/img/c7.jpg" alt="A hand reaching out, caught in warm soft light">
-    </div>
-    <a class="mci-layer mci-stamp" id="mci-stamp" href="/events" aria-label="First jam, October 2, Friday 7 PM — see events">
-      <span class="small">First jam</span>
-      <span class="big mci-h">OCT 2</span>
-      <span class="small">Fri &middot; 7 PM</span>
-    </a>
-    <div class="mci-layer mci-chip mci-chip-1" id="mci-chip1">Fridays &middot; 7&ndash;9 PM</div>
-    <div class="mci-layer mci-chip mci-chip-2" id="mci-chip2">Class + Open Jam</div>
-  </div>
-</div>
+  <a class="scroll-cue" href="#mci-when" aria-label="Scroll to details"><span class="line"></span><span class="txt">Scroll</span></a>
+</section>
 
-<div class="mci-panel-wrap">
+<div class="mci-panel-wrap" id="mci-when">
   <div class="mci-panel">
     <div>
       <p class="label mci-h">WHEN</p>
@@ -319,7 +303,7 @@
   <div class="mci-ig-head">
     <h2 class="mci-h">ON INSTAGRAM</h2>
   </div>
-  <div class="ig-embeds"><iframe class="ig-frame ig-post" src="https://www.instagram.com/p/Ddb99EDytsx/embed/" title="Instagram post" loading="lazy" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><iframe class="ig-frame ig-reel" src="https://www.instagram.com/reel/DPrOYR8jYjU/embed/" title="Instagram reel" loading="lazy" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><iframe class="ig-frame ig-reel" src="https://www.instagram.com/reel/DPZt8AxjOAO/embed/" title="Instagram reel" loading="lazy" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><iframe class="ig-frame ig-reel" src="https://www.instagram.com/reel/DVjMRgUDv0P/embed/" title="Instagram reel" loading="lazy" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <div class="ig-embeds"><iframe class="ig-frame ig-post" data-ratio="1.25" src="https://www.instagram.com/p/Ddh7ZhVOc6f/embed/" title="Instagram post" loading="lazy" scrolling="no" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><iframe class="ig-frame ig-post" data-ratio="1.0" src="https://www.instagram.com/p/Ddb99EDytsx/embed/" title="Instagram post" loading="lazy" scrolling="no" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><iframe class="ig-frame ig-reel" data-ratio="1.0" src="https://www.instagram.com/reel/DPrOYR8jYjU/embed/" title="Instagram reel" loading="lazy" scrolling="no" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><iframe class="ig-frame ig-reel" data-ratio="1.0" src="https://www.instagram.com/reel/DPZt8AxjOAO/embed/" title="Instagram reel" loading="lazy" scrolling="no" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><iframe class="ig-frame ig-reel" data-ratio="1.0" src="https://www.instagram.com/reel/DVjMRgUDv0P/embed/" title="Instagram reel" loading="lazy" scrolling="no" allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
 </div>
 
 
@@ -446,6 +430,30 @@
       });
     }
   }
+
+  // ---- photo hero: cursor parallax + scroll cue ----
+  var heroP = document.getElementById('mci-hero');
+  var heroBg = document.getElementById('mci-hero-bg');
+  var heroIn = document.getElementById('mci-hero-inner');
+  if (heroP && heroBg) {
+    if (canHover && !reduce) {
+      heroP.addEventListener('mousemove', function (e) {
+        var r = heroP.getBoundingClientRect();
+        var hx = (e.clientX - r.left) / r.width - 0.5, hy = (e.clientY - r.top) / r.height - 0.5;
+        heroBg.style.transform = 'translate3d(' + (hx * -22).toFixed(1) + 'px,' + (hy * -16).toFixed(1) + 'px,0)';
+        if (heroIn) heroIn.style.transform = 'translate3d(' + (hx * 10).toFixed(1) + 'px,' + (hy * 7).toFixed(1) + 'px,0)';
+      });
+      heroP.addEventListener('mouseleave', function () { heroBg.style.transform = ''; if (heroIn) heroIn.style.transform = ''; });
+    }
+    var cue = function () { heroP.classList.toggle('is-scrolled', window.scrollY > 80); };
+    window.addEventListener('scroll', cue, { passive: true }); cue();
+  }
+
+  // ---- instagram frames: height follows width so no blank space below the card ----
+  var fitIg = function () {
+    document.querySelectorAll('.ig-frame').forEach(function (f) { var w = f.clientWidth; if (w) f.style.height = Math.round(w * 1.25 + 250) + 'px'; });
+  };
+  fitIg(); window.addEventListener('load', fitIg); window.addEventListener('resize', fitIg);
 
   // ---- read-more (home) ----
   document.querySelectorAll('.mci-more').forEach(function (btn) {

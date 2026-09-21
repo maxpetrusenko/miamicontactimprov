@@ -34,6 +34,7 @@ IG_GLYPH = (
 # fabricated posts. When empty, the section shows the real jam photography below,
 # linked to the profile, and no third-party script is loaded.
 IG_POSTS = [
+    "https://www.instagram.com/p/Ddh7ZhVOc6f/",
     "https://www.instagram.com/p/Ddb99EDytsx/",
     "https://www.instagram.com/reel/DPrOYR8jYjU/",
     "https://www.instagram.com/reel/DPZt8AxjOAO/",
@@ -43,11 +44,18 @@ IG_POSTS = [
 MAX_REEL = "https://www.instagram.com/reel/DVjMRgUDv0P/"
 
 
+# Media aspect (height / width) per post so the frame can be cropped just below the
+# likes row. Instagram renders reels and square posts at 1:1 in the embed; portrait
+# photo posts are 4:5. Posts not listed default to square.
+IG_RATIOS = {"Ddh7ZhVOc6f": 1.25}
+
+
 def ig_embed(url):
     """A live Instagram post as a direct /embed/ iframe: no embed.js, no blocker-prone
-    script, no fallback link. Reels render taller than posts."""
+    script, no fallback link. Height is set by JS from width x ratio + chrome."""
     kind = "reel" if "/reel/" in url else "post"
-    return (f'<iframe class="ig-frame ig-{kind}" src="{url}embed/" title="Instagram {kind}" loading="lazy" '
+    ratio = IG_RATIOS.get(url.rstrip("/").rsplit("/", 1)[-1], 1.0)
+    return (f'<iframe class="ig-frame ig-{kind}" data-ratio="{ratio}" src="{url}embed/" title="Instagram {kind}" loading="lazy" scrolling="no" '
             f'allow="encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>')
 
 
@@ -111,38 +119,22 @@ def _ig_section():
 # ---------------------------------------------------------------- Home
 def home():
     body = f"""
-<div class="mci-hero" id="mci-hero">
-  <div class="mci-hero-copy">
-    <h1 class="mci-h">
-      <span id="mci-w1">MOVE.</span>
-      <span id="mci-w2">LISTEN.</span>
-      <span id="mci-w3" class="accent">IMPROVISE.</span>
-    </h1>
-    <p class="lede">A weekly contact improv jam in Miami &mdash; where dance meets touch, trust, and play. No experience needed, just a curious body.</p>
-    <div class="btn-row">
+<section class="mci-hero-full plain" id="mci-hero">
+  <div class="bg-wrap" id="mci-hero-bg"><img class="bg" src="/assets/img/hero-clean.jpg" alt="Two hands reaching toward each other against a pink sunset sky"></div>
+  <div class="veil"></div>
+  <div class="inner" id="mci-hero-inner">
+    <p class="eyebrow-l rise" style="--d:.15s">Every Friday &middot; 7&ndash;9 PM &middot; Hallandale Beach</p>
+    <h1 class="mci-h"><span class="rise" style="--d:.3s">MOVE.</span><span class="rise" style="--d:.42s">LISTEN.</span><span class="rise accent" style="--d:.54s">IMPROVISE.</span></h1>
+    <p class="lede rise" style="--d:.72s">A weekly contact improv class and open jam in Miami &mdash; where dance meets touch, trust, and play. No experience needed, just a curious body.</p>
+    <div class="btn-row rise" style="--d:.88s">
       <a class="btn primary" href="/events">See upcoming jams &nbsp;&rarr;</a>
       <a class="btn secondary" href="{IG}" target="_blank" rel="noopener">@miamicontactimprov</a>
     </div>
   </div>
-  <div class="mci-hero-stage">
-    <div class="mci-layer mci-disc" id="mci-disc" aria-hidden="true"></div>
-    <div class="mci-layer mci-ring" id="mci-ring" aria-hidden="true"></div>
-    <div class="mci-layer mci-dot-1" id="mci-dot1" aria-hidden="true"></div>
-    <div class="mci-layer mci-dot-2" id="mci-dot2" aria-hidden="true"></div>
-    <div class="mci-logo-float" id="mci-logo-float">
-      <img id="mci-logo" class="mci-hero-photo" src="/assets/img/c7.jpg" alt="A hand reaching out, caught in warm soft light">
-    </div>
-    <a class="mci-layer mci-stamp" id="mci-stamp" href="/events" aria-label="First jam, October 2, Friday 7 PM — see events">
-      <span class="small">First jam</span>
-      <span class="big mci-h">OCT 2</span>
-      <span class="small">Fri &middot; 7 PM</span>
-    </a>
-    <div class="mci-layer mci-chip mci-chip-1" id="mci-chip1">Fridays &middot; 7&ndash;9 PM</div>
-    <div class="mci-layer mci-chip mci-chip-2" id="mci-chip2">Class + Open Jam</div>
-  </div>
-</div>
+  <a class="scroll-cue" href="#mci-when" aria-label="Scroll to details"><span class="line"></span><span class="txt">Scroll</span></a>
+</section>
 
-<div class="mci-panel-wrap">
+<div class="mci-panel-wrap" id="mci-when">
   <div class="mci-panel">
     <div>
       <p class="label mci-h">WHEN</p>

@@ -140,38 +140,22 @@ def _sessions_for_stage():
 def home():
     ig_embeds = "".join(cm.ig_embed(u) for u in cm.IG_POSTS)
     body = f"""
-<div class="mci-hero" id="mci-hero">
-  <div class="mci-hero-copy">
-    <h1 class="mci-h">
-      <span id="mci-w1">MUÉVETE.</span>
-      <span id="mci-w2">ESCUCHA.</span>
-      <span id="mci-w3" class="accent">IMPROVISA.</span>
-    </h1>
-    <p class="lede">Una jam semanal de contact improv en Miami &mdash; donde la danza se encuentra con el contacto, la confianza y el juego. No hace falta experiencia, solo un cuerpo con curiosidad.</p>
-    <div class="btn-row">
+<section class="mci-hero-full plain" id="mci-hero">
+  <div class="bg-wrap" id="mci-hero-bg"><img class="bg" src="{cm.IMG}/hero-clean.jpg" alt="Dos manos que se buscan contra un cielo rosado al atardecer"></div>
+  <div class="veil"></div>
+  <div class="inner" id="mci-hero-inner">
+    <p class="eyebrow-l rise" style="--d:.15s">Todos los viernes &middot; 7&ndash;9 PM &middot; Hallandale Beach</p>
+    <h1 class="mci-h"><span class="rise" style="--d:.3s">MUÉVETE.</span><span class="rise" style="--d:.42s">ESCUCHA.</span><span class="rise accent" style="--d:.54s">IMPROVISA.</span></h1>
+    <p class="lede rise" style="--d:.72s">Una clase y jam abierta semanal de contact improv en Miami &mdash; donde la danza se encuentra con el contacto, la confianza y el juego. No hace falta experiencia, solo un cuerpo con curiosidad.</p>
+    <div class="btn-row rise" style="--d:.88s">
       <a class="btn primary" href="{R_JAMS}">Ver próximas jams &nbsp;&rarr;</a>
       <a class="btn secondary" href="{cm.IG}" target="_blank" rel="noopener">@miamicontactimprov</a>
     </div>
   </div>
-  <div class="mci-hero-stage">
-    <div class="mci-layer mci-disc" id="mci-disc" aria-hidden="true"></div>
-    <div class="mci-layer mci-ring" id="mci-ring" aria-hidden="true"></div>
-    <div class="mci-layer mci-dot-1" id="mci-dot1" aria-hidden="true"></div>
-    <div class="mci-layer mci-dot-2" id="mci-dot2" aria-hidden="true"></div>
-    <div class="mci-logo-float" id="mci-logo-float">
-      <img id="mci-logo" class="mci-hero-photo" src="{cm.IMG}/c7.jpg" alt="Una mano que se extiende, bajo una luz cálida y suave">
-    </div>
-    <a class="mci-layer mci-stamp" id="mci-stamp" href="{R_FRIDAY}" aria-label="Primera jam, 2 de octubre, viernes 7 PM">
-      <span class="small">Primera jam</span>
-      <span class="big mci-h">2 OCT</span>
-      <span class="small">Vie &middot; 7 PM</span>
-    </a>
-    <div class="mci-layer mci-chip mci-chip-1" id="mci-chip1">Viernes &middot; 7&ndash;9 PM</div>
-    <div class="mci-layer mci-chip mci-chip-2" id="mci-chip2">Clase + Jam abierta</div>
-  </div>
-</div>
+  <a class="scroll-cue" href="#mci-when" aria-label="Bajar a los detalles"><span class="line"></span><span class="txt">Desliza</span></a>
+</section>
 
-<div class="mci-panel-wrap">
+<div class="mci-panel-wrap" id="mci-when">
   <div class="mci-panel">
     <div><p class="label mci-h">CUÁNDO</p><p>Todos los viernes, desde el 2 oct<br>7:00 &ndash; 9:00 PM<br>Clase, luego Jam abierta</p></div>
     <div><p class="label mci-h">DÓNDE</p><p>Inner Motion Dance Studio<br>216 NE 1st Ave, Hallandale Beach, FL</p></div>

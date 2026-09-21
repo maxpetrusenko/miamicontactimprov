@@ -416,6 +416,30 @@
     }
   }
 
+  // ---- photo hero: cursor parallax + scroll cue ----
+  var heroP = document.getElementById('mci-hero');
+  var heroBg = document.getElementById('mci-hero-bg');
+  var heroIn = document.getElementById('mci-hero-inner');
+  if (heroP && heroBg) {
+    if (canHover && !reduce) {
+      heroP.addEventListener('mousemove', function (e) {
+        var r = heroP.getBoundingClientRect();
+        var hx = (e.clientX - r.left) / r.width - 0.5, hy = (e.clientY - r.top) / r.height - 0.5;
+        heroBg.style.transform = 'translate3d(' + (hx * -22).toFixed(1) + 'px,' + (hy * -16).toFixed(1) + 'px,0)';
+        if (heroIn) heroIn.style.transform = 'translate3d(' + (hx * 10).toFixed(1) + 'px,' + (hy * 7).toFixed(1) + 'px,0)';
+      });
+      heroP.addEventListener('mouseleave', function () { heroBg.style.transform = ''; if (heroIn) heroIn.style.transform = ''; });
+    }
+    var cue = function () { heroP.classList.toggle('is-scrolled', window.scrollY > 80); };
+    window.addEventListener('scroll', cue, { passive: true }); cue();
+  }
+
+  // ---- instagram frames: height follows width so no blank space below the card ----
+  var fitIg = function () {
+    document.querySelectorAll('.ig-frame').forEach(function (f) { var w = f.clientWidth; if (w) f.style.height = Math.round(w * 1.25 + 250) + 'px'; });
+  };
+  fitIg(); window.addEventListener('load', fitIg); window.addEventListener('resize', fitIg);
+
   // ---- read-more (home) ----
   document.querySelectorAll('.mci-more').forEach(function (btn) {
     var target = document.getElementById(btn.getAttribute('data-target'));
