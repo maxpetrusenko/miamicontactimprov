@@ -64,6 +64,7 @@ PAGES = [
     ("miami-jams", "en", content_local.miami_jams, "0.9", "weekly", None),
     ("jams", "en", content_practice.jams, "0.8", "weekly", None),
     ("friday-jam", "en", content_practice.friday_jam, "0.9", "weekly", None),
+    ("fundamentals", "en", content_practice.fundamentals, "0.9", "weekly", None),
     ("classes", "en", content_practice.classes, "0.8", "monthly", None),
     ("your-first-jam", "en", content_practice.your_first_jam, "0.8", "monthly", None),
     ("keep-practising", "en", content_practice.keep_practising, "0.7", "monthly", None),
@@ -82,6 +83,7 @@ PAGES = [
     ("miami-jams", "es", content_es.miami_jams, "0.8", "weekly", None),
     ("jams", "es", content_es.jams, "0.7", "weekly", None),
     ("friday-jam", "es", content_es.friday_jam, "0.8", "weekly", None),
+    ("fundamentals", "es", content_es.fundamentals, "0.8", "weekly", None),
     ("classes", "es", content_es.classes, "0.7", "monthly", None),
     ("your-first-jam", "es", content_es.your_first_jam, "0.7", "monthly", None),
     ("keep-practising", "es", content_es.keep_practising, "0.6", "monthly", None),
@@ -344,7 +346,7 @@ KEY_FACTS = [
 ]
 
 LOCALE_NOTE = (
-    "Every public page is published in both English and Spanish, 30 pages in total. The "
+    "Every public page is published in both English and Spanish, 34 pages in total. The "
     "Spanish pages under /es/ are translations of their English counterparts and make no "
     "claim the English page does not make; a page is never machine-translated, and a page "
     "that is not translated is absent from /es/ rather than generated. The English page is "

@@ -174,6 +174,7 @@ def classes():
       <h2>Where to learn it in Miami</h2>
       <div class="prose">
         <p>One recurring Contact Improvisation class in Miami-Dade could be verified from its own listings when this page was last checked: <strong>Contact Improv &mdash; ALL LEVELS</strong> at Dance Arts Miami, 250 NE 61st Street, Miami, 33137, on Tuesdays from 6:00 to 7:00 PM. It is advertised as covering connection, weight sharing, momentum and spontaneous partnering, and no partner is needed. Because it is published as a multi-date series on Eventbrite and mirrored on Meetup, confirm the current week there rather than trusting this page.</p>
+        <p>A second series runs from Friday 2 October 2026: <strong>Contact Improv &mdash; Fundamentals</strong>, eight weekly classes at Inner Motion Dance Studio in Hallandale Beach, 7:00 to 9:00 PM, each one priced on a sliding scale of $20 to $50. It covers the same ground as any beginners' series, from weight sharing and a rolling point of contact to falling, momentum and consent, with an open dance at the end of each class. It is also the one class on this site taught by the person who maintains it, so the entry reads as the organiser describing his own class, and it is listed on the same terms as every other entry and ranked no higher for it. The <a href="/fundamentals">Fundamentals page</a> carries the eight dates, the price and how to book.</p>
         <p>Beyond that class, the realistic routes into the form in Miami are the <a href="/jams">jams, camps and adjacent practice</a> listed elsewhere on this site. If you would rather learn in a structured way and no class is running near you, a contemporary dance or improvisation class at any Miami studio will teach you most of the body literacy, and the jams will teach you the rest.</p>
       </div>
       <h2>After the first one</h2>
@@ -606,6 +607,138 @@ def friday_jam():
         "Friday Contact Improv Jam in Miami [Weekly 7–9 PM]",
         "Weekly open Contact Improvisation jam in Miami, Fridays 7 to 9 PM at Inner Motion Dance Studio, 216 NE 1st Ave. $20 sliding scale, no partner or booking. From 2 October 2026.",
         "/friday-jam",
+        body,
+        jsonld=jsonld,
+    )
+
+
+FUNDAMENTALS_FAQ = [
+    ("Do I need a partner or any experience for the Fundamentals series?",
+     "No. The series starts at the beginning and assumes no dance background. Most people arrive alone, and every partner exercise is done with whoever is standing next to you."),
+    ("Do I have to come to all eight classes?",
+     "No. Each class stands on its own, so you can drop into any one of the eight. Coming to all of them is what turns the material into dancing, and it is not required."),
+    ("How much does a class cost?",
+     "A sliding scale of $20 to $50 for each class. Pay what you can inside that range, and nobody will ask where you landed."),
+    ("How do I book?",
+     "Registration runs on Luma, and the link goes up on this page as soon as the series is published there. Payment at the door is accepted at every class, so a booking is not what gets you through the door."),
+    ("Where is it, and how do I get there?",
+     "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, on the north edge of Miami just past Aventura on US-1."),
+    ("Who teaches it?",
+     "Max Petrusenko, who also maintains this website. That is why this page reads as the organiser describing his own class, and why the entry in the jam list carries the same disclosure."),
+    ("Is this the same thing as the Friday jam?",
+     "No. The jam is open dancing with no teacher and no plan. This is a taught class, and every class ends with an open dance so the material is used straight away."),
+    ("What should I wear and bring?",
+     "Clothes you can roll in, covering your back, shoulders and knees, with no zips, buckles or hard seams. Bare feet or soft socks, a full water bottle and a towel. Rings and watches come off at the edge."),
+    ("What if $20 is out of reach this week?",
+     "Say so before the class. One email is enough, and it gets sorted without a conversation about your circumstances."),
+]
+
+
+def fundamentals():
+    """The eight-week series this site hosts, on its own page.
+
+    The dates come from the series' EVENT_DATES row, which is also what the eight Events on
+    /jams and the Course node below are built from, so the table a reader sees, the Events a
+    search engine reads and the Course schedule are one set of Fridays.
+
+    The Course node is published here rather than on the Spanish page: its description is
+    English prose, and docs/i18n.md keeps English-prose nodes off the Spanish pages. The
+    Spanish page names the series in Spanish and links here for the markup.
+
+    The Luma link in the copy goes in when the Luma event exists; see FUNDAMENTALS_URL in
+    build/listings.py, which is the one place that address is written down.
+    """
+    faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in FUNDAMENTALS_FAQ)
+    occurrences = listings.EVENT_DATES[listings.FUNDAMENTALS_NAME]
+    dates_html = facts([
+        (f"Class {i + 1}", listings.date_label(iso))
+        for i, (iso, *_rest) in enumerate(occurrences)
+    ])
+    body = f"""
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Eight Fridays &middot; 7:00&ndash;9:00 PM &middot; Hallandale Beach</p>
+    <h1>Contact improv fundamentals: eight Fridays from the ground up.</h1>
+    <p class="lede">A taught class series that starts Contact Improvisation from the beginning: giving and taking weight, keeping a rolling point of contact, falling, and reading a partner without words. Eight Friday evenings at Inner Motion Dance Studio, 2 October to 20 November 2026.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
+      <a class="btn secondary" href="/your-first-jam">Never been to a jam?</a>
+    </div>
+    <p class="micro">$20&ndash;$50 sliding scale for each class, paid at the door or booked on Luma. Taught by Max Petrusenko, who also maintains this site.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    {answer("The Fundamentals series is eight Contact Improvisation classes on Friday evenings at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, from 2 October to 20 November 2026, 7:00 to 9:00 PM. Each class stands on its own, so you can drop into any of the eight. Max Petrusenko teaches the series, the price is a sliding scale of $20 to $50 for each class, and no partner or experience is needed.")}
+    {facts([
+      ("When", "Fridays, 7:00–9:00 PM"),
+      ("Dates", "Eight Fridays, 2 October to 20 November 2026"),
+      ("Where", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
+      ("Area", "North edge of Miami, just past Aventura on US-1"),
+      ("Cost", "$20–$50 sliding scale for each class"),
+      ("Booking", "On Luma, or pay at the door"),
+      ("Drop in", "Any of the eight classes, no partner and no experience needed"),
+      ("Level", "Fundamentals: weight sharing, contact, falling, momentum, consent"),
+      ("Teacher", "Max Petrusenko"),
+      ("Questions", "hello@miamicontactimprov.com"),
+    ])}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>What the eight classes cover</h2>
+    <div class="prose">
+      <p>Every class runs the same way: a warm-up from standing and from the floor, one piece of material worked slowly with different partners, and an open dance at the end so the material is used rather than noted down.</p>
+      <p>The material is what the form rests on. Giving and taking weight through the skeleton instead of by gripping. Keeping a single rolling point of contact and following where it travels. Falling, and rolling out of it instead of catching yourself on your hands. Reading momentum rather than watching for it. Declining, pausing and renegotiating inside a dance, which is taught here as technique rather than housekeeping. The last evenings put the pieces together into a small open score you can dance without a plan.</p>
+      <p>The first evening assumes nothing, and a class later in the series still works if it turns out to be your first one.</p>
+
+    <h2>The eight Fridays</h2>
+    <p>All eight classes run 7:00 to 9:00 PM at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach.</p>
+    {dates_html}
+
+    <h2>What a class costs</h2>
+      <p>Each class is $20 to $50 on a sliding scale. Pay what you can inside that range and nobody will ask where you landed. The lower end covers the room; the upper end is for anyone who can carry more of it and wants the series to keep running.</p>
+      <p>If you book on Luma and you arrived here first, <strong>WEBSITE</strong> is the code to use. The newsletter and Instagram have their own codes, because the point of a code is knowing which of them is worth doing this again for.</p>
+      <p>If $20 is the reason you are not coming this week, say so before the class. One email is enough and it gets sorted. Nobody is turned away from a fundamentals class over money.</p>
+
+    <h2>Getting there</h2>
+    <p>Inner Motion Dance Studio is at 216 NE 1st Ave, Hallandale Beach, just east of US-1 (Federal Highway) and north of Hallandale Beach Boulevard. From Miami it is the first city past the county line after Aventura; from Fort Lauderdale it is south of Hollywood. If you need parking or access details before you come, <a href="mailto:hello@miamicontactimprov.com">email</a> and you will get an answer before Friday.</p>
+
+    <h2>Who teaches it</h2>
+    <p>Max Petrusenko teaches the series. He also builds and maintains this website, so this page reads as the organiser describing his own class, and the <a href="/miami-jams">Miami-Dade and Broward jam list</a> carries the same disclosure beside its entry. Every other session on this site is published on the strength of the organiser's own page; this one is published on the strength of this page, and it comes down when the series ends rather than sitting here looking current.</p>
+
+    <h2>Also on a Friday</h2>
+    <p>The Friday jam this site hosts runs at the same studio from 2 October 2026. Its <a href="/friday-jam">own page</a> carries the schedule, the door price and how that evening runs. A class is taught and an open jam is not, and most people here end up doing both.</p>
+
+    <h2>Ground rules</h2>
+    <p>The full protocol is on <a href="/safety-and-consent">safety and consent</a>. The short version applies in a class as much as in a jam: keep a single point of contact, keep your own feet available, roll out of a fall instead of bracing with your arms, decline anything you want to decline and take a decline without asking why, and step out of a dance when it ends.</p>
+
+    <h2>Questions about the series</h2>
+    {faq_html}
+    </div>
+    {band("Come to the first one, or to any of them.", "No booking is needed to pay at the door. If you want to ask something first, one email is enough.", [("Email the teacher", "mailto:hello@miamicontactimprov.com", "primary"), ("Your first jam, step by step", "/your-first-jam", "secondary"), ("All verified sessions", "/miami-jams", "secondary")])}
+    {cite_block("Miami Contact Improv (2026). <em>Contact improv fundamentals in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/fundamentals")}
+  </div>
+</section>
+"""
+    jsonld = schema.render(
+        schema.organisation(),
+        schema.webpage(
+            "/fundamentals",
+            "Contact improv fundamentals in Miami, eight Fridays",
+            "Eight Contact Improvisation classes for beginners in Hallandale Beach, Fridays 7:00 to 9:00 PM from 2 October 2026 at Inner Motion Dance Studio, 216 NE 1st Ave. $20 to $50 sliding scale, taught by Max Petrusenko.",
+            date_modified=listings.FUNDAMENTALS_VERIFIED,
+        ),
+        schema.breadcrumb("/fundamentals", "Fundamentals"),
+        schema.faq(FUNDAMENTALS_FAQ),
+        listings.fundamentals_course(),
+    )
+    return page(
+        "Contact Improv Fundamentals Miami [8 Fridays Oct–Nov]",
+        "Eight Friday Contact Improvisation classes for beginners in Hallandale Beach, 2 October to 20 November 2026, 7 to 9 PM. $20 to $50 sliding scale, drop into any class.",
+        "/fundamentals",
         body,
         jsonld=jsonld,
     )

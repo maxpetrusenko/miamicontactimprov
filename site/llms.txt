@@ -7,7 +7,7 @@ It has no membership, no booking function and no commercial interest in any list
 
 ## Languages
 
-Every public page is published in both English and Spanish, 30 pages in total. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
+Every public page is published in both English and Spanish, 34 pages in total. The Spanish pages under /es/ are translations of their English counterparts and make no claim the English page does not make; a page is never machine-translated, and a page that is not translated is absent from /es/ rather than generated. The English page is the x-default of every pair.
 
 ## Key facts
 
@@ -27,6 +27,7 @@ Every public page is published in both English and Spanish, 30 pages in total. T
 - https://miamicontactimprov.com/miami-jams  (en)
 - https://miamicontactimprov.com/jams  (en)
 - https://miamicontactimprov.com/friday-jam  (en)
+- https://miamicontactimprov.com/fundamentals  (en)
 - https://miamicontactimprov.com/classes  (en)
 - https://miamicontactimprov.com/your-first-jam  (en)
 - https://miamicontactimprov.com/keep-practising  (en)
@@ -43,6 +44,7 @@ Every public page is published in both English and Spanish, 30 pages in total. T
 - https://miamicontactimprov.com/es/jams-miami-dade-broward  (es)
 - https://miamicontactimprov.com/es/jams  (es)
 - https://miamicontactimprov.com/es/jam-de-los-viernes  (es)
+- https://miamicontactimprov.com/es/fundamentos  (es)
 - https://miamicontactimprov.com/es/clases  (es)
 - https://miamicontactimprov.com/es/tu-primera-jam  (es)
 - https://miamicontactimprov.com/es/seguir-practicando  (es)

@@ -40,8 +40,9 @@ NAV = [
     ("about", {"en": "About", "es": "Acerca de"}),
 ]
 
-# The header button points at the one session this site hosts. "Submit a jam" keeps its
-# band on every listing page, so the submit route loses nothing by leaving the header.
+# The header button points at the Friday jam, the one session this site hosts that runs
+# every week. "Submit a jam" keeps its band on every listing page, so the submit route
+# loses nothing by leaving the header.
 NAV_CTA = {"en": ("Friday jam", "/friday-jam"), "es": ("Jam de los viernes", "/es/jam-de-los-viernes")}
 
 # Properties Max owns and runs. One canonical host each, rendered on every page so
@@ -73,6 +74,7 @@ FOOTER_COLS = [
         "es": "En Miami",
     }, [
         ("friday-jam", {"en": "Friday jam, Miami", "es": "Jam de los viernes, Miami"}),
+        ("fundamentals", {"en": "Fundamentals, eight Fridays", "es": "Fundamentos, ocho viernes"}),
         ("miami", {"en": "The Miami scene", "es": "La escena de Miami"}),
         ("miami-jams", {"en": "Miami-Dade and Broward jam list", "es": "Lista de jams de Miami-Dade y Broward"}),
         ("jams", {"en": "Jams and open practice", "es": "Jams y práctica abierta"}),
