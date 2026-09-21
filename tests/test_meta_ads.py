@@ -253,6 +253,44 @@ class Table(unittest.TestCase):
         entry.update(overrides)
         return {"ci_x": entry}
 
+    def test_unknown_counts_are_not_rendered_as_zeros(self):
+        cells = meta_ads.cells_for(self.row(), {})
+        self.assertEqual(cells[4], "-1")  # signups: we do not know
+        self.assertEqual(cells[8], "-1")  # attended: we do not know
+        self.assertEqual(cells[3].strip(), "5.00")
+
+    def test_our_counts_fill_the_last_columns(self):
+        cells = meta_ads.cells_for(self.row(), self.counts())
+        self.assertEqual([cells[i].strip() for i in (4, 6, 8)], ["2", "1", "1"])
+        self.assertEqual([cells[i].strip() for i in (5, 7, 9)],
+                         ["50.00", "100.00", "100.00"])
+        self.assertEqual(cells[-1].strip(), "100.00")  # cost per attendee decides
+
+    def test_graph_numbers_arrive_as_strings_and_missing_ones_as_zero(self):
+        row = {"spend": "12.34", "inline_link_clicks": "7", "impressions": ""}
+        self.assertEqual(meta_ads.fetched(row, "spend"), 12.34)
+        self.assertEqual(meta_ads.fetched(row, "impressions"), 0.0)
+        self.assertEqual(meta_ads.fetched({}, "spend"), 0.0)
+
+    def test_money_prints_a_dash_for_not_a_number(self):
+        self.assertEqual(meta_ads.money(None).strip(), "-")
+        self.assertEqual(meta_ads.money(3.5).strip(), "3.50")
+
+    def test_the_digest_names_the_winner_and_the_spend(self):
+        text = meta_ads.digest([self.row()], self.counts(), 100.0, 40, 60)
+        self.assertIn("$100.00", text)
+        self.assertIn("ci_x", text)
+        self.assertIn("per attendee", text)
+
+    def test_the_digest_flags_an_ad_past_the_line(self):
+        text = meta_ads.digest([self.row(spend="300.00")], {}, 300.0, 40, 60)
+        self.assertIn("over the line: ci_x", text)
+
+    def test_the_digest_says_so_when_there_is_nothing_to_compare(self):
+        text = meta_ads.digest([self.row(spend="5.00")], {}, 5.0, 40, 60)
+        self.assertIn("no attendees yet", text)
+
+
 
 class WriteGate(unittest.TestCase):
     def test_without_live_nothing_is_allowed(self):
@@ -269,6 +307,16 @@ class WriteGate(unittest.TestCase):
     def test_with_live_and_a_token_the_write_is_allowed(self):
         with mock.patch.object(api, "secret", return_value="value"):
             self.assertTrue(api.write_allowed(True)[0])
+
+    def test_presence_is_reported_and_no_value_ever_is(self):
+        secret_value = "s3cr3t-do-not-print"
+        with mock.patch.object(api, "secret",
+                               side_effect=lambda name: secret_value if name ==
+                               api.TOKEN_SECRET else None):
+            line = api.secret_report()
+        self.assertIn(f"{api.TOKEN_SECRET}=present", line)
+        self.assertIn(f"{api.PAGE_SECRET}=missing", line)
+        self.assertNotIn(secret_value, line)
 
     def test_a_failed_read_is_missing_rather_than_an_exception(self):
         with mock.patch.object(api.subprocess, "run", side_effect=OSError("no doppler")):
