@@ -418,9 +418,20 @@
       window.addEventListener(ev, kick, { once: true, passive: true });
     });
   }
-  // Newsletter forms. The endpoint, the source and the result lines come from the
+  // Subscribe forms. The endpoint, the source and the result lines come from the
   // form's own data attributes, so this runs unchanged on every page and in both
   // locales. A signup that reaches the Worker is done: nothing is sent twice.
+  //
+  // The campaign fields are read at the moment of the submit, from the address the
+  // reader actually arrived on: a QR code at the door carries ?src=door, a link in an
+  // Instagram bio carries utm_*. `src` rides on the end of the source, which is what
+  // separates a signup made in the room from one made from the bio of the same page.
+  // The source the Worker keys the welcome email off is the part before it.
+  var query = new URLSearchParams(window.location.search);
+  var param = function (name) { return query.get(name) || ''; };
+  // Kept to letters, digits, dash and underscore, and short: the Worker stores a source
+  // up to 64 characters and reads it as a prefix.
+  var entry = param('src').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 24);
   document.querySelectorAll('form.subscribe-form').forEach(function (form) {
     var status = form.querySelector('.subscribe-status');
     var button = form.querySelector('button[type="submit"]');
@@ -437,7 +448,14 @@
         body: JSON.stringify({
           email: input.value.trim(),
           consent: true,
-          source: form.getAttribute('data-source'),
+          source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
+          offer: form.getAttribute('data-offer') || '',
+          campaign: param('utm_campaign'),
+          landing_page: window.location.pathname,
+          referrer: document.referrer || '',
+          utm_source: param('utm_source'),
+          utm_medium: param('utm_medium'),
+          utm_content: param('utm_content'),
         }),
       }).then(function (response) {
         return response.json().catch(function () { return {}; }).then(function (data) {
