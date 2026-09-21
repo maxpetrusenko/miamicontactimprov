@@ -1064,10 +1064,8 @@ def check_video_room(pages):
             if not m:
                 continue
             bracket = VIDEO_COUNT_RE.search(m.group(1))
-            if not bracket:
-                add(ERROR, "video-count", page,
-                    f"video room title carries no (n) count: {m.group(1).strip()!r}")
-            elif int(bracket.group(1)) != len(videos):
+            # A title need not state a count; one it does state must be true.
+            if bracket and int(bracket.group(1)) != len(videos):
                 add(ERROR, "video-count", page,
                     f"title says ({bracket.group(1)}) but the page carries {len(videos)} films")
     measured("video.attributed", total)

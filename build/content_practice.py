@@ -335,7 +335,7 @@ def videos():
         videos_data.schema_list(),
     )
     return page(
-        f"Contact Improvisation Videos ({count}) | Free Films & Documentary",
+        "Contact Improvisation Videos | Free Films & Documentary",
         "Contact Improvisation on film: the channels that made it, credited by name, plus the Miami films this jam is shooting. None of it is ours yet.",
         "/videos",
         body,

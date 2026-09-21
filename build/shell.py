@@ -94,12 +94,6 @@ FOOTER_COLS = [
         ("classes", {"en": "Classes and workshops", "es": "Clases y talleres"}),
         ("keep-practising", {"en": "Keep practising", "es": "Seguir practicando"}),
     ]),
-    ("watch", {
-        "en": "Watch",
-        "es": "Vídeo",
-    }, [
-        ("videos", {"en": "Video room", "es": "Sala de vídeo"}),
-    ]),
     ("site", {
         "en": "This site",
         "es": "Este sitio",

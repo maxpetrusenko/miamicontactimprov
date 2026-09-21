@@ -1500,7 +1500,7 @@ def videos():
         ),
     )
     return page(
-        f"Vídeos de Improvisación de Contacto ({count})",
+        f"Vídeos de Improvisación de Contacto",
         "La Improvisación de Contacto en vídeo: los canales que los hicieron, con su nombre, y los filmes que esta jam rueda en Miami. Ninguno es nuestro todavía.",
         R_VIDEOS,
         body,
