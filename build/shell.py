@@ -100,7 +100,7 @@ FOOTER_COLS = [
 STYLESHEET = "/assets/site.css?v=4"
 
 
-# ---------------------------------------------------------------- newsletter form
+# ------------------------------------------------------------ subscribe form
 # The one endpoint a subscribe form may post to. Kept here so every form on the site
 # points at the same Worker, and so changing it is one edit.
 SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subscribe"
@@ -110,7 +110,7 @@ SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subs
 # welcome email that follows a signup carries it.
 SUBSCRIBE_COPY = {
     "en": {
-        "heading": "Newsletter",
+        "heading": "The monthly dates",
         "label": "Subscribe for 10% off the series, and one email a month.",
         "button": "Subscribe",
         "sending": "Sending.",
@@ -118,7 +118,7 @@ SUBSCRIBE_COPY = {
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
     },
     "es": {
-        "heading": "Boletín",
+        "heading": "Las fechas del mes",
         "label": "Suscríbete para un 10% de descuento en la serie, y un correo al mes.",
         "button": "Suscribirme",
         "sending": "Enviando.",
@@ -140,7 +140,7 @@ def page_slug(path):
 
 
 def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
-    """The newsletter form. One markup, every locale, every placement.
+    """The subscribe form. One markup, every locale, every placement.
 
     It posts JSON to the Worker and writes its own result line. With JavaScript off the
     submit does nothing rather than promising something it cannot do, which is why the
@@ -346,7 +346,7 @@ def header(current, lang="en"):
 
 
 def footer(lang="en", path="/"):
-    """The footer, plus the newsletter form that sits on every page.
+    """The footer, plus the subscribe form that sits on every page.
 
     The form's source names the page it was submitted from, so a signup can be traced
     to the page that produced it. It is the same value the in-page form on that page

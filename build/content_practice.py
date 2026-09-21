@@ -1,6 +1,7 @@
 """Practice pages: jams, classes, safety and consent, video room."""
 
 from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, cards, cite_block, facts, page, subscribe_block
+import json
 import schema
 import listings
 import videos_data
@@ -758,6 +759,71 @@ def fundamentals():
 # so the funnel report can tell which offer earned an address.
 START_OFFER = "Not ready for this Friday? Get the next dates and 10% off when you are."
 
+# ------------------------------------------------------------------ the ad whitelist
+# An ad and the page it opens should say the same sentence. Each key here is the `h`
+# value the ad's own link carries, and the two strings are the h1 and the first line
+# the reader sees when they arrive on it: the headline the ad sold is the headline the
+# page shows, which is what makes a landing congruent rather than merely related.
+#
+# Only those two strings change. The eyebrow, the buttons, the form's offer and the
+# facts under the hero are the page's own copy and stay, because an ad aimed at one
+# family still lands on a page whose job is to collect an address. An `h` that is not
+# one of these four keys leaves the default copy alone, and with JavaScript off nobody
+# sees a swap at all, which is why the default has to stand on its own.
+#
+# The four headlines are the first message of each family in docs/ads/messages.yaml,
+# where tools/ad_statics.py renders them onto the posters. Change one, change the other.
+START_HEADLINES = {
+    "movement": (
+        "What happens when two people move without choreography?",
+        "Contact Improvisation is weight, momentum and one rolling point of contact. "
+        "Eight Friday evenings in Hallandale Beach from 2 October, and the next dates by email.",
+    ),
+    "anxiety": (
+        "No partner. No dance experience. No choreography.",
+        "Get the next Miami class dates, one useful CI video a month, and 10% off your first class.",
+    ),
+    "social": (
+        "Meet people through movement, not small talk.",
+        "Eight Friday evenings in Hallandale Beach from 2 October, and the dates arrive by email "
+        "before you commit to anything.",
+    ),
+    "exercise": (
+        "The banana roll is lesson one.",
+        "Weight sharing, a rolling point of contact and falling that ends in a roll. "
+        "The next class dates arrive by email.",
+    ),
+}
+
+
+def start_headline_script():
+    """The `?h=` swap, as one static map and eight lines of script.
+
+    The map is serialised here so the page carries it and nothing has to be fetched to
+    decide what the headline says. Assignment is textContent, so a query string can only
+    ever pick one of five outcomes: one of the four variants, or the copy already in the
+    markup. Nothing is written into the document that did not come from this module.
+    """
+    variants = json.dumps(
+        {key: {"h1": h1, "line": line} for key, (h1, line) in START_HEADLINES.items()},
+        ensure_ascii=False,
+        indent=2,
+    )
+    return f"""<script>
+// The four headlines an ad can ask for, keyed by the h value on its link. The script
+// sits directly under the hero so the swap lands before the rest of the page paints.
+(function () {{
+  var variants = {variants};
+  var key = (new URLSearchParams(window.location.search).get('h') || '').toLowerCase();
+  var variant = variants[key];
+  if (!variant) return;
+  var heading = document.getElementById('start-heading');
+  var line = document.getElementById('start-line');
+  if (heading) heading.textContent = variant.h1;
+  if (line) line.textContent = variant.line;
+}})();
+</script>"""
+
 
 def start():
     """The page the Instagram bio and the door QR point at: one field, two ways in.
@@ -781,14 +847,15 @@ def start():
 <section class="hero">
   <div class="wrap">
     <p class="eyebrow">Start here &middot; Miami &middot; no partner needed</p>
-    <h1>New to Contact Improvisation?</h1>
-    <p class="lede">Get the next Miami classes, one useful CI video a month, and 10% off your first class.</p>
+    <h1 id="start-heading">New to Contact Improvisation?</h1>
+    <p class="lede" id="start-line">Get the next Miami classes, one useful CI video a month, and 10% off your first class.</p>
     <div class="btn-row">
       <a class="btn primary" href="/fundamentals">See next class</a>
     </div>
     {subscribe_block("en", source="miamicontactimprov:start", offer=START_OFFER, uid="start", button="Send me the dates")}
   </div>
 </section>
+{start_headline_script()}
 
 <section class="section">
   <div class="wrap">
