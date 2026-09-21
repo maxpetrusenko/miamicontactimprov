@@ -58,20 +58,12 @@ IG_GLYPH = (
     'stroke="none"/></svg>'
 )
 
-# Properties Max owns and runs. Retained in code as the canonical list of outbound
-# links; NOT rendered in the footer (see SHOW_PROJECT_LINKS). Hidden-but-present links
-# would be a search-spam signal, so when they are off they are off in the HTML too.
-SHOW_PROJECT_LINKS = False
-PROJECT_HEADING = {"en": "Projects", "es": "Proyectos"}
-PROJECT_LINKS = [
-    ("Max Petrusenko", "https://www.maxpetrusenko.com"),
-    ("GeoAnalyzer", "https://geo-analyzer.com"),
-    ("Unfollow X", "https://unfollow-x.com"),
-    ("SMM Agent", "https://smmagent.app"),
-    ("SMMClaw", "https://smmclaw.app"),
-    ("ClawPoster", "https://clawposter.app"),
-    ("Max Wiki", "https://wiki.maxpetrusenko.com"),
-]
+# There is no "projects"/"properties" block in the footer, by decision: a sitewide
+# reciprocal nav of the other sites the maintainer runs is the pattern Google's
+# hidden-text-and-links policy exists to catch, and sitewide self-links are discounted
+# at best. The list that used to live here and the flag that rendered it are gone rather
+# than switched off, so the block cannot come back by flipping one line. What belongs on
+# a page is a link earned by the page, not a footer that says it on every URL.
 
 FOOTER_COLS = [
     ("start", {
@@ -290,20 +282,11 @@ def footer(lang="en"):
             f"Local listings last checked {LAST_CHECKED}. Contact Improvisation has no central "
             "authority, no licence and no membership. This site is one map of it, not the map."
         )
-    projects = ""
-    if SHOW_PROJECT_LINKS:
-        projects = (
-            f'<nav class="footer-projects" aria-label="{PROJECT_HEADING.get(lang, PROJECT_HEADING["en"])}">'
-            f'<span class="footer-projects-title">{PROJECT_HEADING.get(lang, PROJECT_HEADING["en"])}</span>'
-            + "".join(f'<a href="{href}" target="_blank" rel="noopener">{label}</a>' for label, href in PROJECT_LINKS)
-            + "</nav>"
-        )
     return f"""<footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
       {''.join(cols)}
     </div>
-    {projects}
     <div class="colophon">
       <span>&copy; Miami Contact Improv &middot; {sentence}</span>
     </div>
