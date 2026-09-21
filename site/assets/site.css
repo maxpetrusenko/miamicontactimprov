@@ -480,6 +480,5 @@ a:hover { color: var(--terracotta-dark); }
 
 .ig-embeds { grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 900px; }
 .ig-frame { width: 100%; border: 0; border-radius: 14px; background: #fff; display: block; box-shadow: 0 8px 20px rgba(23,21,18,0.08); }
-.ig-frame.ig-post { height: 620px; }
-.ig-frame.ig-reel { height: 760px; }
+.ig-frame.ig-post, .ig-frame.ig-reel { height: 760px; }
 @media (max-width: 560px) { .ig-embeds { grid-template-columns: 1fr; } }
