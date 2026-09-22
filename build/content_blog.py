@@ -194,7 +194,7 @@ def _article(slug):
             "dateModified": PUBLISHED,
             "author": {"@id": schema.ORG_ID},
             "publisher": {"@id": schema.ORG_ID},
-            "image": schema.SITE + "/assets/og.png",
+            "image": schema.OG_IMAGE,
             "inLanguage": "en-US",
             "isPartOf": {"@id": schema.SITE + BLOG_ROUTE + "#posts"},
         },

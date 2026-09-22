@@ -7,6 +7,23 @@ import locales
 SITE = "https://miamicontactimprov.com"
 ORG_ID = SITE + "/#organisation"
 SITE_ID = SITE + "/#website"
+
+
+def _og_version():
+    """Short content hash of site/assets/og.png. Link unfurlers (iMessage, Slack, WhatsApp,
+    Facebook) and the CDN cache a social image by URL for days, so a new card at the same
+    /assets/og.png keeps showing the old picture. A hash in the query string gives every
+    new card a new URL."""
+    import hashlib
+    import pathlib
+    p = pathlib.Path(__file__).resolve().parent.parent / "site" / "assets" / "og.png"
+    try:
+        return hashlib.md5(p.read_bytes()).hexdigest()[:8]
+    except OSError:
+        return "1"
+
+
+OG_IMAGE = SITE + "/assets/og.png?v=" + _og_version()
 ORG_NAME = "Miami Contact Improv"
 
 # One canonical scope sentence and one disambiguation phrase PER LOCALE. These are the

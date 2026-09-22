@@ -178,7 +178,7 @@ def head(title, description, path, *, jsonld="", og_type="website", extra_head="
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{SITE}/assets/og.png">
+<meta property="og:image" content="{schema.OG_IMAGE}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Two hands reaching toward each other against a pink sunset sky">
@@ -187,7 +187,7 @@ def head(title, description, path, *, jsonld="", og_type="website", extra_head="
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{description}">
-<meta name="twitter:image" content="{SITE}/assets/og.png">
+<meta name="twitter:image" content="{schema.OG_IMAGE}">
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/assets/favicon-96.png" sizes="96x96" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">

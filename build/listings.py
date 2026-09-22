@@ -603,7 +603,7 @@ def friday_jam_event():
         },
         "isAccessibleForFree": False,
         "url": schema.SITE + "/friday-jam",
-        "image": schema.SITE + "/assets/og.png",
+        "image": schema.OG_IMAGE,
     }
 
 
@@ -650,7 +650,7 @@ def events_schema():
                     "url": meta["organiser_url"],
                 },
                 "url": url,
-                "image": schema.SITE + "/assets/og.png",
+                "image": schema.OG_IMAGE,
             }
             if end_hhmm:
                 node["endDate"] = _local_datetime(iso, end_hhmm)
