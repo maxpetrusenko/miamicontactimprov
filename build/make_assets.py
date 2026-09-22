@@ -65,46 +65,25 @@ def favicons():
 
 
 def og_image():
-    """1200x630 social card. Typographic, no stock photo, no AI slop."""
+    """1200x630 social card: the hero photograph (two hands reaching against a sunset sky),
+    cropped to the reach and given a soft dark foot so a title overlay stays legible on
+    platforms that add one. Photo only, no baked-in type: the card title comes from og:title."""
     W, H = 1200, 630
-    img = Image.new("RGB", (W, H), DARK)
-    d = ImageDraw.Draw(img)
-
-    # deep green field with a warm corner bloom, evoking a lit floor
+    src = OUT / "img" / "hero-clean.jpg"
+    photo = Image.open(src).convert("RGB")
+    pw, ph = photo.size
+    scale = W / pw
+    photo = photo.resize((W, round(ph * scale)), Image.LANCZOS)
+    # centre the crop on the reach point, about half-way down the frame
+    top = max(0, min(photo.height - H, round(photo.height * 0.50 - H / 2)))
+    card = photo.crop((0, top, W, top + H))
+    veil = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    vd = ImageDraw.Draw(veil)
     for i in range(H):
-        t = i / H
-        d.line([(0, i), (W, i)], fill=(
-            int(12 + 10 * (1 - t)), int(18 + 16 * (1 - t)), int(16 + 13 * (1 - t)),
-        ))
-    bloom = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    bd = ImageDraw.Draw(bloom)
-    for i in range(28, 0, -1):
-        a = int(5 + i * 1.1)
-        bd.ellipse([W * 0.62 - i * 26, H * 0.1 - i * 12, W * 0.62 + i * 26, H * 0.1 + i * 24],
-                   fill=ACCENT + (max(0, a),))
-    img = Image.alpha_composite(img.convert("RGBA"), bloom).convert("RGB")
-    d = ImageDraw.Draw(img)
-
-    # two arcs: a shared contact point, drawn as plain geometry
-    d.arc([120, 300, 620, 800], start=250, end=20, fill=(245, 242, 234), width=5)
-    d.arc([560, 180, 1060, 680], start=200, end=340, fill=(231, 173, 88), width=5)
-    d.ellipse([578, 400, 602, 424], fill=ACCENT)
-    d.ellipse([280, 350, 300, 370], fill=INK)
-
-    f_eyebrow = load_font(24)
-    f_h1 = load_font(78)
-    f_h2 = load_font(28)
-    f_small = load_font(22)
-
-    d.text((72, 62), "MIAMI  \u00b7  MIAMI BEACH  \u00b7  SOUTH FLORIDA", font=f_eyebrow, fill=ACCENT)
-    d.text((72, 108), "Contact Improvisation", font=f_h1, fill=INK)
-    d.text((72, 198), "in Miami", font=f_h1, fill=INK)
-    d.text((72, 470), "Jams \u00b7 Classes \u00b7 Teachers \u00b7 Video", font=f_h2, fill=(200, 207, 198))
-    d.text((72, 520), "A community map of the practice, with sources.", font=f_small, fill=(170, 180, 170))
-    d.line([(72, 570), (300, 570)], fill=(231, 173, 88), width=3)
-    d.text((72, 584), "miamicontactimprov.com", font=f_small, fill=INK)
-
-    img.save(OUT / "og.png", optimize=True)
+        t = max(0.0, (i - H * 0.55) / (H * 0.45))
+        vd.line([(0, i), (W, i)], fill=(23, 21, 18, int(150 * t * t)))
+    card = Image.alpha_composite(card.convert("RGBA"), veil).convert("RGB")
+    card.save(OUT / "og.png", optimize=True)
 
 
 if __name__ == "__main__":

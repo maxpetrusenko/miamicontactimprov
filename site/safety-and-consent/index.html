@@ -12,6 +12,10 @@
 <meta name="theme-color" content="#F3EDE1">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="geo.region" content="US-FL">
+<meta name="geo.placename" content="Hallandale Beach, Florida">
+<meta name="geo.position" content="25.987;-80.148">
+<meta name="ICBM" content="25.987, -80.148">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Miami Contact Improv">
 <meta property="og:title" content="Contact Improv Safety & Consent [Step-by-Step Guide]">
@@ -20,7 +24,7 @@
 <meta property="og:image" content="https://miamicontactimprov.com/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Two dancers in contact improvisation, one supporting the other's weight">
+<meta property="og:image:alt" content="Two hands reaching toward each other against a pink sunset sky">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=f4548993">
+<link rel="stylesheet" href="/assets/site.css?v=20ad37c4">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -361,6 +365,31 @@
   }
 
   // ---- hero cursor parallax ----
+
+  // Upcoming-jam stamp: the build bakes the next date in; refresh it in the browser so a
+  // deploy from last week still shows this Friday. Friday counts as upcoming until 9 PM.
+  (function () {
+    var st = document.getElementById('mci-stamp');
+    if (!st || !st.dataset.first) return;
+    try {
+      var now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      if (d.getDay() === 5 && now.getHours() >= parseInt(st.dataset.end, 10)) d.setDate(d.getDate() + 1);
+      d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7));
+      var fp = st.dataset.first.split('-');
+      var first = new Date(+fp[0], +fp[1] - 1, +fp[2]);
+      if (d < first) d = first;
+      var isFirst = d.getTime() === first.getTime();
+      var mEn = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+      var mEs = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+      var months = st.dataset.lang === 'es' ? mEs : mEn;
+      var label = isFirst ? st.dataset.labelFirst : st.dataset.labelNext;
+      var lab = st.querySelector('[data-role="label"]'), dt = st.querySelector('[data-role="date"]');
+      if (lab) lab.textContent = label;
+      if (dt) dt.textContent = d.getDate() + ' ' + months[d.getMonth()];
+      st.setAttribute('aria-label', label + ', ' + d.getDate() + ' ' + months[d.getMonth()]);
+    } catch (e) {}
+  })();
   var hero = document.getElementById('mci-hero');
   if (hero && canHover && !reduce) {
     var byId = function (id) { return document.getElementById(id); };
@@ -371,7 +400,6 @@
       set('mci-dot1', 'translate(' + (hx * 60).toFixed(1) + 'px,' + (hy * 60).toFixed(1) + 'px)');
       set('mci-dot2', 'translate(' + (hx * -48).toFixed(1) + 'px,' + (hy * -48).toFixed(1) + 'px)');
       set('mci-logo', 'rotateY(' + (hx * 16).toFixed(1) + 'deg) rotateX(' + (-hy * 12).toFixed(1) + 'deg) translate(' + (hx * -18).toFixed(1) + 'px,' + (hy * -18).toFixed(1) + 'px)');
-      set('mci-stamp', 'translate(' + (hx * 52).toFixed(1) + 'px,' + (hy * 52).toFixed(1) + 'px) rotate(' + (-10 + hx * 8).toFixed(1) + 'deg)');
       set('mci-chip1', 'translate(' + (hx * 42).toFixed(1) + 'px,' + (hy * 42).toFixed(1) + 'px) rotate(' + (hx * 6).toFixed(1) + 'deg)');
       set('mci-chip2', 'translate(' + (hx * -36).toFixed(1) + 'px,' + (hy * -36).toFixed(1) + 'px) rotate(' + (hx * -5).toFixed(1) + 'deg)');
       set('mci-w1', 'translate(' + (hx * 6).toFixed(1) + 'px,' + (hy * 6).toFixed(1) + 'px)');

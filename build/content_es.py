@@ -139,12 +139,23 @@ def _sessions_for_stage():
 # ---------------------------------------------------------------- home
 def home():
     ig_embeds = "".join(cm.ig_embed(u) for u in cm.IG_POSTS)
+    nxt = listings.next_friday_jam()
+    stamp_label = "Primera jam" if nxt.isoformat() == listings.FRIDAY_JAM_FIRST_DATE else "Próxima jam"
+    _es_months = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"]
+    stamp_date = f"{nxt.day} {_es_months[nxt.month - 1]}"
     body = f"""
 <section class="mci-hero-full plain" id="mci-hero">
   <div class="bg-wrap" id="mci-hero-bg"><img class="bg" src="{cm.IMG}/hero-clean.jpg" alt="Dos manos que se buscan contra un cielo rosado al atardecer"></div>
   <div class="veil"></div>
   <div class="inner" id="mci-hero-inner">
-    <p class="eyebrow-l rise" style="--d:.15s">Todos los viernes &middot; 7&ndash;9 PM &middot; Hallandale Beach</p>
+    <div class="hero-top rise" style="--d:.15s">
+      <a class="mci-stamp hero-stamp" id="mci-stamp" href="{R_FRIDAY}" data-first="{listings.FRIDAY_JAM_FIRST_DATE}" data-end="{listings.FRIDAY_JAM_END}" data-label-first="Primera jam" data-label-next="Próxima jam" data-lang="es" aria-label="{stamp_label}">
+        <span class="small" data-role="label">{stamp_label}</span>
+        <span class="big mci-h" data-role="date">{stamp_date}</span>
+        <span class="small">Vie &middot; 7&ndash;9 PM</span>
+      </a>
+      <p class="eyebrow-l">Todos los viernes &middot; 7&ndash;9 PM &middot; Hallandale Beach</p>
+    </div>
     <h1 class="mci-h"><span class="rise" style="--d:.3s">MUÉVETE.</span><span class="rise" style="--d:.42s">ESCUCHA.</span><span class="rise accent" style="--d:.54s">IMPROVISA.</span></h1>
     <p class="lede rise" style="--d:.72s">Una clase y jam abierta semanal de contact improv en Miami &mdash; donde la danza se encuentra con el contacto, la confianza y el juego. No hace falta experiencia, solo un cuerpo con curiosidad.</p>
     <div class="btn-row rise" style="--d:.88s">
@@ -157,7 +168,7 @@ def home():
 
 <div class="mci-panel-wrap" id="mci-when">
   <div class="mci-panel">
-    <div><p class="label mci-h">CUÁNDO</p><p>Todos los viernes, desde el 2 oct<br>7:00 &ndash; 9:00 PM<br>Clase, luego Jam abierta</p></div>
+    <div><p class="label mci-h">CUÁNDO</p><p>Todos los viernes, desde el 2 oct<br>7:00 &ndash; 9:00 PM<br>Clase, luego Jam abierta</p><a class="panel-link" href="{cm.LUMA}" target="_blank" rel="noopener">Reserva en Luma &rarr;</a></div>
     <div><p class="label mci-h">DÓNDE</p><p>Inner Motion Dance Studio<br>216 NE 1st Ave, Hallandale Beach, FL</p></div>
     <div><p class="label mci-h">QUIÉN</p><p>Todos los niveles, todos los cuerpos.<br>Ven solo/a o con quien quieras.</p></div>
   </div>

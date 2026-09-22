@@ -576,3 +576,36 @@ a:hover { color: var(--terracotta-dark); }
 @media (max-width: 760px) { .ig-embeds { grid-template-columns: 1fr; } .ig-embeds > .ig-frame { flex-basis: auto; } }
 
 .ig-frame { overflow: hidden; }
+
+/* upcoming-jam stamp in the photo hero (the badge from the first hero, theme-aligned) */
+.mci-hero-full .hero-top { display: flex; align-items: center; gap: 22px; margin: 0 0 22px; }
+.mci-hero-full .hero-top .eyebrow-l { margin: 0; }
+.mci-stamp.hero-stamp { position: relative; top: auto; left: auto; flex: none; width: 112px; height: 112px; text-decoration: none;
+  color: var(--ink); background: var(--terracotta); transform: rotate(-8deg);
+  box-shadow: 0 16px 34px rgba(23, 21, 18, 0.35), 0 0 0 6px rgba(243, 237, 225, 0.12);
+  animation: stampIn 0.9s cubic-bezier(.2,.7,.2,1) 0.35s both;
+  transition: transform 0.4s cubic-bezier(.2,.7,.2,1), background 0.2s, color 0.2s, box-shadow 0.3s; }
+.mci-stamp.hero-stamp::after { content: ""; position: absolute; inset: 7px; border-radius: 50%; border: 1.5px dashed rgba(23, 21, 18, 0.35); pointer-events: none; }
+.mci-stamp.hero-stamp .small { font-size: 9px; letter-spacing: 1.8px; }
+.mci-stamp.hero-stamp .big { font-size: 30px; margin: 5px 0; }
+.mci-stamp.hero-stamp:hover, .mci-stamp.hero-stamp:focus-visible { background: var(--cream); color: var(--ink); transform: rotate(0deg) scale(1.06);
+  box-shadow: 0 20px 40px rgba(23, 21, 18, 0.4), 0 0 0 6px rgba(193, 115, 74, 0.35); outline: none; }
+.mci-stamp.hero-stamp:hover::after { border-color: rgba(193, 115, 74, 0.6); }
+@keyframes stampIn { from { opacity: 0; transform: rotate(-24deg) scale(0.6); } to { opacity: 1; transform: rotate(-8deg) scale(1); } }
+@media (max-width: 820px) {
+  .mci-hero-full .hero-top { gap: 16px; }
+  .mci-stamp.hero-stamp { width: 96px; height: 96px; }
+  .mci-stamp.hero-stamp .big { font-size: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mci-stamp.hero-stamp { animation: none; transition: none; transform: none !important; }
+}
+
+/* Luma registration links */
+.mci-panel .panel-link { display: inline-block; margin-top: 12px; font-weight: 600; font-size: 13px; letter-spacing: 0.5px; color: var(--peach); text-decoration: none; border-bottom: 1px solid rgba(227, 168, 124, 0.5); transition: color 0.15s, border-color 0.15s; }
+.mci-panel .panel-link:hover { color: var(--cream); border-color: var(--cream); }
+a.mci-info-card.live { display: block; text-decoration: none; color: inherit; transition: transform 0.25s cubic-bezier(.2,.7,.2,1), box-shadow 0.25s; }
+a.mci-info-card.live:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(23, 21, 18, 0.14); }
+a.mci-info-card.live .head { background: var(--ink); }
+a.mci-info-card.live .head span { color: var(--peach); }
+a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }

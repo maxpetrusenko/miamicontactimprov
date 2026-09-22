@@ -20,6 +20,7 @@ import schema
 from shell import page
 
 IG = "https://instagram.com/miamicontactimprov"
+LUMA = "https://luma.com/hau1fq5t"  # Friday class + open practice registration
 IMG = "/assets/img"
 IG_GLYPH = (
     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
@@ -118,12 +119,22 @@ def _ig_section():
 
 # ---------------------------------------------------------------- Home
 def home():
+    nxt = listings.next_friday_jam()
+    stamp_label = "First jam" if nxt.isoformat() == listings.FRIDAY_JAM_FIRST_DATE else "Next jam"
+    stamp_date = f"{nxt.day} {nxt.strftime('%b').upper()}"
     body = f"""
 <section class="mci-hero-full plain" id="mci-hero">
   <div class="bg-wrap" id="mci-hero-bg"><img class="bg" src="/assets/img/hero-clean.jpg" alt="Two hands reaching toward each other against a pink sunset sky"></div>
   <div class="veil"></div>
   <div class="inner" id="mci-hero-inner">
-    <p class="eyebrow-l rise" style="--d:.15s">Every Friday &middot; 7&ndash;9 PM &middot; Hallandale Beach</p>
+    <div class="hero-top rise" style="--d:.15s">
+      <a class="mci-stamp hero-stamp" id="mci-stamp" href="/friday-jam" data-first="{listings.FRIDAY_JAM_FIRST_DATE}" data-end="{listings.FRIDAY_JAM_END}" data-label-first="First jam" data-label-next="Next jam" data-lang="en" aria-label="{stamp_label}">
+        <span class="small" data-role="label">{stamp_label}</span>
+        <span class="big mci-h" data-role="date">{stamp_date}</span>
+        <span class="small">Fri &middot; 7&ndash;9 PM</span>
+      </a>
+      <p class="eyebrow-l">Every Friday &middot; 7&ndash;9 PM &middot; Hallandale Beach</p>
+    </div>
     <h1 class="mci-h"><span class="rise" style="--d:.3s">MOVE.</span><span class="rise" style="--d:.42s">LISTEN.</span><span class="rise accent" style="--d:.54s">IMPROVISE.</span></h1>
     <p class="lede rise" style="--d:.72s">A weekly contact improv class and open jam in Miami &mdash; where dance meets touch, trust, and play. No experience needed, just a curious body.</p>
     <div class="btn-row rise" style="--d:.88s">
@@ -139,6 +150,7 @@ def home():
     <div>
       <p class="label mci-h">WHEN</p>
       <p>Every Friday, starting Oct 2<br>7:00 &ndash; 9:00 PM<br>Class, then Open Jam</p>
+      <a class="panel-link" href="{LUMA}" target="_blank" rel="noopener">RSVP on Luma &rarr;</a>
     </div>
     <div>
       <p class="label mci-h">WHERE</p>
@@ -220,7 +232,7 @@ def events():
 <div class="mci-jam-card">
   <div>
     <p class="label mci-h">WEEKLY JAM</p>
-    <p>Every Friday from Oct 2, 2026 &middot; 7:00&ndash;9:00 PM<br>Class 7:00&ndash;7:45, Open Jam 7:45&ndash;9:00<br>Inner Motion Dance Studio &middot; 216 NE 1st Ave, Hallandale Beach<br><a href="/friday-jam" style="color:var(--peach);text-decoration:underline;">Full details &rarr;</a></p>
+    <p>Every Friday from Oct 2, 2026 &middot; 7:00&ndash;9:00 PM<br>Class 7:00&ndash;7:45, Open Jam 7:45&ndash;9:00<br>Inner Motion Dance Studio &middot; 216 NE 1st Ave, Hallandale Beach<br><a href="/friday-jam" style="color:var(--peach);text-decoration:underline;">Full details &rarr;</a> &nbsp;&middot;&nbsp; <a href="{LUMA}" target="_blank" rel="noopener" style="color:var(--peach);text-decoration:underline;">RSVP on Luma &rarr;</a></p>
   </div>
   <span class="price">$20 &ndash; $50 sliding scale</span>
 </div>
@@ -234,13 +246,14 @@ def events():
       <p>Online registration will open here once ticketing is live. The weekly jam needs no booking &mdash; just come to the door.</p>
     </div>
   </div>
-  <div class="mci-info-card">
+  <a class="mci-info-card live" href="{LUMA}" target="_blank" rel="noopener">
     <div class="head"><span>LUMA</span></div>
     <div class="body">
-      <h3>Special workshops</h3>
-      <p>One-off workshops and intensives will be bookable here. In the meantime, follow Instagram for announcements.</p>
+      <h3>Contact Improvisation (CI) Class Miami</h3>
+      <p>Register in advance for the Friday class and open practice at Inner Motion Dance Studio. Hosted by Max Petrusenko.</p>
+      <span class="mci-pill terracotta">RSVP on Luma &rarr;</span>
     </div>
-  </div>
+  </a>
 </div>
 </div>
 

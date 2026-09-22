@@ -41,6 +41,19 @@ FRIDAY_JAM_EVENT_ID = "https://miamicontactimprov.com/friday-jam#event"
 _ET = ZoneInfo("America/New_York")
 
 
+def next_friday_jam(today=None):
+    """The next Friday jam date: the first Friday on/after today (Miami time) that is
+    not before the first jam. A Friday counts as upcoming until the jam ends (9 PM)."""
+    tz = ZoneInfo("America/New_York")
+    now = datetime.datetime.now(tz) if today is None else today
+    first = datetime.date.fromisoformat(FRIDAY_JAM_FIRST_DATE)
+    d = now.date()
+    if d.weekday() == 4 and now.hour >= int(FRIDAY_JAM_END[:2]):
+        d += datetime.timedelta(days=1)
+    d += datetime.timedelta(days=(4 - d.weekday()) % 7)
+    return max(d, first)
+
+
 def _local_datetime(date_str, hhmm):
     """`date_str` at `hhmm` in America/New_York, as ISO-8601 with the offset true then.
 
@@ -566,6 +579,8 @@ def friday_jam_event():
                 "postalCode": "33009",
                 "addressCountry": "US",
             },
+            # Approximate: the studio's block on NE 1st Ave, north of Hallandale Beach Blvd.
+            "geo": {"@type": "GeoCoordinates", "latitude": 25.987, "longitude": -80.148},
         },
         "organizer": {**host, "affiliation": {"@id": schema.ORG_ID}},
         "performer": host,
