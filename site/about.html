@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=4">
+<link rel="stylesheet" href="/assets/site.css?v=5">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -237,12 +237,24 @@
     </nav>
     <div class="footer-subscribe">
       <h3>The monthly dates</h3>
-      <form class="subscribe-form" data-source="miamicontactimprov:about" data-offer="Subscribe for 10% off the series, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-footer-about">Subscribe for 10% off the series, and one email a month.</label>
+      <form class="subscribe-form" data-source="miamicontactimprov:about" data-offer="Subscribe for 20% off classes for the next two months, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
+  <label class="subscribe-label" for="subscribe-footer-about">Subscribe for 20% off classes for the next two months, and one email a month.</label>
   <div class="subscribe-row">
     <input id="subscribe-footer-about" name="email" type="email" inputmode="email" autocomplete="email" required>
+    <label class="subscribe-phone" for="subscribe-phone-footer-about">
+      <span>Phone (optional)</span>
+      <input id="subscribe-phone-footer-about" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+    </label>
     <button class="btn primary" type="submit">Subscribe</button>
   </div>
+  <div class="subscribe-hp" aria-hidden="true">
+    <label for="subscribe-hp-footer-about">Company</label>
+    <input id="subscribe-hp-footer-about" name="company" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <label class="subscribe-consent" for="subscribe-consent-footer-about">
+    <input id="subscribe-consent-footer-about" name="consent" type="checkbox" required>
+    <span>I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.</span>
+  </label>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>
     </div>
@@ -293,10 +305,15 @@
     var status = form.querySelector('.subscribe-status');
     var button = form.querySelector('button[type="submit"]');
     var input = form.querySelector('input[type="email"]');
+    var phone = form.querySelector('input[type="tel"]');
+    var consent = form.querySelector('input[name="consent"]');
+    var company = form.querySelector('input[name="company"]');
     var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       if (!input.value.trim()) { input.focus(); return; }
+      if (!consent.checked) { consent.focus(); return; }
+      if (company && company.value.trim()) { return; }
       button.disabled = true;
       say('sending');
       fetch(form.getAttribute('data-endpoint'), {
@@ -304,7 +321,9 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: input.value.trim(),
-          consent: true,
+          phone: phone ? phone.value.trim() : '',
+          consent: consent.checked,
+          company: company ? company.value.trim() : '',
           source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
           offer: form.getAttribute('data-offer') || '',
           campaign: param('utm_campaign'),

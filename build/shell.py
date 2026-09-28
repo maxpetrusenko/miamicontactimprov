@@ -97,7 +97,7 @@ FOOTER_COLS = [
     ]),
 ]
 
-STYLESHEET = "/assets/site.css?v=4"
+STYLESHEET = "/assets/site.css?v=5"
 
 
 # ------------------------------------------------------------ subscribe form
@@ -107,11 +107,15 @@ SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subs
 
 # The form copy, per locale. The label carries the whole offer: the discount and the
 # send frequency, in one sentence. The discount code itself is never printed here; the
-# welcome email that follows a signup carries it.
+# welcome email that follows a signup carries it. `consent` is the one-sentence,
+# required opt-in line the field sits above a checkbox for - not a hint, the actual
+# legal consent statement, because a form that texts a phone number needs one.
 SUBSCRIBE_COPY = {
     "en": {
         "heading": "The monthly dates",
-        "label": "Subscribe for 10% off the series, and one email a month.",
+        "label": "Subscribe for 20% off classes for the next two months, and one email a month.",
+        "phone_label": "Phone (optional)",
+        "consent": "I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.",
         "button": "Subscribe",
         "sending": "Sending.",
         "ok": "You are on the list. The code is in the email that just went out.",
@@ -119,7 +123,9 @@ SUBSCRIBE_COPY = {
     },
     "es": {
         "heading": "Las fechas del mes",
-        "label": "Suscríbete para un 10% de descuento en la serie, y un correo al mes.",
+        "label": "Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes.",
+        "phone_label": "Teléfono (opcional)",
+        "consent": "Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.",
         "button": "Suscribirme",
         "sending": "Enviando.",
         "ok": "Ya estás en la lista. El código va en el correo que acaba de salir.",
@@ -146,7 +152,7 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     submit does nothing rather than promising something it cannot do, which is why the
     markup carries no action attribute.
 
-    `source` travels with the signup. The Worker sends the welcome email and the 10%
+    `source` travels with the signup. The Worker sends the welcome email and the 20%
     code only when the source starts with `miamicontactimprov`, so the value here is
     what decides whether a reader gets the code.
 
@@ -154,17 +160,40 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     the page it sits on. The label is the sentence the reader answers and this site has
     no separate hint line under the field, so a page that offers the next dates rather
     than the monthly email says so in the label itself and nowhere else.
+
+    Phone is a second, optional field: no SMS sends yet, so making it required would
+    ask for something the site cannot use today and only costs signups. The consent
+    checkbox is required and is the actual legal line, not a hint - it names both
+    channels because a reader who leaves a number is agreeing to be texted on it.
+    The honeypot field is hidden from sighted users by CSS alone (no display:none, a
+    simple bot still fills it) and read by the Worker, which drops a submission that
+    fills it rather than answering it as spam.
     """
     copy = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])
     field_id = f"subscribe-{uid}"
+    phone_id = f"subscribe-phone-{uid}"
+    consent_id = f"subscribe-consent-{uid}"
+    hp_id = f"subscribe-hp-{uid}"
     text = label or copy["label"]
     action = button or copy["button"]
     return f"""<form class="subscribe-form" data-source="{_attr(source)}" data-offer="{_attr(text)}" data-endpoint="{SUBSCRIBE_ENDPOINT}" data-sending="{_attr(copy['sending'])}" data-ok="{_attr(copy['ok'])}" data-error="{_attr(copy['error'])}">
   <label class="subscribe-label" for="{field_id}">{text}</label>
   <div class="subscribe-row">
     <input id="{field_id}" name="email" type="email" inputmode="email" autocomplete="email" required>
+    <label class="subscribe-phone" for="{phone_id}">
+      <span>{copy['phone_label']}</span>
+      <input id="{phone_id}" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+    </label>
     <button class="btn primary" type="submit">{action}</button>
   </div>
+  <div class="subscribe-hp" aria-hidden="true">
+    <label for="{hp_id}">Company</label>
+    <input id="{hp_id}" name="company" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <label class="subscribe-consent" for="{consent_id}">
+    <input id="{consent_id}" name="consent" type="checkbox" required>
+    <span>{copy['consent']}</span>
+  </label>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>"""
 
@@ -447,10 +476,15 @@ def body_script():
     var status = form.querySelector('.subscribe-status');
     var button = form.querySelector('button[type="submit"]');
     var input = form.querySelector('input[type="email"]');
+    var phone = form.querySelector('input[type="tel"]');
+    var consent = form.querySelector('input[name="consent"]');
+    var company = form.querySelector('input[name="company"]');
     var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       if (!input.value.trim()) { input.focus(); return; }
+      if (!consent.checked) { consent.focus(); return; }
+      if (company && company.value.trim()) { return; }
       button.disabled = true;
       say('sending');
       fetch(form.getAttribute('data-endpoint'), {
@@ -458,7 +492,9 @@ def body_script():
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: input.value.trim(),
-          consent: true,
+          phone: phone ? phone.value.trim() : '',
+          consent: consent.checked,
+          company: company ? company.value.trim() : '',
           source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
           offer: form.getAttribute('data-offer') || '',
           campaign: param('utm_campaign'),

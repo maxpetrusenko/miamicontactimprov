@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=4">
+<link rel="stylesheet" href="/assets/site.css?v=5">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -339,16 +339,28 @@
 
     <h2>What a class costs</h2>
       <p>Each class is $20 to $50 on a sliding scale. Pay what you can inside that range and nobody will ask where you landed. The lower end covers the room; the upper end is for anyone who can carry more of it and wants the series to keep running.</p>
-      <p>Subscribers to the monthly email get 10% off any class; the code arrives in the first email. Nothing else on this site unlocks a discount.</p>
+      <p>Subscribers to the monthly email get 20% off any class for the next two months; the code arrives in the first email. Nothing else on this site unlocks a discount.</p>
       <p>If $20 is the reason you are not coming this week, say so before the class. One email is enough and it gets sorted. Nobody is turned away from a fundamentals class over money.</p>
 
       <div class="subscribe-block">
-  <form class="subscribe-form" data-source="miamicontactimprov:fundamentals" data-offer="Not ready for this Friday? Get the next dates and 10% off when you are." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-fundamentals">Not ready for this Friday? Get the next dates and 10% off when you are.</label>
+  <form class="subscribe-form" data-source="miamicontactimprov:fundamentals" data-offer="Not ready for this Friday? Get the next dates and 20% off classes for the next two months." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
+  <label class="subscribe-label" for="subscribe-fundamentals">Not ready for this Friday? Get the next dates and 20% off classes for the next two months.</label>
   <div class="subscribe-row">
     <input id="subscribe-fundamentals" name="email" type="email" inputmode="email" autocomplete="email" required>
+    <label class="subscribe-phone" for="subscribe-phone-fundamentals">
+      <span>Phone (optional)</span>
+      <input id="subscribe-phone-fundamentals" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+    </label>
     <button class="btn primary" type="submit">Subscribe</button>
   </div>
+  <div class="subscribe-hp" aria-hidden="true">
+    <label for="subscribe-hp-fundamentals">Company</label>
+    <input id="subscribe-hp-fundamentals" name="company" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <label class="subscribe-consent" for="subscribe-consent-fundamentals">
+    <input id="subscribe-consent-fundamentals" name="consent" type="checkbox" required>
+    <span>I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.</span>
+  </label>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>
 </div>
@@ -385,12 +397,24 @@
     </nav>
     <div class="footer-subscribe">
       <h3>The monthly dates</h3>
-      <form class="subscribe-form" data-source="miamicontactimprov:fundamentals" data-offer="Subscribe for 10% off the series, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-footer-fundamentals">Subscribe for 10% off the series, and one email a month.</label>
+      <form class="subscribe-form" data-source="miamicontactimprov:fundamentals" data-offer="Subscribe for 20% off classes for the next two months, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
+  <label class="subscribe-label" for="subscribe-footer-fundamentals">Subscribe for 20% off classes for the next two months, and one email a month.</label>
   <div class="subscribe-row">
     <input id="subscribe-footer-fundamentals" name="email" type="email" inputmode="email" autocomplete="email" required>
+    <label class="subscribe-phone" for="subscribe-phone-footer-fundamentals">
+      <span>Phone (optional)</span>
+      <input id="subscribe-phone-footer-fundamentals" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+    </label>
     <button class="btn primary" type="submit">Subscribe</button>
   </div>
+  <div class="subscribe-hp" aria-hidden="true">
+    <label for="subscribe-hp-footer-fundamentals">Company</label>
+    <input id="subscribe-hp-footer-fundamentals" name="company" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <label class="subscribe-consent" for="subscribe-consent-footer-fundamentals">
+    <input id="subscribe-consent-footer-fundamentals" name="consent" type="checkbox" required>
+    <span>I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.</span>
+  </label>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>
     </div>
@@ -441,10 +465,15 @@
     var status = form.querySelector('.subscribe-status');
     var button = form.querySelector('button[type="submit"]');
     var input = form.querySelector('input[type="email"]');
+    var phone = form.querySelector('input[type="tel"]');
+    var consent = form.querySelector('input[name="consent"]');
+    var company = form.querySelector('input[name="company"]');
     var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       if (!input.value.trim()) { input.focus(); return; }
+      if (!consent.checked) { consent.focus(); return; }
+      if (company && company.value.trim()) { return; }
       button.disabled = true;
       say('sending');
       fetch(form.getAttribute('data-endpoint'), {
@@ -452,7 +481,9 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: input.value.trim(),
-          consent: true,
+          phone: phone ? phone.value.trim() : '',
+          consent: consent.checked,
+          company: company ? company.value.trim() : '',
           source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
           offer: form.getAttribute('data-offer') || '',
           campaign: param('utm_campaign'),

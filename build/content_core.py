@@ -20,7 +20,7 @@ def home():
       <a class="btn secondary" href="/what-is-contact-improvisation">What is CI?</a>
     </div>
     <p class="micro">No membership. No central authority. A community resource that also runs a weekly jam and a beginners' class series.</p>
-    {subscribe_block("en", source="miamicontactimprov:home", offer="The next Miami dates by email, one message a month.", uid="home")}
+    {subscribe_block("en", source="miamicontactimprov:home", offer="Subscribe for 20% off classes for the next two months, and the next Miami dates by email.", uid="home")}
   </div>
 </section>
 
