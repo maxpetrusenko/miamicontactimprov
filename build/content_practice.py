@@ -705,7 +705,7 @@ def fundamentals():
 
     <h2>What a class costs</h2>
       <p>Each class is $20 to $50 on a sliding scale. Pay what you can inside that range and nobody will ask where you landed. The lower end covers the room; the upper end is for anyone who can carry more of it and wants the series to keep running.</p>
-      <p>Subscribers to the monthly email get 10% off any class; the code arrives in the first email. Nothing else on this site unlocks a discount.</p>
+      <p>Subscribers to the monthly email get 20% off any class for the next two months; the code arrives in the first email. Nothing else on this site unlocks a discount.</p>
       <p>If $20 is the reason you are not coming this week, say so before the class. One email is enough and it gets sorted. Nobody is turned away from a fundamentals class over money.</p>
 
       {subscribe_block("en", source="miamicontactimprov:fundamentals", offer=START_OFFER, uid="fundamentals")}
@@ -757,7 +757,7 @@ def fundamentals():
 # /fundamentals, where the reader has just read what the discount is. Written once so
 # the sentence a reader answers is the sentence the record of that signup carries, and
 # so the funnel report can tell which offer earned an address.
-START_OFFER = "Not ready for this Friday? Get the next dates and 10% off when you are."
+START_OFFER = "Not ready for this Friday? Get the next dates and 20% off classes for the next two months."
 
 # ------------------------------------------------------------------ the ad whitelist
 # An ad and the page it opens should say the same sentence. Each key here is the `h`
@@ -848,7 +848,7 @@ def start():
   <div class="wrap">
     <p class="eyebrow">Start here &middot; Miami &middot; no partner needed</p>
     <h1 id="start-heading">New to Contact Improvisation?</h1>
-    <p class="lede" id="start-line">Get the next Miami classes, one useful CI video a month, and 10% off your first class.</p>
+    <p class="lede" id="start-line">Get the next Miami classes, one useful CI video a month, and 20% off classes for the next two months.</p>
     <div class="btn-row">
       <a class="btn primary" href="/fundamentals">See next class</a>
     </div>
@@ -859,9 +859,9 @@ def start():
 
 <section class="section">
   <div class="wrap">
-    {answer("Leave your email and the next class dates arrive, with one video a month and a 10% code for your first class. After that it is one email a month, and replying to any of them takes you off the list. No partner and no experience are needed for any of it.", label="What arrives by email")}
+    {answer("Leave your email and the next class dates arrive, with one video a month and a 20% code for classes over the next two months. After that it is one email a month, and replying to any of them takes you off the list. No partner and no experience are needed for any of it.", label="What arrives by email")}
     {facts([
-      ("What arrives", "The next dates by email, one CI video a month, and the 10% code for your first class"),
+      ("What arrives", "The next dates by email, one CI video a month, and a 20% code for classes over the next two months"),
       ("After that", "One email a month, and a reply to any of them takes you off the list"),
       ("Next classes", f"Fridays, 7:00&ndash;9:00 PM, from {first} to {last}"),
       ("Where", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
@@ -891,14 +891,14 @@ def start():
         schema.webpage(
             "/start",
             "New to Contact Improvisation in Miami",
-            "The next Contact Improvisation class dates in Miami by email, one CI video a month and 10% off a first class. Fridays 7:00 to 9:00 PM at Inner Motion Dance Studio, Hallandale Beach, from 2 October 2026.",
+            "The next Contact Improvisation class dates in Miami by email, one CI video a month and 20% off classes for the next two months. Fridays 7:00 to 9:00 PM at Inner Motion Dance Studio, Hallandale Beach, from 2 October 2026.",
             date_modified=listings.FUNDAMENTALS_VERIFIED,
         ),
         schema.breadcrumb("/start", "Start"),
     )
     return page(
         "New to Contact Improvisation? Start in Miami",
-        "Get the next Contact Improvisation class dates in Miami by email, one video a month and 10% off your first class. No partner and no experience needed.",
+        "Get the next Contact Improvisation class dates in Miami by email, one video a month and 20% off classes for the next two months. No partner and no experience needed.",
         "/start",
         body,
         jsonld=jsonld,
