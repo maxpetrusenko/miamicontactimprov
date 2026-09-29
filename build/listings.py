@@ -38,6 +38,18 @@ FRIDAY_JAM_END = "21:00"
 # delete the expectation that it exists.
 FRIDAY_JAM_EVENT_ID = "https://miamicontactimprov.com/friday-jam#event"
 
+# The eight-week Fundamentals series this site hosts: the date its schedule was set down by
+# the teacher, and the name that keys the rows for it in every table below.
+FUNDAMENTALS_VERIFIED = "2026-09-21"
+FUNDAMENTALS_NAME = "Contact Improv \u2014 Fundamentals"
+# TODO(luma): registration for the series runs on Luma, and the event does not exist there
+# yet. Swap this for the Luma event URL (https://lu.ma/...) once it is published: it is the
+# Course url, the offer url and the address the page is built at, so it is the one place to
+# change. Until then it points at this site's own page for the series, because a Course with
+# no url is a Course tools/gate.py refuses and inventing a Luma slug would publish a link
+# that 404s.
+FUNDAMENTALS_URL = schema.SITE + "/fundamentals"
+
 _ET = ZoneInfo("America/New_York")
 
 
@@ -74,6 +86,38 @@ def _local_datetime(date_str, hhmm):
 
 # Kept so nothing that still calls the old name silently breaks.
 _jam_datetime = _local_datetime
+
+# The weekday and month names a page prints beside a listing's ISO date. The tables keep ISO
+# dates because that is what the Event nodes need; a reader needs "Friday 2 October 2026".
+_WEEKDAYS = {
+    "en": ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"),
+    "es": ("lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"),
+}
+_MONTHS = {
+    "en": (
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
+    ),
+    "es": (
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+    ),
+}
+
+
+def date_label(iso, lang="en"):
+    """`2026-10-02` -> `Friday 2 October 2026`, or the Spanish form under `lang="es"`.
+
+    A page that lists its own dates reads them from the EVENT_DATES row the Events and the
+    Course schedule are built from, so the dates a reader sees and the dates in the markup
+    cannot be two different sets of Fridays.
+    """
+    year, month, day = (int(part) for part in iso.split("-"))
+    weekday = datetime.date(year, month, day).weekday()
+    if lang == "es":
+        return f"{_WEEKDAYS['es'][weekday]} {day} de {_MONTHS['es'][month - 1]} de {year}"
+    return f"{_WEEKDAYS['en'][weekday]} {day} {_MONTHS['en'][month - 1]} {year}"
+
 
 # name, modality, city, venue, schedule, cost, url, verified, note
 # name, modality, city, venue, schedule, cost, url, verified, note
@@ -199,6 +243,26 @@ SESSIONS = [
         "own public schedule did not yet show this session when it was opened on the checked date, so the "
         "source linked here is this site's own page for the jam, which is where the schedule is kept current.",
     ),
+    (
+        FUNDAMENTALS_NAME,
+        "Contact Improvisation",
+        "Miami, north edge: Hallandale Beach",
+        "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009",
+        "Eight Fridays, 7:00\u20139:00 PM, from Friday 2 October 2026 to Friday 20 November 2026",
+        "$20\u2013$50 sliding scale for each class, paid at the door or booked on Luma",
+        FUNDAMENTALS_URL,
+        FUNDAMENTALS_VERIFIED,
+        "Run by the same maintainer as the Friday jam, and the disclosure comes first: it is taught by Max "
+        "Petrusenko, who also maintains miamicontactimprov.com, so this entry is the organiser describing "
+        "his own class, on the same terms as every other entry on this page and ranked no higher for it. "
+        "Eight weekly classes on the fundamentals of the form, 7:00 to 9:00 PM at Inner Motion Dance "
+        "Studio on the north edge of Miami: giving and taking weight, a rolling point of contact, falling, "
+        "momentum, consent, and small dances that build toward an open score. Each class ends with an open "
+        "dance, and you can drop into any of the eight, with no partner and no experience needed. "
+        "Registration runs through Luma, subscribers to the monthly email get 10% off, and payment at the "
+        "door is accepted at every class. The series ends on 20 "
+        "November 2026, so this entry comes down with it rather than sitting here looking current.",
+    ),
 ]
 
 
@@ -209,6 +273,10 @@ SESSIONS = [
 SESSION_ORGANISERS = {
     FRIDAY_JAM_NAME: (
         "Max Petrusenko, who also maintains this site",
+        "https://www.maxpetrusenko.com",
+    ),
+    FUNDAMENTALS_NAME: (
+        "Max Petrusenko, who also teaches it and maintains this site",
         "https://www.maxpetrusenko.com",
     ),
     "Contact Improv \u2014 ALL LEVELS": (
@@ -459,6 +527,20 @@ EVENT_DATES = {
     "Ecstatic Dance Miami \u2014 Full Moon Immersion": [
         ("2026-09-26", "Hollywood Lakes, Hollywood, FL", "19:00", "23:59"),
     ],
+    # The eight dates of the Fundamentals series, as the series itself publishes them. Eight
+    # dated occurrences rather than the single recurring node the Friday jam gets, because
+    # this is a course with a first and a last class and a search result should be able to say
+    # which one is next; when 20 November passes, the row is no longer current and comes out.
+    FUNDAMENTALS_NAME: [
+        ("2026-10-02", "Inner Motion Dance Studio, Hallandale Beach, FL", "19:00", "21:00"),
+        ("2026-10-09", "Inner Motion Dance Studio, Hallandale Beach, FL", "19:00", "21:00"),
+        ("2026-10-16", "Inner Motion Dance Studio, Hallandale Beach, FL", "19:00", "21:00"),
+        ("2026-10-23", "Inner Motion Dance Studio, Hallandale Beach, FL", "19:00", "21:00"),
+        ("2026-10-30", "Inner Motion Dance Studio, Hallandale Beach, FL", "19:00", "21:00"),
+        ("2026-11-06", "Inner Motion Dance Studio, Hallandale Beach, FL", "19:00", "21:00"),
+        ("2026-11-13", "Inner Motion Dance Studio, Hallandale Beach, FL", "19:00", "21:00"),
+        ("2026-11-20", "Inner Motion Dance Studio, Hallandale Beach, FL", "19:00", "21:00"),
+    ],
 }
 
 # The organiser and locality behind each dated occurrence. Separate from EVENT_DATES so
@@ -480,6 +562,15 @@ EVENT_ORGS = {
         "locality": "Hollywood",
         "ticketed": None,
     },
+    # Ticketed, because a class with a published sliding scale is not free and the Events
+    # should say so; the door still takes the money for anyone who has not booked on Luma.
+    FUNDAMENTALS_NAME: {
+        "slug": "contact-improv-fundamentals",
+        "organiser": "Max Petrusenko",
+        "organiser_url": "https://www.maxpetrusenko.com",
+        "locality": "Hallandale Beach",
+        "ticketed": True,
+    },
 }
 
 # Session -> (schema type, name, url) for `performer`: who is on at this session.
@@ -488,8 +579,9 @@ EVENT_ORGS = {
 # the property Google reads for it. On this property it can only ever carry what a source
 # actually publishes, so the table is short and its gaps are the point:
 #
-#   * The Friday jam is the one session whose page names the person who holds it - "Max
-#     Petrusenko hosts the jam" - so it is a Person, and the same host node that
+#   * The Friday jam and the Fundamentals series are the two sessions whose pages name the
+#     person who holds them - "Max Petrusenko hosts the jam" and "Max Petrusenko teaches the
+#     series" - so both carry a Person, and the jam's entry is the same host node that
 #     friday_jam_event() builds its organizer from.
 #   * For the three third-party dated occurrences the sources name an organisation and no
 #     individual: Kama Flight publishes its own workshop page and describes the form, and
@@ -515,6 +607,9 @@ EVENT_PERFORMERS = {
     "Ecstatic Dance Miami \u2014 Full Moon Immersion": (
         "Organization", "Ecstatic Dance Miami", "https://ecstaticdancemiami.com/",
     ),
+    # The series' own page names the person teaching it, so it carries a Person here for the
+    # same reason the jam does.
+    FUNDAMENTALS_NAME: ("Person", "Max Petrusenko", "https://www.maxpetrusenko.com"),
 }
 
 
@@ -710,4 +805,84 @@ def course_schema():
             },
         },
         "url": "https://www.eventbrite.com/e/contact-improv-all-levels-tickets-1999219825315",
+    }
+
+
+def fundamentals_course():
+    """The eight-week series this site hosts, as a Course whose dates come from one table.
+
+    Modelled on course_schema() above: same shape, one CourseInstance. Two things differ.
+    The provider is this site rather than a studio, and the dates are read from the
+    EVENT_DATES row for the series, which is the same row the eight dated Events on /jams and
+    /miami-jams are built from and the same one the dates table on /fundamentals lists. One
+    table, so the Course, the Events and the page cannot advertise different Fridays.
+
+    The offer is the sliding scale the series actually charges. `validFrom` is the first
+    class's start, for the reason set out on friday_jam_event(): there is no on-sale datetime
+    to publish until the Luma event exists, and backdating it to the day this was written
+    would claim a sale that never opened.
+    """
+    occurrences = EVENT_DATES[FUNDAMENTALS_NAME]
+    first_iso, _place, start_hhmm, end_hhmm = occurrences[0]
+    last_iso = occurrences[-1][0]
+    return {
+        "@type": "Course",
+        "@id": FUNDAMENTALS_URL + "#series",
+        "name": FUNDAMENTALS_NAME,
+        "description": (
+            "An eight-week Contact Improvisation class series for beginners in Hallandale "
+            "Beach, Miami: giving and taking weight, keeping a rolling point of contact, "
+            "falling, momentum and consent, with an open dance at the end of each class. No "
+            "partner and no experience needed, and any one of the eight can be taken on its own."
+        ),
+        "provider": {
+            "@type": "Organization",
+            "name": schema.ORG_NAME,
+            "url": schema.SITE + "/",
+        },
+        "inLanguage": "en",
+        "teaches": (
+            "Contact Improvisation fundamentals: weight sharing, a rolling point of contact, "
+            "falling safely, momentum, consent, and dancing an open score"
+        ),
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "onsite",
+            "courseWorkload": "PT2H",
+            "location": {
+                "@type": "Place",
+                "name": "Inner Motion Dance Studio",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "216 NE 1st Ave",
+                    "addressLocality": "Hallandale Beach",
+                    "addressRegion": "FL",
+                    "postalCode": "33009",
+                    "addressCountry": "US",
+                },
+            },
+            "courseSchedule": {
+                "@type": "Schedule",
+                "byDay": "https://schema.org/Friday",
+                "startTime": start_hhmm,
+                "endTime": end_hhmm,
+                "startDate": first_iso,
+                "endDate": last_iso,
+                "repeatFrequency": "P1W",
+                "scheduleTimezone": "America/New_York",
+            },
+        },
+        # An Offer carries one price, so the price is the floor of the published range and the
+        # range itself goes in `description` rather than being averaged into a figure the
+        # series does not charge.
+        "offers": {
+            "@type": "Offer",
+            "price": "20",
+            "priceCurrency": "USD",
+            "description": "Sliding scale $20 to $50 for each class, paid at the door or booked on Luma",
+            "availability": "https://schema.org/InStock",
+            "validFrom": _local_datetime(first_iso, start_hhmm),
+            "url": FUNDAMENTALS_URL,
+        },
+        "url": FUNDAMENTALS_URL,
     }

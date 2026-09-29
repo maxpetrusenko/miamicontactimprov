@@ -8,3 +8,8 @@ __pycache__/
 .agents
 .hermes
 .wrangler
+
+# Ad posters are regenerated from docs/ads/messages.yaml by tools/ad_statics.py.
+# Deterministic names make the PNGs disposable, and they are the one thing here
+# that is meant to be uploaded rather than deployed.
+docs/ads/out/

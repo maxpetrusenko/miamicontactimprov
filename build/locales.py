@@ -43,12 +43,14 @@ SWITCHER_LABEL = "Language / Idioma"
 # entry, a redirect rule and an hreflang pair automatically.
 ROUTES = {
     "home": {"en": "/", "es": "/es/"},
+    "start": {"en": "/start", "es": "/es/empezar"},
     "what-is-contact-improvisation": {
         "en": "/what-is-contact-improvisation",
         "es": "/es/que-es-la-improvisacion-de-contacto",
     },
     "jams": {"en": "/jams", "es": "/es/jams"},
     "friday-jam": {"en": "/friday-jam", "es": "/es/jam-de-los-viernes"},
+    "fundamentals": {"en": "/fundamentals", "es": "/es/fundamentos"},
     "your-first-jam": {"en": "/your-first-jam", "es": "/es/tu-primera-jam"},
     "miami-jams": {"en": "/miami-jams", "es": "/es/jams-miami-dade-broward"},
     "faq": {"en": "/faq", "es": "/es/preguntas-frecuentes"},
@@ -77,6 +79,7 @@ ROUTES = {
 # The order the pages are written, ranked and listed in llms.txt. Purely presentational.
 ORDER = [
     ("home", "en"), ("home", "es"),
+    ("start", "en"), ("start", "es"),
     ("events", "en"), ("contact", "en"),
     ("blog", "en"), ("blog-first-jam", "en"), ("blog-weight-sharing", "en"),
     ("blog-falling", "en"), ("blog-consent", "en"), ("blog-no-music", "en"),
@@ -85,6 +88,7 @@ ORDER = [
     ("miami-jams", "en"), ("miami-jams", "es"),
     ("jams", "en"), ("jams", "es"),
     ("friday-jam", "en"), ("friday-jam", "es"),
+    ("fundamentals", "en"), ("fundamentals", "es"),
     ("classes", "en"), ("classes", "es"),
     ("your-first-jam", "en"), ("your-first-jam", "es"),
     ("keep-practising", "en"), ("keep-practising", "es"),
