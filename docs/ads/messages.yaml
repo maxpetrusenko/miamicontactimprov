@@ -1,0 +1,150 @@
+# Ad message bank for the Contact Improv Miami Fundamentals series.
+#
+# Four creative families, three messages each, and the eight identity words from
+# review round 4. tools/ad_statics.py reads this file and writes two posters per
+# message (1080x1080 feed, 1080x1920 story) into docs/ads/out/<family>/.
+#
+# The identity word is the one-word answer to "who is this reader already". It is
+# the poster's kicker line, and it is what gets swapped when a winner is cloned.
+#
+# Editing rules, enforced by tools/ad_statics.py:
+#   * every family lists the identity words it addresses, and each must be one of
+#     the eight below;
+#   * each message carries exactly one of its family's identity words;
+#   * `headline` is read first and stands alone, `subline` supports it and does
+#     not repeat it;
+#   * `body` is the long-form ad text for the family, 120 to 200 words, pasted
+#     into Meta as the primary text.
+#
+# Facts in the copy come from build/listings.py, which is the single source for
+# the series dates, venue, price and booking. Change them there, then here.
+
+landing: https://miamicontactimprov.com/start
+venue: Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach
+scale: Eight Fridays, 2 October to 20 November, 7:00 to 9:00 PM
+
+# The eight identity words. One ad per word, same offer, different reader.
+identities:
+  - climbers
+  - yogis
+  - salsa dancers
+  - acro people
+  - new to Miami
+  - ecstatic dancers
+  - actors
+  - couples
+
+families:
+  movement:
+    label: Movement and curiosity
+    identities:
+      - climbers
+      - yogis
+      - ecstatic dancers
+    body: |
+      You have moved with someone else's weight before. On a climbing wall it is your job to hold your partner and theirs to hold you, and neither of you has to say so. A dance floor asks for the same thing with fewer holds. Two people moving, no plan, nothing to remember.
+
+      Contact Improvisation is that idea taught slowly. Giving weight through bone instead of grip. Keeping one rolling point of contact and following where it travels. Falling that ends in a roll rather than a hand planted on the floor. Reading momentum instead of watching for it.
+
+      Eight Friday evenings at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, from 2 October, 7:00 to 9:00 PM. Each class is $20 to $50 on a sliding scale, paid at the door or booked on Luma. Drop into any of the eight.
+
+      No partner needed. No experience needed. Clothes you can roll around on the floor in.
+    messages:
+      - slug: move-without-choreography
+        identity: climbers
+        headline: What happens when two people move without choreography?
+        subline: Weight, momentum and one rolling point of contact. Eight Fridays from 2 October.
+      - slug: the-part-you-cannot-do-alone
+        identity: yogis
+        headline: The part of a practice you cannot do alone.
+        subline: Contact Improvisation, eight Friday evenings in Hallandale Beach, 7:00 to 9:00 PM.
+      - slug: eyes-closed-with-a-partner
+        identity: ecstatic dancers
+        headline: You already dance with your eyes closed. This one has a partner.
+        subline: A taught class, an open dance at the end, eight Fridays from 2 October.
+
+  anxiety:
+    label: Beginner anxiety
+    identities:
+      - new to Miami
+      - couples
+      - actors
+    body: |
+      If you have been circling this for a while, here is the honest version.
+
+      No partner. No dance experience. No choreography to learn and then perform for anyone. The first class starts with standing and walking, moves to the floor, and adds a small amount of weight taken from another person when you are ready for it. You will notice your own habits in the first twenty minutes. So is everyone else in the room.
+
+      What the eight evenings teach: sharing weight through the skeleton instead of by gripping, holding one rolling point of contact, falling that resolves into a roll, and declining or pausing inside a dance without it turning into a problem. There is no performance at the end of the series. The last evenings put the pieces into a small score you can dance without a plan.
+
+      Fridays, 7:00 to 9:00 PM at Inner Motion Dance Studio, Hallandale Beach, 2 October to 20 November. $20 to $50 a class on a sliding scale, at the door or booked on Luma. Come to one or all eight.
+
+      If $20 is the reason you are not coming this week, say so and it gets sorted.
+    messages:
+      - slug: no-partner-no-experience
+        identity: new to Miami
+        headline: No partner. No dance experience. No choreography.
+        subline: Contact Improvisation fundamentals, Miami. The first class is Friday 2 October.
+      - slug: two-hours-a-week
+        identity: couples
+        headline: Two hours a week of moving in a room with other people.
+        subline: The first evening assumes nothing. Drop into any of the eight Fridays.
+      - slug: nothing-to-perform
+        identity: actors
+        headline: There is nothing to perform here.
+        subline: A taught class in Hallandale Beach, 7:00 to 9:00 PM, from 2 October.
+
+  social:
+    label: Social
+    identities:
+      - salsa dancers
+      - new to Miami
+      - ecstatic dancers
+    body: |
+      Most ways of meeting people in Miami involve talking about work. This one does not.
+
+      Contact Improvisation is a taught form where two people move together, one giving a little weight, the other taking it, and the exchange happens through hands, floor and balance rather than conversation. You dance with several different people in one evening, which is how a room of strangers stops being a room of strangers.
+
+      The material is slow enough that being new is not a handicap. Nobody has a partner assigned and nobody spends the evening sitting in a chair watching.
+
+      Eight Fridays at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, 7:00 to 9:00 PM, from 2 October. Each class is $20 to $50 on a sliding scale, paid at the door or booked on Luma. Come to one or all eight, and bring nothing except clothes you can move in.
+    messages:
+      - slug: movement-not-small-talk
+        identity: salsa dancers
+        headline: Meet people through movement, not small talk.
+        subline: Eight Friday evenings in Hallandale Beach, starting 2 October.
+      - slug: come-alone
+        identity: new to Miami
+        headline: Come alone. Leave knowing who is in the room.
+        subline: No partner needed, and you will dance with several. Fridays from 2 October.
+      - slug: same-room-every-friday
+        identity: ecstatic dancers
+        headline: The same room, the same eight Fridays, the same people.
+        subline: A taught class with an open dance at the end, 7:00 PM in Hallandale Beach.
+
+  exercise:
+    label: Specific exercise
+    identities:
+      - acro people
+      - climbers
+      - actors
+    body: |
+      Here is the banana roll, one of the first things we teach.
+
+      You lie on your back with your knees bent. Your partner stands, takes your crossed ankle and your far shoulder, and rolls you slowly over your own rounding back so your spine meets the floor one vertebra at a time. Done well it is a long stretch and a lesson in the same movement. The body being rolled does almost nothing. The body doing the rolling finds out where the weight really is.
+
+      That is the method of Contact Improvisation in miniature. Put two bodies in contact, then find the path around and over with the least effort. Sharing weight through the skeleton, a single rolling point of contact, falling that ends in a roll, and the small negotiations that keep a dance moving.
+
+      Eight Fridays from 2 October, 7:00 to 9:00 PM, Inner Motion Dance Studio, Hallandale Beach. $20 to $50 for each class on a sliding scale, at the door or booked on Luma. Any of the eight, no partner, no experience.
+    messages:
+      - slug: the-banana-roll
+        identity: acro people
+        headline: The banana roll is lesson one.
+        subline: Weight sharing, a rolling point of contact, and falling that ends in a roll.
+      - slug: where-the-weight-is
+        identity: climbers
+        headline: Find out where your partner's weight actually is.
+        subline: Contact Improvisation fundamentals, eight Fridays in Hallandale Beach.
+      - slug: reading-a-partner-without-words
+        identity: actors
+        headline: Reading a partner without words, taught as a technique.
+        subline: Two hours a week from 2 October. $20 to $50, any of the eight classes.

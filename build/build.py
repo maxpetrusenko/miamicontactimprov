@@ -61,11 +61,13 @@ TODAY = _sitemap_lastmod()
 # slug, locale, builder, sitemap priority, changefreq, background video id
 PAGES = [
     ("home", "en", content_marketing.home, "1.0", "weekly", None),
+    ("start", "en", content_practice.start, "0.9", "weekly", None),
     ("what-is-contact-improvisation", "en", content_core.what_is, "0.9", "monthly", None),
     ("miami", "en", content_directory.miami, "0.9", "weekly", None),
     ("miami-jams", "en", content_local.miami_jams, "0.9", "weekly", None),
     ("jams", "en", content_practice.jams, "0.8", "weekly", None),
     ("friday-jam", "en", content_practice.friday_jam, "0.9", "weekly", None),
+    ("fundamentals", "en", content_practice.fundamentals, "0.9", "weekly", None),
     ("classes", "en", content_practice.classes, "0.8", "monthly", None),
     ("your-first-jam", "en", content_practice.your_first_jam, "0.8", "monthly", None),
     ("keep-practising", "en", content_practice.keep_practising, "0.7", "monthly", None),
@@ -87,11 +89,13 @@ PAGES = [
     # Spanish. Same slug, second locale: each of these is a first-class route with its
     # own canonical, its own sitemap entry and its own side of the hreflang pair.
     ("home", "es", content_es.home, "1.0", "weekly", None),
+    ("start", "es", content_es.start, "0.9", "weekly", None),
     ("what-is-contact-improvisation", "es", content_es.what_is, "0.9", "monthly", None),
     ("miami", "es", content_es.miami, "0.9", "weekly", None),
     ("miami-jams", "es", content_es.miami_jams, "0.8", "weekly", None),
     ("jams", "es", content_es.jams, "0.7", "weekly", None),
     ("friday-jam", "es", content_es.friday_jam, "0.8", "weekly", None),
+    ("fundamentals", "es", content_es.fundamentals, "0.8", "weekly", None),
     ("classes", "es", content_es.classes, "0.7", "monthly", None),
     ("your-first-jam", "es", content_es.your_first_jam, "0.7", "monthly", None),
     ("keep-practising", "es", content_es.keep_practising, "0.6", "monthly", None),

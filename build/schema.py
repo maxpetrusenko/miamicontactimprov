@@ -57,13 +57,15 @@ DISAMBIGUATION_BY_LANG = {
 
 _DISAMBIGUATING_TAIL_BY_LANG = {
     "en": (
-        ": it hosts one weekly community jam, on Fridays in Miami, listed on the same "
-        "terms as every other session; it takes no bookings, charges no listing fee, and it is not "
+        ": it runs one weekly community jam on Fridays in Miami and one eight-week class "
+        "series for beginners at the same studio, both listed on the same terms as every "
+        "other session; it takes no bookings, charges no listing fee, and it is not "
         "miamiimprov.com, the comedy theatre that dominates search for the bare word 'improv'."
     ),
     "es": (
-        ": organiza una única jam comunitaria semanal, los viernes en Miami, publicada "
-        "en las mismas condiciones que cualquier otra sesión; no acepta reservas, no cobra por "
+        ": organiza una jam comunitaria semanal los viernes en Miami y una serie de clases "
+        "para principiantes de ocho semanas en el mismo estudio, las dos publicadas en las "
+        "mismas condiciones que cualquier otra sesión; no acepta reservas, no cobra por "
         "publicar, y no es miamiimprov.com, el teatro de comedia que domina las búsquedas de la "
         "palabra 'improv'."
     ),

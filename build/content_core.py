@@ -1,6 +1,6 @@
 """Core pages: home, what-is, history, glossary."""
 
-from shell import answer, band, cards, cite_block, facts, page
+from shell import answer, band, cards, cite_block, facts, page, subscribe_block
 import schema
 
 H1 = "Contact Improvisation in Miami"
@@ -19,7 +19,8 @@ def home():
       <a class="btn secondary" href="/miami">Find it in Miami</a>
       <a class="btn secondary" href="/what-is-contact-improvisation">What is CI?</a>
     </div>
-    <p class="micro">No membership. No central authority. A community resource that also hosts one weekly jam.</p>
+    <p class="micro">No membership. No central authority. A community resource that also runs a weekly jam and a beginners' class series.</p>
+    {subscribe_block("en", source="miamicontactimprov:home", offer="Subscribe for 20% off classes for the next two months, and the next Miami dates by email.", uid="home")}
   </div>
 </section>
 
@@ -186,6 +187,7 @@ def what_is():
       <h2>Questions people actually ask</h2>
       {faq_html}
     </div>
+    {subscribe_block("en", source="miamicontactimprov:what-is-contact-improvisation", offer="Want to try this in Miami? Get the next dates by email.", uid="what-is-contact-improvisation")}
     {band("Ready to try it?", "Read what happens at a jam before you go, then find one near you.", [("Jams in Miami", "/jams", "primary"), ("Your first jam, step by step", "/your-first-jam", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>What is Contact Improvisation?</em>. miamicontactimprov.com. https://miamicontactimprov.com/what-is-contact-improvisation")}
   </div>
