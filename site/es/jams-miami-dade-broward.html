@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=25083667">
+<link rel="stylesheet" href="/assets/site.css?v=937a0665">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -409,6 +409,32 @@
   </div>
 </footer>
 </div>
+<div class="mci-popup-overlay" id="mci-popup">
+  <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-es-jams-miami-dade-broward">
+    <button class="mci-popup-close" type="button" aria-label="Cerrar">&times;</button>
+    <h2 id="mci-popup-heading-es-jams-miami-dade-broward" class="mci-h">Novedades de las clases + 20% de descuento los próximos dos meses.</h2>
+    <form class="subscribe-form" data-source="miamicontactimprov:popup:es-jams-miami-dade-broward" data-offer="Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="Ya estás en la lista. El código va en el correo que acaba de salir." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.">
+  <label class="subscribe-label" for="subscribe-popup-es-jams-miami-dade-broward">Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes.</label>
+  <div class="subscribe-row">
+    <input id="subscribe-popup-es-jams-miami-dade-broward" name="email" type="email" inputmode="email" autocomplete="email" required>
+    <label class="subscribe-phone" for="subscribe-phone-popup-es-jams-miami-dade-broward">
+      <span>Teléfono (opcional)</span>
+      <input id="subscribe-phone-popup-es-jams-miami-dade-broward" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+    </label>
+    <button class="btn primary" type="submit">Suscribirme</button>
+  </div>
+  <div class="subscribe-hp" aria-hidden="true">
+    <label for="subscribe-hp-popup-es-jams-miami-dade-broward">Company</label>
+    <input id="subscribe-hp-popup-es-jams-miami-dade-broward" name="company" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <label class="subscribe-consent" for="subscribe-consent-popup-es-jams-miami-dade-broward">
+    <input id="subscribe-consent-popup-es-jams-miami-dade-broward" name="consent" type="checkbox" required>
+    <span>Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.</span>
+  </label>
+  <p class="subscribe-status" role="status" aria-live="polite"></p>
+</form>
+  </div>
+</div>
 <script>
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -651,6 +677,155 @@
       }).catch(function () { say('error'); button.disabled = false; });
     });
   });
+
+  // ---- buy buttons (ticket / intro / monthly / annual checkout) ----
+  // One handler for every [data-plan] button on the site: the plan, the date (when
+  // the button carries one) and the endpoint all come off the button's own data
+  // attributes, same pattern as the subscribe form above. A 200 redirects straight to
+  // the Stripe-hosted Checkout URL the Worker returns; a 409 means online sales are
+  // closed for that class and the reader pays at the door instead, so the button
+  // stays disabled and the status line carries the door link rather than a dead
+  // button sitting next to a message that already answered it.
+  document.querySelectorAll('[data-plan]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wrap = btn.closest('.buy-button');
+      var status = wrap ? wrap.querySelector('.buy-status') : null;
+      var say = function (text) { if (status) status.textContent = text; };
+      var plan = btn.getAttribute('data-plan');
+      var date = btn.getAttribute('data-date');
+      var payload = { plan: plan };
+      if (date) payload.date = date;
+      btn.disabled = true;
+      say(btn.getAttribute('data-sending') || '');
+      fetch(btn.getAttribute('data-endpoint'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(function (response) {
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          return { status: response.status, ok: response.ok, data: data };
+        });
+      }).then(function (result) {
+        if (result.ok && result.data && result.data.url) {
+          window.location.href = result.data.url;
+          return;
+        }
+        if (result.status === 409 && result.data && result.data.closed) {
+          if (status) {
+            status.textContent = '';
+            var msg = document.createTextNode((btn.getAttribute('data-closed') || '') + ' ');
+            var link = document.createElement('a');
+            link.href = result.data.door_url || '/pay';
+            link.textContent = 'Pay at the door';
+            status.appendChild(msg);
+            status.appendChild(link);
+          }
+          return; // sale's closed: the button stays disabled, the message explains why
+        }
+        say(btn.getAttribute('data-error') || '');
+        btn.disabled = false;
+      }).catch(function () {
+        say(btn.getAttribute('data-error') || '');
+        btn.disabled = false;
+      });
+    });
+  });
+
+  // ---- success page: personalise from the checkout redirect's query string ----
+  // No ticket ID, no QR - this page works purely off ?date= and ?plan=, which is all
+  // a redirect from Stripe Checkout can hand it. The server-rendered line above is
+  // already the correct generic sentence for a membership/pack purchase with no
+  // single date; this only overwrites it when a ticket's ?date= is present.
+  (function () {
+    var line = document.getElementById('mci-success-line');
+    if (!line) return;
+    try {
+      var q = new URLSearchParams(window.location.search);
+      var date = q.get('date');
+      if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+      var parts = date.split('-');
+      var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      if (isNaN(d.getTime())) return;
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'];
+      line.textContent = 'See you Friday, ' + months[d.getMonth()] + ' ' + d.getDate() + ', 7\u20139 PM.';
+    } catch (e) {}
+  })();
+
+  // ---- newsletter popup ----
+  // Shown once per visitor, 5 seconds after load, unless localStorage already says
+  // so. Every read/write is wrapped so private browsing or blocked storage degrades
+  // to "never shows" rather than breaking the page.
+  (function () {
+    var modal = document.getElementById('mci-popup');
+    if (!modal) return;
+    var card = modal.querySelector('.mci-popup');
+    var closeBtn = modal.querySelector('.mci-popup-close');
+    var form = modal.querySelector('form.subscribe-form');
+    var seenKey = 'mci_popup_seen';
+    var lastFocus = null;
+
+    var seen = function () {
+      try { return localStorage.getItem(seenKey) === '1'; } catch (e) { return false; }
+    };
+    var markSeen = function () {
+      try { localStorage.setItem(seenKey, '1'); } catch (e) {}
+    };
+
+    var focusables = function () {
+      return Array.prototype.slice.call(
+        card.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])')
+      );
+    };
+
+    var onKeydown = function (e) {
+      if (e.key === 'Escape') { closeModal(); return; }
+      if (e.key !== 'Tab') return;
+      var f = focusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+
+    var openModal = function () {
+      lastFocus = document.activeElement;
+      modal.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown, true);
+      var f = focusables();
+      if (f.length) f[0].focus();
+    };
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      document.removeEventListener('keydown', onKeydown, true);
+      markSeen();
+      try {
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+        else document.body.focus();
+      } catch (e) {}
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+
+    // Marking "seen" on a successful submit without touching the shared subscribe
+    // handler above: watch the status line this page's form already carries, and
+    // treat it reaching the handler's own "ok" text as success.
+    if (form) {
+      var status = form.querySelector('.subscribe-status');
+      var okText = form.getAttribute('data-ok') || '';
+      if (status && okText && 'MutationObserver' in window) {
+        new MutationObserver(function () {
+          if (status.textContent === okText) markSeen();
+        }).observe(status, { childList: true, characterData: true, subtree: true });
+      }
+    }
+
+    if (!seen()) {
+      setTimeout(function () { if (!seen()) openModal(); }, 5000);
+    }
+  })();
 })();
 </script>
 </body>

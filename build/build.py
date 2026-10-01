@@ -19,6 +19,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import content_checkout  # noqa: E402
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
 import content_es  # noqa: E402
@@ -80,6 +81,8 @@ PAGES = [
     ("about", "en", content_marketing.about, "0.5", "yearly", None),
     ("events", "en", content_marketing.events, "0.9", "weekly", None),
     ("contact", "en", content_marketing.contact, "0.6", "monthly", None),
+    ("pricing", "en", content_checkout.pricing, "0.8", "monthly", None),
+    ("success", "en", content_checkout.success, "0.3", "yearly", None),
     ("blog", "en", content_blog.index, "0.7", "weekly", None),
     ("blog-first-jam", "en", content_blog.first_jam, "0.6", "monthly", None),
     ("blog-weight-sharing", "en", content_blog.weight_sharing, "0.6", "monthly", None),
@@ -247,6 +250,10 @@ REDIRECT_ALIASES = """# Clean-URL safety net. Cloudflare Pages serves /miami.htm
 /contact-improvisation-miami /miami                           301
 /safety                     /safety-and-consent               301
 /teachers                   /directory                        301
+
+# Door payment link. Not a page (no sibling locale, no PAGES row): a flat utility
+# redirect to Max's live Stripe Payment Link, already public elsewhere on the web.
+/pay                        https://buy.stripe.com/3cIaEX1Oe13Xfxh45v4ow01  302
 """
 
 

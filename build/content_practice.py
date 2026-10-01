@@ -1,6 +1,6 @@
 """Practice pages: jams, classes, safety and consent, video room."""
 
-from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, cards, cite_block, facts, page, subscribe_block
+from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, buy_button, cards, cite_block, facts, page, subscribe_block
 import json
 import schema
 import listings
@@ -623,9 +623,9 @@ FUNDAMENTALS_FAQ = [
     ("Do I have to come to all eight classes?",
      "No. Each class stands on its own, so you can drop into any one of the eight. Coming to all of them is what turns the material into dancing, and it is not required."),
     ("How much does a class cost?",
-     "A sliding scale of $20 to $50 for each class. Pay what you can inside that range, and nobody will ask where you landed."),
+     "$20 online, booked in advance through the button on this page. Promotion codes apply, and new codes go out monthly to subscribers. Online sales close two hours before each class; after that it is $30 to $50 pay-what-you-can at the door."),
     ("How do I book?",
-     "Registration runs on Luma, and the link goes up on this page as soon as the series is published there. Payment at the door is accepted at every class, so a booking is not what gets you through the door."),
+     "Buy the $20 online ticket above, any time until two hours before the class starts. No booking is needed to come to the door either: every class accepts $30 to $50 pay-what-you-can, no advance registration, right up to 9:00."),
     ("Where is it, and how do I get there?",
      "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, on the north edge of Miami just past Aventura on US-1."),
     ("Who teaches it?",
@@ -650,8 +650,9 @@ def fundamentals():
     English prose, and docs/i18n.md keeps English-prose nodes off the Spanish pages. The
     Spanish page names the series in Spanish and links here for the markup.
 
-    The Luma link in the copy goes in when the Luma event exists; see FUNDAMENTALS_URL in
-    build/listings.py, which is the one place that address is written down.
+    Booking is the $20 online ticket (shell.buy_button, plan 'ticket') or cash at the
+    door; see FUNDAMENTALS_FAQ's "How do I book?" for the one place that mechanism is
+    described in full.
     """
     faq_html = "".join(f"<h3>{q}</h3><p>{a}</p>" for q, a in FUNDAMENTALS_FAQ)
     occurrences = listings.EVENT_DATES[listings.FUNDAMENTALS_NAME]
@@ -666,10 +667,11 @@ def fundamentals():
     <h1>Contact improv fundamentals: eight Fridays from the ground up.</h1>
     <p class="lede">A taught class series that starts Contact Improvisation from the beginning: giving and taking weight, keeping a rolling point of contact, falling, and reading a partner without words. Eight Friday evenings at Inner Motion Dance Studio, 2 October to 20 November 2026.</p>
     <div class="btn-row">
-      <a class="btn primary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
+      {buy_button("ticket", "Buy ticket &ndash; $20", "fundamentals-hero")}
+      <a class="btn secondary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
       <a class="btn secondary" href="/your-first-jam">Never been to a jam?</a>
     </div>
-    <p class="micro">$20&ndash;$50 sliding scale for each class, paid at the door or booked on Luma. Taught by Max Petrusenko, who also maintains this site.</p>
+    <p class="micro">$20 online, promotion codes apply, sales close two hours before class. $30&ndash;$50 pay-what-you-can at the door after that, no booking needed either way. <a href="/pricing">See all pricing &rarr;</a> Taught by Max Petrusenko, who also maintains this site.</p>
   </div>
 </section>
 
@@ -681,8 +683,8 @@ def fundamentals():
       ("Dates", "Eight Fridays, 2 October to 20 November 2026"),
       ("Where", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
       ("Area", "North edge of Miami, just past Aventura on US-1"),
-      ("Cost", "$20–$50 sliding scale for each class"),
-      ("Booking", "On Luma, or pay at the door"),
+      ("Cost", "$20 online, or $30–$50 pay-what-you-can at the door"),
+      ("Booking", "Buy the $20 ticket above, any time until 2 hours before class. No booking needed at the door"),
       ("Drop in", "Any of the eight classes, no partner and no experience needed"),
       ("Level", "Fundamentals: weight sharing, contact, falling, momentum, consent"),
       ("Teacher", "Max Petrusenko"),
@@ -704,9 +706,9 @@ def fundamentals():
     {dates_html}
 
     <h2>What a class costs</h2>
-      <p>Each class is $20 to $50 on a sliding scale. Pay what you can inside that range and nobody will ask where you landed. The lower end covers the room; the upper end is for anyone who can carry more of it and wants the series to keep running.</p>
-      <p>Subscribers to the monthly email get 20% off any class for the next two months; the code arrives in the first email. Nothing else on this site unlocks a discount.</p>
-      <p>If $20 is the reason you are not coming this week, say so before the class. One email is enough and it gets sorted. Nobody is turned away from a fundamentals class over money.</p>
+      <p>$20 online, booked with the ticket button above. Online sales close two hours before each class starts; after that, the door takes $30 to $50 pay-what-you-can, same as always, no booking needed either way. <a href="/pricing">See all pricing &rarr;</a></p>
+      <p>Subscribers to the monthly email get 20% off the online ticket for the next two months; the code arrives in the first email. Promotion codes apply to the ticket, not to memberships.</p>
+      <p>If $20 is the reason you are not coming this week, pay what you can at the door instead, or say so by email beforehand. Nobody is turned away from a fundamentals class over money.</p>
 
       {subscribe_block("en", source="miamicontactimprov:fundamentals", offer=START_OFFER, uid="fundamentals")}
 

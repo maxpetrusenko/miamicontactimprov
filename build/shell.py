@@ -121,6 +121,11 @@ STYLESHEET = "/assets/site.css?v=" + _css_version()
 # points at the same Worker, and so changing it is one edit.
 SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subscribe"
 
+# The one endpoint a buy button may post to. Same Worker as the subscribe form, a
+# different route. `plan` is one of 'ticket' | 'intro' | 'monthly' | 'annual'; `date`
+# is only meaningful for 'ticket' and is omitted for the other three.
+CHECKOUT_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/checkout"
+
 # The form copy, per locale. The label carries the whole offer: the discount and the
 # send frequency, in one sentence. The discount code itself is never printed here; the
 # welcome email that follows a signup carries it. `consent` is the one-sentence,
@@ -233,6 +238,80 @@ def subscribe_block(lang, source, offer, uid, button=None, anchor=None):
         f"  {subscribe_form(lang, source=source, uid=uid, label=offer, button=button)}\n"
         f"</div>"
     )
+
+
+# The buy button's own result lines, mirroring the subscribe form's data-sending/
+# data-error naming so the two components read as one family. The error line reuses
+# the subscribe form's exact phrase, for voice consistency across the site's two forms
+# of checkout. The "closed" line is filled in by JS, not printed here, because it
+# carries a link built from the Worker's own response (`door_url`).
+BUY_COPY = {
+    "en": {
+        "sending": "Opening checkout.",
+        "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
+        "closed": "Online sales closed, pay at the door ($30).",
+        "closed_link": "What this looks like",
+    },
+}
+
+
+def buy_button(plan, label, uid, date=None, lang="en"):
+    """A buy button: one click, one POST to CHECKOUT_ENDPOINT, no real form submit.
+
+    `plan` is one of 'ticket' | 'intro' | 'monthly' | 'annual' and travels as
+    `data-plan`. `date` is only ever set for a 'ticket' button pinned to a specific
+    Friday (none are, in this slice); a generic "Buy ticket" button carries no
+    `data-date` and the Worker resolves the next upcoming Friday itself.
+
+    The status line sits next to the button, empty until a click resolves it - this is
+    feedback from an action the reader just took, not a caption explaining the button.
+    """
+    copy = BUY_COPY.get(lang, BUY_COPY["en"])
+    btn_id = f"buy-{uid}"
+    date_attr = f' data-date="{_attr(date)}"' if date else ""
+    return (
+        f'<div class="buy-button">'
+        f'<button class="btn primary" type="button" id="{btn_id}" data-plan="{_attr(plan)}"{date_attr} '
+        f'data-endpoint="{CHECKOUT_ENDPOINT}" data-sending="{_attr(copy["sending"])}" '
+        f'data-error="{_attr(copy["error"])}" data-closed="{_attr(copy["closed"])}">{label}</button>'
+        f'<p class="buy-status" role="status" aria-live="polite"></p>'
+        f'</div>'
+    )
+
+
+# ------------------------------------------------------------ newsletter popup
+# The copy for the popup heading, per locale. The form itself is the same
+# subscribe_form() every inline and footer placement uses, so its own label and
+# offer carry the mechanics (20% off, one email a month); this heading carries the
+# hook that gets a reader to look at the form at all.
+POPUP_HEADING = {
+    "en": "Get class updates + 20% off for the next two months.",
+    "es": "Novedades de las clases + 20% de descuento los próximos dos meses.",
+}
+
+POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
+
+
+def newsletter_popup(lang, path):
+    """The site-wide signup modal, injected once per page by page().
+
+    Behaviour lives in body_script(): shown once per visitor after 5 seconds via
+    localStorage, closed by the ✕, Escape or a backdrop click, focus-trapped while
+    open. The form posts through the same `.subscribe-form` handler every other
+    form on the site already uses - this markup only has to carry the class.
+    """
+    slug = page_slug(path)
+    heading_id = f"mci-popup-heading-{slug}"
+    heading = POPUP_HEADING.get(lang, POPUP_HEADING["en"])
+    close_label = POPUP_CLOSE_LABEL.get(lang, POPUP_CLOSE_LABEL["en"])
+    form = subscribe_form(lang, source=f"miamicontactimprov:popup:{slug}", uid=f"popup-{slug}")
+    return f"""<div class="mci-popup-overlay" id="mci-popup">
+  <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="{heading_id}">
+    <button class="mci-popup-close" type="button" aria-label="{close_label}">&times;</button>
+    <h2 id="{heading_id}" class="mci-h">{heading}</h2>
+    {form}
+  </div>
+</div>"""
 
 
 def _nav_href(slug, lang):
@@ -691,6 +770,155 @@ def body_script():
       }).catch(function () { say('error'); button.disabled = false; });
     });
   });
+
+  // ---- buy buttons (ticket / intro / monthly / annual checkout) ----
+  // One handler for every [data-plan] button on the site: the plan, the date (when
+  // the button carries one) and the endpoint all come off the button's own data
+  // attributes, same pattern as the subscribe form above. A 200 redirects straight to
+  // the Stripe-hosted Checkout URL the Worker returns; a 409 means online sales are
+  // closed for that class and the reader pays at the door instead, so the button
+  // stays disabled and the status line carries the door link rather than a dead
+  // button sitting next to a message that already answered it.
+  document.querySelectorAll('[data-plan]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wrap = btn.closest('.buy-button');
+      var status = wrap ? wrap.querySelector('.buy-status') : null;
+      var say = function (text) { if (status) status.textContent = text; };
+      var plan = btn.getAttribute('data-plan');
+      var date = btn.getAttribute('data-date');
+      var payload = { plan: plan };
+      if (date) payload.date = date;
+      btn.disabled = true;
+      say(btn.getAttribute('data-sending') || '');
+      fetch(btn.getAttribute('data-endpoint'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(function (response) {
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          return { status: response.status, ok: response.ok, data: data };
+        });
+      }).then(function (result) {
+        if (result.ok && result.data && result.data.url) {
+          window.location.href = result.data.url;
+          return;
+        }
+        if (result.status === 409 && result.data && result.data.closed) {
+          if (status) {
+            status.textContent = '';
+            var msg = document.createTextNode((btn.getAttribute('data-closed') || '') + ' ');
+            var link = document.createElement('a');
+            link.href = result.data.door_url || '/pay';
+            link.textContent = 'Pay at the door';
+            status.appendChild(msg);
+            status.appendChild(link);
+          }
+          return; // sale's closed: the button stays disabled, the message explains why
+        }
+        say(btn.getAttribute('data-error') || '');
+        btn.disabled = false;
+      }).catch(function () {
+        say(btn.getAttribute('data-error') || '');
+        btn.disabled = false;
+      });
+    });
+  });
+
+  // ---- success page: personalise from the checkout redirect's query string ----
+  // No ticket ID, no QR - this page works purely off ?date= and ?plan=, which is all
+  // a redirect from Stripe Checkout can hand it. The server-rendered line above is
+  // already the correct generic sentence for a membership/pack purchase with no
+  // single date; this only overwrites it when a ticket's ?date= is present.
+  (function () {
+    var line = document.getElementById('mci-success-line');
+    if (!line) return;
+    try {
+      var q = new URLSearchParams(window.location.search);
+      var date = q.get('date');
+      if (!date || !/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) return;
+      var parts = date.split('-');
+      var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      if (isNaN(d.getTime())) return;
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'];
+      line.textContent = 'See you Friday, ' + months[d.getMonth()] + ' ' + d.getDate() + ', 7\\u20139 PM.';
+    } catch (e) {}
+  })();
+
+  // ---- newsletter popup ----
+  // Shown once per visitor, 5 seconds after load, unless localStorage already says
+  // so. Every read/write is wrapped so private browsing or blocked storage degrades
+  // to "never shows" rather than breaking the page.
+  (function () {
+    var modal = document.getElementById('mci-popup');
+    if (!modal) return;
+    var card = modal.querySelector('.mci-popup');
+    var closeBtn = modal.querySelector('.mci-popup-close');
+    var form = modal.querySelector('form.subscribe-form');
+    var seenKey = 'mci_popup_seen';
+    var lastFocus = null;
+
+    var seen = function () {
+      try { return localStorage.getItem(seenKey) === '1'; } catch (e) { return false; }
+    };
+    var markSeen = function () {
+      try { localStorage.setItem(seenKey, '1'); } catch (e) {}
+    };
+
+    var focusables = function () {
+      return Array.prototype.slice.call(
+        card.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])')
+      );
+    };
+
+    var onKeydown = function (e) {
+      if (e.key === 'Escape') { closeModal(); return; }
+      if (e.key !== 'Tab') return;
+      var f = focusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+
+    var openModal = function () {
+      lastFocus = document.activeElement;
+      modal.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown, true);
+      var f = focusables();
+      if (f.length) f[0].focus();
+    };
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      document.removeEventListener('keydown', onKeydown, true);
+      markSeen();
+      try {
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+        else document.body.focus();
+      } catch (e) {}
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+
+    // Marking "seen" on a successful submit without touching the shared subscribe
+    // handler above: watch the status line this page's form already carries, and
+    // treat it reaching the handler's own "ok" text as success.
+    if (form) {
+      var status = form.querySelector('.subscribe-status');
+      var okText = form.getAttribute('data-ok') || '';
+      if (status && okText && 'MutationObserver' in window) {
+        new MutationObserver(function () {
+          if (status.textContent === okText) markSeen();
+        }).observe(status, { childList: true, characterData: true, subtree: true });
+      }
+    }
+
+    if (!seen()) {
+      setTimeout(function () { if (!seen()) openModal(); }, 5000);
+    }
+  })();
 })();
 </script>
 </body>
@@ -730,6 +958,8 @@ def page(title, description, path, body, *, jsonld="", bg_video=None, bg_youtube
         + "\n"
         + footer(lang, path=path)
         + "\n</div>\n"
+        + newsletter_popup(lang, path)
+        + "\n"
         + body_script()
     )
 

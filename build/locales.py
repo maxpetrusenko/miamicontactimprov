@@ -68,6 +68,8 @@ ROUTES = {
     "about": {"en": "/about", "es": "/es/acerca-de"},
     "events": {"en": "/events"},
     "contact": {"en": "/contact"},
+    "pricing": {"en": "/pricing"},
+    "success": {"en": "/success"},
     "blog": {"en": "/blog/"},
     "blog-first-jam": {"en": "/blog/five-things-before-your-first-jam"},
     "blog-weight-sharing": {"en": "/blog/weight-sharing-explained"},
@@ -99,6 +101,7 @@ ORDER = [
     ("safety-and-consent", "en"), ("safety-and-consent", "es"),
     ("faq", "en"), ("faq", "es"),
     ("about", "en"), ("about", "es"),
+    ("pricing", "en"), ("success", "en"),
 ]
 
 

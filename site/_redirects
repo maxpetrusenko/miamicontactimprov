@@ -58,6 +58,12 @@
 /contact.html  /contact  301
 /contact/index.html  /contact  301
 /contact/  /contact  301
+/pricing.html  /pricing  301
+/pricing/index.html  /pricing  301
+/pricing/  /pricing  301
+/success.html  /success  301
+/success/index.html  /success  301
+/success/  /success  301
 /blog/index.html  /blog/  301
 /blog/five-things-before-your-first-jam.html  /blog/five-things-before-your-first-jam  301
 /blog/five-things-before-your-first-jam/index.html  /blog/five-things-before-your-first-jam  301
@@ -136,3 +142,7 @@
 /contact-improvisation-miami /miami                           301
 /safety                     /safety-and-consent               301
 /teachers                   /directory                        301
+
+# Door payment link. Not a page (no sibling locale, no PAGES row): a flat utility
+# redirect to Max's live Stripe Payment Link, already public elsewhere on the web.
+/pay                        https://buy.stripe.com/3cIaEX1Oe13Xfxh45v4ow01  302
