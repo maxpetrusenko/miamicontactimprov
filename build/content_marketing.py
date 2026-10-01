@@ -17,7 +17,7 @@ uses Fridays, first session 2 October 2026, and reuses the verified Event node.
 
 import listings
 import schema
-from shell import page
+from shell import buy_button, page
 
 IG = "https://instagram.com/miamicontactimprov"
 LUMA = "https://luma.com/hau1fq5t"  # Friday class + open practice registration
@@ -138,9 +138,11 @@ def home():
     <h1 class="mci-h"><span class="rise" style="--d:.3s">MOVE.</span><span class="rise" style="--d:.42s">LISTEN.</span><span class="rise accent" style="--d:.54s">IMPROVISE.</span></h1>
     <p class="lede rise" style="--d:.72s">A weekly contact improv class and open jam in Miami &mdash; where dance meets touch, trust, and play. No experience needed, just a curious body.</p>
     <div class="btn-row rise" style="--d:.88s">
-      <a class="btn primary" href="/events">See upcoming jams &nbsp;&rarr;</a>
+      {buy_button("class", "Buy ticket &ndash; $20", "home-hero")}
+      <a class="btn secondary" href="/events">See upcoming jams &nbsp;&rarr;</a>
       <a class="btn secondary" href="{IG}" target="_blank" rel="noopener">@miamicontactimprov</a>
     </div>
+    <p class="rise" style="--d:.95s"><a class="mci-pricing-link" href="/pricing">See all pricing &rarr;</a></p>
   </div>
   <a class="scroll-cue" href="#mci-when" aria-label="Scroll to details"><span class="line"></span><span class="txt">Scroll</span></a>
 </section>

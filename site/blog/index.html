@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=25083667">
+<link rel="stylesheet" href="/assets/site.css?v=937a0665">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -290,6 +290,32 @@
   </div>
 </footer>
 </div>
+<div class="mci-popup-overlay" id="mci-popup">
+  <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-blog">
+    <button class="mci-popup-close" type="button" aria-label="Close">&times;</button>
+    <h2 id="mci-popup-heading-blog" class="mci-h">Get class updates + 20% off for the next two months.</h2>
+    <form class="subscribe-form" data-source="miamicontactimprov:popup:blog" data-offer="Subscribe for 20% off classes for the next two months, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
+  <label class="subscribe-label" for="subscribe-popup-blog">Subscribe for 20% off classes for the next two months, and one email a month.</label>
+  <div class="subscribe-row">
+    <input id="subscribe-popup-blog" name="email" type="email" inputmode="email" autocomplete="email" required>
+    <label class="subscribe-phone" for="subscribe-phone-popup-blog">
+      <span>Phone (optional)</span>
+      <input id="subscribe-phone-popup-blog" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+    </label>
+    <button class="btn primary" type="submit">Subscribe</button>
+  </div>
+  <div class="subscribe-hp" aria-hidden="true">
+    <label for="subscribe-hp-popup-blog">Company</label>
+    <input id="subscribe-hp-popup-blog" name="company" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <label class="subscribe-consent" for="subscribe-consent-popup-blog">
+    <input id="subscribe-consent-popup-blog" name="consent" type="checkbox" required>
+    <span>I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.</span>
+  </label>
+  <p class="subscribe-status" role="status" aria-live="polite"></p>
+</form>
+  </div>
+</div>
 <script>
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -527,11 +553,233 @@
           return response.ok && data.ok;
         });
       }).then(function (ok) {
-        if (ok) { form.reset(); say('ok'); }
+        if (ok) {
+          form.reset();
+          say('ok');
+          try {
+            if (window.posthog && form.closest('#mci-popup')) posthog.capture('newsletter_popup_submitted');
+          } catch (e) {}
+          // Identify by a hashed email, never the address itself: the hash is
+          // the distinct id, and the real email only ever becomes a person
+          // property when the reader ticked consent for it (same checkbox
+          // this handler already required before sending the subscribe call).
+          try {
+            if (window.posthog && window.crypto && window.crypto.subtle) {
+              var emailValue = input.value.trim().toLowerCase();
+              window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(emailValue)).then(function (buf) {
+                var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) {
+                  return b.toString(16).padStart(2, '0');
+                }).join('').slice(0, 32);
+                posthog.identify(hex, consent.checked ? { email: emailValue } : {});
+              }).catch(function () {});
+            }
+          } catch (e) {}
+        }
         else { say('error'); button.disabled = false; }
       }).catch(function () { say('error'); button.disabled = false; });
     });
   });
+
+  // ---- buy buttons (drop-in class / jam / combo checkout) ----
+  // One handler for every [data-kind] button on the site: the kind, the date (when
+  // the button carries one) and the endpoint all come off the button's own data
+  // attributes, same pattern as the subscribe form above. A 200 redirects straight to
+  // the Stripe-hosted Checkout URL the Worker returns; a 409 means online sales are
+  // closed (or, for jam/combo today, not configured yet) and the reader pays at the
+  // door instead, so the button stays disabled and the status line carries the door
+  // link rather than a dead button sitting next to a message that already answered it.
+  document.querySelectorAll('[data-kind]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wrap = btn.closest('.buy-button');
+      var status = wrap ? wrap.querySelector('.buy-status') : null;
+      var say = function (text) { if (status) status.textContent = text; };
+      var kind = btn.getAttribute('data-kind');
+      var eventDate = btn.getAttribute('data-event-date');
+      var payload = { kind: kind };
+      if (eventDate) payload.event_date = eventDate;
+      try {
+        if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
+      } catch (e) {}
+      btn.disabled = true;
+      say(btn.getAttribute('data-sending') || '');
+      fetch(btn.getAttribute('data-endpoint'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(function (response) {
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          return { status: response.status, ok: response.ok, data: data };
+        });
+      }).then(function (result) {
+        if (result.ok && result.data && result.data.url) {
+          try {
+            if (window.posthog) posthog.capture('checkout_started', { kind: kind });
+          } catch (e) {}
+          window.location.href = result.data.url;
+          return;
+        }
+        if (result.status === 409 && result.data && result.data.closed) {
+          if (status) {
+            status.textContent = '';
+            var msg = document.createTextNode((btn.getAttribute('data-closed') || '') + ' ');
+            var link = document.createElement('a');
+            link.href = result.data.door_url || '/pay';
+            link.textContent = 'Pay at the door';
+            link.addEventListener('click', function () {
+              try {
+                if (window.posthog) posthog.capture('pay_door_redirect', { from: 'checkout_closed' });
+              } catch (e) {}
+            });
+            status.appendChild(msg);
+            status.appendChild(link);
+          }
+          return; // sale's closed: the button stays disabled, the message explains why
+        }
+        say(btn.getAttribute('data-error') || '');
+        btn.disabled = false;
+      }).catch(function () {
+        say(btn.getAttribute('data-error') || '');
+        btn.disabled = false;
+      });
+    });
+  });
+
+  // ---- /pricing: a plain pageview-adjacent event, not autocapture's job ----
+  // Autocapture already logs the pageview; this is the specific named event the
+  // funnel (pricing_viewed -> buy_click -> checkout_started -> checkout_completed)
+  // is built around, so it exists even if autocapture's shape ever changes.
+  if (window.location.pathname === '/pricing') {
+    try { if (window.posthog) posthog.capture('pricing_viewed'); } catch (e) {}
+  }
+
+  // ---- /pay: fire tracking, then hand off to Stripe ----
+  // A plain Cloudflare _redirects rule can't run JS, so it can neither fire
+  // pay_door_redirect nor let PostHog attribute whatever UTM params arrived on
+  // this URL (e.g. a printed door QR's ?utm_source=poster&utm_medium=qr) before
+  // the visitor leaves -- which is the whole reason /pay is a real page instead.
+  // The short delay gives the capture call's request a moment to leave before
+  // the page unloads; the <meta http-equiv="refresh"> in this page's <head> is
+  // the no-JS fallback, slower but still correct.
+  if (window.location.pathname === '/pay') {
+    try { if (window.posthog) posthog.capture('pay_door_redirect', { from: 'pay_page' }); } catch (e) {}
+    setTimeout(function () {
+      // Keep in sync with shell.DOOR_PAYMENT_LINK / content_checkout.DOOR_LINK.
+      window.location.replace('https://buy.stripe.com/3cIaEX1Oe13Xfxh45v4ow01');
+    }, 250);
+  }
+
+  // ---- success page: personalise from the checkout redirect's query string ----
+  // No ticket ID, no QR - this page works purely off ?kind=, ?event_date= and
+  // ?amount=, which is all a redirect from Stripe Checkout can hand it. The
+  // server-rendered line above is already a correct generic sentence; this only
+  // overwrites it when the params are present and parse cleanly.
+  (function () {
+    var q = new URLSearchParams(window.location.search);
+    var kind = q.get('kind');
+    var amount = q.get('amount');
+    try {
+      if (window.posthog && kind) {
+        posthog.capture('checkout_completed', {
+          kind: kind,
+          amount: amount ? parseInt(amount, 10) : null,
+        });
+      }
+    } catch (e) {}
+
+    var line = document.getElementById('mci-success-line');
+    if (!line) return;
+    try {
+      var date = q.get('event_date');
+      if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+      var parts = date.split('-');
+      var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      if (isNaN(d.getTime())) return;
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'];
+      var when = months[d.getMonth()] + ' ' + d.getDate();
+      var what = kind === 'jam' ? 'the 7:45 PM jam'
+        : kind === 'combo' ? 'the full evening, class at 7:00 then jam at 7:45'
+        : 'the 7:00 PM class';
+      line.textContent = 'See you Friday, ' + when + ', for ' + what + '.';
+    } catch (e) {}
+  })();
+
+  // ---- newsletter popup ----
+  // Shown once per visitor, 5 seconds after load, unless localStorage already says
+  // so. Every read/write is wrapped so private browsing or blocked storage degrades
+  // to "never shows" rather than breaking the page.
+  (function () {
+    var modal = document.getElementById('mci-popup');
+    if (!modal) return;
+    var card = modal.querySelector('.mci-popup');
+    var closeBtn = modal.querySelector('.mci-popup-close');
+    var form = modal.querySelector('form.subscribe-form');
+    var seenKey = 'mci_popup_seen';
+    var lastFocus = null;
+
+    var seen = function () {
+      try { return localStorage.getItem(seenKey) === '1'; } catch (e) { return false; }
+    };
+    var markSeen = function () {
+      try { localStorage.setItem(seenKey, '1'); } catch (e) {}
+    };
+
+    var focusables = function () {
+      return Array.prototype.slice.call(
+        card.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])')
+      );
+    };
+
+    var onKeydown = function (e) {
+      if (e.key === 'Escape') { closeModal(); return; }
+      if (e.key !== 'Tab') return;
+      var f = focusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+
+    var openModal = function () {
+      lastFocus = document.activeElement;
+      modal.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown, true);
+      var f = focusables();
+      if (f.length) f[0].focus();
+      try { if (window.posthog) posthog.capture('newsletter_popup_shown'); } catch (e) {}
+    };
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      document.removeEventListener('keydown', onKeydown, true);
+      markSeen();
+      try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
+      try {
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+        else document.body.focus();
+      } catch (e) {}
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+
+    // Marking "seen" on a successful submit without touching the shared subscribe
+    // handler above: watch the status line this page's form already carries, and
+    // treat it reaching the handler's own "ok" text as success.
+    if (form) {
+      var status = form.querySelector('.subscribe-status');
+      var okText = form.getAttribute('data-ok') || '';
+      if (status && okText && 'MutationObserver' in window) {
+        new MutationObserver(function () {
+          if (status.textContent === okText) markSeen();
+        }).observe(status, { childList: true, characterData: true, subtree: true });
+      }
+    }
+
+    if (!seen()) {
+      setTimeout(function () { if (!seen()) openModal(); }, 5000);
+    }
+  })();
 })();
 </script>
 </body>

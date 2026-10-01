@@ -683,3 +683,60 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
 @media (max-width: 480px) {
   .mci-hero-full .btn { display: flex; justify-content: center; width: 100%; box-sizing: border-box; }
 }
+
+/* ---------------------------------------------------------------- buy button
+   One button, a POST to shell.CHECKOUT_ENDPOINT, a status line next to it that is
+   empty until a click resolves it - mirrors .subscribe-status below. Scoped so the
+   same markup reads correctly on a light section and on the dark hero veil. */
+.buy-button { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.buy-status { font-size: 0.86rem; color: var(--terracotta-dark); margin: 0; max-width: 42ch; }
+.buy-status:empty { display: none; }
+.buy-status a { color: inherit; text-decoration: underline; }
+.mci-hero-full .buy-status { color: var(--cream); }
+.mci-pricing-link { font-weight: 600; font-size: 14px; color: var(--ink); text-decoration: underline; }
+.mci-hero-full .mci-pricing-link { color: var(--cream); }
+
+/* ---------------------------------------------------------------- price list
+   /pricing's five rows. A stacked list in the site's existing card language
+   (.answer/.card: white, bordered, var(--radius-sm)), not a pricing-table grid. */
+.price-list { display: flex; flex-direction: column; gap: 16px; max-width: var(--read); margin: 0 0 30px; }
+.price-row {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 16px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--white); padding: 20px 22px;
+}
+.price-row .price-text { flex: 1 1 260px; color: var(--ink); }
+.price-row .price-text strong { font-size: 1.05rem; }
+.price-row .price-note { font-size: 0.86rem; color: var(--muted); margin-top: 4px; }
+
+/* ---------------------------------------------------------------- newsletter popup
+   One overlay, injected once per page by shell.newsletter_popup(). Hidden by default
+   (no FOUC); shell.body_script() adds .is-open after the 5-second delay, unless
+   localStorage already says the visitor has seen it. */
+.mci-popup-overlay {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  align-items: center; justify-content: center; padding: 20px;
+  background: rgba(23, 21, 18, 0.55);
+}
+.mci-popup-overlay.is-open { display: flex; }
+.mci-popup {
+  position: relative; width: 100%; max-width: 440px;
+  background: var(--cream); border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(23, 21, 18, 0.35);
+  padding: 34px 30px 28px;
+}
+.mci-popup h2 {
+  font-size: 1.5rem; line-height: 1.12; color: var(--ink);
+  max-width: 26ch; margin: 0 0 18px; text-transform: uppercase;
+}
+.mci-popup .subscribe-form { max-width: none; }
+.mci-popup .subscribe-row input[type="email"],
+.mci-popup .subscribe-phone input[type="tel"] {
+  color: var(--ink); background: var(--input); border: 1px solid var(--line-strong);
+}
+.mci-popup-close {
+  position: absolute; top: 12px; right: 12px; width: 34px; height: 34px;
+  border: none; border-radius: 50%; background: transparent; color: var(--ink);
+  font-size: 22px; line-height: 1; cursor: pointer;
+}
+.mci-popup-close:hover { background: var(--line); }

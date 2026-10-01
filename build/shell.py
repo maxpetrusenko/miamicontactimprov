@@ -121,6 +121,73 @@ STYLESHEET = "/assets/site.css?v=" + _css_version()
 # points at the same Worker, and so changing it is one edit.
 SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subscribe"
 
+# The one endpoint a buy button may post to. Same Worker as the subscribe form, a
+# different route. `kind` is one of 'class' | 'jam' | 'combo'; `event_date` pins it
+# to a specific Friday and is omitted to let the Worker resolve the next upcoming
+# one. Memberships and the intro pack are deferred -- see
+# docs/plans/pricing-events-config.md -- so there is no plan/subscription concept
+# here any more, only a drop-in kind.
+CHECKOUT_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/checkout"
+
+# The door payment link the /pay page hands off to. Printed on physical materials
+# (door QR, posters) too, so this exact URL is the one stable thing that must never
+# silently change without updating those -- see docs/plans/pricing-events-config.md.
+DOOR_PAYMENT_LINK = "https://buy.stripe.com/3cIaEX1Oe13Xfxh45v4ow01"
+
+
+def _posthog_config():
+    """Reads POSTHOG_KEY / POSTHOG_HOST from the build environment.
+
+    Local builds and this repo's public source never carry a real key: it is
+    injected only at build time (a GitHub Actions secret in publish.yml). Unset
+    here means `posthog_snippet()` emits nothing at all, and every call site that
+    uses `window.posthog` already checks it exists first, so the whole analytics
+    layer is a clean no-op until a key is wired in.
+    """
+    import os
+    key = os.environ.get("POSTHOG_KEY", "").strip()
+    host = os.environ.get("POSTHOG_HOST", "https://us.i.posthog.com").strip()
+    return key, host
+
+
+POSTHOG_KEY, POSTHOG_HOST = _posthog_config()
+
+
+def posthog_snippet():
+    """The PostHog bootstrap script, or "" when POSTHOG_KEY is unset.
+
+    Uses PostHog's own loader snippet (not a CDN <script src>) so the real
+    library only loads once a key exists. The `defaults` config key opts into
+    PostHog's own current sane defaults (pageview/pageleave capture, etc.);
+    the explicit keys after it are this site's specific requirements per Max
+    (2026-10-01): autocapture on, session recording with email/phone fields
+    masked by selector (not just by type, in case a form's input has no
+    `type="tel"`), and `identified_only` person profiles so an anonymous
+    visitor stays lightweight until `posthog.identify()` runs on a newsletter
+    signup (see the subscribe-form handler below).
+
+    Respects Do Not Track: `posthog.init` itself is skipped at runtime for a
+    visitor whose browser sends DNT, so nothing starts tracking for them even
+    though the loader tag is still served (cheap, inert until `init` runs).
+    """
+    if not POSTHOG_KEY:
+        return ""
+    mask_selector = 'input[type="email"], input[type="tel"], input[name="email"], input[name="phone"]'
+    return f"""<script>
+!function(t,e){{var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){{function g(t,e){{var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){{t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{{configurable:!0,enumerable:!0,writable:!0,value:function(t){{var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}}}),Object.defineProperty(u.people,"toString",{{configurable:!0,enumerable:!0,writable:!0,value:function(){{return u.toString(1)+".people (stub)"}}}}),o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])}},e.__SV=1)}}(document,window.posthog||[]);
+if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doNotTrack === 'yes')) {{
+  posthog.init('{POSTHOG_KEY}', {{
+    api_host: '{POSTHOG_HOST}',
+    defaults: '2026-05-30',
+    person_profiles: 'identified_only',
+    capture_pageview: true,
+    capture_pageleave: true,
+    autocapture: true,
+    session_recording: {{ maskAllInputs: true, maskTextSelector: '{mask_selector}' }}
+  }});
+}}
+</script>"""
+
 # The form copy, per locale. The label carries the whole offer: the discount and the
 # send frequency, in one sentence. The discount code itself is never printed here; the
 # welcome email that follows a signup carries it. `consent` is the one-sentence,
@@ -235,6 +302,83 @@ def subscribe_block(lang, source, offer, uid, button=None, anchor=None):
     )
 
 
+# The buy button's own result lines, mirroring the subscribe form's data-sending/
+# data-error naming so the two components read as one family. The error line reuses
+# the subscribe form's exact phrase, for voice consistency across the site's two forms
+# of checkout. The "closed" line is filled in by JS, not printed here, because it
+# carries a link built from the Worker's own response (`door_url`).
+BUY_COPY = {
+    "en": {
+        "sending": "Opening checkout.",
+        "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
+        "closed": "Online sales closed, pay at the door ($30).",
+        "closed_link": "What this looks like",
+    },
+}
+
+
+def buy_button(kind, label, uid, event_date=None, lang="en"):
+    """A buy button: one click, one POST to CHECKOUT_ENDPOINT, no real form submit.
+
+    `kind` is one of 'class' | 'jam' | 'combo' and travels as `data-kind`.
+    `event_date` pins the button to one specific Friday (none are, in this
+    slice); a generic "Buy ticket" button carries no `data-event-date` and the
+    Worker resolves the next upcoming one for that kind itself. Today only
+    `kind="class"` ever resolves to a real, open date -- see
+    docs/plans/pricing-events-config.md for why jam/combo buttons aren't shown
+    yet rather than shown disabled.
+
+    The status line sits next to the button, empty until a click resolves it - this is
+    feedback from an action the reader just took, not a caption explaining the button.
+    """
+    copy = BUY_COPY.get(lang, BUY_COPY["en"])
+    btn_id = f"buy-{uid}"
+    date_attr = f' data-event-date="{_attr(event_date)}"' if event_date else ""
+    return (
+        f'<div class="buy-button">'
+        f'<button class="btn primary" type="button" id="{btn_id}" data-kind="{_attr(kind)}"{date_attr} '
+        f'data-endpoint="{CHECKOUT_ENDPOINT}" data-sending="{_attr(copy["sending"])}" '
+        f'data-error="{_attr(copy["error"])}" data-closed="{_attr(copy["closed"])}">{label}</button>'
+        f'<p class="buy-status" role="status" aria-live="polite"></p>'
+        f'</div>'
+    )
+
+
+# ------------------------------------------------------------ newsletter popup
+# The copy for the popup heading, per locale. The form itself is the same
+# subscribe_form() every inline and footer placement uses, so its own label and
+# offer carry the mechanics (20% off, one email a month); this heading carries the
+# hook that gets a reader to look at the form at all.
+POPUP_HEADING = {
+    "en": "Get class updates + 20% off for the next two months.",
+    "es": "Novedades de las clases + 20% de descuento los próximos dos meses.",
+}
+
+POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
+
+
+def newsletter_popup(lang, path):
+    """The site-wide signup modal, injected once per page by page().
+
+    Behaviour lives in body_script(): shown once per visitor after 5 seconds via
+    localStorage, closed by the ✕, Escape or a backdrop click, focus-trapped while
+    open. The form posts through the same `.subscribe-form` handler every other
+    form on the site already uses - this markup only has to carry the class.
+    """
+    slug = page_slug(path)
+    heading_id = f"mci-popup-heading-{slug}"
+    heading = POPUP_HEADING.get(lang, POPUP_HEADING["en"])
+    close_label = POPUP_CLOSE_LABEL.get(lang, POPUP_CLOSE_LABEL["en"])
+    form = subscribe_form(lang, source=f"miamicontactimprov:popup:{slug}", uid=f"popup-{slug}")
+    return f"""<div class="mci-popup-overlay" id="mci-popup">
+  <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="{heading_id}">
+    <button class="mci-popup-close" type="button" aria-label="{close_label}">&times;</button>
+    <h2 id="{heading_id}" class="mci-h">{heading}</h2>
+    {form}
+  </div>
+</div>"""
+
+
 def _nav_href(slug, lang):
     """The route for a nav/footer link, in the reader's language when one exists.
 
@@ -316,7 +460,7 @@ def head(title, description, path, *, jsonld="", og_type="website", extra_head="
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{STYLESHEET}">
 <link rel="alternate" type="text/plain" href="{SITE}/llms.txt" title="llms.txt">
-{extra_head}{jsonld}
+{extra_head}{posthog_snippet()}{jsonld}
 </head>"""
 
 
@@ -686,11 +830,233 @@ def body_script():
           return response.ok && data.ok;
         });
       }).then(function (ok) {
-        if (ok) { form.reset(); say('ok'); }
+        if (ok) {
+          form.reset();
+          say('ok');
+          try {
+            if (window.posthog && form.closest('#mci-popup')) posthog.capture('newsletter_popup_submitted');
+          } catch (e) {}
+          // Identify by a hashed email, never the address itself: the hash is
+          // the distinct id, and the real email only ever becomes a person
+          // property when the reader ticked consent for it (same checkbox
+          // this handler already required before sending the subscribe call).
+          try {
+            if (window.posthog && window.crypto && window.crypto.subtle) {
+              var emailValue = input.value.trim().toLowerCase();
+              window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(emailValue)).then(function (buf) {
+                var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) {
+                  return b.toString(16).padStart(2, '0');
+                }).join('').slice(0, 32);
+                posthog.identify(hex, consent.checked ? { email: emailValue } : {});
+              }).catch(function () {});
+            }
+          } catch (e) {}
+        }
         else { say('error'); button.disabled = false; }
       }).catch(function () { say('error'); button.disabled = false; });
     });
   });
+
+  // ---- buy buttons (drop-in class / jam / combo checkout) ----
+  // One handler for every [data-kind] button on the site: the kind, the date (when
+  // the button carries one) and the endpoint all come off the button's own data
+  // attributes, same pattern as the subscribe form above. A 200 redirects straight to
+  // the Stripe-hosted Checkout URL the Worker returns; a 409 means online sales are
+  // closed (or, for jam/combo today, not configured yet) and the reader pays at the
+  // door instead, so the button stays disabled and the status line carries the door
+  // link rather than a dead button sitting next to a message that already answered it.
+  document.querySelectorAll('[data-kind]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wrap = btn.closest('.buy-button');
+      var status = wrap ? wrap.querySelector('.buy-status') : null;
+      var say = function (text) { if (status) status.textContent = text; };
+      var kind = btn.getAttribute('data-kind');
+      var eventDate = btn.getAttribute('data-event-date');
+      var payload = { kind: kind };
+      if (eventDate) payload.event_date = eventDate;
+      try {
+        if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
+      } catch (e) {}
+      btn.disabled = true;
+      say(btn.getAttribute('data-sending') || '');
+      fetch(btn.getAttribute('data-endpoint'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(function (response) {
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          return { status: response.status, ok: response.ok, data: data };
+        });
+      }).then(function (result) {
+        if (result.ok && result.data && result.data.url) {
+          try {
+            if (window.posthog) posthog.capture('checkout_started', { kind: kind });
+          } catch (e) {}
+          window.location.href = result.data.url;
+          return;
+        }
+        if (result.status === 409 && result.data && result.data.closed) {
+          if (status) {
+            status.textContent = '';
+            var msg = document.createTextNode((btn.getAttribute('data-closed') || '') + ' ');
+            var link = document.createElement('a');
+            link.href = result.data.door_url || '/pay';
+            link.textContent = 'Pay at the door';
+            link.addEventListener('click', function () {
+              try {
+                if (window.posthog) posthog.capture('pay_door_redirect', { from: 'checkout_closed' });
+              } catch (e) {}
+            });
+            status.appendChild(msg);
+            status.appendChild(link);
+          }
+          return; // sale's closed: the button stays disabled, the message explains why
+        }
+        say(btn.getAttribute('data-error') || '');
+        btn.disabled = false;
+      }).catch(function () {
+        say(btn.getAttribute('data-error') || '');
+        btn.disabled = false;
+      });
+    });
+  });
+
+  // ---- /pricing: a plain pageview-adjacent event, not autocapture's job ----
+  // Autocapture already logs the pageview; this is the specific named event the
+  // funnel (pricing_viewed -> buy_click -> checkout_started -> checkout_completed)
+  // is built around, so it exists even if autocapture's shape ever changes.
+  if (window.location.pathname === '/pricing') {
+    try { if (window.posthog) posthog.capture('pricing_viewed'); } catch (e) {}
+  }
+
+  // ---- /pay: fire tracking, then hand off to Stripe ----
+  // A plain Cloudflare _redirects rule can't run JS, so it can neither fire
+  // pay_door_redirect nor let PostHog attribute whatever UTM params arrived on
+  // this URL (e.g. a printed door QR's ?utm_source=poster&utm_medium=qr) before
+  // the visitor leaves -- which is the whole reason /pay is a real page instead.
+  // The short delay gives the capture call's request a moment to leave before
+  // the page unloads; the <meta http-equiv="refresh"> in this page's <head> is
+  // the no-JS fallback, slower but still correct.
+  if (window.location.pathname === '/pay') {
+    try { if (window.posthog) posthog.capture('pay_door_redirect', { from: 'pay_page' }); } catch (e) {}
+    setTimeout(function () {
+      // Keep in sync with shell.DOOR_PAYMENT_LINK / content_checkout.DOOR_LINK.
+      window.location.replace('https://buy.stripe.com/3cIaEX1Oe13Xfxh45v4ow01');
+    }, 250);
+  }
+
+  // ---- success page: personalise from the checkout redirect's query string ----
+  // No ticket ID, no QR - this page works purely off ?kind=, ?event_date= and
+  // ?amount=, which is all a redirect from Stripe Checkout can hand it. The
+  // server-rendered line above is already a correct generic sentence; this only
+  // overwrites it when the params are present and parse cleanly.
+  (function () {
+    var q = new URLSearchParams(window.location.search);
+    var kind = q.get('kind');
+    var amount = q.get('amount');
+    try {
+      if (window.posthog && kind) {
+        posthog.capture('checkout_completed', {
+          kind: kind,
+          amount: amount ? parseInt(amount, 10) : null,
+        });
+      }
+    } catch (e) {}
+
+    var line = document.getElementById('mci-success-line');
+    if (!line) return;
+    try {
+      var date = q.get('event_date');
+      if (!date || !/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) return;
+      var parts = date.split('-');
+      var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      if (isNaN(d.getTime())) return;
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'];
+      var when = months[d.getMonth()] + ' ' + d.getDate();
+      var what = kind === 'jam' ? 'the 7:45 PM jam'
+        : kind === 'combo' ? 'the full evening, class at 7:00 then jam at 7:45'
+        : 'the 7:00 PM class';
+      line.textContent = 'See you Friday, ' + when + ', for ' + what + '.';
+    } catch (e) {}
+  })();
+
+  // ---- newsletter popup ----
+  // Shown once per visitor, 5 seconds after load, unless localStorage already says
+  // so. Every read/write is wrapped so private browsing or blocked storage degrades
+  // to "never shows" rather than breaking the page.
+  (function () {
+    var modal = document.getElementById('mci-popup');
+    if (!modal) return;
+    var card = modal.querySelector('.mci-popup');
+    var closeBtn = modal.querySelector('.mci-popup-close');
+    var form = modal.querySelector('form.subscribe-form');
+    var seenKey = 'mci_popup_seen';
+    var lastFocus = null;
+
+    var seen = function () {
+      try { return localStorage.getItem(seenKey) === '1'; } catch (e) { return false; }
+    };
+    var markSeen = function () {
+      try { localStorage.setItem(seenKey, '1'); } catch (e) {}
+    };
+
+    var focusables = function () {
+      return Array.prototype.slice.call(
+        card.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])')
+      );
+    };
+
+    var onKeydown = function (e) {
+      if (e.key === 'Escape') { closeModal(); return; }
+      if (e.key !== 'Tab') return;
+      var f = focusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+
+    var openModal = function () {
+      lastFocus = document.activeElement;
+      modal.classList.add('is-open');
+      document.addEventListener('keydown', onKeydown, true);
+      var f = focusables();
+      if (f.length) f[0].focus();
+      try { if (window.posthog) posthog.capture('newsletter_popup_shown'); } catch (e) {}
+    };
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      document.removeEventListener('keydown', onKeydown, true);
+      markSeen();
+      try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
+      try {
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+        else document.body.focus();
+      } catch (e) {}
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+
+    // Marking "seen" on a successful submit without touching the shared subscribe
+    // handler above: watch the status line this page's form already carries, and
+    // treat it reaching the handler's own "ok" text as success.
+    if (form) {
+      var status = form.querySelector('.subscribe-status');
+      var okText = form.getAttribute('data-ok') || '';
+      if (status && okText && 'MutationObserver' in window) {
+        new MutationObserver(function () {
+          if (status.textContent === okText) markSeen();
+        }).observe(status, { childList: true, characterData: true, subtree: true });
+      }
+    }
+
+    if (!seen()) {
+      setTimeout(function () { if (!seen()) openModal(); }, 5000);
+    }
+  })();
 })();
 </script>
 </body>
@@ -710,14 +1076,17 @@ def bg_youtube_embed(video_id):
 
 
 def page(title, description, path, body, *, jsonld="", bg_video=None, bg_youtube=None,
-         og_type="website", lang="en"):
+         og_type="website", lang="en", extra_head=""):
     """Assemble a full HTML document.
 
     lang: the locale this page is written in. It selects <html lang>, the reciprocal
     alternates, the switcher, the nav labels and the footer.
+
+    extra_head: raw HTML appended into <head>, before the PostHog snippet and the
+    JSON-LD. The only user today is /pay's no-JS meta-refresh fallback.
     """
     return (
-        head(title, description, path, jsonld=jsonld, og_type=og_type, lang=lang)
+        head(title, description, path, jsonld=jsonld, og_type=og_type, lang=lang, extra_head=extra_head)
         + "\n<body>\n"
         + f'<a class="skip-link" href="#main">{SKIP_LABELS.get(lang, SKIP_LABELS["en"])}</a>\n'
         + '<div id="grain" aria-hidden="true"></div>\n'
@@ -730,6 +1099,8 @@ def page(title, description, path, body, *, jsonld="", bg_video=None, bg_youtube
         + "\n"
         + footer(lang, path=path)
         + "\n</div>\n"
+        + newsletter_popup(lang, path)
+        + "\n"
         + body_script()
     )
 

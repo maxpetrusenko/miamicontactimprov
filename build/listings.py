@@ -880,7 +880,7 @@ def fundamentals_course():
             "@type": "Offer",
             "price": "20",
             "priceCurrency": "USD",
-            "description": "Sliding scale $20 to $50 for each class, paid at the door or booked on Luma",
+            "description": "$20 online, promotion codes apply, sales close 2 hours before class. $30 to $50 pay-what-you-can at the door after that, no booking needed either way.",
             "availability": "https://schema.org/InStock",
             "validFrom": _local_datetime(first_iso, start_hhmm),
             "url": FUNDAMENTALS_URL,
