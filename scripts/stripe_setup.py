@@ -56,6 +56,28 @@ PRICES = [
         "recurring_interval": None,
     },
     {
+        "lookup_key": "ci-jam-dropin",
+        "product_name": "Contact Improv Miami - Jam drop-in (online)",
+        "description": (
+            "One ticket, one open jam night, Inner Motion Dance Studio, Hallandale "
+            "Beach FL. Online sales close 2 hours before the jam starts; after that, "
+            "pay at the door."
+        ),
+        "unit_amount": 1500,
+        "recurring_interval": None,
+    },
+    {
+        "lookup_key": "ci-combo-dropin",
+        "product_name": "Contact Improv Miami - Class + jam same day (online)",
+        "description": (
+            "One ticket covering both the class and the jam on a day that runs "
+            "both, Inner Motion Dance Studio, Hallandale Beach FL. Online sales "
+            "close 2 hours before the class starts; after that, pay at the door."
+        ),
+        "unit_amount": 3000,
+        "recurring_interval": None,
+    },
+    {
         "lookup_key": "ci-intro-pack",
         "product_name": "Contact Improv Miami - Intro 3-class pack",
         "description": (
