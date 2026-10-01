@@ -138,7 +138,7 @@ def home():
     <h1 class="mci-h"><span class="rise" style="--d:.3s">MOVE.</span><span class="rise" style="--d:.42s">LISTEN.</span><span class="rise accent" style="--d:.54s">IMPROVISE.</span></h1>
     <p class="lede rise" style="--d:.72s">A weekly contact improv class and open jam in Miami &mdash; where dance meets touch, trust, and play. No experience needed, just a curious body.</p>
     <div class="btn-row rise" style="--d:.88s">
-      {buy_button("ticket", "Buy ticket &ndash; $20", "home-hero")}
+      {buy_button("class", "Buy ticket &ndash; $20", "home-hero")}
       <a class="btn secondary" href="/events">See upcoming jams &nbsp;&rarr;</a>
       <a class="btn secondary" href="{IG}" target="_blank" rel="noopener">@miamicontactimprov</a>
     </div>

@@ -61,6 +61,9 @@
 /pricing.html  /pricing  301
 /pricing/index.html  /pricing  301
 /pricing/  /pricing  301
+/pay.html  /pay  301
+/pay/index.html  /pay  301
+/pay/  /pay  301
 /success.html  /success  301
 /success/index.html  /success  301
 /success/  /success  301
@@ -142,7 +145,3 @@
 /contact-improvisation-miami /miami                           301
 /safety                     /safety-and-consent               301
 /teachers                   /directory                        301
-
-# Door payment link. Not a page (no sibling locale, no PAGES row): a flat utility
-# redirect to Max's live Stripe Payment Link, already public elsewhere on the web.
-/pay                        https://buy.stripe.com/3cIaEX1Oe13Xfxh45v4ow01  302

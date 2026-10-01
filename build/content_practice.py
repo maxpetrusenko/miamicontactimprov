@@ -667,7 +667,7 @@ def fundamentals():
     <h1>Contact improv fundamentals: eight Fridays from the ground up.</h1>
     <p class="lede">A taught class series that starts Contact Improvisation from the beginning: giving and taking weight, keeping a rolling point of contact, falling, and reading a partner without words. Eight Friday evenings at Inner Motion Dance Studio, 2 October to 20 November 2026.</p>
     <div class="btn-row">
-      {buy_button("ticket", "Buy ticket &ndash; $20", "fundamentals-hero")}
+      {buy_button("class", "Buy ticket &ndash; $20", "fundamentals-hero")}
       <a class="btn secondary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
       <a class="btn secondary" href="/your-first-jam">Never been to a jam?</a>
     </div>
@@ -707,7 +707,7 @@ def fundamentals():
 
     <h2>What a class costs</h2>
       <p>$20 online, booked with the ticket button above. Online sales close two hours before each class starts; after that, the door takes $30 to $50 pay-what-you-can, same as always, no booking needed either way. <a href="/pricing">See all pricing &rarr;</a></p>
-      <p>Subscribers to the monthly email get 20% off the online ticket for the next two months; the code arrives in the first email. Promotion codes apply to the ticket, not to memberships.</p>
+      <p>Subscribers to the monthly email get 20% off the online ticket for the next two months; the code arrives in the first email.</p>
       <p>If $20 is the reason you are not coming this week, pay what you can at the door instead, or say so by email beforehand. Nobody is turned away from a fundamentals class over money.</p>
 
       {subscribe_block("en", source="miamicontactimprov:fundamentals", offer=START_OFFER, uid="fundamentals")}

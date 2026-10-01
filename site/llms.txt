@@ -43,6 +43,7 @@ The library pages are published in both English and Spanish; the Events, Contact
 - https://miamicontactimprov.com/events  (en)
 - https://miamicontactimprov.com/contact  (en)
 - https://miamicontactimprov.com/pricing  (en)
+- https://miamicontactimprov.com/pay  (en)
 - https://miamicontactimprov.com/success  (en)
 - https://miamicontactimprov.com/blog/  (en)
 - https://miamicontactimprov.com/blog/five-things-before-your-first-jam  (en)

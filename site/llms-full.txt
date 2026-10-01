@@ -1010,7 +1010,7 @@ What a class costs
 
 $20 online, booked with the ticket button above. Online sales close two hours before each class starts; after that, the door takes $30 to $50 pay-what-you-can, same as always, no booking needed either way. See all pricing → 
 
-Subscribers to the monthly email get 20% off the online ticket for the next two months; the code arrives in the first email. Promotion codes apply to the ticket, not to memberships.
+Subscribers to the monthly email get 20% off the online ticket for the next two months; the code arrives in the first email.
 
 If $20 is the reason you are not coming this week, pay what you can at the door instead, or say so by email beforehand. Nobody is turned away from a fundamentals class over money.
 
@@ -2544,49 +2544,56 @@ id="main">
 
 Pricing
 
-What a class, a jam, or a membership costs.
+What a class or a jam costs.
 
-One ticket price for the door, one for online, and two ways to pay for more than one session at a time. Every option checks out through a Stripe-hosted page; nothing here asks for a card on this site.
+One ticket price for the door, one for online. Every online option checks out through a Stripe-hosted page; nothing here asks for a card on this site.
 
 Short answer
 
-A single class or jam is $20 online or $30 to $50 at the door, pay what you can. First-timers can buy a 3-class pack for $45. Coming every week costs $60 a month or $540 a year. Promotion codes apply to the $20 ticket and the $45 intro pack; they do not apply to either membership.
+A class is $20 online or $30 to $50 at the door, pay what you can. Promotion codes apply to every online ticket.
 
- Drop-in, online — $20. 
+ Class, online — $20. 
 Promotion codes apply.
 
 Online sales close two hours before each class; after that it is $30–$50 pay-what-you-can at the door.
 
  Buy ticket – $20 
 
+ Jam, online — $15. 
+Promotion codes apply.
+
+Not bookable yet: no jam night has its own date in the schedule yet. This row becomes a button once one does.
+
+ Class + jam, same day — $30. 
+Promotion codes apply.
+
+Not bookable yet, for the same reason as the jam row above.
+
  At the door — $30–$50, pay what you can. 
 
 No booking. Come to the door; nobody is turned away over money.
 
- Intro 3-class pack — $45. 
-For first-timers. Promotion codes apply.
-
- Buy intro pack – $45 
-
- Monthly, unlimited — $60/month. 
-
-Promotion codes apply to the drop-in ticket and the intro pack above. They do not apply to memberships.
-
- Buy monthly – $60/mo 
-
- Annual, prepaid — $540 (about $45/month).
-
- Buy annual – $540 
-
 Refund policy
 
-If we cancel a class or jam, we refund you: tickets in full, memberships prorated.
+If we cancel a class or jam, we refund your ticket in full.
 
-Every price above is for the same weekly Friday session at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009: a class from 7:00 to 7:45, then an open jam from 7:45 to 9:00. A ticket or a membership gets you in the door the same way a $20 to $50 cash payment always has — nothing changes about the room itself.
+Every Friday runs at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009: a class from 7:00 to 7:45, then an open jam from 7:45 to 9:00. A ticket gets you in the door the same way a cash payment always has — nothing changes about the room itself.
 
 Cite this page
 
 Miami Contact Improv (2026). Pricing . miamicontactimprov.com. https://miamicontactimprov.com/pricing
+
+---
+
+## https://miamicontactimprov.com/pay
+
+id="main">
+
+Door payment
+
+Taking you to payment.
+
+If this does not redirect automatically in a moment, continue to payment .
 
 ---
 
@@ -2598,7 +2605,7 @@ You're checked out
 
 You're in.
 
-Your membership is active — come to any Friday class, 7–9 PM.
+Come to the door with your name — details below.
 
  Where Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009 
 
@@ -2619,12 +2626,6 @@ What to wear and bring
  Phone Silenced, face down, off the floor or at the edge 
 
 First time? Your first jam, step by step walks through arriving, the opening circle and what the first ten minutes look like. Questions before Friday: hello@miamicontactimprov.com .
-
-See you on the floor
-
-No ticket ID or QR to bring - just show up. The door will have your name if you bought in advance.
-
- Your first jam, step by step All pricing
 
 ---
 

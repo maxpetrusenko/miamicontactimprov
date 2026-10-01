@@ -569,29 +569,53 @@
           return response.ok && data.ok;
         });
       }).then(function (ok) {
-        if (ok) { form.reset(); say('ok'); }
+        if (ok) {
+          form.reset();
+          say('ok');
+          try {
+            if (window.posthog && form.closest('#mci-popup')) posthog.capture('newsletter_popup_submitted');
+          } catch (e) {}
+          // Identify by a hashed email, never the address itself: the hash is
+          // the distinct id, and the real email only ever becomes a person
+          // property when the reader ticked consent for it (same checkbox
+          // this handler already required before sending the subscribe call).
+          try {
+            if (window.posthog && window.crypto && window.crypto.subtle) {
+              var emailValue = input.value.trim().toLowerCase();
+              window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(emailValue)).then(function (buf) {
+                var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) {
+                  return b.toString(16).padStart(2, '0');
+                }).join('').slice(0, 32);
+                posthog.identify(hex, consent.checked ? { email: emailValue } : {});
+              }).catch(function () {});
+            }
+          } catch (e) {}
+        }
         else { say('error'); button.disabled = false; }
       }).catch(function () { say('error'); button.disabled = false; });
     });
   });
 
-  // ---- buy buttons (ticket / intro / monthly / annual checkout) ----
-  // One handler for every [data-plan] button on the site: the plan, the date (when
+  // ---- buy buttons (drop-in class / jam / combo checkout) ----
+  // One handler for every [data-kind] button on the site: the kind, the date (when
   // the button carries one) and the endpoint all come off the button's own data
   // attributes, same pattern as the subscribe form above. A 200 redirects straight to
   // the Stripe-hosted Checkout URL the Worker returns; a 409 means online sales are
-  // closed for that class and the reader pays at the door instead, so the button
-  // stays disabled and the status line carries the door link rather than a dead
-  // button sitting next to a message that already answered it.
-  document.querySelectorAll('[data-plan]').forEach(function (btn) {
+  // closed (or, for jam/combo today, not configured yet) and the reader pays at the
+  // door instead, so the button stays disabled and the status line carries the door
+  // link rather than a dead button sitting next to a message that already answered it.
+  document.querySelectorAll('[data-kind]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var wrap = btn.closest('.buy-button');
       var status = wrap ? wrap.querySelector('.buy-status') : null;
       var say = function (text) { if (status) status.textContent = text; };
-      var plan = btn.getAttribute('data-plan');
-      var date = btn.getAttribute('data-date');
-      var payload = { plan: plan };
-      if (date) payload.date = date;
+      var kind = btn.getAttribute('data-kind');
+      var eventDate = btn.getAttribute('data-event-date');
+      var payload = { kind: kind };
+      if (eventDate) payload.event_date = eventDate;
+      try {
+        if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
+      } catch (e) {}
       btn.disabled = true;
       say(btn.getAttribute('data-sending') || '');
       fetch(btn.getAttribute('data-endpoint'), {
@@ -604,6 +628,9 @@
         });
       }).then(function (result) {
         if (result.ok && result.data && result.data.url) {
+          try {
+            if (window.posthog) posthog.capture('checkout_started', { kind: kind });
+          } catch (e) {}
           window.location.href = result.data.url;
           return;
         }
@@ -614,6 +641,11 @@
             var link = document.createElement('a');
             link.href = result.data.door_url || '/pay';
             link.textContent = 'Pay at the door';
+            link.addEventListener('click', function () {
+              try {
+                if (window.posthog) posthog.capture('pay_door_redirect', { from: 'checkout_closed' });
+              } catch (e) {}
+            });
             status.appendChild(msg);
             status.appendChild(link);
           }
@@ -628,24 +660,63 @@
     });
   });
 
+  // ---- /pricing: a plain pageview-adjacent event, not autocapture's job ----
+  // Autocapture already logs the pageview; this is the specific named event the
+  // funnel (pricing_viewed -> buy_click -> checkout_started -> checkout_completed)
+  // is built around, so it exists even if autocapture's shape ever changes.
+  if (window.location.pathname === '/pricing') {
+    try { if (window.posthog) posthog.capture('pricing_viewed'); } catch (e) {}
+  }
+
+  // ---- /pay: fire tracking, then hand off to Stripe ----
+  // A plain Cloudflare _redirects rule can't run JS, so it can neither fire
+  // pay_door_redirect nor let PostHog attribute whatever UTM params arrived on
+  // this URL (e.g. a printed door QR's ?utm_source=poster&utm_medium=qr) before
+  // the visitor leaves -- which is the whole reason /pay is a real page instead.
+  // The short delay gives the capture call's request a moment to leave before
+  // the page unloads; the <meta http-equiv="refresh"> in this page's <head> is
+  // the no-JS fallback, slower but still correct.
+  if (window.location.pathname === '/pay') {
+    try { if (window.posthog) posthog.capture('pay_door_redirect', { from: 'pay_page' }); } catch (e) {}
+    setTimeout(function () {
+      // Keep in sync with shell.DOOR_PAYMENT_LINK / content_checkout.DOOR_LINK.
+      window.location.replace('https://buy.stripe.com/3cIaEX1Oe13Xfxh45v4ow01');
+    }, 250);
+  }
+
   // ---- success page: personalise from the checkout redirect's query string ----
-  // No ticket ID, no QR - this page works purely off ?date= and ?plan=, which is all
-  // a redirect from Stripe Checkout can hand it. The server-rendered line above is
-  // already the correct generic sentence for a membership/pack purchase with no
-  // single date; this only overwrites it when a ticket's ?date= is present.
+  // No ticket ID, no QR - this page works purely off ?kind=, ?event_date= and
+  // ?amount=, which is all a redirect from Stripe Checkout can hand it. The
+  // server-rendered line above is already a correct generic sentence; this only
+  // overwrites it when the params are present and parse cleanly.
   (function () {
+    var q = new URLSearchParams(window.location.search);
+    var kind = q.get('kind');
+    var amount = q.get('amount');
+    try {
+      if (window.posthog && kind) {
+        posthog.capture('checkout_completed', {
+          kind: kind,
+          amount: amount ? parseInt(amount, 10) : null,
+        });
+      }
+    } catch (e) {}
+
     var line = document.getElementById('mci-success-line');
     if (!line) return;
     try {
-      var q = new URLSearchParams(window.location.search);
-      var date = q.get('date');
+      var date = q.get('event_date');
       if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
       var parts = date.split('-');
       var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
       if (isNaN(d.getTime())) return;
       var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
         'August', 'September', 'October', 'November', 'December'];
-      line.textContent = 'See you Friday, ' + months[d.getMonth()] + ' ' + d.getDate() + ', 7\u20139 PM.';
+      var when = months[d.getMonth()] + ' ' + d.getDate();
+      var what = kind === 'jam' ? 'the 7:45 PM jam'
+        : kind === 'combo' ? 'the full evening, class at 7:00 then jam at 7:45'
+        : 'the 7:00 PM class';
+      line.textContent = 'See you Friday, ' + when + ', for ' + what + '.';
     } catch (e) {}
   })();
 
@@ -691,12 +762,14 @@
       document.addEventListener('keydown', onKeydown, true);
       var f = focusables();
       if (f.length) f[0].focus();
+      try { if (window.posthog) posthog.capture('newsletter_popup_shown'); } catch (e) {}
     };
 
     function closeModal() {
       modal.classList.remove('is-open');
       document.removeEventListener('keydown', onKeydown, true);
       markSeen();
+      try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
       try {
         if (lastFocus && lastFocus.focus) lastFocus.focus();
         else document.body.focus();

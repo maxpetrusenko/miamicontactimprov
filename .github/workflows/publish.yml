@@ -40,6 +40,15 @@ jobs:
         run: python3 build/make_assets.py
 
       - name: Build site
+        env:
+          # The PostHog public client token. Safe to appear in built HTML (it's a
+          # phc_ client key, not a secret that grants access to anything), but
+          # never committed to this public repo's source -- injected only here.
+          # Empty on a PR run from a fork (no secret access) or until the
+          # POSTHOG_KEY repo secret is created: build/shell.py's
+          # posthog_snippet() emits nothing at all when this is unset, so that
+          # is a clean no-op, not a broken build.
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
         run: python3 build/build.py --out site
 
       - name: Gate (html structure, json-ld, seo, links, discovery files, raster assets, a11y)
