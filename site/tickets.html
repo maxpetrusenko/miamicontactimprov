@@ -297,6 +297,8 @@
   var CHECKOUT = root.getAttribute('data-checkout');
   var FIRST = root.getAttribute('data-first');
   var ERR = 'That did not go through. Try again, or email hello@miamicontactimprov.com.';
+  // One message for every first-class refusal: the Worker never says why.
+  var UNAVAILABLE = 'The first-class price is not available for this email. The community price still works.';
   var dateSel = document.getElementById('tk-date');
 
   // Drop Fridays whose online sale has closed (two hours before start).
@@ -346,7 +348,8 @@
         return;
       }
       if (res.status === 409 && res.data.closed) { say('Online sales are closed for that Friday. Pay at the door ($30).'); return; }
-      if (res.data.error === 'first_discount_claimed') { say('This email already has a class with us, so the first-class price is used. The community price still works.'); return; }
+      if (res.data.error === 'first_offer_unavailable') { say(UNAVAILABLE); return; }
+      if (res.status === 429) { say('Too many tries. Wait a minute and try again.'); btn.disabled = false; return; }
       say(res.status === 400 && res.data.error ? res.data.error + '.' : ERR);
       btn.disabled = false;
     }).catch(function () { say(ERR); btn.disabled = false; });
@@ -388,10 +391,10 @@
       body: JSON.stringify({ email: email, consent: true, company: first.elements.company.value })
     }).then(function (r) { return r.json().then(function (d) { return { status: r.status, data: d }; }); })
       .then(function (res) {
-        track('first_class_captured', { eligible: !!(res.data && res.data.eligible) });
-        if (res.status === 200 && res.data.eligible) { return go(btn, { ticket_type: 'first', email: email }); }
-        if (res.status === 200) { status.textContent = 'This email already has a class with us, so the first-class price is used. The community price still works.'; return; }
-        status.textContent = ERR; btn.disabled = false;
+        track('first_class_captured', {});
+        if (res.status === 200 && res.data.ok) { return go(btn, { ticket_type: 'first', email: email }); }
+        status.textContent = res.status === 429 ? 'Too many tries. Wait a minute and try again.' : ERR;
+        btn.disabled = false;
       }).catch(function () { status.textContent = ERR; btn.disabled = false; });
   });
 })();

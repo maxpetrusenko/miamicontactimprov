@@ -34,7 +34,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install build dependencies
-        run: python3 -m pip install --quiet pillow
+        run: python3 -m pip install --quiet pillow pyyaml
+
+      # Fail-closed like the gate: unit tests run before anything deploys.
+      # test_meta_ads needs the ad posters on disk, so render them first.
+      - name: Unit tests
+        run: |
+          python3 tools/ad_statics.py
+          python3 -m unittest discover -s tests
 
       - name: Build assets
         run: python3 build/make_assets.py

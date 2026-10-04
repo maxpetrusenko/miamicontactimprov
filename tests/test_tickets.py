@@ -63,6 +63,14 @@ class TicketsPage(unittest.TestCase):
     def test_no_status_badges(self):
         self.assertNotRegex(self.html, r'class="[^"]*badge')
 
+    def test_first_class_refusal_is_one_uniform_message(self):
+        # The Worker answers every first-class refusal with first_offer_unavailable;
+        # the page must not branch on a reason it is never told.
+        script = content_tickets.TICKETS_SCRIPT
+        self.assertIn("first_offer_unavailable", script)
+        self.assertNotIn("first_discount_claimed", script)
+        self.assertNotIn("eligible", script)
+
     def test_client_referrer_rule_matches_the_worker(self):
         self.assertIn("/^[a-z0-9][a-z0-9-]{0,39}$/", content_tickets.TICKETS_SCRIPT)
 

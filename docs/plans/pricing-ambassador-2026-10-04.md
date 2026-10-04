@@ -58,9 +58,10 @@ record of which offer each sale used.
    WhatsApp group, Facebook group, somewhere else) and type a handle or group name → "Unlock
    $15" → Stripe Checkout at $15, codes off. No verification.
 3. **New here, $15.** Email + consent → `POST /api/first-class` records the offer on the
-   subscriber record and checks Stripe for a past paid CI checkout → if none, straight to a $15
-   Checkout with the email locked. Same email again after paying: "This email already has a
-   class with us", and the community price is offered instead.
+   subscriber record (always answers `{ ok: true }`) → `/api/checkout` with `ticket_type: first`
+   checks KV and Stripe → a $15 Checkout with the email locked. If the price is not available
+   (paid before, a session already open, offer never issued, Stripe unreachable) the answer is
+   one uniform 409 `first_offer_unavailable`, and the page offers the community price.
 4. **Friend link.** `miamicontactimprov.com/fr/maya-lopez` → 302 → `/tickets?ref=maya-lopez` →
    a dark panel "Maya Lopez sent you. Your class is $15." → $15 Checkout with `referrer`.
 5. **Door $30.** Information only on `/tickets`. The `/pay` link and its $30 to $50 range are
@@ -78,18 +79,60 @@ Every session from `/api/checkout` carries, on the session and its PaymentIntent
 | `share_channel` | `instagram_story`, `whatsapp_group`, `facebook_group`, `other` (community only) |
 | `handle` | free text, 80 chars max (community only) |
 | `referrer` | `/fr/<name>` slug, `^[a-z0-9][a-z0-9-]{0,39}$` (referral only) |
+| `referrer_verified` | `true` when the slug is in the `AMBASSADORS` allowlist, else `false` (referral only) |
 | `first_discount` | `true` (first only) |
 
 Prices (lookup keys, created by `scripts/stripe_setup.py`): `ci-ticket-online-friday` $20,
 `ci-class-15` $15 (one price for all three $15 offers; `ticket_type` tells them apart).
 
-KV (`EMAIL_SUBS`, the existing subscriber store) gains two fields on the subscriber record,
-merged without touching existing fields: `first_offer_issued_at` and `first_discount_claimed`.
-The flag only caches a "yes" from Stripe; Stripe stays the source of truth.
+KV (`EMAIL_SUBS`, the existing subscriber store) gains three fields on the subscriber record,
+merged without touching existing fields: `first_offer_issued_at`, `first_discount_claimed`
+(cached "yes" from Stripe or set by the webhook) and `first_pending_until`. Stripe stays the
+source of truth. Emails are trimmed and lowercased everywhere before they are stored, compared
+or sent to Stripe.
 
-**Non-stacking rules**: one price per session; `allow_promotion_codes` only on early; the
-first-class price needs an issued offer for that email and no completed CI session for it;
-the $15 offers are class-only (`kind` must be `class`).
+`AMBASSADORS` KV (separate namespace, keys `ambassador:<slug>`) is the allowlist. An unknown slug
+still buys at $15 (the link worked for the buyer) but is tagged `referrer_verified=false`, so
+the credit ledger can skip it. Seeding from the CRM promoter flag is slice 2; for now:
+`wrangler kv key put --binding AMBASSADORS ambassador:max '{"name":"Max"}'`.
+
+**Non-stacking and double-claim rules**:
+
+- One price per session; `allow_promotion_codes` only on early; the $15 offers are class-only.
+- First class needs an issued offer, no completed CI session for that email in Stripe, no
+  `first_discount_claimed` flag, and no unexpired `first_pending_until`.
+- Before a first-class session is created the Worker writes `first_pending_until` (now + 32
+  min) and gives the session `expires_at` = minute bucket + 31 min (Stripe's minimum is 30). A
+  second request while the marker stands gets the 409.
+- KV has no compare-and-set, so two requests that both read before either writes can both pass.
+  They send the same `Idempotency-Key` (sha256 of `email|event|first|minute`) and identical
+  parameters, so Stripe returns one session to both. The remaining gap is two concurrent
+  requests for different Fridays in the same instant; closing it fully needs a Durable Object.
+- `POST /api/stripe/webhook` (signature checked with `STRIPE_WEBHOOK_SECRET`, 5 minute
+  tolerance): `checkout.session.completed` (paid) and `async_payment_succeeded` set
+  `first_discount_claimed` and clear the pending marker; `checkout.session.expired` on a
+  first-class session clears the marker. It only updates existing subscriber records.
+- Other ticket types use `sha256(client IP|event|type|channel|handle|referrer|minute)` as the
+  idempotency key, or a random key when there is no IP, so a double click returns one session
+  and two strangers never share one.
+
+**Accepted $5 risks** (not worth more code at this price):
+
+- Email aliases (`name+1@gmail.com`, dots in Gmail, a second address) get a second first class.
+- People who paid through Luma or the `/pay` door link have no CI Checkout Session in Stripe
+  under their email, so the first-class price still looks open to them.
+- Community $15 is self-reported. Spot-check tags later.
+
+**Abuse controls**: one 409 for every first-class refusal (no "has paid" oracle);
+`POST /api/first-class` always answers `{ ok: true }`; Cloudflare rate limiting binding
+`API_LIMITER`, 10 requests per 60 s per `CF-Connecting-IP` on every `/api/*` route except the
+webhook; CORS locked to `miamicontactimprov.com` (and `www.`) for checkout routes, plus
+`maxpetrusenko.com` for `/api/subscribe`, plus `EXTRA_ORIGINS` for local dev. Turnstile is
+skipped for now: add it to `/api/first-class` if the rate limit is not enough.
+
+**Stripe mode guard**: `STRIPE_MODE` (`test` by default, set in `wrangler.jsonc`) must match the
+key prefix (`sk_test_`/`rk_test_` or `sk_live_`/`rk_live_`); a mismatch refuses checkout before
+any Stripe call.
 
 ## Slice 1: walking skeleton (this PR)
 
@@ -101,13 +144,21 @@ script), `/fr/:name` rule in `_redirects` (and `tools/serve.py` for local), `she
 
 Worker (`appDevelopment-tech/maxpetrusenko.com`, `nextjs/workers/newsletter-api/newsletter-api`):
 `src/tickets.ts` (ticket rules, first-class capture), `ticket_type` handling in
-`src/checkout.ts`, `hasCompletedCiPurchase` and `customer_email` / PaymentIntent metadata in
-`src/stripe.ts`, route `POST /api/first-class`, `test/tickets.spec.ts`.
+`src/checkout.ts` (pending marker, expiry, idempotency key), `src/stripe.ts` (purchase lookup,
+`customer_email`, PaymentIntent metadata, mode guard), `src/webhook.ts`, `src/http.ts` (CORS,
+rate limit), routes `POST /api/first-class` and `POST /api/stripe/webhook`,
+`test/tickets.spec.ts`, `test/hardening.spec.ts`, CI workflow
+`.github/workflows/newsletter-api-tests.yml`. The site's `publish.yml` now runs
+`python3 -m unittest discover -s tests` before deploy.
 
 **Proof gate (met 2026-10-04, Stripe TEST mode only):**
 
-- Worker: `npx vitest run` 67/67 (15 new). Site: `python3 -m unittest tests.test_tickets` 11/11;
+- Worker: `npx vitest run` 84/84 (32 new: tickets, concurrent first-class sessions, mixed-case
+  email, the uniform 409, idempotency, webhook signature and effects, allowlist, rate limit,
+  CORS, mode guard). `tsc` clean; `wrangler deploy --dry-run` shows the rate limit binding.
+- Site: `python3 -m unittest discover -s tests` 53/53 (after `tools/ad_statics.py`);
   `tools/gate.py` error=0 warn=0 over 94 pages.
+- The E2E below ran before the review fixes, against the first version of the Worker.
 - Local E2E (Playwright, local site → `wrangler dev` → Stripe test API): referral, community and
   first-class sessions created; first-class paid with test card 4242 and redirected to
   `/success?...&ticket_type=first`; same email refused afterwards. Session metadata read back
@@ -123,10 +174,21 @@ env -u SSL_CERT_FILE -u NODE_EXTRA_CA_CERTS -u HTTPS_PROXY -u HTTP_PROXY npx wra
 MCI_API_BASE=http://localhost:8787 python3 build/build.py --out /tmp/mci-local
 ```
 
-**Before this goes live** (not done here, needs Max): deploy the Worker, create the `ci-class-15`
-price in the live account (`stripe_setup.py --live --only ci-class-15 --confirm ...`), merge
-and deploy the site. Until the Worker is deployed, the live `/tickets` page answers "That did not
-go through" on the $15 options, so the two PRs must ship together, Worker first.
+### Go-live order (Max, not done in these PRs)
+
+1. Decide the live Stripe account (open decision below).
+2. Create the live price: `python3 scripts/stripe_setup.py --live --only ci-class-15 --confirm "I am creating a LIVE Stripe object"`.
+3. Create the allowlist namespace: `wrangler kv namespace create AMBASSADORS`, add the binding
+   with its id to `wrangler.jsonc`, seed the first slugs.
+4. In Stripe (live), add a webhook endpoint `https://newsletter-api.max-petrusenko.workers.dev/api/stripe/webhook`
+   for `checkout.session.completed`, `checkout.session.async_payment_succeeded`,
+   `checkout.session.expired`; `wrangler secret put STRIPE_WEBHOOK_SECRET` with its `whsec_`.
+5. `wrangler secret put STRIPE_SECRET_KEY` with the live key and set `STRIPE_MODE` to `live` in
+   `wrangler.jsonc` in the same change (the guard refuses a mismatch).
+6. Merge and deploy the Worker PR. Smoke-test: `/api/checkout` early returns a live Checkout URL.
+7. Merge the site PR (deploys from main). Until step 6 is live, the $15 buttons on `/tickets`
+   answer "That did not go through".
+8. Buy one $15 ticket end to end, check the metadata in the dashboard, refund it.
 
 ## Next slices
 
