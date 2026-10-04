@@ -35,10 +35,11 @@ class IdeasPage(unittest.TestCase):
 
     def test_parents_card_counts_families_and_kids(self):
         card = self.html.split('id="parents-kids"', 1)[1].split("</article>", 1)[0]
-        self.assertIn("/10 families", card)
+        self.assertIn("of 10 families", card)
         self.assertIn('class="idea-kids"', card)
-        self.assertIn('name="adults"', card)
-        self.assertIn('name="kids"', card)
+        self.assertIn('data-families="1"', card)
+        self.assertIn('name="adults"', self.html)
+        self.assertIn('name="kids"', self.html)
 
     def test_eros_contact_is_consent_framed(self):
         card = self.html.split('id="eros-contact"', 1)[1].split("</article>", 1)[0]
@@ -48,7 +49,7 @@ class IdeasPage(unittest.TestCase):
     def test_three_levels_and_a_suggest_card(self):
         for level in ("definitely", "probably", "curious"):
             self.assertIn(f'data-level="{level}"', self.html)
-        self.assertIn('class="idea-suggest-form"', self.html)
+        self.assertIn('id="idea-suggest"', self.html)
 
     def test_ref_attribution_and_share_line(self):
         script = content_ideas.IDEAS_SCRIPT
@@ -58,8 +59,12 @@ class IdeasPage(unittest.TestCase):
 
     def test_endpoint_and_labels(self):
         self.assertIn(f'data-endpoint="{shell.IDEAS_ENDPOINT}"', self.html)
-        for idea, _ in WORKER_IDEAS:
-            self.assertIn(f'for="idea-{idea}-email"', self.html)
+        for input_id in ("idea-email", "idea-consent", "idea-adults", "idea-kids", "sg-title"):
+            self.assertIn(f'for="{input_id}"', self.html)
+
+    def test_cards_use_the_site_card_component(self):
+        self.assertEqual(self.html.count('<article class="card"'), len(WORKER_IDEAS))
+        self.assertIn('class="grid"', self.html)
 
     def test_no_badges(self):
         self.assertNotRegex(self.html, r'class="[^"]*badge')

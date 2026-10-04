@@ -143,6 +143,9 @@ FIRST_CLASS_ENDPOINT = API_BASE + "/api/first-class"
 # /ideas demand board: GET for counters, POST /interest and /suggest. content_ideas.py.
 IDEAS_ENDPOINT = API_BASE + "/api/ideas"
 
+# Community $15: verify the buyer's post (link or screenshot) before checkout.
+COMMUNITY_VERIFY_ENDPOINT = API_BASE + "/api/community/verify"
+
 # The door payment link the /pay page hands off to. Printed on physical materials
 # (door QR, posters) too, so this exact URL is the one stable thing that must never
 # silently change without updating those -- see docs/plans/pricing-events-config.md.
@@ -325,7 +328,7 @@ BUY_COPY = {
     "en": {
         "sending": "Opening checkout.",
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
-        "closed": "Online sales closed, pay at the door ($30).",
+        "closed": "Online sales closed, pay at the door ($30 to $50).",
         "closed_link": "What this looks like",
     },
 }

@@ -79,6 +79,21 @@ PRICES = [
         "recurring_interval": None,
     },
     {
+        # Online ticket, sliding scale $20-40 (Max, 2026-10-04): Stripe
+        # custom_unit_amount, preset $20. Stripe allows no promotion codes on
+        # a custom-amount price, so the Worker sends none.
+        "lookup_key": "ci-class-sliding",
+        "product_name": "Contact Improv Miami - Friday class online (sliding scale $20-40)",
+        "description": (
+            "One ticket, one Friday 7-9pm Contact Improv class, Inner Motion Dance "
+            "Studio, Hallandale Beach FL. Sliding scale: pick your price from $20 "
+            "to $40. Online sales close 2 hours before class start."
+        ),
+        "unit_amount": None,
+        "custom_unit_amount": {"preset": 2000, "minimum": 2000, "maximum": 4000},
+        "recurring_interval": None,
+    },
+    {
         # One $15 price for the three reduced Friday-class offers (community
         # share & unlock, first class, /fr/<name> referral). Checkout metadata
         # `ticket_type` tells them apart. Promotion codes are switched off on
@@ -178,15 +193,17 @@ def create_product(name: str, description: str, live: bool) -> str:
 
 
 def create_price(product_id: str, row: dict, live: bool) -> dict:
-    args = [
-        "prices", "create",
-        "--product", product_id,
-        "--unit-amount", str(row["unit_amount"]),
-        "--currency", CURRENCY,
-        "--lookup-key", row["lookup_key"],
-    ]
+    args = ["prices", "create", "-d", f"product={product_id}", "-d", f"currency={CURRENCY}",
+            "-d", f"lookup_key={row['lookup_key']}"]
+    custom = row.get("custom_unit_amount")
+    if custom:
+        args += ["-d", "custom_unit_amount[enabled]=true"]
+        for key in ("preset", "minimum", "maximum"):
+            args += ["-d", f"custom_unit_amount[{key}]={custom[key]}"]
+    else:
+        args += ["-d", f"unit_amount={row['unit_amount']}"]
     if row["recurring_interval"]:
-        args += ["--recurring.interval", row["recurring_interval"]]
+        args += ["-d", f"recurring[interval]={row['recurring_interval']}"]
     if live:
         args.append("--live")
     return run_stripe(args)

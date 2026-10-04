@@ -452,7 +452,9 @@ a:hover { color: var(--terracotta-dark); }
 .subscribe-form { max-width: 46ch; }
 .subscribe-label { display: block; font-size: 0.95rem; color: var(--sage); margin-bottom: 12px; }
 .subscribe-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-.subscribe-row input[type="email"] {
+.subscribe-row input[type="email"],
+.subscribe-row input[type="url"],
+.subscribe-row input[type="text"] {
   flex: 1 1 220px; min-width: 0; padding: 12px 14px; font: inherit; font-size: 0.95rem;
   color: var(--ink); background: rgba(12, 18, 16, 0.7);
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
@@ -461,7 +463,9 @@ a:hover { color: var(--terracotta-dark); }
 .subscribe-phone span {
   font-size: 0.72rem; letter-spacing: 0.04em; color: var(--muted);
 }
-.subscribe-phone input[type="tel"] {
+.subscribe-phone input[type="tel"],
+.subscribe-phone input[type="file"],
+.subscribe-phone select {
   padding: 12px 14px; font: inherit; font-size: 0.95rem; width: 100%;
   color: var(--ink); background: rgba(12, 18, 16, 0.7);
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
@@ -741,66 +745,19 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
 }
 .mci-popup-close:hover { background: var(--line); }
 
-/* ---------------------------------------------------------------- tickets
-   /tickets (content_tickets.py). Same white bordered cards as .answer and
-   .price-row; the community card carries the terracotta edge because it is the
-   offer the page is built to push. */
-.price-more { max-width: var(--read); margin: -8px 0 30px; color: var(--ink); }
-.tk-date { display: flex; flex-direction: column; gap: 8px; max-width: 360px; margin: 0 0 28px; }
-.tk-date label, .tk-share label, .tk-first > label:not(.tk-consent) { font-weight: 600; font-size: 0.86rem; color: var(--ink); }
-#tk select, #tk input[type="text"], #tk input[type="email"] {
-  font: inherit; font-size: 0.98rem; color: var(--ink); background: var(--input);
-  border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 12px 14px; width: 100%; box-sizing: border-box;
-}
-#tk select:focus, #tk input:focus { outline: 2px solid var(--terracotta); outline-offset: 1px; }
-.tk-kicker { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terracotta); font-weight: 700; margin: 0 0 6px; }
-.tk-price { font-family: var(--display); font-size: clamp(48px, 6vw, 72px); line-height: 1; color: var(--ink); margin: 0 0 12px; }
-.tk-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 0 0 34px; align-items: start; }
-.tk-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; color: var(--body); }
-.tk-card > p:not(.tk-kicker):not(.tk-price) { margin: 0 0 18px; }
-.tk-card-accent { border: 2px solid var(--terracotta); box-shadow: 0 18px 40px -24px rgba(193, 115, 74, 0.55); }
-.tk-card-quiet { background: var(--cream-2); }
-.tk-share, .tk-first { display: flex; flex-direction: column; gap: 8px; }
-.tk-share .buy-button, .tk-first .buy-button { margin-top: 10px; }
-.tk-share-link { font-size: 0.86rem; color: var(--muted); margin: 14px 0 0; }
-.tk-referral { background: var(--ink); color: var(--cream); border-radius: var(--radius); padding: 26px 28px; margin: 0 0 24px; }
-.tk-referral h2 { color: var(--cream); margin: 0 0 16px; font-size: clamp(26px, 3.4vw, 38px); }
-.tk-referral .tk-kicker { color: var(--peach); }
-.tk-referral .btn.primary { background: var(--terracotta); color: var(--ink); }
-.tk-referral .buy-status { color: var(--cream); }
-.tk-new { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; background: var(--white); border: 1px solid var(--line); border-left: 3px solid var(--sage); border-radius: var(--radius); padding: 28px; margin: 0 0 34px; }
-.tk-new h2 { margin: 0 0 10px; }
-.tk-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 0.86rem; color: var(--body); }
-.tk-consent input { margin-top: 4px; }
-@media (max-width: 900px) {
-  .tk-grid, .tk-new { grid-template-columns: 1fr; }
-}
-
-/* ---------------------------------------------------------------- ideas
-   /ideas (content_ideas.py). Same white cards as /tickets; the bar is the one
-   visual for "how close", in the site's terracotta. */
-.idea-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin: 0 0 34px; align-items: start; }
-.idea-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: flex; flex-direction: column; gap: 12px; color: var(--body); scroll-margin-top: 90px; }
-.idea-card:target { border-color: var(--terracotta); box-shadow: 0 18px 40px -24px rgba(193, 115, 74, 0.55); }
-.idea-card h3 { font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.05; color: var(--ink); margin: 0; text-transform: uppercase; letter-spacing: 0.3px; }
-.idea-card > p { margin: 0; }
-.idea-count { font-size: 0.92rem; color: var(--ink); }
-.idea-n, .idea-kids { font-weight: 700; }
-.idea-bar { height: 6px; background: var(--cream-2); border-radius: var(--radius-pill); overflow: hidden; }
-.idea-bar span { display: block; height: 100%; background: var(--terracotta); border-radius: inherit; transition: width 0.6s ease; }
-.idea-card .btn { align-self: flex-start; }
-.idea-form, .idea-suggest-form { display: flex; flex-direction: column; gap: 8px; }
-.idea-form > label:not(.tk-consent), .idea-suggest-form label, .idea-num { font-weight: 600; font-size: 0.86rem; color: var(--ink); }
-.idea-card input[type="email"], .idea-card input[type="text"], .idea-card textarea, .idea-card select {
-  font: inherit; font-size: 0.98rem; color: var(--ink); background: var(--input);
-  border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 11px 13px; width: 100%; box-sizing: border-box;
-}
-.idea-family { display: flex; gap: 12px; }
-.idea-num { display: flex; flex-direction: column; gap: 6px; flex: 1; }
-.idea-q, .idea-more { color: var(--ink); font-weight: 600; margin: 0 0 8px; }
-.idea-level .btn-row { gap: 8px; }
-.idea-level .btn, .idea-share .btn { padding: 10px 18px; font-size: 0.9rem; }
-.idea-suggest { background: var(--cream-2); border-style: dashed; border-color: var(--line-strong); }
-.idea-next { background: var(--white); border: 1px solid var(--line); border-left: 3px solid var(--terracotta); border-radius: var(--radius-sm); padding: 18px 22px; color: var(--ink); }
-/* [hidden] must win over the display rules above (.idea-form is flex). */
-#ideas [hidden], #tk [hidden] { display: none !important; }
+/* ---------------------------------------------------------------- tickets + ideas
+   Built from the existing components (hero, .answer, .facts, .price-list, .band,
+   .card, .subscribe-block); only these joins are new. */
+.subscribe-block .subscribe-row + .subscribe-row { margin-top: 10px; }
+.subscribe-block .subscribe-row input, .subscribe-block .subscribe-phone input, .subscribe-block .subscribe-phone select { color: var(--cream); }
+.subscribe-block .btn-row { margin-top: 4px; }
+.facts .btn-row { gap: 8px; }
+.facts .btn-row .btn { padding: 8px 16px; font-size: 0.86rem; }
+.band[hidden], #ideas [hidden], #tk [hidden] { display: none !important; }
+.band + .facts, #tk > .band { margin: 0 0 30px; }
+.grid > .subscribe-block { grid-column: 1 / -1; margin: 0; max-width: none; }
+.grid + .subscribe-block, #ideas .grid { margin-bottom: 10px; }
+.idea-count { color: var(--ink); }
+/* The sage label and muted consent line were near-invisible on the sage block. */
+.subscribe-block .subscribe-label, .subscribe-block .subscribe-consent, .subscribe-block .subscribe-phone span { color: var(--cream); }
+.subscribe-block .subscribe-consent { opacity: 0.85; }

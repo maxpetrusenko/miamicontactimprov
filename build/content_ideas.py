@@ -35,87 +35,85 @@ IDEAS = [
 LEVELS = [("definitely", "Definitely"), ("probably", "Probably"), ("curious", "Just curious")]
 
 
-def _number_select(name, uid, label, lo, hi, default):
-    opts = "".join(
-        f'<option value="{n}"{" selected" if n == default else ""}>{n}</option>' for n in range(lo, hi + 1)
-    )
-    return (
-        f'<label class="idea-num" for="{uid}-{name}">{label}'
-        f'<select id="{uid}-{name}" name="{name}">{opts}</select></label>'
-    )
+def _count_line(threshold, families):
+    if families:
+        return f'<span class="idea-n">0</span> of {threshold} families, <span class="idea-kids">0</span> kids'
+    return f'<span class="idea-n">0</span> interested. At {threshold} we schedule it.'
 
 
 def _card(idea_id, title, line, threshold, families):
-    uid = f"idea-{idea_id}"
-    count_line = (
-        f'<span class="idea-n">0</span>/{threshold} families, <span class="idea-kids">0</span> kids'
-        if families
-        else f'<span class="idea-n">0</span> interested. At {threshold} we schedule it.'
-    )
-    family_fields = (
-        f'<div class="idea-family">{_number_select("adults", uid, "Adults", 1, 4, 1)}'
-        f'{_number_select("kids", uid, "Kids", 0, 6, 1)}</div>'
-        if families
-        else ""
-    )
-    levels = "".join(f'<button type="button" class="btn secondary" data-level="{v}">{label}</button>' for v, label in LEVELS)
+    # .card from the home page and the directory: white, bordered, h3 + p.
     return f"""
-<article class="idea-card" id="{idea_id}" data-idea="{idea_id}" data-threshold="{threshold}">
+<article class="card" id="{idea_id}" data-idea="{idea_id}" data-threshold="{threshold}" data-families="{'1' if families else ''}">
   <h3>{title}</h3>
   <p>{line}</p>
-  <p class="idea-count" aria-live="polite">{count_line}</p>
-  <div class="idea-bar" aria-hidden="true"><span style="width:0%"></span></div>
-  <button class="btn primary idea-go" type="button">Count me in</button>
-  <form class="idea-form" hidden novalidate>
-    <label for="{uid}-email">Email</label>
-    <input id="{uid}-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
-    {family_fields}
-    <label class="tk-consent"><input type="checkbox" name="consent" required> Email me when it is scheduled.</label>
-    <div class="subscribe-hp" aria-hidden="true"><label for="{uid}-company">Company</label><input id="{uid}-company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
-    <button class="btn primary" type="submit">Count me in</button>
-  </form>
-  <div class="idea-level" hidden>
-    <p class="idea-q">At $20 to $30, would you come?</p>
-    <div class="btn-row">{levels}</div>
-  </div>
-  <div class="idea-share" hidden>
-    <p class="idea-more"></p>
-    <div class="btn-row"><button type="button" class="btn secondary idea-copy">Copy share link</button></div>
-  </div>
-  <p class="buy-status" role="status" aria-live="polite"></p>
+  <p class="idea-count"><strong>{_count_line(threshold, families)}</strong></p>
+  <div class="btn-row"><button class="btn secondary idea-go" type="button">Count me in</button></div>
 </article>"""
+
+
+def _number_select(name, label, lo, hi, default):
+    opts = "".join(f'<option value="{n}"{" selected" if n == default else ""}>{n}</option>' for n in range(lo, hi + 1))
+    return f'<label class="subscribe-phone" for="idea-{name}"><span>{label}</span><select id="idea-{name}" name="{name}">{opts}</select></label>'
 
 
 def ideas():
     cards = "".join(_card(*row) for row in IDEAS)
+    levels = "".join(f'<button type="button" class="btn secondary" data-level="{v}">{label}</button>' for v, label in LEVELS)
     body = f"""
 <section class="hero">
   <div class="wrap">
-    <p class="eyebrow">Ideas</p>
+    <p class="eyebrow">Ideas &middot; What we host next</p>
     <h1>What should we host next?</h1>
-    <p class="lede">Each idea runs once enough people say they would come. Add yourself, tell us how sure you are, and share it with the people who should be there.</p>
+    <p class="lede">Each idea runs once enough people say they would come. Add yourself, say how sure you are, and share it with the people who should be there.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap" id="ideas" data-endpoint="{_attr(IDEAS_ENDPOINT)}">
-    <div class="idea-grid">
+    <div class="grid">
       {cards}
-      <article class="idea-card idea-suggest" id="suggest">
-        <h3>Suggest something</h3>
-        <p>Something missing? Tell us. We read every suggestion before it goes on the board.</p>
-        <form class="idea-suggest-form" novalidate>
-          <label for="sg-title">Idea</label>
-          <input id="sg-title" name="title" type="text" maxlength="80" required placeholder="Contact + yoga on Sunday mornings">
-          <label for="sg-detail">Anything else</label>
-          <textarea id="sg-detail" name="detail" maxlength="500" rows="3"></textarea>
-          <label for="sg-email">Email</label>
-          <input id="sg-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
-          <div class="subscribe-hp" aria-hidden="true"><label for="sg-company">Company</label><input id="sg-company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+    </div>
+
+    <div class="subscribe-block" id="idea-panel" hidden>
+      <form class="subscribe-form" id="idea-form" novalidate>
+        <label class="subscribe-label" for="idea-email">Count me in for <strong id="idea-title"></strong></label>
+        <div class="subscribe-row">
+          <input id="idea-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+          <span id="idea-family" hidden>{_number_select("adults", "Adults", 1, 4, 1)}{_number_select("kids", "Kids", 0, 6, 1)}</span>
+          <button class="btn primary" type="submit">Count me in</button>
+        </div>
+        <div class="subscribe-hp" aria-hidden="true"><label for="idea-company">Company</label><input id="idea-company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="subscribe-consent" for="idea-consent"><input id="idea-consent" name="consent" type="checkbox" required><span>Email me when it is scheduled.</span></label>
+      </form>
+      <div id="idea-level" hidden>
+        <p class="subscribe-label">At $20 to $30, would you come?</p>
+        <div class="btn-row">{levels}</div>
+      </div>
+      <div id="idea-share" hidden>
+        <p class="subscribe-label" id="idea-more"></p>
+        <div class="btn-row"><button type="button" class="btn primary" id="idea-copy">Copy share link</button></div>
+      </div>
+      <p class="subscribe-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="prose">
+      <h2 id="suggest">Suggest something</h2>
+      <p>Something missing? Tell us. It goes on the board once we have read it.</p>
+    </div>
+    <div class="subscribe-block">
+      <form class="subscribe-form" id="idea-suggest" novalidate>
+        <label class="subscribe-label" for="sg-title">Your idea</label>
+        <div class="subscribe-row">
+          <input id="sg-title" name="title" type="text" maxlength="80" placeholder="Contact + yoga on Sunday mornings">
+        </div>
+        <div class="subscribe-row">
+          <input id="sg-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-label="Email">
           <button class="btn primary" type="submit">Send it</button>
-        </form>
-        <p class="buy-status" role="status" aria-live="polite"></p>
-      </article>
+        </div>
+        <div class="subscribe-hp" aria-hidden="true"><label for="sg-company">Company</label><input id="sg-company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+        <p class="subscribe-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </div>
 </section>
@@ -147,136 +145,135 @@ IDEAS_SCRIPT = r"""<script>
   var API = root.getAttribute('data-endpoint');
   var ERR = 'That did not go through. Try again in a minute.';
   var KEY = 'mci_idea_email';
+  var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
   var q = new URLSearchParams(location.search);
   var ref = (q.get('ref') || '').trim().toLowerCase();
   if (!/^[a-z0-9][a-z0-9-]{0,39}$/.test(ref)) ref = '';
 
+  var panel = document.getElementById('idea-panel');
+  var form = document.getElementById('idea-form');
+  var level = document.getElementById('idea-level');
+  var share = document.getElementById('idea-share');
+  var family = document.getElementById('idea-family');
+  var status = panel.querySelector('.subscribe-status');
+  var current = null, email = '', shareUrl = '';
+
   function remembered() { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
-  function remember(email) { try { localStorage.setItem(KEY, email); } catch (e) {} }
+  function remember(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
   function track(name, props) { try { if (window.posthog) posthog.capture(name, props); } catch (e) {} }
   function post(path, body) {
     return fetch(API + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { status: r.status, data: d }; }); });
   }
-
   function paint(card, idea) {
-    if (!idea) return;
+    if (!card || !idea) return;
     var n = card.querySelector('.idea-n'); if (n) n.textContent = idea.count;
     var k = card.querySelector('.idea-kids'); if (k && typeof idea.kids === 'number') k.textContent = idea.kids;
-    var bar = card.querySelector('.idea-bar span');
-    if (bar) bar.style.width = Math.min(100, Math.round(100 * idea.count / idea.threshold)) + '%';
   }
-
-  function moreLine(idea, families) {
+  function isFamilies() { return current && current.getAttribute('data-families') === '1'; }
+  function moreLine(idea) {
     if (!idea.needed) return 'That is enough. We are scheduling it, and you hear first.';
-    var unit = families ? (idea.needed === 1 ? 'family' : 'families') : (idea.needed === 1 ? 'person' : 'people');
+    var unit = isFamilies() ? (idea.needed === 1 ? 'family' : 'families') : (idea.needed === 1 ? 'person' : 'people');
     return idea.needed + ' more ' + unit + ' needed. Share it with someone who should be there.';
   }
-
-  function wire(card) {
-    var id = card.getAttribute('data-idea');
-    var families = !!card.querySelector('.idea-family');
-    var go = card.querySelector('.idea-go');
-    var form = card.querySelector('.idea-form');
-    var level = card.querySelector('.idea-level');
-    var share = card.querySelector('.idea-share');
-    var status = card.querySelector('.buy-status');
-    var email = '';
-    var shareUrl = '';
-
-    function send(extra) {
-      var body = { idea: id, email: email, consent: true, ref: ref };
-      if (form && families) { body.adults = form.elements.adults.value; body.kids = form.elements.kids.value; }
-      for (var k in extra) body[k] = extra[k];
-      status.textContent = '';
-      return post('/interest', body).then(function (res) {
-        if (res.status !== 200 || !res.data.ok) { status.textContent = res.status === 429 ? 'Too many tries. Wait a minute.' : ERR; return null; }
-        paint(card, res.data.idea);
-        shareUrl = location.origin + '/ideas?ref=' + res.data.share_ref + '#' + id;
-        return res.data.idea;
-      }).catch(function () { status.textContent = ERR; return null; });
-    }
-
-    function counted(idea) {
-      if (!idea) { go.disabled = false; return; }
-      remember(email);
-      track('idea_interest', { idea: id, ref: ref || null });
-      go.hidden = true; if (form) form.hidden = true;
-      level.hidden = false;
-      share.querySelector('.idea-more').textContent = moreLine(idea, families);
-    }
-
-    go.addEventListener('click', function () {
-      email = remembered();
-      if (email && !families) { go.disabled = true; send({}).then(counted); return; }
-      go.hidden = true; form.hidden = false;
-      if (email) form.elements.email.value = email;
-      form.elements.email.focus();
-    });
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      email = form.elements.email.value.trim().toLowerCase();
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { status.textContent = 'Enter your email.'; return; }
-      if (!form.elements.consent.checked) { status.textContent = 'Tick the box so we can tell you when it runs.'; return; }
-      if (form.elements.company.value) return;
-      send({}).then(counted);
-    });
-
-    level.querySelectorAll('[data-level]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var v = b.getAttribute('data-level');
-        send({ level: v }).then(function (idea) {
-          if (!idea) return;
-          track('idea_level', { idea: id, level: v });
-          level.hidden = true; share.hidden = false;
-          share.querySelector('.idea-more').textContent = moreLine(idea, families);
-        });
-      });
-    });
-
-    share.querySelector('.idea-copy').addEventListener('click', function () {
-      var title = card.querySelector('h3').textContent;
-      if (navigator.share) { navigator.share({ title: title, url: shareUrl }).catch(function () {}); return; }
-      try { navigator.clipboard.writeText(shareUrl); status.textContent = 'Link copied.'; } catch (e) { status.textContent = shareUrl; }
-    });
+  function show(step) {
+    form.hidden = step !== 'form'; level.hidden = step !== 'level'; share.hidden = step !== 'share';
+  }
+  function send(extra) {
+    var id = current.getAttribute('data-idea');
+    var body = { idea: id, email: email, consent: true, ref: ref, company: form.elements.company.value };
+    if (isFamilies()) { body.adults = form.elements.adults.value; body.kids = form.elements.kids.value; }
+    for (var k in extra) body[k] = extra[k];
+    status.textContent = '';
+    return post('/interest', body).then(function (res) {
+      if (res.status !== 200 || !res.data.ok || !res.data.idea) { status.textContent = res.status === 429 ? 'Too many tries. Wait a minute.' : ERR; return null; }
+      paint(current, res.data.idea);
+      shareUrl = location.origin + '/ideas?ref=' + res.data.share_ref + '#' + id;
+      return res.data.idea;
+    }).catch(function () { status.textContent = ERR; return null; });
+  }
+  function counted(idea) {
+    if (!idea) return;
+    remember(email);
+    track('idea_interest', { idea: current.getAttribute('data-idea'), ref: ref || null });
+    document.getElementById('idea-more').textContent = moreLine(idea);
+    show('level');
   }
 
-  root.querySelectorAll('.idea-card[data-idea]').forEach(wire);
+  function open(card) {
+    current = card;
+    document.getElementById('idea-title').textContent = card.querySelector('h3').textContent;
+    family.hidden = !isFamilies();
+    status.textContent = '';
+    panel.hidden = false;
+    card.after(panel);
+    email = remembered();
+    if (email && !isFamilies()) { show('level'); send({}).then(counted); }
+    else { show('form'); if (email) form.elements.email.value = email; }
+    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 
-  var suggest = root.querySelector('.idea-suggest-form');
-  suggest.addEventListener('submit', function (e) {
+  function wire(card) { card.querySelector('.idea-go').addEventListener('click', function () { open(card); }); }
+  root.querySelectorAll('.card[data-idea]').forEach(wire);
+
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var status = suggest.parentNode.querySelector('.buy-status');
-    var title = suggest.elements.title.value.trim();
-    var email = suggest.elements.email.value.trim().toLowerCase();
-    if (!title) { status.textContent = 'Add the idea.'; return; }
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { status.textContent = 'Enter your email.'; return; }
-    post('/suggest', { title: title, detail: suggest.elements.detail.value, email: email, company: suggest.elements.company.value })
-      .then(function (res) {
-        if (res.status === 200) { suggest.hidden = true; status.textContent = 'Thanks. It goes on the board once we have read it.'; track('idea_suggested', {}); }
-        else status.textContent = ERR;
-      }).catch(function () { status.textContent = ERR; });
+    email = form.elements.email.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) { status.textContent = 'Enter your email.'; return; }
+    if (!form.elements.consent.checked) { status.textContent = 'Tick the box so we can tell you when it runs.'; return; }
+    send({}).then(counted);
   });
 
-  // Counters, plus any suggestion Max approved, as a plain card at the end.
-  fetch(API).then(function (r) { return r.json(); }).then(function (data) {
-    (data.ideas || []).forEach(function (idea) {
-      var card = root.querySelector('[data-idea="' + idea.id + '"]');
-      if (card) paint(card, idea);
+  level.querySelectorAll('[data-level]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-level');
+      send({ level: v }).then(function (idea) {
+        if (!idea) return;
+        track('idea_level', { idea: current.getAttribute('data-idea'), level: v });
+        document.getElementById('idea-more').textContent = moreLine(idea);
+        show('share');
+      });
     });
-    var template = root.querySelector('[data-idea="extended-jam"]');
+  });
+
+  document.getElementById('idea-copy').addEventListener('click', function () {
+    var title = current.querySelector('h3').textContent;
+    if (navigator.share) { navigator.share({ title: title, url: shareUrl }).catch(function () {}); return; }
+    try { navigator.clipboard.writeText(shareUrl); status.textContent = 'Link copied.'; } catch (e) { status.textContent = shareUrl; }
+  });
+
+  var suggest = document.getElementById('idea-suggest');
+  suggest.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var st = suggest.querySelector('.subscribe-status');
+    var title = suggest.elements.title.value.trim();
+    var em = suggest.elements.email.value.trim().toLowerCase();
+    if (!title) { st.textContent = 'Add the idea.'; return; }
+    if (!EMAIL_RE.test(em)) { st.textContent = 'Enter your email.'; return; }
+    post('/suggest', { title: title, email: em, company: suggest.elements.company.value }).then(function (res) {
+      if (res.status === 200) { suggest.querySelectorAll('.subscribe-row').forEach(function (r) { r.hidden = true; }); st.textContent = 'Thanks. It goes on the board once we have read it.'; track('idea_suggested', {}); }
+      else st.textContent = ERR;
+    }).catch(function () { st.textContent = ERR; });
+  });
+
+  // Counters, plus any suggestion Max approved, as one more card.
+  fetch(API).then(function (r) { return r.json(); }).then(function (data) {
+    (data.ideas || []).forEach(function (idea) { paint(root.querySelector('[data-idea="' + idea.id + '"]'), idea); });
+    var grid = root.querySelector('.grid');
     (data.suggestions || []).forEach(function (s) {
-      var card = template.cloneNode(true);
-      card.id = s.id; card.setAttribute('data-idea', s.id); card.setAttribute('data-threshold', s.threshold);
-      card.querySelector('h3').textContent = s.title;
-      card.querySelector('p').textContent = s.detail || '';
-      card.querySelector('.idea-count').innerHTML = '<span class="idea-n">0</span> interested. At ' + s.threshold + ' we schedule it.';
-      card.querySelectorAll('[id]').forEach(function (el) { el.id = el.id.replace('extended-jam', s.id); });
-      card.querySelectorAll('[for]').forEach(function (el) { el.setAttribute('for', el.getAttribute('for').replace('extended-jam', s.id)); });
-      root.querySelector('.idea-suggest').before(card);
+      var card = document.createElement('article');
+      card.className = 'card'; card.id = s.id;
+      card.setAttribute('data-idea', s.id); card.setAttribute('data-threshold', s.threshold);
+      var h = document.createElement('h3'); h.textContent = s.title;
+      var p = document.createElement('p'); p.textContent = s.detail || '';
+      var c = document.createElement('p'); c.className = 'idea-count';
+      c.innerHTML = '<strong><span class="idea-n">0</span> interested. At ' + Number(s.threshold) + ' we schedule it.</strong>';
+      var row = document.createElement('div'); row.className = 'btn-row';
+      row.innerHTML = '<button class="btn secondary idea-go" type="button">Count me in</button>';
+      card.append(h, p, c, row); grid.appendChild(card);
       paint(card, s); wire(card);
     });
+    if (location.hash) { var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView({ block: 'center' }); }
   }).catch(function () {});
 })();
 </script>"""

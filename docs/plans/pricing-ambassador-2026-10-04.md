@@ -51,12 +51,50 @@ record of which offer each sale used.
 - **Verification**: the plan rejects screenshots and Instagram API checks for a $5 difference.
   Community is self-reported; spot-check later.
 
+## Decisions from Max (2026-10-04, after the first preview)
+
+- **Stripe account:** the same one the tests ran on ("Blindfolded Experience",
+  acct_1L2x...). Its rename or a new account is handled elsewhere; nothing here touches
+  account settings.
+- **Prices:** online ticket is a **$20 to $40 sliding scale** (Stripe `custom_unit_amount`,
+  preset $20, lookup key `ci-class-sliding`); the door is **$30 to $50**, pay what you can;
+  community and first class stay **$15**. `/tickets`, `/pricing`, `/pay` and the buy buttons
+  say the same. Stripe refuses promotion codes on a custom-amount price, so **no online
+  ticket takes a code now**; the newsletter's 20% code (a Luma code) no longer applies to
+  the website ticket.
+- **Community $15 is verified, not trusted** (below).
+
+## Community $15 verification (`src/verify.ts`)
+
+`POST /api/community/verify { email, share_url? , screenshot? }`:
+
+1. **Link:** normalised (https only, no IP hosts, tracking params and fragment stripped, our
+   own pages and Luma refused), fetched with a named bot user agent, read from `og:title`,
+   `og:description`, `<title>` and body text. Pass = it contains one of `miamicontactimprov`,
+   `ci miami`, `contact improvisation`, `contact improv`, `contactimprov`.
+2. **Screenshot** (offered after any failed link: Instagram and Facebook usually show a login
+   page): downscaled in the browser to 1280 px JPEG, read by Workers AI
+   `@cf/meta/llama-4-scout-17b-16e-instruct` on the same Worker. The keyword check runs on
+   the text the model returns, never on its own judgement.
+3. **One post per email:** `post:<sha256(url)>` and `img:<sha256(bytes)>` belong to the first
+   email that verified them; another email gets `used`.
+4. **Evidence:** every attempt, pass or fail, is stored as `evidence:<id>` (email, method,
+   URL, matched keyword, 400-char excerpt) in `COMMUNITY` KV; admins list it with
+   `GET /api/community/evidence`.
+5. Checkout `{ ticket_type: community, email, verification_id }` needs verified evidence for
+   that email, younger than 24 h, and writes `share_url`, `verified=true`, `method=url|ocr`
+   and `verification_id` into Stripe metadata. The email is locked on the Checkout page.
+
+**Known gap:** any public page that mentions contact improv passes the link check (the
+preview test used the Wikipedia article). If that gets abused, narrow the keywords for links
+to `miamicontactimprov` / `ci miami` / the event link, which a real share carries.
+
 ## User flows (slice 1)
 
-1. **Early $20.** `/tickets` → pick a Friday → "Buy for $20" → Stripe Checkout (codes allowed).
-2. **Community $15.** Share the class link → on `/tickets` pick the channel (Instagram story,
-   WhatsApp group, Facebook group, somewhere else) and type a handle or group name → "Unlock
-   $15" → Stripe Checkout at $15, codes off. No verification.
+1. **Online $20 to $40.** `/tickets` → pick a Friday → "Buy ticket" → Stripe Checkout with the price editable from $20 to $40 (no codes).
+2. **Community $15.** Share the class → paste the link to the post (or a screenshot) and an
+   email on `/tickets` → verified → Stripe Checkout at $15 (superseded the self-reported
+   channel + handle version; see "Community $15 verification").
 3. **New here, $15.** Email + consent → `POST /api/first-class` records the offer on the
    subscriber record (always answers `{ ok: true }`) → `/api/checkout` with `ticket_type: first`
    checks KV and Stripe → a $15 Checkout with the email locked. If the price is not available
@@ -78,8 +116,8 @@ Every session from `/api/checkout` carries, on the session and its PaymentIntent
 | `ticket_type` | `early`, `community`, `first`, `referral` |
 | `event` | Friday date, `YYYY-MM-DD` (also kept as `class_date` for PR #23 compatibility) |
 | `kind`, `product` | `class`, `ci-class` |
-| `share_channel` | `instagram_story`, `whatsapp_group`, `facebook_group`, `other` (community only) |
-| `handle` | free text, 80 chars max (community only) |
+| `share_url` | the verified post link, normalised (community, link method) |
+| `verified`, `method`, `verification_id` | `true`, `url` or `ocr`, evidence id (community only) |
 | `referrer` | `/fr/<name>` slug, `^[a-z0-9][a-z0-9-]{0,39}$` (referral only) |
 | `referrer_verified` | `true` when the slug is in the `AMBASSADORS` allowlist, else `false` (referral only) |
 | `first_discount` | `true` (first only) |
@@ -201,29 +239,38 @@ Suggestions are stored as pending and shown only after `POST /api/ideas/suggesti
 - Rebuild the preview site: `MCI_API_BASE=https://newsletter-api-preview.max-petrusenko.workers.dev
   python3 build/build.py --out <copy of site/>`, append the noindex header to its `_headers`,
   `wrangler pages deploy <dir> --project-name=mci-pricing-preview --branch=main`.
-- Playwright on the preview: `/fr/maya-lopez` → $15 community → test card 4242 → `/success` on
-  the preview host → "Add your vote" → `/ideas`: count went up by one, Definitely, "17 more
-  people needed", Parents 2 adults + 3 kids, suggestion sent. Stripe: session `complete/paid`,
-  1500, metadata as specified, `expires_at` 31 min, webhook `pending_webhooks=0`. Screenshots
-  (desktop and phone): `docs/media/pricing-ambassador/preview/`.
+- Playwright on the preview (third round): `/tickets` → "Buy ticket" opens Stripe at $20 with
+  the price editable up to $40; community link `https://example.com/` fails with the retry
+  message and the screenshot field appears; a link that mentions contact improvisation passes
+  → $15 Checkout → test card 4242 → `/success` → "Add your vote" → `/ideas` count +1,
+  Definitely, "N more people needed"; a second buyer's Instagram link fails, a screenshot
+  (`ocr-test-story.jpg`) is read by Workers AI and passes → $15 Checkout. Stripe metadata:
+  `ticket_type=community, verified=true, method=url|ocr, share_url`. Screenshots (desktop and
+  phone): `docs/media/pricing-ambassador/preview/`.
+- /tickets and /ideas now use only the site's existing components (hero, `.answer`, `.facts`,
+  `.price-list`, `.band`, `.card` in `.grid`, `.subscribe-block` forms, `.cite`). The form block's
+  label and consent text were near-invisible on its sage background; they are cream now, which
+  also fixes the same form on `/fundamentals`.
 
 ### Go-live order (Max, not done in these PRs)
 
-1. Decide the live Stripe account (open decision below).
+1. Live Stripe account: the same one as test (decided by Max 2026-10-04).
 2. Create the live price: `python3 scripts/stripe_setup.py --live --only ci-class-15 --confirm "I am creating a LIVE Stripe object"`.
-3. Create the production KV namespaces `AMBASSADORS` and `IDEAS`
+3. Create the live sliding price: `python3 scripts/stripe_setup.py --live --only ci-class-sliding --confirm "I am creating a LIVE Stripe object"`.
+4. Create the production KV namespaces `AMBASSADORS`, `IDEAS` and `COMMUNITY`
    (`wrangler kv namespace create ...`), add both bindings with their ids to the top level of
    `wrangler.jsonc`, seed the first ambassador slugs. Without `IDEAS` the live `/ideas` page
-   shows zeros and its buttons fail.
-4. In Stripe (live), add a webhook endpoint `https://newsletter-api.max-petrusenko.workers.dev/api/stripe/webhook`
+   shows zeros and its buttons fail; without `COMMUNITY` the $15 community option fails.
+   Workers AI (`ai` binding) is already in `wrangler.jsonc`; it bills per use on the account.
+5. In Stripe (live), add a webhook endpoint `https://newsletter-api.max-petrusenko.workers.dev/api/stripe/webhook`
    for `checkout.session.completed`, `checkout.session.async_payment_succeeded`,
    `checkout.session.expired`; `wrangler secret put STRIPE_WEBHOOK_SECRET` with its `whsec_`.
-5. `wrangler secret put STRIPE_SECRET_KEY` with the live key and set `STRIPE_MODE` to `live` in
+6. `wrangler secret put STRIPE_SECRET_KEY` with the live key and set `STRIPE_MODE` to `live` in
    `wrangler.jsonc` in the same change (the guard refuses a mismatch).
-6. Merge and deploy the Worker PR. Smoke-test: `/api/checkout` early returns a live Checkout URL.
-7. Merge the site PR (deploys from main). Until step 6 is live, the $15 buttons on `/tickets`
+7. Merge and deploy the Worker PR. Smoke-test: `/api/checkout` early returns a live Checkout URL.
+8. Merge the site PR (deploys from main). Until step 7 is live, the $15 buttons on `/tickets`
    answer "That did not go through".
-8. Buy one $15 ticket end to end, check the metadata in the dashboard, refund it.
+9. Buy one $15 ticket end to end, check the metadata in the dashboard, refund it.
 
 ## Next slices
 
