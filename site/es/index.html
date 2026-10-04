@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=937a0665">
+<link rel="stylesheet" href="/assets/site.css?v=69a9eb8f">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -259,9 +259,9 @@
   <div class="veil"></div>
   <div class="inner" id="mci-hero-inner">
     <div class="hero-top rise" style="--d:.15s">
-      <a class="mci-stamp hero-stamp" id="mci-stamp" href="/es/jam-de-los-viernes" data-first="2026-10-02" data-end="21:00" data-label-first="Primera jam" data-label-next="Próxima jam" data-lang="es" aria-label="Primera jam">
-        <span class="small" data-role="label">Primera jam</span>
-        <span class="big mci-h" data-role="date">2 OCT</span>
+      <a class="mci-stamp hero-stamp" id="mci-stamp" href="/es/jam-de-los-viernes" data-first="2026-10-02" data-end="21:00" data-label-first="Primera jam" data-label-next="Próxima jam" data-lang="es" aria-label="Próxima jam">
+        <span class="small" data-role="label">Próxima jam</span>
+        <span class="big mci-h" data-role="date">9 OCT</span>
         <span class="small">Vie &middot; 7&ndash;9 PM</span>
       </a>
       <p class="eyebrow-l">Todos los viernes &middot; 7&ndash;9 PM &middot; Hallandale Beach</p>
@@ -757,6 +757,7 @@
       if (window.posthog && kind) {
         posthog.capture('checkout_completed', {
           kind: kind,
+          ticket_type: q.get('ticket_type') || 'early',
           amount: amount ? parseInt(amount, 10) : null,
         });
       }

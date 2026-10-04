@@ -16,6 +16,7 @@ pages (what-is, jams, classes, history, glossary, safety, directory, videos and 
 Spanish tree) are kept reachable from the footer and inherit the same shell.
 """
 
+import os
 import pathlib
 
 import locales
@@ -119,7 +120,12 @@ STYLESHEET = "/assets/site.css?v=" + _css_version()
 # ------------------------------------------------------------ subscribe form
 # The one endpoint a subscribe form may post to. Kept here so every form on the site
 # points at the same Worker, and so changing it is one edit.
-SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subscribe"
+# MCI_API_BASE swaps the Worker origin for a local `wrangler dev` run (e.g.
+# http://localhost:8787) when building a throwaway copy of the site. Committed
+# site/ is always built without it, so production points at the real Worker.
+API_BASE = os.environ.get("MCI_API_BASE", "https://newsletter-api.max-petrusenko.workers.dev").rstrip("/")
+
+SUBSCRIBE_ENDPOINT = API_BASE + "/api/subscribe"
 
 # The one endpoint a buy button may post to. Same Worker as the subscribe form, a
 # different route. `kind` is one of 'class' | 'jam' | 'combo'; `event_date` pins it
@@ -127,7 +133,11 @@ SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subs
 # one. Memberships and the intro pack are deferred -- see
 # docs/plans/pricing-events-config.md -- so there is no plan/subscription concept
 # here any more, only a drop-in kind.
-CHECKOUT_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/checkout"
+CHECKOUT_ENDPOINT = API_BASE + "/api/checkout"
+
+# "New here?" capture on /tickets: records the email, answers whether the $15
+# first class is still open to it. See content_tickets.py.
+FIRST_CLASS_ENDPOINT = API_BASE + "/api/first-class"
 
 # The door payment link the /pay page hands off to. Printed on physical materials
 # (door QR, posters) too, so this exact URL is the one stable thing that must never
@@ -958,6 +968,7 @@ def body_script():
       if (window.posthog && kind) {
         posthog.capture('checkout_completed', {
           kind: kind,
+          ticket_type: q.get('ticket_type') || 'early',
           amount: amount ? parseInt(amount, 10) : null,
         });
       }

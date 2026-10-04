@@ -4,7 +4,8 @@
 Creates, idempotently (keyed on `lookup_key`, never on name or id), the
 product and price for each entry in `PRICES`:
 
-    ci-ticket-online-friday    $20.00  one-time   drop-in class ticket
+    ci-ticket-online-friday    $20.00  one-time   drop-in class ticket (early)
+    ci-class-15                $15.00  one-time   class: community / first / referral
     ci-intro-pack              $45.00  one-time   3-class intro pack (first-timers)
     ci-membership-monthly      $60.00  /month     unlimited membership
     ci-membership-annual      $540.00  one-time   12-month prepaid membership
@@ -75,6 +76,21 @@ PRICES = [
             "close 2 hours before the class starts; after that, pay at the door."
         ),
         "unit_amount": 3000,
+        "recurring_interval": None,
+    },
+    {
+        # One $15 price for the three reduced Friday-class offers (community
+        # share & unlock, first class, /fr/<name> referral). Checkout metadata
+        # `ticket_type` tells them apart. Promotion codes are switched off on
+        # these sessions by the Worker, so nothing stacks below $15.
+        "lookup_key": "ci-class-15",
+        "product_name": "Contact Improv Miami - Friday class ($15 community, first class, friend link)",
+        "description": (
+            "One ticket, one Friday 7-9pm Contact Improv class, Inner Motion Dance "
+            "Studio, Hallandale Beach FL, at the $15 community, first-class or "
+            "friend-link price. Online sales close 2 hours before class start."
+        ),
+        "unit_amount": 1500,
         "recurring_interval": None,
     },
     {

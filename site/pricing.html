@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=937a0665">
+<link rel="stylesheet" href="/assets/site.css?v=69a9eb8f">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -233,6 +233,7 @@
   </div>
 </div>
 
+    <p class="price-more">Sharing the class or coming for the first time? <a href="/tickets">The $15 Friday class tickets</a>.</p>
     <div class="answer"><div class="label">Refund policy</div><p>If we cancel a class or jam, we refund your ticket in full.</p></div>
     <div class="prose">
       <p>Every Friday runs at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009: a class from 7:00 to 7:45, then an open jam from 7:45 to 9:00. A ticket gets you in the door the same way a cash payment always has &mdash; nothing changes about the room itself.</p>
@@ -675,6 +676,7 @@
       if (window.posthog && kind) {
         posthog.capture('checkout_completed', {
           kind: kind,
+          ticket_type: q.get('ticket_type') || 'early',
           amount: amount ? parseInt(amount, 10) : null,
         });
       }

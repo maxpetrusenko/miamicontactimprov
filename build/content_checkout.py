@@ -60,6 +60,7 @@ def pricing():
   <div class="wrap">
     {answer("A class is $20 online or $30 to $50 at the door, pay what you can. Promotion codes apply to every online ticket.")}
     {rows}
+    <p class="price-more">Sharing the class or coming for the first time? <a href="/tickets">The $15 Friday class tickets</a>.</p>
     {answer("If we cancel a class or jam, we refund your ticket in full.", label="Refund policy")}
     <div class="prose">
       <p>Every Friday runs at {VENUE}: a class from 7:00 to 7:45, then an open jam from 7:45 to 9:00. A ticket gets you in the door the same way a cash payment always has &mdash; nothing changes about the room itself.</p>

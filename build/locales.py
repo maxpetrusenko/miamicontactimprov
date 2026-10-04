@@ -69,6 +69,7 @@ ROUTES = {
     "events": {"en": "/events"},
     "contact": {"en": "/contact"},
     "pricing": {"en": "/pricing"},
+    "tickets": {"en": "/tickets"},
     "pay": {"en": "/pay"},
     "success": {"en": "/success"},
     "blog": {"en": "/blog/"},
@@ -102,7 +103,7 @@ ORDER = [
     ("safety-and-consent", "en"), ("safety-and-consent", "es"),
     ("faq", "en"), ("faq", "es"),
     ("about", "en"), ("about", "es"),
-    ("pricing", "en"), ("pay", "en"), ("success", "en"),
+    ("pricing", "en"), ("tickets", "en"), ("pay", "en"), ("success", "en"),
 ]
 
 

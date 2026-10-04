@@ -61,6 +61,9 @@
 /pricing.html  /pricing  301
 /pricing/index.html  /pricing  301
 /pricing/  /pricing  301
+/tickets.html  /tickets  301
+/tickets/index.html  /tickets  301
+/tickets/  /tickets  301
 /pay.html  /pay  301
 /pay/index.html  /pay  301
 /pay/  /pay  301
@@ -145,3 +148,7 @@
 /contact-improvisation-miami /miami                           301
 /safety                     /safety-and-consent               301
 /teachers                   /directory                        301
+
+# Ambassador links: miamicontactimprov.com/fr/<name> lands on /tickets with the
+# referrer in the query string; the Worker writes it into Stripe metadata.
+/fr/:name                   /tickets?ref=:name                302
