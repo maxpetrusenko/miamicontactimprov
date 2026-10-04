@@ -172,7 +172,7 @@ def home():
   <div class="mci-cards">
     <div class="mci-mini"><p class="t mci-h">7:00 &middot; CLASS</p><p>Guided warm-up and skills &mdash; rolling, weight-sharing, safe falling.</p></div>
     <div class="mci-mini"><p class="t mci-h">7:45 &middot; OPEN JAM</p><p>Free-form dancing. Join in, sit out, watch &mdash; everything is welcome.</p></div>
-    <div class="mci-mini"><p class="t mci-h">$20 &ndash; $50</p><p>Sliding scale &mdash; pay what fits. Bring comfy clothes, no shoes needed.</p></div>
+    <div class="mci-mini"><p class="t mci-h">$20 &ndash; $40</p><p>Online, sliding scale. $30 &ndash; $50 at the door, $15 community or first class. Bring comfy clothes, no shoes needed.</p></div>
   </div>
   <div class="mci-actions">
     <a class="mci-textlink" href="https://www.youtube.com/watch?v=q4wUEiHowSU" target="_blank" rel="noopener">&#9654; Watch: what is contact improv</a>
@@ -236,7 +236,7 @@ def events():
     <p class="label mci-h">WEEKLY JAM</p>
     <p>Every Friday from Oct 2, 2026 &middot; 7:00&ndash;9:00 PM<br>Class 7:00&ndash;7:45, Open Jam 7:45&ndash;9:00<br>Inner Motion Dance Studio &middot; 216 NE 1st Ave, Hallandale Beach<br><a href="/friday-jam" style="color:var(--peach);text-decoration:underline;">Full details &rarr;</a> &nbsp;&middot;&nbsp; <a href="{LUMA}" target="_blank" rel="noopener" style="color:var(--peach);text-decoration:underline;">RSVP on Luma &rarr;</a></p>
   </div>
-  <span class="price">$20 &ndash; $50 sliding scale</span>
+  <span class="price">$20 &ndash; $40 online, sliding scale</span>
 </div>
 
 <p class="mci-label">Registered events</p>
@@ -308,7 +308,7 @@ ABOUT_FAQ = [
     ("Is it a partner dance like tango?",
      "No fixed roles or steps &mdash; contact improv is improvised. You will dance with many different people over a session, and no partner is required to attend."),
     ("How much does it cost?",
-     "The weekly jam is $20&ndash;$50 sliding scale &mdash; pay what fits your budget. Special workshops may have a set price, listed on the event page."),
+     "A Friday is $20 to $40 online on a sliding scale, $15 when you share it or come for the first time, or $30 to $50 at the door, pay what you can. Special workshops may have a set price, listed on the event page."),
 ]
 
 

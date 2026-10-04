@@ -231,7 +231,7 @@ SESSIONS = [
         "Miami, north edge: Hallandale Beach",
         "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009",
         "Weekly, Fridays 7:00\u20139:00 PM, from Friday 2 October 2026",
-        "$20 at the door, on a sliding scale of $20\u2013$50; pay what you can within that range",
+        "$20 to $40 online on a sliding scale, $15 when you share it or come for the first time, or $30 to $50 at the door, pay what you can",
         "https://miamicontactimprov.com/friday-jam",
         FRIDAY_JAM_VERIFIED,
         "The one session this site runs itself. It is hosted by Max Petrusenko, who also maintains "
@@ -249,7 +249,7 @@ SESSIONS = [
         "Miami, north edge: Hallandale Beach",
         "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009",
         "Eight Fridays, 7:00\u20139:00 PM, from Friday 2 October 2026 to Friday 20 November 2026",
-        "$20\u2013$50 sliding scale for each class, paid at the door or booked on Luma",
+        "$20 to $40 online on a sliding scale, $15 when you share it or come for the first time, or $30 to $50 at the door, pay what you can",
         FUNDAMENTALS_URL,
         FUNDAMENTALS_VERIFIED,
         "Run by the same maintainer as the Friday jam, and the disclosure comes first: it is taught by Max "
@@ -648,7 +648,7 @@ def friday_jam_event():
         "description": (
             "A weekly open, all-levels Contact Improvisation jam in Miami, "
             "hosted by Max Petrusenko at Inner Motion Dance Studio. Fridays 7:00 to 9:00 PM from "
-            "2 October 2026. $20 at the door on a sliding scale of $20 to $50. No partner, no "
+            "2 October 2026. $20 to $40 online on a sliding scale, $30 to $50 at the door. No partner, no "
             "experience and no booking needed."
         ),
         "startDate": _local_datetime(FRIDAY_JAM_FIRST_DATE, FRIDAY_JAM_START),
@@ -692,7 +692,7 @@ def friday_jam_event():
             "@type": "Offer",
             "price": "20",
             "priceCurrency": "USD",
-            "description": "Sliding scale $20 to $50, paid at the door",
+            "description": "$20 to $40 online on a sliding scale, $30 to $50 at the door, $15 community or first class",
             "availability": "https://schema.org/InStock",
             "validFrom": _local_datetime(FRIDAY_JAM_FIRST_DATE, FRIDAY_JAM_START),
             "url": schema.SITE + "/friday-jam",
@@ -880,7 +880,7 @@ def fundamentals_course():
             "@type": "Offer",
             "price": "20",
             "priceCurrency": "USD",
-            "description": "$20 online, promotion codes apply, sales close 2 hours before class. $30 to $50 pay-what-you-can at the door after that, no booking needed either way.",
+            "description": "$20 to $40 online on a sliding scale, sales close 2 hours before class. $30 to $50 at the door, pay what you can. $15 when you share it or come for the first time.",
             "availability": "https://schema.org/InStock",
             "validFrom": _local_datetime(first_iso, start_hhmm),
             "url": FUNDAMENTALS_URL,

@@ -186,7 +186,7 @@ def home():
   <div class="mci-cards">
     <div class="mci-mini"><p class="t mci-h">7:00 &middot; CLASE</p><p>Calentamiento guiado y herramientas &mdash; rodar, compartir peso, caer sin hacerse daño.</p></div>
     <div class="mci-mini"><p class="t mci-h">7:45 &middot; JAM ABIERTA</p><p>Danza libre. Entra, siéntate, mira &mdash; todo es bienvenido.</p></div>
-    <div class="mci-mini"><p class="t mci-h">$20 &ndash; $50</p><p>Escala móvil &mdash; paga lo que puedas. Ropa cómoda, sin zapatos.</p></div>
+    <div class="mci-mini"><p class="t mci-h">$20 &ndash; $40</p><p>En línea, escala móvil. $30 &ndash; $50 en la puerta, $15 si lo compartes o es tu primera clase. Ropa cómoda, sin zapatos.</p></div>
   </div>
   <div class="mci-actions">
     <a class="mci-textlink" href="https://www.youtube.com/watch?v=q4wUEiHowSU" target="_blank" rel="noopener">&#9654; Ver: qué es el contact improv</a>
@@ -1052,7 +1052,7 @@ def classes():
       <p>Una escena sin certificación es una escena donde la reputación es todo el control de calidad. Merece la pena saberlo antes de pagar un intensivo.</p>
       <h2>Dónde aprenderlo en Miami</h2>
       <p>Se pudo verificar una clase recurrente de Improvisación de Contacto en Miami-Dade a partir de sus propios listados cuando esta página se comprobó por última vez: <strong>Contact Improv &mdash; ALL LEVELS</strong> en Dance Arts Miami, 250 NE 61st Street, Miami, 33137, los martes de 18:00 a 19:00. Se anuncia como un espacio para trabajar conexión, compartir peso, momento y formación de pareja espontánea, y no hace falta pareja. Como se publica como una serie de varias fechas en Eventbrite y se replica en Meetup, confirma la semana actual allí en lugar de fiarte de esta página.</p>
-      <p>Desde el viernes 2 de octubre de 2026 hay una segunda serie: <strong>Contact Improv &mdash; Fundamentals</strong>, ocho clases semanales en Inner Motion Dance Studio, en Hallandale Beach, de 7:00 a 9:00 PM, con una escala de 20 a 50 dólares por clase. Cubre el mismo terreno que cualquier serie para principiantes, desde compartir peso y mantener un punto de contacto rodante hasta las caídas, el momento y el consentimiento, con un baile abierto al final de cada clase. Es además la única clase de este sitio que imparte quien lo mantiene, así que la entrada se lee como quien organiza describiendo su propia clase, y aparece en los mismos términos que el resto y sin ir por encima de ninguna. La <a href="{R_FUND}">página de Fundamentos</a> lleva las ocho fechas, el precio y cómo reservar.</p>
+      <p>Desde el viernes 2 de octubre de 2026 hay una segunda serie: <strong>Contact Improv &mdash; Fundamentals</strong>, ocho clases semanales en Inner Motion Dance Studio, en Hallandale Beach, de 7:00 a 9:00 PM, con 20 a 40 dólares en línea o 30 a 50 en la puerta por clase. Cubre el mismo terreno que cualquier serie para principiantes, desde compartir peso y mantener un punto de contacto rodante hasta las caídas, el momento y el consentimiento, con un baile abierto al final de cada clase. Es además la única clase de este sitio que imparte quien lo mantiene, así que la entrada se lee como quien organiza describiendo su propia clase, y aparece en los mismos términos que el resto y sin ir por encima de ninguna. La <a href="{R_FUND}">página de Fundamentos</a> lleva las ocho fechas, el precio y cómo reservar.</p>
       <p>Más allá de esa clase, las vías realistas hacia la forma en Miami son las <a href="{R_JAMS}">jams, campamentos y prácticas adyacentes</a> listadas en otras partes de este sitio. Si prefieres aprender de forma estructurada y no hay ninguna clase cerca de ti, una clase de danza contemporánea o de improvisación en cualquier estudio de Miami te enseñará buena parte de la alfabetización corporal, y las jams te enseñarán el resto.</p>
       <h2>Después de la primera</h2>
       <p>Qué hacer en las semanas siguientes a tu primera sesión, incluidas las semanas en que no hay nada, está en la <a href="{R_KEEP}">página de seguir practicando</a>. Un recorrido más completo de la noche en sí &mdash; la llegada, el círculo de apertura, los primeros diez minutos de baile y las frases que puedes decir cuando quieres parar &mdash; está en <a href="{R_FIRST}">tu primera jam, paso a paso</a>.</p>
@@ -1596,7 +1596,7 @@ FRIDAY_JAM_FAQ_ES = [
     ("¿Hay que reservar?",
      "No. No hay entrada ni lista. Ven a la puerta de Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, entre las 7:00 y las 7:15 PM para llegar al círculo de apertura. Llegar más tarde está bien; irse antes, siempre."),
     ("¿Cuánto cuesta y cómo funciona la escala?",
-     "20 dólares en la puerta, en una escala de 20 a 50. Paga lo que puedas dentro de ese rango y nadie te va a preguntar dónde te quedaste. El dinero cubre el estudio; la jam no se organiza con ánimo de lucro."),
+     "De 20 a 40 dólares en línea con escala móvil, 15 dólares si lo compartes o es tu primera clase, o de 30 a 50 dólares en la puerta, paga lo que puedas. Dentro del rango nadie te va a preguntar dónde te quedaste. El dinero cubre el estudio; la jam no se organiza con ánimo de lucro."),
     ("¿Dónde está exactamente?",
      "En el borde norte de Miami: Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, justo pasada Aventura por la US-1. El código postal es de Hallandale Beach, en el condado de Broward, y el sitio lo imprime tal cual porque una dirección se copia, no se traduce. Miami Contact Improv cubre Miami-Dade y Broward."),
     ("¿Quién la organiza?",
@@ -1622,19 +1622,19 @@ def friday_jam():
       <a class="btn primary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
       <a class="btn secondary" href="{R_FIRST}">¿Nunca has ido a una jam?</a>
     </div>
-    <p class="micro">20 dólares en la puerta, escala de 20 a 50. La organiza Max Petrusenko, que también lleva este sitio.</p>
+    <p class="micro">20 a 40 dólares en línea, 30 a 50 en la puerta, 15 si lo compartes o es tu primera clase. La organiza Max Petrusenko, que también lleva este sitio.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    {answer("La jam de los viernes es una jam semanal, abierta y de todos los niveles de Improvisación de Contacto en Miami, en Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, todos los viernes de 7:00 a 9:00 PM a partir del 2 de octubre de 2026. Cuesta 20 dólares en la puerta en una escala de 20 a 50, no requiere pareja, experiencia previa ni reserva, y la organiza Max Petrusenko, quien mantiene miamicontactimprov.com.", SHORT)}
+    {answer("La jam de los viernes es una jam semanal, abierta y de todos los niveles de Improvisación de Contacto en Miami, en Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, todos los viernes de 7:00 a 9:00 PM a partir del 2 de octubre de 2026. Cuesta de 20 a 40 dólares en línea o de 30 a 50 en la puerta, no requiere pareja, experiencia previa ni reserva, y la organiza Max Petrusenko, quien mantiene miamicontactimprov.com.", SHORT)}
     {facts([
       ("Cuándo", "Todos los viernes, 7:00–9:00 PM"),
       ("Primera sesión", "Viernes 2 de octubre de 2026"),
       ("Dónde", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
       ("Zona", "Borde norte de Miami, justo pasada Aventura por la US-1"),
-      ("Precio", "20 dólares en la puerta, escala de 20 a 50"),
+      ("Precio", "20 a 40 dólares en línea, 30 a 50 en la puerta, 15 si lo compartes o es tu primera clase"),
       ("Reserva", "Ninguna. Ven a la puerta"),
       ("Para quién", "Abierta y de todos los niveles. Se espera a quien viene por primera vez; mirar está bien"),
       ("Organiza", "Max Petrusenko"),
@@ -1654,7 +1654,7 @@ def friday_jam():
       <p><strong>La jam abierta.</strong> El tramo largo de la tarde, normalmente sin música. Las danzas empiezan con una mirada o una mano y terminan cuando cualquiera de las dos personas para. Descansar entre danzas es normal. Bailar en solitario forma parte de la forma.</p>
       <p><strong>8:50, cierre.</strong> Un círculo breve o un momento de quietud, y fuera a las 9:00 para que el estudio pueda cerrar.</p>
       <h2>La escala de precios</h2>
-      <p>La puerta son 20 dólares y la escala llega a 50. El extremo bajo cubre la sala cuando viene gente suficiente; el alto es para quien pueda cargar con más y quiera que la jam siga en pie. Elige en privado, entrégalo, listo. A nadie se le deja fuera de una primera jam por dinero: si esta semana los 20 dólares son la barrera, ven igual y dilo en la puerta.</p>
+      <p>De 20 a 40 dólares en línea con escala móvil, 15 dólares si lo compartes o es tu primera clase, o de 30 a 50 dólares en la puerta, paga lo que puedas. El extremo bajo cubre la sala cuando viene gente suficiente; el alto es para quien pueda cargar con más y quiera que la jam siga en pie. Elige en privado, entrégalo, listo. A nadie se le deja fuera de una primera jam por dinero: si esta semana el precio es la barrera, ven igual y dilo en la puerta.</p>
       <h2>Cómo llegar</h2>
       <p>Inner Motion Dance Studio está en el 216 NE 1st Ave de Hallandale Beach, justo al este de la US-1 (Federal Highway) y al norte de Hallandale Beach Boulevard. Desde Miami es la primera ciudad pasada la línea del condado después de Aventura; desde Fort Lauderdale queda al sur de Hollywood. Si necesitas datos de aparcamiento o de acceso antes de venir, <a href="mailto:hello@miamicontactimprov.com">escribe</a> y tendrás respuesta antes del viernes.</p>
       <h2>Quién sostiene la sala</h2>
@@ -1674,7 +1674,7 @@ def friday_jam():
         schema.webpage(
             R_FRIDAY,
             "Jam de Improvisación de Contacto de los viernes en Miami",
-            "Una jam semanal, abierta y de todos los niveles de Improvisación de Contacto en Miami, en Inner Motion Dance Studio (216 NE 1st Ave, Hallandale Beach), los viernes de 7:00 a 9:00 PM desde el 2 de octubre de 2026. 20 dólares en la puerta, escala de 20 a 50. La organiza Max Petrusenko.",
+            "Una jam semanal, abierta y de todos los niveles de Improvisación de Contacto en Miami, en Inner Motion Dance Studio (216 NE 1st Ave, Hallandale Beach), los viernes de 7:00 a 9:00 PM desde el 2 de octubre de 2026. 20 a 40 dólares en línea, 30 a 50 en la puerta, 15 si lo compartes o es tu primera clase. La organiza Max Petrusenko.",
             date_modified=listings.FRIDAY_JAM_VERIFIED,
             lang="es",
         ),
@@ -1684,7 +1684,7 @@ def friday_jam():
     )
     return page(
         "Jam de Improvisación de Contacto en Miami, viernes 7–9 PM",
-        "Jam abierta y semanal de Improvisación de Contacto en Miami, viernes de 7 a 9 PM en Inner Motion Dance Studio, 216 NE 1st Ave. De 20 a 50 dólares, sin pareja ni reserva.",
+        "Jam abierta y semanal de Improvisación de Contacto en Miami, viernes de 7 a 9 PM en Inner Motion Dance Studio, 216 NE 1st Ave. 20 a 40 dólares en línea, 30 a 50 en la puerta.",
         R_FRIDAY,
         body,
         jsonld=jsonld,
@@ -1699,7 +1699,7 @@ FUNDAMENTALS_FAQ_ES = [
     ("¿Tengo que venir a las ocho clases?",
      "No. Cada clase se sostiene sola, así que puedes entrar a cualquiera de las ocho. Venir a todas es lo que convierte el material en baile, y no es obligatorio."),
     ("¿Cuánto cuesta una clase?",
-     "Una escala de 20 a 50 dólares por clase. Paga lo que puedas dentro de ese rango y nadie te va a preguntar dónde te quedaste."),
+     "De 20 a 40 dólares en línea con escala móvil, 15 dólares si lo compartes o es tu primera clase, o de 30 a 50 dólares en la puerta, paga lo que puedas. Dentro del rango nadie te va a preguntar dónde te quedaste."),
     ("¿Cómo se reserva?",
      "La inscripción va por Luma, y el enlace aparecerá en esta página en cuanto la serie esté publicada allí. En todas las clases se acepta el pago en la puerta, así que la reserva no es lo que te deja entrar."),
     ("¿Dónde es y cómo llego?",
@@ -1710,7 +1710,7 @@ FUNDAMENTALS_FAQ_ES = [
      "No. La jam es baile abierto, sin quien enseñe y sin plan. Esto es una clase con material, y cada clase termina con un baile abierto para usar lo que se acaba de trabajar."),
     ("¿Qué ropa llevo y qué traigo?",
      "Ropa que puedas rodar, que cubra espalda, hombros y rodillas, sin cremalleras, hebillas ni costuras duras. Pies descalzos o calcetines blandos, una botella de agua llena y una toalla. Anillos y relojes se quedan al borde."),
-    ("¿Y si esta semana no llego a los 20 dólares?",
+    ("¿Y si esta semana no llego al precio?",
      "Dilo antes de la clase. Un correo basta y se resuelve, sin preguntas sobre tus circunstancias."),
 ]
 
@@ -1745,19 +1745,19 @@ def fundamentals():
       <a class="btn primary" href="https://maps.apple.com/?q=216+NE+1st+Ave,+Hallandale+Beach,+FL+33009" rel="noopener">216 NE 1st Ave, Hallandale Beach</a>
       <a class="btn secondary" href="{R_FIRST}">¿Nunca has ido a una jam?</a>
     </div>
-    <p class="micro">Escala de 20 a 50 dólares por clase, pagados en la puerta o reservados en Luma. La enseña Max Petrusenko, que también lleva este sitio.</p>
+    <p class="micro">20 a 40 dólares en línea, 30 a 50 en la puerta, 15 si lo compartes o es tu primera clase. La enseña Max Petrusenko, que también lleva este sitio.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    {answer("La serie de Fundamentos son ocho clases de Improvisación de Contacto los viernes por la tarde-noche en Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, del 2 de octubre al 20 de noviembre de 2026, de 7:00 a 9:00 PM. Cada clase se sostiene sola, así que puedes entrar a cualquiera de las ocho. La enseña Max Petrusenko, el precio es una escala de 20 a 50 dólares por clase, y no hace falta pareja ni experiencia.")}
+    {answer("La serie de Fundamentos son ocho clases de Improvisación de Contacto los viernes por la tarde-noche en Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, del 2 de octubre al 20 de noviembre de 2026, de 7:00 a 9:00 PM. Cada clase se sostiene sola, así que puedes entrar a cualquiera de las ocho. La enseña Max Petrusenko, el precio es de 20 a 40 dólares en línea o de 30 a 50 en la puerta, y no hace falta pareja ni experiencia.")}
     {facts([
       ("Cuándo", "Viernes, 7:00–9:00 PM"),
       ("Fechas", "Ocho viernes, del 2 de octubre al 20 de noviembre de 2026"),
       ("Dónde", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
       ("Zona", "Borde norte de Miami, justo pasada Aventura por la US-1"),
-      ("Precio", "Escala de 20 a 50 dólares por clase"),
+      ("Precio", "20 a 40 dólares en línea, 30 a 50 en la puerta, 15 si lo compartes o es tu primera clase"),
       ("Reserva", "En Luma o pago en la puerta"),
       ("Entrar", "A cualquiera de las ocho clases, sin pareja y sin experiencia"),
       ("Nivel", "Fundamentos: compartir peso, contacto, caídas, momento, consentimiento"),
@@ -1780,9 +1780,9 @@ def fundamentals():
       {dates_html}
 
       <h2>Cuánto cuesta una clase</h2>
-      <p>Cada clase son 20 dólares o más dentro de una escala que llega a 50. Paga lo que puedas dentro de ese rango y nadie te va a preguntar dónde te quedaste. El extremo bajo cubre la sala; el alto es para quien pueda cargar con más y quiera que la serie siga en pie.</p>
+      <p>De 20 a 40 dólares en línea con escala móvil, 15 dólares si lo compartes o es tu primera clase, o de 30 a 50 dólares en la puerta, paga lo que puedas. Dentro del rango nadie te va a preguntar dónde te quedaste. El extremo bajo cubre la sala; el alto es para quien pueda cargar con más y quiera que la serie siga en pie.</p>
       <p>Quien se suscribe al correo mensual tiene un 20% de descuento en cualquier clase durante los próximos dos meses; el código llega en el primer correo. Nada más en este sitio abre un descuento.</p>
-      <p>Si esta semana los 20 dólares son la barrera, dilo antes de la clase. Un correo basta y se resuelve. A nadie se le deja fuera de una clase de fundamentos por dinero.</p>
+      <p>Si esta semana el precio es la barrera, dilo antes de la clase. Un correo basta y se resuelve. A nadie se le deja fuera de una clase de fundamentos por dinero.</p>
 
       {subscribe_block("es", source="miamicontactimprov:es-fundamentos", offer=START_OFFER_ES, uid="es-fundamentos")}
 
@@ -1811,7 +1811,7 @@ def fundamentals():
         schema.webpage(
             R_FUND,
             "Fundamentos de Improvisación de Contacto en Miami",
-            "Ocho clases de Improvisación de Contacto para principiantes en Hallandale Beach, del 2 de octubre al 20 de noviembre de 2026, los viernes de 7 a 9 PM. Escala de 20 a 50 dólares, la enseña Max Petrusenko.",
+            "Ocho clases de Improvisación de Contacto para principiantes en Hallandale Beach, del 2 de octubre al 20 de noviembre de 2026, los viernes de 7 a 9 PM. 20 a 40 dólares en línea, 30 a 50 en la puerta. La enseña Max Petrusenko.",
             date_modified=listings.FUNDAMENTALS_VERIFIED,
             lang="es",
         ),
@@ -1882,7 +1882,7 @@ def start():
       ("Después", "Un correo al mes, y responder a cualquiera te saca de la lista"),
       ("Próximas clases", f"Viernes, 7:00&ndash;9:00 PM, del {first} al {last}"),
       ("Dónde", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
-      ("Precio", "Escala de 20 a 50 dólares por clase, pagados en la puerta o reservados en Luma"),
+      ("Precio", "20 a 40 dólares en línea, 30 a 50 en la puerta, 15 si lo compartes o es tu primera clase"),
       ("Qué llevar", "Ropa que puedas rodar, agua, pies descalzos o calcetines blandos"),
       ("Para empezar", "Sin pareja y sin experiencia: se entra a cualquiera de las ocho clases"),
       ("Quién la organiza", "Max Petrusenko, que también mantiene este sitio"),

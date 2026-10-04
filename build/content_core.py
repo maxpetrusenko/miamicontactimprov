@@ -47,7 +47,7 @@ def home():
   <div class="wrap">
     <h2>Start from where you are</h2>
     {cards([
-      ("This Friday", "The Friday jam", "Weekly open jam at Inner Motion Dance Studio, north Miami, 7 to 9 PM. $20 sliding scale, no partner, no booking. First session 2 October 2026.", "/friday-jam"),
+      ("This Friday", "The Friday jam", "Weekly open jam at Inner Motion Dance Studio, north Miami, 7 to 9 PM. $20 to $40 online, $30 to $50 at the door, no partner. First session 2 October 2026.", "/friday-jam"),
       ("Never done it", "Watch first, then dance", "What a jam actually looks like from the inside, and why watching is a legitimate way to participate.", "/classes#first-jam"),
       ("Looking for a session", "Jams and open practice", "What an open jam is, how the room usually runs, and what to say when you arrive.", "/jams"),
       ("Want teaching", "Classes and workshops", "Beginner series, workshops and intensives, plus what to look for in a teacher.", "/classes"),
