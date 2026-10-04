@@ -76,9 +76,13 @@ class TicketsPage(unittest.TestCase):
 
 
 class ReferralRedirect(unittest.TestCase):
-    def test_fr_name_redirects_to_tickets_with_ref(self):
+    def test_fr_name_rewrites_to_tickets(self):
+        # A 200 rewrite, not a 302 with ?ref=:name (Pages leaves query placeholders
+        # unsubstituted, which was caught on the preview deploy).
         rules = build.redirects_file()
-        self.assertRegex(rules, r"(?m)^/fr/:name\s+/tickets\?ref=:name\s+302$")
+        self.assertRegex(rules, r"(?m)^/fr/\*\s+/tickets\s+200$")
+        self.assertNotRegex(rules, r"(?m)^/fr/\S+\s+\S*\?ref=")
+        self.assertIn("location.pathname.match(/^\\/fr\\/", content_tickets.TICKETS_SCRIPT)
 
     def test_tickets_is_a_real_page_in_the_sitemap_table(self):
         routes = [row["route"] for row in build.rows()]

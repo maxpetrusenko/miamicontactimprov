@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import content_checkout  # noqa: E402
 import content_tickets  # noqa: E402
+import content_ideas  # noqa: E402
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
 import content_es  # noqa: E402
@@ -84,6 +85,7 @@ PAGES = [
     ("contact", "en", content_marketing.contact, "0.6", "monthly", None),
     ("pricing", "en", content_checkout.pricing, "0.8", "monthly", None),
     ("tickets", "en", content_tickets.tickets, "0.8", "weekly", None),
+    ("ideas", "en", content_ideas.ideas, "0.7", "weekly", None),
     ("pay", "en", content_checkout.pay, "0.1", "yearly", None),
     ("success", "en", content_checkout.success, "0.3", "yearly", None),
     ("blog", "en", content_blog.index, "0.7", "weekly", None),
@@ -254,9 +256,11 @@ REDIRECT_ALIASES = """# Clean-URL safety net. Cloudflare Pages serves /miami.htm
 /safety                     /safety-and-consent               301
 /teachers                   /directory                        301
 
-# Ambassador links: miamicontactimprov.com/fr/<name> lands on /tickets with the
-# referrer in the query string; the Worker writes it into Stripe metadata.
-/fr/:name                   /tickets?ref=:name                302
+# Ambassador links: miamicontactimprov.com/fr/<name> serves /tickets (a 200
+# rewrite, the address bar keeps /fr/<name>) and the page reads <name> from the
+# path. A 302 to /tickets?ref=:name does not work: Pages does not substitute
+# placeholders inside a query string and sends ref=%3Aname.
+/fr/*                       /tickets                          200
 """
 
 

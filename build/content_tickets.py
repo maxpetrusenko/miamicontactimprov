@@ -182,7 +182,9 @@ TICKETS_SCRIPT = r"""<script>
   }
 
   // /fr/<name> lands here as ?ref=<name>. Same rule the Worker applies.
-  var ref = (new URLSearchParams(location.search).get('ref') || '').trim().toLowerCase();
+  // /fr/<name> (served by a 200 rewrite) or /tickets?ref=<name>.
+  var fromPath = location.pathname.match(/^\/fr\/([^\/?#]+)/);
+  var ref = (fromPath ? decodeURIComponent(fromPath[1]) : (new URLSearchParams(location.search).get('ref') || '')).trim().toLowerCase();
   if (!/^[a-z0-9][a-z0-9-]{0,39}$/.test(ref)) ref = '';
   if (ref) {
     var panel = document.getElementById('tk-referral');

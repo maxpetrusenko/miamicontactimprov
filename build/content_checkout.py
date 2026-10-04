@@ -154,6 +154,7 @@ def success():
       ("Phone", "Silenced, face down, off the floor or at the edge"),
     ])}
     <div class="prose">
+      <p class="idea-next"><strong>What should we host next?</strong> Acro, live music, a beach jam, a parents class with kids care. <a href="/ideas">Add your vote</a>.</p>
       <p>First time? <a href="/your-first-jam">Your first jam, step by step</a> walks through arriving, the opening circle and what the first ten minutes look like. Questions before Friday: <a href="mailto:hello@miamicontactimprov.com">hello@miamicontactimprov.com</a>.</p>
     </div>
   </div>

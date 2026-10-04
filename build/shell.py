@@ -46,6 +46,7 @@ INSTAGRAM_URL = "https://instagram.com/miamicontactimprov"
 NAV = [
     ("home", {"en": "Home", "es": "Inicio"}),
     ("events", {"en": "Events", "es": "Eventos"}),
+    ("ideas", {"en": "Ideas", "es": "Ideas"}),
     ("blog", {"en": "Blog", "es": "Blog"}),
     ("about", {"en": "About", "es": "Acerca de"}),
     ("contact", {"en": "Contact", "es": "Contacto"}),
@@ -138,6 +139,9 @@ CHECKOUT_ENDPOINT = API_BASE + "/api/checkout"
 # "New here?" capture on /tickets: records the email, answers whether the $15
 # first class is still open to it. See content_tickets.py.
 FIRST_CLASS_ENDPOINT = API_BASE + "/api/first-class"
+
+# /ideas demand board: GET for counters, POST /interest and /suggest. content_ideas.py.
+IDEAS_ENDPOINT = API_BASE + "/api/ideas"
 
 # The door payment link the /pay page hands off to. Printed on physical materials
 # (door QR, posters) too, so this exact URL is the one stable thing that must never

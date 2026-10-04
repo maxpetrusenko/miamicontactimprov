@@ -62,7 +62,9 @@ record of which offer each sale used.
    checks KV and Stripe → a $15 Checkout with the email locked. If the price is not available
    (paid before, a session already open, offer never issued, Stripe unreachable) the answer is
    one uniform 409 `first_offer_unavailable`, and the page offers the community price.
-4. **Friend link.** `miamicontactimprov.com/fr/maya-lopez` → 302 → `/tickets?ref=maya-lopez` →
+4. **Friend link.** `miamicontactimprov.com/fr/maya-lopez` → `/tickets` via a 200 rewrite (the
+   page reads the name from the path; Pages leaves `:name` unsubstituted in a query string, so a
+   302 to `/tickets?ref=:name` arrived as `ref=%3Aname`, caught on the preview) →
    a dark panel "Maya Lopez sent you. Your class is $15." → $15 Checkout with `referrer`.
 5. **Door $30.** Information only on `/tickets`. The `/pay` link and its $30 to $50 range are
    unchanged (see decisions).
@@ -174,12 +176,45 @@ env -u SSL_CERT_FILE -u NODE_EXTRA_CA_CERTS -u HTTPS_PROXY -u HTTP_PROXY npx wra
 MCI_API_BASE=http://localhost:8787 python3 build/build.py --out /tmp/mci-local
 ```
 
+## Slice 3: /ideas (built in these PRs, preview only)
+
+`/ideas` (site `build/content_ideas.py`, Worker `src/ideas.ts`, KV binding `IDEAS`): seven idea
+cards (CI + Acro, Eros Contact, Tantra and Bodywork Lab, Parents CI + Kids Hangout, CI + Live
+Music, Outdoor and Beach CI, Extended Jam) plus "Suggest something". Each shows "N interested.
+At T we schedule it." and a bar; Parents shows "N/10 families, K kids". Click → email + consent
+once (remembered on the device) → Definitely / Probably / Just curious → "N more needed" with a
+share link `/ideas?ref=<share code>#<idea>`; `?ref=` is stored on the interest row. One row per
+person per idea; internal weight 2 for a past ticket buyer, the public number is people.
+Suggestions are stored as pending and shown only after `POST /api/ideas/suggestions/approve`
+(admin token). Linked from the nav ("Ideas") and the ticket success page.
+
+## Preview (Stripe TEST, 2026-10-04)
+
+- Site: https://mci-pricing-preview.pages.dev (separate Pages project `mci-pricing-preview`,
+  `X-Robots-Tag: noindex`). A branch preview of the `miamicontactimprov` project cannot work:
+  the account-level `pages_dev_canonicalization` Bulk Redirect (include_subdomains) 301s every
+  `*.miamicontactimprov.pages.dev` host to production.
+- Worker: https://newsletter-api-preview.max-petrusenko.workers.dev (`wrangler deploy --env
+  preview`, own KV namespaces `preview-EMAIL_SUBS`/`-AMBASSADORS`/`-IDEAS`, Stripe test key,
+  test-mode webhook endpoint `we_1UMv3AGR8ZpP3RhoPzbhEn9n`, no Resend, admin token in Doppler
+  `api_keys/dev CI_IDEAS_PREVIEW_ADMIN_TOKEN`).
+- Rebuild the preview site: `MCI_API_BASE=https://newsletter-api-preview.max-petrusenko.workers.dev
+  python3 build/build.py --out <copy of site/>`, append the noindex header to its `_headers`,
+  `wrangler pages deploy <dir> --project-name=mci-pricing-preview --branch=main`.
+- Playwright on the preview: `/fr/maya-lopez` → $15 community → test card 4242 → `/success` on
+  the preview host → "Add your vote" → `/ideas`: count went up by one, Definitely, "17 more
+  people needed", Parents 2 adults + 3 kids, suggestion sent. Stripe: session `complete/paid`,
+  1500, metadata as specified, `expires_at` 31 min, webhook `pending_webhooks=0`. Screenshots
+  (desktop and phone): `docs/media/pricing-ambassador/preview/`.
+
 ### Go-live order (Max, not done in these PRs)
 
 1. Decide the live Stripe account (open decision below).
 2. Create the live price: `python3 scripts/stripe_setup.py --live --only ci-class-15 --confirm "I am creating a LIVE Stripe object"`.
-3. Create the allowlist namespace: `wrangler kv namespace create AMBASSADORS`, add the binding
-   with its id to `wrangler.jsonc`, seed the first slugs.
+3. Create the production KV namespaces `AMBASSADORS` and `IDEAS`
+   (`wrangler kv namespace create ...`), add both bindings with their ids to the top level of
+   `wrangler.jsonc`, seed the first ambassador slugs. Without `IDEAS` the live `/ideas` page
+   shows zeros and its buttons fail.
 4. In Stripe (live), add a webhook endpoint `https://newsletter-api.max-petrusenko.workers.dev/api/stripe/webhook`
    for `checkout.session.completed`, `checkout.session.async_payment_succeeded`,
    `checkout.session.expired`; `wrangler secret put STRIPE_WEBHOOK_SECRET` with its `whsec_`.

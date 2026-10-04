@@ -44,6 +44,7 @@ The library pages are published in both English and Spanish; the Events, Contact
 - https://miamicontactimprov.com/contact  (en)
 - https://miamicontactimprov.com/pricing  (en)
 - https://miamicontactimprov.com/tickets  (en)
+- https://miamicontactimprov.com/ideas  (en)
 - https://miamicontactimprov.com/pay  (en)
 - https://miamicontactimprov.com/success  (en)
 - https://miamicontactimprov.com/blog/  (en)

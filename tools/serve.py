@@ -17,13 +17,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*a, directory=ROOT, **k)
 
     def do_GET(self):
-        # Mirrors the `/fr/:name /tickets?ref=:name 302` rule in site/_redirects.
+        # Mirrors the `/fr/* /tickets 200` rewrite in site/_redirects.
         parts = urllib.parse.urlparse(self.path).path.strip("/").split("/")
         if len(parts) == 2 and parts[0] == "fr" and parts[1]:
-            self.send_response(302)
-            self.send_header("Location", "/tickets?ref=" + urllib.parse.quote(parts[1]))
-            self.end_headers()
-            return
+            self.path = "/tickets"
         return super().do_GET()
 
     def translate_path(self, path):
