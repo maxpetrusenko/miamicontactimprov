@@ -452,7 +452,9 @@ a:hover { color: var(--terracotta-dark); }
 .subscribe-form { max-width: 46ch; }
 .subscribe-label { display: block; font-size: 0.95rem; color: var(--sage); margin-bottom: 12px; }
 .subscribe-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-.subscribe-row input[type="email"] {
+.subscribe-row input[type="email"],
+.subscribe-row input[type="url"],
+.subscribe-row input[type="text"] {
   flex: 1 1 220px; min-width: 0; padding: 12px 14px; font: inherit; font-size: 0.95rem;
   color: var(--ink); background: rgba(12, 18, 16, 0.7);
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
@@ -461,7 +463,9 @@ a:hover { color: var(--terracotta-dark); }
 .subscribe-phone span {
   font-size: 0.72rem; letter-spacing: 0.04em; color: var(--muted);
 }
-.subscribe-phone input[type="tel"] {
+.subscribe-phone input[type="tel"],
+.subscribe-phone input[type="file"],
+.subscribe-phone select {
   padding: 12px 14px; font: inherit; font-size: 0.95rem; width: 100%;
   color: var(--ink); background: rgba(12, 18, 16, 0.7);
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
@@ -740,3 +744,20 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
   font-size: 22px; line-height: 1; cursor: pointer;
 }
 .mci-popup-close:hover { background: var(--line); }
+
+/* ---------------------------------------------------------------- tickets + ideas
+   Built from the existing components (hero, .answer, .facts, .price-list, .band,
+   .card, .subscribe-block); only these joins are new. */
+.subscribe-block .subscribe-row + .subscribe-row { margin-top: 10px; }
+.subscribe-block .subscribe-row input, .subscribe-block .subscribe-phone input, .subscribe-block .subscribe-phone select { color: var(--cream); }
+.subscribe-block .btn-row { margin-top: 4px; }
+.facts .btn-row { gap: 8px; }
+.facts .btn-row .btn { padding: 8px 16px; font-size: 0.86rem; }
+.band[hidden], #ideas [hidden], #tk [hidden] { display: none !important; }
+.band + .facts, #tk > .band { margin: 0 0 30px; }
+.grid > .subscribe-block { grid-column: 1 / -1; margin: 0; max-width: none; }
+.grid + .subscribe-block, #ideas .grid { margin-bottom: 10px; }
+.idea-count { color: var(--ink); }
+/* The sage label and muted consent line were near-invisible on the sage block. */
+.subscribe-block .subscribe-label, .subscribe-block .subscribe-consent, .subscribe-block .subscribe-phone span { color: var(--cream); }
+.subscribe-block .subscribe-consent { opacity: 0.85; }

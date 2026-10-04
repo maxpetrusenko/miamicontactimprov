@@ -22,10 +22,15 @@ def pricing():
     rows = f"""
 <div class="price-list">
   <div class="price-row">
-    <div class="price-text"><strong>Class, online &mdash; $20.</strong><br>Promotion codes apply.
+    <div class="price-text"><strong>Class, online &mdash; $20 to $40, sliding scale.</strong><br>Pick your price on the checkout page.
       <p class="price-note">Online sales close two hours before each class; after that it is $30&ndash;$50 pay-what-you-can at the door.</p>
     </div>
-    {buy_button("class", "Buy ticket &ndash; $20", "pricing-class")}
+    {buy_button("class", "Buy ticket, $20 to $40", "pricing-class")}
+  </div>
+
+  <div class="price-row">
+    <div class="price-text"><strong>Class, community or first class &mdash; $15.</strong><br>Share the class and show us the post, or come for the first time.</div>
+    <a class="btn secondary" href="/tickets">See tickets</a>
   </div>
 
   <div class="price-row">
@@ -58,7 +63,7 @@ def pricing():
 
 <section class="section">
   <div class="wrap">
-    {answer("A class is $20 online or $30 to $50 at the door, pay what you can. Promotion codes apply to every online ticket.")}
+    {answer("A class is $20 to $40 online on a sliding scale, $15 when you share it or come for the first time, or $30 to $50 at the door, pay what you can.")}
     {rows}
     {answer("If we cancel a class or jam, we refund your ticket in full.", label="Refund policy")}
     <div class="prose">
@@ -74,13 +79,13 @@ def pricing():
         schema.webpage(
             "/pricing",
             "Pricing | Miami Contact Improv",
-            "What a Friday class or jam costs in Miami: a $20 online ticket or $30 to $50 at the door, pay what you can.",
+            "What a Friday class or jam costs in Miami: $20 to $40 online, $15 community or first class, or $30 to $50 at the door, pay what you can.",
         ),
         schema.breadcrumb("/pricing", "Pricing"),
     )
     return page(
         "Pricing | Miami Contact Improv Classes & Jams",
-        "What a Friday Contact Improv class or jam costs: $20 online or $30 to $50 at the door, pay what you can.",
+        "What a Friday Contact Improv class or jam costs: $20 to $40 online, $15 community or first class, $30 to $50 at the door.",
         "/pricing",
         body,
         jsonld=jsonld,
@@ -101,7 +106,7 @@ def pay():
   <div class="wrap">
     <p class="eyebrow">Door payment</p>
     <h1>Taking you to payment.</h1>
-    <p class="lede">If this does not redirect automatically in a moment, <a href="{DOOR_LINK}">continue to payment</a>.</p>
+    <p class="lede">At the door it is $30 to $50, pay what you can. If this does not redirect in a moment, <a href="{DOOR_LINK}">continue to payment</a>.</p>
   </div>
 </section>
 """
@@ -153,6 +158,7 @@ def success():
       ("Phone", "Silenced, face down, off the floor or at the edge"),
     ])}
     <div class="prose">
+      <p class="idea-next"><strong>What should we host next?</strong> Acro, live music, a beach jam, a parents class with kids care. <a href="/ideas">Add your vote</a>.</p>
       <p>First time? <a href="/your-first-jam">Your first jam, step by step</a> walks through arriving, the opening circle and what the first ten minutes look like. Questions before Friday: <a href="mailto:hello@miamicontactimprov.com">hello@miamicontactimprov.com</a>.</p>
     </div>
   </div>

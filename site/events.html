@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=937a0665">
+<link rel="stylesheet" href="/assets/site.css?v=d515ceb8">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -173,7 +173,7 @@
       "@type": "Event",
       "@id": "https://miamicontactimprov.com/friday-jam#event",
       "name": "Miami Contact Improv — Friday Jam",
-      "description": "A weekly open, all-levels Contact Improvisation jam in Miami, hosted by Max Petrusenko at Inner Motion Dance Studio. Fridays 7:00 to 9:00 PM from 2 October 2026. $20 at the door on a sliding scale of $20 to $50. No partner, no experience and no booking needed.",
+      "description": "A weekly open, all-levels Contact Improvisation jam in Miami, hosted by Max Petrusenko at Inner Motion Dance Studio. Fridays 7:00 to 9:00 PM from 2 October 2026. $20 to $40 online on a sliding scale, $30 to $50 at the door. No partner, no experience and no booking needed.",
       "startDate": "2026-10-02T19:00:00-04:00",
       "endDate": "2026-10-02T21:00:00-04:00",
       "eventSchedule": {
@@ -221,7 +221,7 @@
         "@type": "Offer",
         "price": "20",
         "priceCurrency": "USD",
-        "description": "Sliding scale $20 to $50, paid at the door",
+        "description": "$20 to $40 online on a sliding scale, $30 to $50 at the door, $15 community or first class",
         "availability": "https://schema.org/InStock",
         "validFrom": "2026-10-02T19:00:00-04:00",
         "url": "https://miamicontactimprov.com/friday-jam"
@@ -249,7 +249,7 @@
       <span></span><span></span><span></span>
     </button>
     <nav class="nav" id="primary-nav" aria-label="Primary">
-      <a href="/">Home</a><a href="/events" aria-current="page">Events</a><a href="/blog/">Blog</a><a href="/about">About</a><a href="/contact">Contact</a><a class="follow" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg><span>Follow</span></a>
+      <a href="/">Home</a><a href="/events" aria-current="page">Events</a><a href="/ideas">Ideas</a><a href="/blog/">Blog</a><a href="/about">About</a><a href="/contact">Contact</a><a class="follow" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg><span>Follow</span></a>
     </nav>
   </div>
 </header>
@@ -264,7 +264,7 @@
     <p class="label mci-h">WEEKLY JAM</p>
     <p>Every Friday from Oct 2, 2026 &middot; 7:00&ndash;9:00 PM<br>Class 7:00&ndash;7:45, Open Jam 7:45&ndash;9:00<br>Inner Motion Dance Studio &middot; 216 NE 1st Ave, Hallandale Beach<br><a href="/friday-jam" style="color:var(--peach);text-decoration:underline;">Full details &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://luma.com/hau1fq5t" target="_blank" rel="noopener" style="color:var(--peach);text-decoration:underline;">RSVP on Luma &rarr;</a></p>
   </div>
-  <span class="price">$20 &ndash; $50 sliding scale</span>
+  <span class="price">$20 &ndash; $40 online, sliding scale</span>
 </div>
 
 <p class="mci-label">Registered events</p>
@@ -746,6 +746,7 @@
       if (window.posthog && kind) {
         posthog.capture('checkout_completed', {
           kind: kind,
+          ticket_type: q.get('ticket_type') || 'early',
           amount: amount ? parseInt(amount, 10) : null,
         });
       }

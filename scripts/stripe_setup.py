@@ -4,7 +4,8 @@
 Creates, idempotently (keyed on `lookup_key`, never on name or id), the
 product and price for each entry in `PRICES`:
 
-    ci-ticket-online-friday    $20.00  one-time   drop-in class ticket
+    ci-ticket-online-friday    $20.00  one-time   drop-in class ticket (early)
+    ci-class-15                $15.00  one-time   class: community / first / referral
     ci-intro-pack              $45.00  one-time   3-class intro pack (first-timers)
     ci-membership-monthly      $60.00  /month     unlimited membership
     ci-membership-annual      $540.00  one-time   12-month prepaid membership
@@ -75,6 +76,36 @@ PRICES = [
             "close 2 hours before the class starts; after that, pay at the door."
         ),
         "unit_amount": 3000,
+        "recurring_interval": None,
+    },
+    {
+        # Online ticket, sliding scale $20-40 (Max, 2026-10-04): Stripe
+        # custom_unit_amount, preset $20. Stripe allows no promotion codes on
+        # a custom-amount price, so the Worker sends none.
+        "lookup_key": "ci-class-sliding",
+        "product_name": "Contact Improv Miami - Friday class online (sliding scale $20-40)",
+        "description": (
+            "One ticket, one Friday 7-9pm Contact Improv class, Inner Motion Dance "
+            "Studio, Hallandale Beach FL. Sliding scale: pick your price from $20 "
+            "to $40. Online sales close 2 hours before class start."
+        ),
+        "unit_amount": None,
+        "custom_unit_amount": {"preset": 2000, "minimum": 2000, "maximum": 4000},
+        "recurring_interval": None,
+    },
+    {
+        # One $15 price for the three reduced Friday-class offers (community
+        # share & unlock, first class, /fr/<name> referral). Checkout metadata
+        # `ticket_type` tells them apart. Promotion codes are switched off on
+        # these sessions by the Worker, so nothing stacks below $15.
+        "lookup_key": "ci-class-15",
+        "product_name": "Contact Improv Miami - Friday class ($15 community, first class, friend link)",
+        "description": (
+            "One ticket, one Friday 7-9pm Contact Improv class, Inner Motion Dance "
+            "Studio, Hallandale Beach FL, at the $15 community, first-class or "
+            "friend-link price. Online sales close 2 hours before class start."
+        ),
+        "unit_amount": 1500,
         "recurring_interval": None,
     },
     {
@@ -162,15 +193,17 @@ def create_product(name: str, description: str, live: bool) -> str:
 
 
 def create_price(product_id: str, row: dict, live: bool) -> dict:
-    args = [
-        "prices", "create",
-        "--product", product_id,
-        "--unit-amount", str(row["unit_amount"]),
-        "--currency", CURRENCY,
-        "--lookup-key", row["lookup_key"],
-    ]
+    args = ["prices", "create", "-d", f"product={product_id}", "-d", f"currency={CURRENCY}",
+            "-d", f"lookup_key={row['lookup_key']}"]
+    custom = row.get("custom_unit_amount")
+    if custom:
+        args += ["-d", "custom_unit_amount[enabled]=true"]
+        for key in ("preset", "minimum", "maximum"):
+            args += ["-d", f"custom_unit_amount[{key}]={custom[key]}"]
+    else:
+        args += ["-d", f"unit_amount={row['unit_amount']}"]
     if row["recurring_interval"]:
-        args += ["--recurring.interval", row["recurring_interval"]]
+        args += ["-d", f"recurring[interval]={row['recurring_interval']}"]
     if live:
         args.append("--live")
     return run_stripe(args)

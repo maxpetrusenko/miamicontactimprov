@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=937a0665">
+<link rel="stylesheet" href="/assets/site.css?v=d515ceb8">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -227,7 +227,7 @@
           "name": "How much does it cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The weekly jam is $20–$50 sliding scale — pay what fits your budget. Special workshops may have a set price, listed on the event page."
+            "text": "A Friday is $20 to $40 online on a sliding scale, $15 when you share it or come for the first time, or $30 to $50 at the door, pay what you can. Special workshops may have a set price, listed on the event page."
           }
         }
       ]
@@ -251,7 +251,7 @@
       <span></span><span></span><span></span>
     </button>
     <nav class="nav" id="primary-nav" aria-label="Primary">
-      <a href="/">Home</a><a href="/events">Events</a><a href="/blog/">Blog</a><a href="/about" aria-current="page">About</a><a href="/contact">Contact</a><a class="follow" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg><span>Follow</span></a>
+      <a href="/">Home</a><a href="/events">Events</a><a href="/ideas">Ideas</a><a href="/blog/">Blog</a><a href="/about" aria-current="page">About</a><a href="/contact">Contact</a><a class="follow" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg><span>Follow</span></a>
     </nav>
   </div>
 </header>
@@ -296,7 +296,7 @@
 
 <p class="mci-label">FAQ</p>
 <div class="mci-accordion">
-  <div class="item"><button class="q" type="button" aria-expanded="false"><span class="qt mci-h">Do I need dance experience?</span><span class="ic">+</span></button><p class="a">No. Most people who come have zero dance background. We start every session with a short class covering the basics of weight-sharing and safe falling.</p></div><div class="item"><button class="q" type="button" aria-expanded="false"><span class="qt mci-h">What should I wear?</span><span class="ic">+</span></button><p class="a">Comfortable clothes you can move in. No shoes &mdash; we dance barefoot or in socks. Avoid zippers, buckles, or jewellery that could catch on a partner.</p></div><div class="item"><button class="q" type="button" aria-expanded="false"><span class="qt mci-h">Is it a partner dance like tango?</span><span class="ic">+</span></button><p class="a">No fixed roles or steps &mdash; contact improv is improvised. You will dance with many different people over a session, and no partner is required to attend.</p></div><div class="item"><button class="q" type="button" aria-expanded="false"><span class="qt mci-h">How much does it cost?</span><span class="ic">+</span></button><p class="a">The weekly jam is $20&ndash;$50 sliding scale &mdash; pay what fits your budget. Special workshops may have a set price, listed on the event page.</p></div>
+  <div class="item"><button class="q" type="button" aria-expanded="false"><span class="qt mci-h">Do I need dance experience?</span><span class="ic">+</span></button><p class="a">No. Most people who come have zero dance background. We start every session with a short class covering the basics of weight-sharing and safe falling.</p></div><div class="item"><button class="q" type="button" aria-expanded="false"><span class="qt mci-h">What should I wear?</span><span class="ic">+</span></button><p class="a">Comfortable clothes you can move in. No shoes &mdash; we dance barefoot or in socks. Avoid zippers, buckles, or jewellery that could catch on a partner.</p></div><div class="item"><button class="q" type="button" aria-expanded="false"><span class="qt mci-h">Is it a partner dance like tango?</span><span class="ic">+</span></button><p class="a">No fixed roles or steps &mdash; contact improv is improvised. You will dance with many different people over a session, and no partner is required to attend.</p></div><div class="item"><button class="q" type="button" aria-expanded="false"><span class="qt mci-h">How much does it cost?</span><span class="ic">+</span></button><p class="a">A Friday is $20 to $40 online on a sliding scale, $15 when you share it or come for the first time, or $30 to $50 at the door, pay what you can. Special workshops may have a set price, listed on the event page.</p></div>
 </div>
 
 <div id="submit" style="margin-top:56px;">
@@ -742,6 +742,7 @@
       if (window.posthog && kind) {
         posthog.capture('checkout_completed', {
           kind: kind,
+          ticket_type: q.get('ticket_type') || 'early',
           amount: amount ? parseInt(amount, 10) : null,
         });
       }

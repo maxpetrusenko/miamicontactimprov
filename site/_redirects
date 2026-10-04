@@ -61,6 +61,12 @@
 /pricing.html  /pricing  301
 /pricing/index.html  /pricing  301
 /pricing/  /pricing  301
+/tickets.html  /tickets  301
+/tickets/index.html  /tickets  301
+/tickets/  /tickets  301
+/ideas.html  /ideas  301
+/ideas/index.html  /ideas  301
+/ideas/  /ideas  301
 /pay.html  /pay  301
 /pay/index.html  /pay  301
 /pay/  /pay  301
@@ -145,3 +151,9 @@
 /contact-improvisation-miami /miami                           301
 /safety                     /safety-and-consent               301
 /teachers                   /directory                        301
+
+# Ambassador links: miamicontactimprov.com/fr/<name> serves /tickets (a 200
+# rewrite, the address bar keeps /fr/<name>) and the page reads <name> from the
+# path. A 302 to /tickets?ref=:name does not work: Pages does not substitute
+# placeholders inside a query string and sends ref=%3Aname.
+/fr/*                       /tickets                          200

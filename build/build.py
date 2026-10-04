@@ -20,6 +20,8 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import content_checkout  # noqa: E402
+import content_tickets  # noqa: E402
+import content_ideas  # noqa: E402
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
 import content_es  # noqa: E402
@@ -82,6 +84,8 @@ PAGES = [
     ("events", "en", content_marketing.events, "0.9", "weekly", None),
     ("contact", "en", content_marketing.contact, "0.6", "monthly", None),
     ("pricing", "en", content_checkout.pricing, "0.8", "monthly", None),
+    ("tickets", "en", content_tickets.tickets, "0.8", "weekly", None),
+    ("ideas", "en", content_ideas.ideas, "0.7", "weekly", None),
     ("pay", "en", content_checkout.pay, "0.1", "yearly", None),
     ("success", "en", content_checkout.success, "0.3", "yearly", None),
     ("blog", "en", content_blog.index, "0.7", "weekly", None),
@@ -251,6 +255,12 @@ REDIRECT_ALIASES = """# Clean-URL safety net. Cloudflare Pages serves /miami.htm
 /contact-improvisation-miami /miami                           301
 /safety                     /safety-and-consent               301
 /teachers                   /directory                        301
+
+# Ambassador links: miamicontactimprov.com/fr/<name> serves /tickets (a 200
+# rewrite, the address bar keeps /fr/<name>) and the page reads <name> from the
+# path. A 302 to /tickets?ref=:name does not work: Pages does not substitute
+# placeholders inside a query string and sends ref=%3Aname.
+/fr/*                       /tickets                          200
 """
 
 
@@ -370,7 +380,7 @@ KEY_FACTS = [
     "Consent in CI is continuous: any dancer may decline, pause or leave at any point.",
     "Miami has no central CI venue or calendar; practice runs through individual organisers, studios and Miami's wider contemporary and somatic dance community.",
     "The global CI World Jam Map at contactimprov.com carries the world's jam listings, including a Florida page.",
-    "Miami Contact Improv hosts a weekly class followed by an open jam every Friday, 7:00 to 9:00 PM, at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, from 2 October 2026. $20 at the door on a $20 to $50 sliding scale; no partner, experience or booking needed.",
+    "Miami Contact Improv hosts a weekly class followed by an open jam every Friday, 7:00 to 9:00 PM, at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009, from 2 October 2026. $20 to $40 online on a sliding scale, $30 to $50 at the door, $15 community or first class; no partner, experience or booking needed.",
 ]
 
 LOCALE_NOTE = (

@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=937a0665">
+<link rel="stylesheet" href="/assets/site.css?v=d515ceb8">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -178,7 +178,7 @@
       <span></span><span></span><span></span>
     </button>
     <nav class="nav" id="primary-nav" aria-label="Primary">
-      <a href="/">Home</a><a href="/events">Events</a><a href="/blog/">Blog</a><a href="/about">About</a><a href="/contact">Contact</a><a class="follow" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg><span>Follow</span></a>
+      <a href="/">Home</a><a href="/events">Events</a><a href="/ideas">Ideas</a><a href="/blog/">Blog</a><a href="/about">About</a><a href="/contact">Contact</a><a class="follow" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg><span>Follow</span></a>
     </nav>
   </div>
 </header>
@@ -251,7 +251,7 @@
 <section class="section">
   <div class="wrap">
     <div class="answer"><div class="label">What arrives by email</div><p>Leave your email and the next class dates arrive, with one video a month and a 20% code for classes over the next two months. After that it is one email a month, and replying to any of them takes you off the list. No partner and no experience are needed for any of it.</p></div>
-    <table class="facts"><tr><th scope="row">What arrives</th><td>The next dates by email, one CI video a month, and a 20% code for classes over the next two months</td></tr><tr><th scope="row">After that</th><td>One email a month, and a reply to any of them takes you off the list</td></tr><tr><th scope="row">Next classes</th><td>Fridays, 7:00&ndash;9:00 PM, from Friday 2 October 2026 to Friday 20 November 2026</td></tr><tr><th scope="row">Where</th><td>Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009</td></tr><tr><th scope="row">Cost</th><td>$20&ndash;$50 sliding scale for each class, paid at the door or booked on Luma</td></tr><tr><th scope="row">Wear</th><td>Clothes you can roll in, water, bare feet or soft socks</td></tr><tr><th scope="row">To start</th><td>No partner and no experience: drop into any of the eight classes</td></tr><tr><th scope="row">Who runs it</th><td>Max Petrusenko, who also maintains this site</td></tr></table>
+    <table class="facts"><tr><th scope="row">What arrives</th><td>The next dates by email, one CI video a month, and a 20% code for classes over the next two months</td></tr><tr><th scope="row">After that</th><td>One email a month, and a reply to any of them takes you off the list</td></tr><tr><th scope="row">Next classes</th><td>Fridays, 7:00&ndash;9:00 PM, from Friday 2 October 2026 to Friday 20 November 2026</td></tr><tr><th scope="row">Where</th><td>Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009</td></tr><tr><th scope="row">Cost</th><td>$20&ndash;$40 online, sliding scale; $30&ndash;$50 at the door; $15 community or first class</td></tr><tr><th scope="row">Wear</th><td>Clothes you can roll in, water, bare feet or soft socks</td></tr><tr><th scope="row">To start</th><td>No partner and no experience: drop into any of the eight classes</td></tr><tr><th scope="row">Who runs it</th><td>Max Petrusenko, who also maintains this site</td></tr></table>
   </div>
 </section>
 
@@ -702,6 +702,7 @@
       if (window.posthog && kind) {
         posthog.capture('checkout_completed', {
           kind: kind,
+          ticket_type: q.get('ticket_type') || 'early',
           amount: amount ? parseInt(amount, 10) : null,
         });
       }

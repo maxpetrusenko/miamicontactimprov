@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=937a0665">
+<link rel="stylesheet" href="/assets/site.css?v=d515ceb8">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -188,7 +188,7 @@
       <span></span><span></span><span></span>
     </button>
     <nav class="nav" id="primary-nav" aria-label="Primary">
-      <a href="/">Home</a><a href="/events">Events</a><a href="/blog/">Blog</a><a href="/about">About</a><a href="/contact">Contact</a><a class="follow" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg><span>Follow</span></a>
+      <a href="/">Home</a><a href="/events">Events</a><a href="/ideas">Ideas</a><a href="/blog/">Blog</a><a href="/about">About</a><a href="/contact">Contact</a><a class="follow" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg><span>Follow</span></a>
     </nav>
   </div>
 </header>
@@ -210,6 +210,7 @@
     </div>
     <table class="facts"><tr><th scope="row">Clothing</th><td>Loose, opaque, covers back, shoulders and knees. No zips, buckles or rough seams</td></tr><tr><th scope="row">Feet</th><td>Bare or soft non-slip socks. No shoes on the floor</td></tr><tr><th scope="row">Water</th><td>A full bottle. The floor is hot and humid in Miami</td></tr><tr><th scope="row">Towel</th><td>One. You will need it</td></tr><tr><th scope="row">Jewellery</th><td>Leave it off. Rings, watches and necklaces catch and cut</td></tr><tr><th scope="row">Phone</th><td>Silenced, face down, off the floor or at the edge</td></tr></table>
     <div class="prose">
+      <p class="idea-next"><strong>What should we host next?</strong> Acro, live music, a beach jam, a parents class with kids care. <a href="/ideas">Add your vote</a>.</p>
       <p>First time? <a href="/your-first-jam">Your first jam, step by step</a> walks through arriving, the opening circle and what the first ten minutes look like. Questions before Friday: <a href="mailto:hello@miamicontactimprov.com">hello@miamicontactimprov.com</a>.</p>
     </div>
   </div>
@@ -649,6 +650,7 @@
       if (window.posthog && kind) {
         posthog.capture('checkout_completed', {
           kind: kind,
+          ticket_type: q.get('ticket_type') || 'early',
           amount: amount ? parseInt(amount, 10) : null,
         });
       }
