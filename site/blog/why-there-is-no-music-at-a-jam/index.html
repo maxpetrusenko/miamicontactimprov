@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=38bbe783">
+<link rel="stylesheet" href="/assets/site.css?v=2cea6bcc">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -190,7 +190,24 @@
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://miamicontactimprov.com/blog/#posts"
-      }
+      },
+      "articleSection": "Contact Improvisation",
+      "wordCount": 382,
+      "about": {
+        "@type": "Thing",
+        "name": "Contact improvisation",
+        "sameAs": "https://en.wikipedia.org/wiki/Contact_improvisation"
+      },
+      "spatialCoverage": {
+        "@type": "City",
+        "name": "Miami",
+        "containedInPlace": {
+          "@type": "State",
+          "name": "Florida"
+        }
+      },
+      "keywords": "contact improvisation, contact improv Miami",
+      "abstract": "Most contact improv jams have no music because sound covers the small cues the dance depends on, such as breath and shifts in weight, and a beat organises movement for you instead of letting partners find their own timing. It is a common default, not a rule."
     }
   ]
 }
@@ -218,8 +235,9 @@
 <main id="main">
 
 <div class="mci-view">
-<p class="mci-eyebrow"><a href="/blog/" style="color:inherit;">Blog</a> &middot; 4 min read</p>
+<p class="mci-eyebrow"><a href="/blog/" style="color:inherit;">Blog</a> &middot; Sep 20, 2026 &middot; 4 min read</p>
 <h1 class="mci-h">WHY THERE IS (USUALLY) NO MUSIC AT A JAM</h1>
+<div class="answer"><div class="label">Short answer</div><p>Most contact improv jams have no music because sound covers the small cues the dance depends on, such as breath and shifts in weight, and a beat organises movement for you instead of letting partners find their own timing. It is a common default, not a rule.</p></div>
 <div class="prose">
 <p>The first thing many people notice at a jam is the quiet. No playlist, no beat to move to, sometimes no sound at all beyond breathing and the occasional thud of a body meeting the floor. It reads as awkward for about a quarter of an hour. Then it reads as the point.</p>
 <h2>Music covers the information the dance runs on</h2>
@@ -586,8 +604,16 @@
       try {
         if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
       } catch (e) {}
+      // Loading state lives on the button itself (spinner over the label, width
+      // unchanged); data-sending is read out to screen readers instead of shown.
+      var setLoading = function (on) {
+        btn.classList.toggle('is-loading', on);
+        if (on) { btn.setAttribute('aria-busy', 'true'); btn.setAttribute('aria-label', btn.getAttribute('data-sending') || ''); }
+        else { btn.removeAttribute('aria-busy'); btn.removeAttribute('aria-label'); }
+      };
       btn.disabled = true;
-      say(btn.getAttribute('data-sending') || '');
+      say('');
+      setLoading(true);
       fetch(btn.getAttribute('data-endpoint'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -619,14 +645,25 @@
             status.appendChild(msg);
             status.appendChild(link);
           }
+          setLoading(false);
           return; // sale's closed: the button stays disabled, the message explains why
         }
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       }).catch(function () {
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       });
+    });
+  });
+  // Back from Stripe via the browser's back button restores the page from bfcache
+  // with the button still spinning; reset it.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    document.querySelectorAll('.buy-button .btn.is-loading').forEach(function (b) {
+      b.classList.remove('is-loading'); b.removeAttribute('aria-busy'); b.removeAttribute('aria-label'); b.disabled = false;
     });
   });
 

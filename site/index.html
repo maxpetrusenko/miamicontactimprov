@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=38bbe783">
+<link rel="stylesheet" href="/assets/site.css?v=2cea6bcc">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -273,7 +273,7 @@
       <a class="btn secondary" href="/events">See upcoming jams &nbsp;&rarr;</a>
       <a class="btn secondary" href="https://instagram.com/miamicontactimprov" target="_blank" rel="noopener">@miamicontactimprov</a>
     </div>
-    <p class="rise" style="--d:.95s"><a class="mci-pricing-link" href="/pricing">See all pricing &rarr;</a></p>
+    <p class="mci-price-hint rise" style="--d:.95s"><span class="save">Book online &amp; save</span><span><strong>$20 online</strong> &middot; $30&ndash;$50 at the door</span><a class="mci-pricing-link" href="/pricing">All pricing &rarr;</a></p>
   </div>
   <a class="scroll-cue" href="#mci-when" aria-label="Scroll to details"><span class="line"></span><span class="txt">Scroll</span></a>
 </section>
@@ -303,7 +303,7 @@
   <div class="mci-cards">
     <div class="mci-mini"><p class="t mci-h">7:00 &middot; CLASS</p><p>Guided warm-up and skills &mdash; rolling, weight-sharing, safe falling.</p></div>
     <div class="mci-mini"><p class="t mci-h">7:45 &middot; OPEN JAM</p><p>Free-form dancing. Join in, sit out, watch &mdash; everything is welcome.</p></div>
-    <div class="mci-mini"><p class="t mci-h">$20 &ndash; $50</p><p>Sliding scale &mdash; pay what fits. Bring comfy clothes, no shoes needed.</p></div>
+    <div class="mci-mini"><p class="t mci-h">$20 ONLINE</p><p>Or $30&ndash;$50 at the door, pay what you can &mdash; booking ahead saves you $10 or more. <a href="/pricing">See pricing</a></p></div>
   </div>
   <div class="mci-actions">
     <a class="mci-textlink" href="https://www.youtube.com/watch?v=q4wUEiHowSU" target="_blank" rel="noopener">&#9654; Watch: what is contact improv</a>
@@ -686,8 +686,16 @@
       try {
         if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
       } catch (e) {}
+      // Loading state lives on the button itself (spinner over the label, width
+      // unchanged); data-sending is read out to screen readers instead of shown.
+      var setLoading = function (on) {
+        btn.classList.toggle('is-loading', on);
+        if (on) { btn.setAttribute('aria-busy', 'true'); btn.setAttribute('aria-label', btn.getAttribute('data-sending') || ''); }
+        else { btn.removeAttribute('aria-busy'); btn.removeAttribute('aria-label'); }
+      };
       btn.disabled = true;
-      say(btn.getAttribute('data-sending') || '');
+      say('');
+      setLoading(true);
       fetch(btn.getAttribute('data-endpoint'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -719,14 +727,25 @@
             status.appendChild(msg);
             status.appendChild(link);
           }
+          setLoading(false);
           return; // sale's closed: the button stays disabled, the message explains why
         }
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       }).catch(function () {
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       });
+    });
+  });
+  // Back from Stripe via the browser's back button restores the page from bfcache
+  // with the button still spinning; reset it.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    document.querySelectorAll('.buy-button .btn.is-loading').forEach(function (b) {
+      b.classList.remove('is-loading'); b.removeAttribute('aria-busy'); b.removeAttribute('aria-label'); b.disabled = false;
     });
   });
 

@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=38bbe783">
+<link rel="stylesheet" href="/assets/site.css?v=2cea6bcc">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -190,7 +190,24 @@
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://miamicontactimprov.com/blog/#posts"
-      }
+      },
+      "articleSection": "Contact Improvisation",
+      "wordCount": 455,
+      "about": {
+        "@type": "Thing",
+        "name": "Contact improvisation",
+        "sameAs": "https://en.wikipedia.org/wiki/Contact_improvisation"
+      },
+      "spatialCoverage": {
+        "@type": "City",
+        "name": "Miami",
+        "containedInPlace": {
+          "@type": "State",
+          "name": "Florida"
+        }
+      },
+      "keywords": "contact improvisation, contact improv Miami",
+      "abstract": "Consent in contact improvisation is continuous and can be withdrawn at any moment: agreeing to one movement is not agreeing to the next. Boundaries are mostly communicated physically, leaving a dance is never rude, and a good jam states its ground rules aloud and names someone to talk to if something feels wrong."
     }
   ]
 }
@@ -218,8 +235,9 @@
 <main id="main">
 
 <div class="mci-view">
-<p class="mci-eyebrow"><a href="/blog/" style="color:inherit;">Blog</a> &middot; 5 min read</p>
+<p class="mci-eyebrow"><a href="/blog/" style="color:inherit;">Blog</a> &middot; Sep 20, 2026 &middot; 5 min read</p>
 <h1 class="mci-h">DANCING WITH STRANGERS: CONSENT AND SAYING NO MID-DANCE</h1>
+<div class="answer"><div class="label">Short answer</div><p>Consent in contact improvisation is continuous and can be withdrawn at any moment: agreeing to one movement is not agreeing to the next. Boundaries are mostly communicated physically, leaving a dance is never rude, and a good jam states its ground rules aloud and names someone to talk to if something feels wrong.</p></div>
 <div class="prose">
 <p>Contact Improvisation is a form in which touch is the medium, and it happens mostly between people who have never met. That combination is why the form takes consent more seriously, and more practically, than almost any other movement practice. The short version: you can stop any dance at any moment for any reason, and the dance continues without you. The longer version is worth reading before you go.</p>
 <h2>Consent here is continuous, not a checkbox</h2>
@@ -587,8 +605,16 @@
       try {
         if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
       } catch (e) {}
+      // Loading state lives on the button itself (spinner over the label, width
+      // unchanged); data-sending is read out to screen readers instead of shown.
+      var setLoading = function (on) {
+        btn.classList.toggle('is-loading', on);
+        if (on) { btn.setAttribute('aria-busy', 'true'); btn.setAttribute('aria-label', btn.getAttribute('data-sending') || ''); }
+        else { btn.removeAttribute('aria-busy'); btn.removeAttribute('aria-label'); }
+      };
       btn.disabled = true;
-      say(btn.getAttribute('data-sending') || '');
+      say('');
+      setLoading(true);
       fetch(btn.getAttribute('data-endpoint'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -620,14 +646,25 @@
             status.appendChild(msg);
             status.appendChild(link);
           }
+          setLoading(false);
           return; // sale's closed: the button stays disabled, the message explains why
         }
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       }).catch(function () {
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       });
+    });
+  });
+  // Back from Stripe via the browser's back button restores the page from bfcache
+  // with the button still spinning; reset it.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    document.querySelectorAll('.buy-button .btn.is-loading').forEach(function (b) {
+      b.classList.remove('is-loading'); b.removeAttribute('aria-busy'); b.removeAttribute('aria-label'); b.disabled = false;
     });
   });
 

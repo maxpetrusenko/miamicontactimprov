@@ -6,14 +6,141 @@ them. Add an article by appending to ARTICLES; build/locales.py and build/build.
 carry a row per slug so it gets a canonical, a sitemap entry and a redirect rule.
 """
 
+import datetime
+import re
+
 import schema
-from shell import band, cite_block, page
+from shell import answer, band, cite_block, page
 
 BLOG_ROUTE = "/blog/"
 PUBLISHED = "2026-09-20"
+# Articles published after the first batch carry their own date; the rest use PUBLISHED.
+DATES = {
+    "blog-miami-class": "2026-10-06",
+    "blog-levels": "2026-10-06",
+    "blog-small-dance": "2026-10-05",
+    "blog-solo-practice": "2026-10-04",
+}
+
+
+# A one-paragraph answer shown at the top of each article and used as the BlogPosting
+# abstract: self-contained, so a search or AI answer can quote it without the page.
+ANSWERS = {
+    "blog-miami-class": "The Friday contact improv class in Miami meets at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, every Friday from 7:00 to 9:00 PM: a 45-minute guided class, then an open jam. A class is $20 booked online or $30 to $50 pay-what-you-can at the door. No partner or dance experience needed.",
+    "blog-levels": "Contact improvisation moves between three levels: the floor, a middle level of kneeling and crouching, and standing. Classes start on the floor because it teaches how to give weight safely, and the core skill is travelling smoothly between levels by spiralling and rolling rather than pushing or dropping.",
+    "blog-small-dance": "The small dance is a contact improvisation exercise in which you stand still and notice the tiny, constant reflexes that keep you balanced. It trains the sensitivity dancers use to feel a partner's weight through the point of contact, and it takes two or three minutes with no equipment.",
+    "blog-solo-practice": "You can practise contact improvisation without a partner. Five solo exercises cover the core skills: rolling on the floor, going down and coming up without hands, the small dance, giving real weight to a wall, and rolling the spine. A few minutes a day makes the next jam noticeably easier.",
+    "blog-first-jam": "At a first contact improv jam it helps to know five things: sitting out at the edge counts as taking part, nobody is watching you, the slow and quiet start is normal, you can leave any dance at any moment without a reason, and you will be physically closer to strangers than at a party.",
+    "blog-weight-sharing": "Weight-sharing is the core skill of contact improvisation: one dancer gives part of their weight, the other receives it through the skeleton rather than the arms, and the point of contact rolls between bodies. The common beginner mistake is using muscle; the fix is to go lower, slower and closer to the floor.",
+    "blog-falling": "In contact improvisation, falling safely is a skill: lower your centre so the fall is short, roll instead of stopping so the force spreads, breathe out on the way down, keep your feet available, and use spotters who stand ready to slow a fall that goes wrong.",
+    "blog-consent": "Consent in contact improvisation is continuous and can be withdrawn at any moment: agreeing to one movement is not agreeing to the next. Boundaries are mostly communicated physically, leaving a dance is never rude, and a good jam states its ground rules aloud and names someone to talk to if something feels wrong.",
+    "blog-no-music": "Most contact improv jams have no music because sound covers the small cues the dance depends on, such as breath and shifts in weight, and a beat organises movement for you instead of letting partners find their own timing. It is a common default, not a rule.",
+}
+
+KEYWORDS = {
+    "blog-miami-class": ["contact improv Miami", "contact improvisation class Miami", "dance class Hallandale Beach", "Friday jam Miami", "Inner Motion Dance Studio"],
+    "blog-levels": ["contact improvisation levels", "floor work", "contact improv technique", "contact improv Miami"],
+    "blog-small-dance": ["small dance", "standing meditation dance", "contact improvisation exercise", "contact improv Miami"],
+    "blog-solo-practice": ["contact improv solo practice", "contact improvisation exercises", "rolling", "contact improv Miami"],
+}
+
+
+def _date(slug):
+    return DATES.get(slug, PUBLISHED)
+
+
+def _date_label(slug):
+    d = datetime.date.fromisoformat(_date(slug))
+    return f"{d.strftime('%b')} {d.day}, {d.year}"
 
 # slug, route, title, h1, description, read minutes, body html
 ARTICLES = [
+    (
+        "blog-miami-class",
+        "/blog/contact-improv-class-miami-what-to-expect",
+        "Contact Improv Class in Miami: What to Expect on Friday",
+        "Contact improv in Miami: what to expect on a Friday",
+        "A newcomer's guide to the Friday contact improv class and jam in Miami at Inner Motion Dance Studio, Hallandale Beach: schedule, online vs door prices, how to book.",
+        5,
+        """
+<p>If you have searched for a contact improv class in Miami, you have probably found a handful of listings and very little about what actually happens when you walk in. This is the plain version for the Friday class and open jam that this site runs, written for someone who has never done Contact Improvisation before.</p>
+<h2>Where it is</h2>
+<p>The class meets at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009. That is the north edge of Miami: just past Aventura on US-1, east of Federal Highway and north of Hallandale Beach Boulevard. From downtown Miami it is the first city over the Broward county line; from Fort Lauderdale it is south of Hollywood. Directions and the rest of the logistics are on the <a href="/friday-jam">Friday jam page</a>.</p>
+<h2>How the evening runs</h2>
+<p>Every Friday from 7:00 to 9:00 PM. The first 45 minutes are a guided class: a warm-up from the floor and standing, the basics of giving and receiving weight, and how to roll out of a fall. Each week has a theme; this week's is moving through levels, from the floor to standing, which is covered in <a href="/blog/floor-to-standing-dancing-through-levels">floor to standing</a>. From 7:45 the room opens into a jam: free dancing, usually without music, where you can join a dance, dance alone, or sit at the edge and watch. Everything is optional, and the evening starts with a short circle where the ground rules are said out loud.</p>
+<h2>What it costs</h2>
+<p>A class is <strong>$20 when you book online</strong>. At the door it is <strong>$30 to $50, pay what you can</strong>, so booking ahead saves you at least $10. Online sales close two hours before class; after that the door price applies. Nobody is turned away from a first class over money. The full breakdown is on the <a href="/pricing">pricing page</a>.</p>
+<h2>How to book</h2>
+<p>You can buy a ticket on this site, register on Luma or Eventbrite, or book with ClassPass credits. All of them are linked from the <a href="/events">events page</a>. You do not need to bring a partner, and you do not need any dance experience.</p>
+<h2>What to bring</h2>
+<p>Clothes you can roll on the floor in, with long sleeves and long legs if you can, since you will be in contact with the floor and with other people. No shoes on the dance floor; bare feet or socks. Leave off jewellery, zips and buckles that could catch a partner. Bring water. That is it.</p>
+<h2>If you are nervous</h2>
+<p>Most people are, the first time. Sitting out is participation, nobody is watching you, and you can leave any dance at any moment without a reason. Those three ideas are explained in <a href="/blog/five-things-before-your-first-jam">five things nobody tells you before your first jam</a>, and the full ground rules are on <a href="/safety-and-consent">safety and consent</a>. The class is taught in English, and Spanish speakers are welcome.</p>
+""",
+    ),
+    (
+        "blog-levels",
+        "/blog/floor-to-standing-dancing-through-levels",
+        "Floor to Standing: Dancing Through Levels in Contact Improv",
+        "Floor to standing: dancing through levels",
+        "Contact improv moves between the floor, a middle level and standing. Why the floor comes first, how dancers travel between levels, and what changes at each height.",
+        5,
+        """
+<p>Watch a jam for ten minutes and you will see bodies at every height: two people rolling across the floor, a pair crouched low and folding over each other, a dancer briefly resting across someone's shoulders. That range is not decoration. Moving between levels, from the floor to standing and back, is one of the foundations of Contact Improvisation, and it is where a lot of the form's ease comes from.</p>
+<h2>Why the floor comes first</h2>
+<p>Most classes start on the ground, and not because it is gentle. The floor is the most reliable partner in the room. It takes all of your weight, all of the time, without negotiation. Rolling, sliding and spiralling on it teach you what giving weight actually feels like before you try giving it to a person. They also teach you that the floor is not somewhere you fall to but somewhere you can arrive, which changes how you dance everywhere above it.</p>
+<h2>The middle level is where most of the dance happens</h2>
+<p>Between lying down and standing is a wide band of positions: kneeling, crouching, on hands and knees, sitting back on the heels. Beginners tend to skip it, going straight from the floor to standing tall. Experienced dancers live there. A low centre makes you stable, keeps falls short, and puts your hips close to a partner's hips, which is where weight is easiest to share. Many of the lifts that look spectacular from the edge of the room start at this level with very little effort.</p>
+<h2>Travelling between levels is the skill</h2>
+<p>The interesting part is not any single height but the journey between them. Rising from the floor by spiralling up through the hips rather than pushing up with the arms. Coming down from standing by folding and rolling rather than dropping. Using a partner's back as a temporary floor on the way up, and letting them become the floor on your way down. When these transitions are smooth, the dance never has to stop and restart; it just changes altitude.</p>
+<h2>What changes at each height</h2>
+<p>On the floor, you have the most contact and the least momentum, so the dance is about listening and slow weight. At the middle level, you have stability and leverage, so the dance is about sharing weight and small lifts. Standing, you have speed and space, so the dance is about momentum and catching it. None of these is more advanced than the others. A good dance usually visits all three.</p>
+<h2>Try it this week</h2>
+<p>Next time you dance, notice which level you default to and spend five minutes deliberately somewhere else. If you always stand, stay low. If you always end up on the floor, practise the way up. The tools for both are in the <a href="/glossary">glossary</a>, falling safely between levels is covered in <a href="/blog/how-to-fall-without-getting-hurt">how to fall without getting hurt</a>, and the room to practise it in is the <a href="/friday-jam">Friday jam</a>.</p>
+""",
+    ),
+    (
+        "blog-small-dance",
+        "/blog/the-small-dance-standing-still",
+        "The Small Dance: What Standing Still Teaches You",
+        "The small dance: what standing still teaches you",
+        "The small dance is a contact improv exercise in standing still and noticing the constant tiny adjustments that keep you upright. What it is, how to do it, and why it matters.",
+        4,
+        """
+<p>One of the oldest exercises in Contact Improvisation involves almost no visible movement at all. You stand, eyes soft or closed, and pay attention to what your body is doing to keep you upright. It is usually called the small dance, and it has been part of how the form is taught since its early years. It looks like nothing. It is one of the most useful things you can practise.</p>
+<h2>Standing is not still</h2>
+<p>Stand quietly for a minute and you will notice that you are never completely still. Your weight drifts slightly forward, then your ankles catch it. It shifts to one side and something in your hips adjusts. These corrections are tiny and constant, and they happen without you deciding anything. The small dance is the practice of noticing them: the reflexes that keep you balanced, running underneath your attention all the time.</p>
+<h2>Why it matters in a duet</h2>
+<p>When two people share weight, those same small reflexes are what make the dance work. A partner leaning on you is constantly adjusting, and so are you. If you can feel your own small dance, you can start to feel theirs through the point of contact: the moment they commit their weight, the moment they are about to move. That sensitivity is what lets a dance change direction without anyone leading it.</p>
+<h2>How to do it</h2>
+<p>Stand with your feet under your hips, knees soft, arms hanging. Let your eyes close or rest on the floor. Do not try to stand straight; let your skeleton hold you up rather than your muscles. Then simply notice. Where is your weight right now? What moved to catch it? Stay for two or three minutes. If your mind wanders, return to the soles of your feet. That is the whole exercise.</p>
+<h2>Using it in a jam</h2>
+<p>The small dance is a good way to arrive. Before you start dancing with anyone, spend a minute standing at the edge of the room and let your attention drop into your own balance. It also makes a gentle entry into a duet: stand back to back with a partner and do the small dance together, noticing how two sets of adjustments start to talk to each other. Often a dance grows out of that without either of you starting it.</p>
+<p>For more ways to practise on your own between sessions, see <a href="/keep-practising">keep practising</a>. Where the exercise and the form came from is on the <a href="/history">history page</a>.</p>
+""",
+    ),
+    (
+        "blog-solo-practice",
+        "/blog/solo-practice-between-jams",
+        "Five Solo Exercises to Practise Between Contact Improv Jams",
+        "Five things to practise on your own between jams",
+        "You do not need a partner to get better at contact improv. Five short solo exercises for rolling, falling, the spine and balance that make your next jam easier.",
+        5,
+        """
+<p>Contact Improvisation is a partner form, so it is easy to assume you can only practise it with a partner. In fact most of the skills that make a duet feel easy, the soft landings, the rolling spine, the trust in the floor, are solo skills. A few minutes a day on your own makes a noticeable difference by the next jam. None of these need more than a clear patch of floor.</p>
+<h2>1. Rolling on the floor</h2>
+<p>Lie down and roll slowly across the room, letting each part of your back meet the floor in turn. Do not push with your arms; let your head, then your shoulders, then your hips lead the turn. The goal is to feel the floor as something that receives you rather than something you bump into. It is the same quality you want when a partner receives your weight.</p>
+<h2>2. Going down and coming up</h2>
+<p>From standing, lower yourself to the floor as smoothly as you can, then come back up, without using your hands as props. Try spiralling: folding at the knees and hips and turning as you go, so you arrive on the side of a hip rather than on your knees. Repeat it ten times, slower each time. This is the solo version of moving through levels, and it is how you learn to fall without stopping.</p>
+<h2>3. The small dance</h2>
+<p>Stand still for two minutes and notice the constant small adjustments that keep you upright. It trains the sensitivity you use to feel a partner's weight. There is a longer description in <a href="/blog/the-small-dance-standing-still">the small dance</a>.</p>
+<h2>4. A wall as a partner</h2>
+<p>Lean your back, then your side, then your shoulder against a wall and practise giving it real weight, enough that you would have to move if it disappeared. Then roll your point of contact along it, from shoulder blade to hip, without losing the connection. A wall is a very patient partner, and it is honest: you can feel straight away whether you are really giving weight or just leaning.</p>
+<h2>5. Rolling the spine</h2>
+<p>Standing, let your head drop forward and roll down through your spine, one vertebra at a time, until you are hanging forward with soft knees. Then roll back up the same way. Lifts and weight-sharing ask the spine to curve and support at the same time, and this keeps it supple and familiar. Do it slowly and breathe out on the way down.</p>
+<p>If any of these feels strange, that is normal; most of them feel strange the first week. More practice ideas are on <a href="/keep-practising">keep practising</a>, the mechanics behind them are in <a href="/blog/weight-sharing-explained">weight-sharing, explained</a>, and the place to try them with other people is the <a href="/friday-jam">Friday jam</a>.</p>
+""",
+    ),
     (
         "blog-first-jam",
         "/blog/five-things-before-your-first-jam",
@@ -129,7 +256,7 @@ def _article_map():
 
 def index():
     cards = "".join(
-        f'<a class="card" href="{route}"><span class="tag">{mins} min read</span>'
+        f'<a class="card" href="{route}"><span class="tag">{_date_label(slug)} &middot; {mins} min read</span>'
         f"<h3>{h1}</h3><p>{desc}</p></a>"
         for slug, route, title, h1, desc, mins, body in ARTICLES
     )
@@ -137,7 +264,7 @@ def index():
 <div class="mci-view">
 <p class="mci-eyebrow">Blog</p>
 <h1 class="mci-h">NOTES FROM THE FLOOR</h1>
-<p style="font-size:17px;line-height:1.75;color:var(--body);max-width:700px;margin:0 0 34px;">Short, practical pieces about Contact Improvisation: what a jam is actually like, how the weight-sharing works, how to fall, and how the room stays safe. Written for this site, for people who are new to it.</p>
+<p style="font-size:17px;line-height:1.75;color:var(--body);max-width:700px;margin:0 0 34px;">Short, practical pieces about Contact Improvisation in Miami: what the Friday class is like, how weight-sharing works, how to fall, what to practise at home, and how the room stays safe. Written for this site, for people who are new to it.</p>
 <div class="grid">{cards}</div>
 {band("Reading is the easy part", "The form makes sense in a room, about ten minutes in. Come to the Friday jam and find out.", [("See upcoming jams", "/events", "primary"), ("Your first jam, step by step", "/your-first-jam", "secondary")])}
 </div>
@@ -170,8 +297,9 @@ def _article(slug):
     _s, route, title, h1, desc, mins, body_html = _article_map()[slug]
     body = f"""
 <div class="mci-view">
-<p class="mci-eyebrow"><a href="{BLOG_ROUTE}" style="color:inherit;">Blog</a> &middot; {mins} min read</p>
+<p class="mci-eyebrow"><a href="{BLOG_ROUTE}" style="color:inherit;">Blog</a> &middot; {_date_label(slug)} &middot; {mins} min read</p>
 <h1 class="mci-h">{h1.upper()}</h1>
+{answer(ANSWERS[slug]) if slug in ANSWERS else ""}
 <div class="prose">{body_html}</div>
 {band("New here? Come as you are.", "A short class, then an open jam. All levels, no partner needed.", [("See upcoming jams", "/events", "primary"), ("More from the blog", BLOG_ROUTE, "secondary")])}
 {cite_block(f"Miami Contact Improv (2026). <em>{h1}</em>. miamicontactimprov.com. https://miamicontactimprov.com{route}")}
@@ -181,7 +309,7 @@ def _article(slug):
     jsonld = schema.render(
         schema.organisation(),
         schema.website(),
-        schema.webpage(route, title, desc, date_modified=PUBLISHED),
+        schema.webpage(route, title, desc, date_modified=_date(slug)),
         schema.breadcrumb(route, h1),
         {
             "@type": "BlogPosting",
@@ -190,13 +318,21 @@ def _article(slug):
             "description": desc,
             "url": url,
             "mainEntityOfPage": {"@id": url + "#page"},
-            "datePublished": PUBLISHED,
-            "dateModified": PUBLISHED,
+            "datePublished": _date(slug),
+            "dateModified": _date(slug),
             "author": {"@id": schema.ORG_ID},
             "publisher": {"@id": schema.ORG_ID},
             "image": schema.OG_IMAGE,
             "inLanguage": "en-US",
             "isPartOf": {"@id": schema.SITE + BLOG_ROUTE + "#posts"},
+            "articleSection": "Contact Improvisation",
+            "wordCount": len(re.sub(r"<[^>]+>", " ", body_html).split()),
+            "about": {"@type": "Thing", "name": "Contact improvisation",
+                      "sameAs": "https://en.wikipedia.org/wiki/Contact_improvisation"},
+            "spatialCoverage": {"@type": "City", "name": "Miami",
+                                "containedInPlace": {"@type": "State", "name": "Florida"}},
+            "keywords": ", ".join(KEYWORDS.get(slug, ["contact improvisation", "contact improv Miami"])),
+            **({"abstract": re.sub(r"<[^>]+>", "", ANSWERS[slug])} if slug in ANSWERS else {}),
         },
     )
     return page(title, desc, route, body, jsonld=jsonld, og_type="article")
@@ -220,3 +356,19 @@ def consent():
 
 def no_music():
     return _article("blog-no-music")
+
+
+def levels():
+    return _article("blog-levels")
+
+
+def small_dance():
+    return _article("blog-small-dance")
+
+
+def solo_practice():
+    return _article("blog-solo-practice")
+
+
+def miami_class():
+    return _article("blog-miami-class")

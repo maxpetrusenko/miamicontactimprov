@@ -146,7 +146,7 @@ def home():
       <a class="btn secondary" href="/events">See upcoming jams &nbsp;&rarr;</a>
       <a class="btn secondary" href="{IG}" target="_blank" rel="noopener">@miamicontactimprov</a>
     </div>
-    <p class="rise" style="--d:.95s"><a class="mci-pricing-link" href="/pricing">See all pricing &rarr;</a></p>
+    <p class="mci-price-hint rise" style="--d:.95s"><span class="save">Book online &amp; save</span><span><strong>$20 online</strong> &middot; $30&ndash;$50 at the door</span><a class="mci-pricing-link" href="/pricing">All pricing &rarr;</a></p>
   </div>
   <a class="scroll-cue" href="#mci-when" aria-label="Scroll to details"><span class="line"></span><span class="txt">Scroll</span></a>
 </section>
@@ -176,7 +176,7 @@ def home():
   <div class="mci-cards">
     <div class="mci-mini"><p class="t mci-h">7:00 &middot; CLASS</p><p>Guided warm-up and skills &mdash; rolling, weight-sharing, safe falling.</p></div>
     <div class="mci-mini"><p class="t mci-h">7:45 &middot; OPEN JAM</p><p>Free-form dancing. Join in, sit out, watch &mdash; everything is welcome.</p></div>
-    <div class="mci-mini"><p class="t mci-h">$20 &ndash; $50</p><p>Sliding scale &mdash; pay what fits. Bring comfy clothes, no shoes needed.</p></div>
+    <div class="mci-mini"><p class="t mci-h">$20 ONLINE</p><p>Or $30&ndash;$50 at the door, pay what you can &mdash; booking ahead saves you $10 or more. <a href="/pricing">See pricing</a></p></div>
   </div>
   <div class="mci-actions">
     <a class="mci-textlink" href="https://www.youtube.com/watch?v=q4wUEiHowSU" target="_blank" rel="noopener">&#9654; Watch: what is contact improv</a>
@@ -240,7 +240,7 @@ def events():
     <p class="label mci-h">WEEKLY JAM</p>
     <p>Every Friday from Oct 2, 2026 &middot; 7:00&ndash;9:00 PM<br>Class 7:00&ndash;7:45, Open Jam 7:45&ndash;9:00<br>Inner Motion Dance Studio &middot; 216 NE 1st Ave, Hallandale Beach<br><a href="/friday-jam" style="color:var(--peach);text-decoration:underline;">Full details &rarr;</a> &nbsp;&middot;&nbsp; <a href="{LUMA}" target="_blank" rel="noopener" style="color:var(--peach);text-decoration:underline;">RSVP on Luma &rarr;</a></p>
   </div>
-  <span class="price">$20 &ndash; $50 sliding scale</span>
+  <span class="price-stack"><span class="price">$20 online</span><span class="price-door">$30&ndash;$50 at the door</span></span>
 </div>
 
 <p class="mci-label">Book a class</p>
@@ -319,7 +319,7 @@ ABOUT_FAQ = [
     ("Is it a partner dance like tango?",
      "No fixed roles or steps &mdash; contact improv is improvised. You will dance with many different people over a session, and no partner is required to attend."),
     ("How much does it cost?",
-     "The weekly jam is $20&ndash;$50 sliding scale &mdash; pay what fits your budget. Special workshops may have a set price, listed on the event page."),
+     "A class is $20 when you book online, or $30&ndash;$50 pay-what-you-can at the door, so booking ahead saves you at least $10. Online sales close two hours before class. Special workshops may have a set price, listed on the event page."),
 ]
 
 

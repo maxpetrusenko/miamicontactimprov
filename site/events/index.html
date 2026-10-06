@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=38bbe783">
+<link rel="stylesheet" href="/assets/site.css?v=2cea6bcc">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -264,7 +264,7 @@
     <p class="label mci-h">WEEKLY JAM</p>
     <p>Every Friday from Oct 2, 2026 &middot; 7:00&ndash;9:00 PM<br>Class 7:00&ndash;7:45, Open Jam 7:45&ndash;9:00<br>Inner Motion Dance Studio &middot; 216 NE 1st Ave, Hallandale Beach<br><a href="/friday-jam" style="color:var(--peach);text-decoration:underline;">Full details &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://luma.com/cbzvq6pj" target="_blank" rel="noopener" style="color:var(--peach);text-decoration:underline;">RSVP on Luma &rarr;</a></p>
   </div>
-  <span class="price">$20 &ndash; $50 sliding scale</span>
+  <span class="price-stack"><span class="price">$20 online</span><span class="price-door">$30&ndash;$50 at the door</span></span>
 </div>
 
 <p class="mci-label">Book a class</p>
@@ -669,8 +669,16 @@
       try {
         if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
       } catch (e) {}
+      // Loading state lives on the button itself (spinner over the label, width
+      // unchanged); data-sending is read out to screen readers instead of shown.
+      var setLoading = function (on) {
+        btn.classList.toggle('is-loading', on);
+        if (on) { btn.setAttribute('aria-busy', 'true'); btn.setAttribute('aria-label', btn.getAttribute('data-sending') || ''); }
+        else { btn.removeAttribute('aria-busy'); btn.removeAttribute('aria-label'); }
+      };
       btn.disabled = true;
-      say(btn.getAttribute('data-sending') || '');
+      say('');
+      setLoading(true);
       fetch(btn.getAttribute('data-endpoint'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -702,14 +710,25 @@
             status.appendChild(msg);
             status.appendChild(link);
           }
+          setLoading(false);
           return; // sale's closed: the button stays disabled, the message explains why
         }
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       }).catch(function () {
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       });
+    });
+  });
+  // Back from Stripe via the browser's back button restores the page from bfcache
+  // with the button still spinning; reset it.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    document.querySelectorAll('.buy-button .btn.is-loading').forEach(function (b) {
+      b.classList.remove('is-loading'); b.removeAttribute('aria-busy'); b.removeAttribute('aria-label'); b.disabled = false;
     });
   });
 

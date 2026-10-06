@@ -77,6 +77,10 @@ ROUTES = {
     "blog-falling": {"en": "/blog/how-to-fall-without-getting-hurt"},
     "blog-consent": {"en": "/blog/consent-and-saying-no-mid-dance"},
     "blog-no-music": {"en": "/blog/why-there-is-no-music-at-a-jam"},
+    "blog-miami-class": {"en": "/blog/contact-improv-class-miami-what-to-expect"},
+    "blog-levels": {"en": "/blog/floor-to-standing-dancing-through-levels"},
+    "blog-small-dance": {"en": "/blog/the-small-dance-standing-still"},
+    "blog-solo-practice": {"en": "/blog/solo-practice-between-jams"},
 }
 
 # The order the pages are written, ranked and listed in llms.txt. Purely presentational.
@@ -84,7 +88,8 @@ ORDER = [
     ("home", "en"), ("home", "es"),
     ("start", "en"), ("start", "es"),
     ("events", "en"), ("contact", "en"),
-    ("blog", "en"), ("blog-first-jam", "en"), ("blog-weight-sharing", "en"),
+    ("blog", "en"), ("blog-miami-class", "en"), ("blog-levels", "en"), ("blog-small-dance", "en"), ("blog-solo-practice", "en"),
+    ("blog-first-jam", "en"), ("blog-weight-sharing", "en"),
     ("blog-falling", "en"), ("blog-consent", "en"), ("blog-no-music", "en"),
     ("what-is-contact-improvisation", "en"), ("what-is-contact-improvisation", "es"),
     ("miami", "en"), ("miami", "es"),

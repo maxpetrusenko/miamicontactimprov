@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=38bbe783">
+<link rel="stylesheet" href="/assets/site.css?v=2cea6bcc">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -587,8 +587,16 @@
       try {
         if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
       } catch (e) {}
+      // Loading state lives on the button itself (spinner over the label, width
+      // unchanged); data-sending is read out to screen readers instead of shown.
+      var setLoading = function (on) {
+        btn.classList.toggle('is-loading', on);
+        if (on) { btn.setAttribute('aria-busy', 'true'); btn.setAttribute('aria-label', btn.getAttribute('data-sending') || ''); }
+        else { btn.removeAttribute('aria-busy'); btn.removeAttribute('aria-label'); }
+      };
       btn.disabled = true;
-      say(btn.getAttribute('data-sending') || '');
+      say('');
+      setLoading(true);
       fetch(btn.getAttribute('data-endpoint'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -620,14 +628,25 @@
             status.appendChild(msg);
             status.appendChild(link);
           }
+          setLoading(false);
           return; // sale's closed: the button stays disabled, the message explains why
         }
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       }).catch(function () {
+        setLoading(false);
         say(btn.getAttribute('data-error') || '');
         btn.disabled = false;
       });
+    });
+  });
+  // Back from Stripe via the browser's back button restores the page from bfcache
+  // with the button still spinning; reset it.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    document.querySelectorAll('.buy-button .btn.is-loading').forEach(function (b) {
+      b.classList.remove('is-loading'); b.removeAttribute('aria-busy'); b.removeAttribute('aria-label'); b.disabled = false;
     });
   });
 

@@ -186,7 +186,7 @@ def home():
   <div class="mci-cards">
     <div class="mci-mini"><p class="t mci-h">7:00 &middot; CLASE</p><p>Calentamiento guiado y herramientas &mdash; rodar, compartir peso, caer sin hacerse daño.</p></div>
     <div class="mci-mini"><p class="t mci-h">7:45 &middot; JAM ABIERTA</p><p>Danza libre. Entra, siéntate, mira &mdash; todo es bienvenido.</p></div>
-    <div class="mci-mini"><p class="t mci-h">$20 &ndash; $50</p><p>Escala móvil &mdash; paga lo que puedas. Ropa cómoda, sin zapatos.</p></div>
+    <div class="mci-mini"><p class="t mci-h">$20 EN LÍNEA</p><p>O $30&ndash;$50 en la puerta, paga lo que puedas &mdash; reservar antes te ahorra $10 o más. Ropa cómoda, sin zapatos.</p></div>
   </div>
   <div class="mci-actions">
     <a class="mci-textlink" href="https://www.youtube.com/watch?v=q4wUEiHowSU" target="_blank" rel="noopener">&#9654; Ver: qué es el contact improv</a>
