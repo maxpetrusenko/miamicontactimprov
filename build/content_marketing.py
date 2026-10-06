@@ -20,7 +20,10 @@ import schema
 from shell import buy_button, page
 
 IG = "https://instagram.com/miamicontactimprov"
-LUMA = "https://luma.com/hau1fq5t"  # Friday class + open practice registration
+LUMA = "https://luma.com/cbzvq6pj"  # Friday class + open practice registration
+LUMA_EMBED = "https://luma.com/embed/event/evt-YVDi6vViD3q6ZpX/simple"  # same event, Luma's own embed
+EVENTBRITE = "https://www.eventbrite.com/e/contact-improvisation-ci-class-miami-exploring-levels-tickets-2003010213468"
+CLASSPASS = "https://classpass.com/studios/miami-contact-improv-hallandale-beach"
 IMG = "/assets/img"
 IG_GLYPH = (
     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
@@ -35,6 +38,7 @@ IG_GLYPH = (
 # fabricated posts. When empty, the section shows the real jam photography below,
 # linked to the profile, and no third-party script is loaded.
 IG_POSTS = [
+    "https://www.instagram.com/p/DeE871UhEEe/",
     "https://www.instagram.com/p/Ddh7ZhVOc6f/",
     "https://www.instagram.com/p/Ddb99EDytsx/",
     "https://www.instagram.com/reel/DPrOYR8jYjU/",
@@ -48,7 +52,7 @@ MAX_REEL = "https://www.instagram.com/reel/DVjMRgUDv0P/"
 # Media aspect (height / width) per post so the frame can be cropped just below the
 # likes row. Instagram renders reels and square posts at 1:1 in the embed; portrait
 # photo posts are 4:5. Posts not listed default to square.
-IG_RATIOS = {"Ddh7ZhVOc6f": 1.25}
+IG_RATIOS = {"Ddh7ZhVOc6f": 1.25, "DeE871UhEEe": 1.25}
 
 
 def ig_embed(url):
@@ -239,23 +243,30 @@ def events():
   <span class="price">$20 &ndash; $50 sliding scale</span>
 </div>
 
-<p class="mci-label">Registered events</p>
-<div class="mci-two">
-  <div class="mci-info-card">
-    <div class="head"><span>EVENTBRITE</span></div>
-    <div class="body">
-      <h3>Ticketed sessions</h3>
-      <p>Online registration will open here once ticketing is live. The weekly jam needs no booking &mdash; just come to the door.</p>
-    </div>
+<p class="mci-label">Book a class</p>
+<div class="mci-book">
+  <div class="mci-info-card embed">
+    <div class="head"><span>LUMA</span><a href="{LUMA}" target="_blank" rel="noopener">Open on Luma &rarr;</a></div>
+    <iframe class="luma-frame" src="{LUMA_EMBED}" title="Register on Luma: Contact Improvisation class, Exploring Levels" loading="lazy" allow="fullscreen; payment"></iframe>
   </div>
-  <a class="mci-info-card live" href="{LUMA}" target="_blank" rel="noopener">
-    <div class="head"><span>LUMA</span></div>
-    <div class="body">
-      <h3>Contact Improvisation (CI) Class Miami</h3>
-      <p>Register in advance for the Friday class and open practice at Inner Motion Dance Studio. Hosted by Max Petrusenko.</p>
-      <span class="mci-pill terracotta">RSVP on Luma &rarr;</span>
-    </div>
-  </a>
+  <div class="mci-book-side">
+    <a class="mci-info-card live" href="{EVENTBRITE}" target="_blank" rel="noopener">
+      <div class="head"><span>EVENTBRITE</span></div>
+      <div class="body">
+        <h3>Contact Improvisation (CI) Class Miami &mdash; Exploring Levels</h3>
+        <p>Fri, Oct 9 &middot; 7:00&ndash;9:00 PM &middot; Inner Motion Dance Studio. Tickets $10&ndash;$30.</p>
+        <span class="mci-pill terracotta">Get tickets on Eventbrite &rarr;</span>
+      </div>
+    </a>
+    <a class="mci-info-card live" href="{CLASSPASS}" target="_blank" rel="noopener">
+      <div class="head"><span>CLASSPASS</span></div>
+      <div class="body">
+        <h3>Book with ClassPass credits</h3>
+        <p>Miami Contact Improv is on ClassPass &mdash; reserve the Friday class with your membership.</p>
+        <span class="mci-pill dark">Book on ClassPass &rarr;</span>
+      </div>
+    </a>
+  </div>
 </div>
 </div>
 

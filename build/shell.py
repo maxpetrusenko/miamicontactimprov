@@ -586,9 +586,6 @@ SCROLL_CONTROLS = """<div class="scroll-controls" id="scroll-controls" aria-hidd
   <button class="to-top" type="button" aria-label="Scroll to top">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
   </button>
-  <button class="to-bottom" type="button" aria-label="Scroll down">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>
-  </button>
 </div>"""
 
 
