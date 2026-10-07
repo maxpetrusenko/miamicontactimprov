@@ -698,6 +698,9 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
 .buy-button { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .buy-status { font-size: 0.86rem; color: var(--terracotta-dark); margin: 0; max-width: 42ch; }
 .buy-status:empty { display: none; }
+.buy-code { font-size: 0.86rem; font-weight: 600; color: var(--terracotta-dark); margin: 0; }
+.buy-code[hidden] { display: none; }
+.mci-hero-full .buy-code { color: var(--cream); }
 .buy-status a { color: inherit; text-decoration: underline; }
 .mci-hero-full .buy-status { color: var(--cream); }
 .mci-pricing-link { font-weight: 600; font-size: 14px; color: var(--ink); text-decoration: underline; }
