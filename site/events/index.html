@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=46b18710">
+<link rel="stylesheet" href="/assets/site.css?v=1dede446">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -595,7 +595,29 @@
   // closed (or, for jam/combo today, not configured yet) and the reader pays at the
   // door instead, so the button stays disabled and the status line carries the door
   // link rather than a dead button sitting next to a message that already answered it.
+  // A personal ticket code from the /t/<CODE> short link arrives as ?code= (CI10-XXXXXX or
+  // CI10XXXXXX). It is validated, kept for the tab in sessionStorage, shown as one line
+  // under every buy button, and sent with the checkout request.
+  var TICKET_RE = /^CI\d{2}-?[A-Z0-9]{6}$/i;
+  var normalizeCode = function (raw) {
+    if (!raw || !TICKET_RE.test(raw)) return '';
+    var u = raw.toUpperCase().replace('-', '');
+    return u.slice(0, 4) + '-' + u.slice(4);
+  };
+  var ticketCode = normalizeCode(new URLSearchParams(window.location.search).get('code'));
+  try {
+    if (ticketCode) sessionStorage.setItem('mci_ticket_code', ticketCode);
+    else ticketCode = normalizeCode(sessionStorage.getItem('mci_ticket_code'));
+  } catch (e) {}
+  var showCode = function (btn, key) {
+    var line = btn.closest('.buy-button') ? btn.closest('.buy-button').querySelector('.buy-code') : null;
+    if (!line) return;
+    if (!ticketCode) { line.hidden = true; return; }
+    line.textContent = (btn.getAttribute(key || 'data-code-applied') || '').replace('{code}', ticketCode);
+    line.hidden = false;
+  };
   document.querySelectorAll('[data-kind]').forEach(function (btn) {
+    showCode(btn);
     btn.addEventListener('click', function () {
       var wrap = btn.closest('.buy-button');
       var status = wrap ? wrap.querySelector('.buy-status') : null;
@@ -604,6 +626,7 @@
       var eventDate = btn.getAttribute('data-event-date');
       var payload = { kind: kind };
       if (eventDate) payload.event_date = eventDate;
+      if (ticketCode) payload.code = ticketCode;
       try {
         if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
       } catch (e) {}
@@ -630,7 +653,17 @@
           try {
             if (window.posthog) posthog.capture('checkout_started', { kind: kind });
           } catch (e) {}
-          window.location.href = result.data.url;
+          var go = function () { window.location.href = result.data.url; };
+          if (result.data.code_status === 'invalid') {
+            // The sale still goes through at full price with the code box; say why first.
+            try { sessionStorage.removeItem('mci_ticket_code'); } catch (e) {}
+            ticketCode = '';
+            var line = wrap ? wrap.querySelector('.buy-code') : null;
+            if (line) { line.textContent = btn.getAttribute('data-code-invalid') || ''; line.hidden = false; }
+            setTimeout(go, 1800);
+            return;
+          }
+          go();
           return;
         }
         if (result.status === 409 && result.data && result.data.closed) {
@@ -729,7 +762,7 @@
       line.textContent = 'See you Friday, ' + when + ', for ' + what + '.';
     } catch (e) {}
   })();
-
+})();
 </script>
 </body>
 </html>

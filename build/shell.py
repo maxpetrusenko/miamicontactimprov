@@ -379,6 +379,8 @@ BUY_COPY = {
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
         "closed": "Online sales closed, pay at the door ($30).",
         "closed_link": "What this looks like",
+        "code_applied": "Code {code} applied at checkout",
+        "code_invalid": "That code is no longer valid",
     },
 }
 
@@ -404,7 +406,9 @@ def buy_button(kind, label, uid, event_date=None, lang="en"):
         f'<div class="buy-button">'
         f'<button class="btn primary" type="button" id="{btn_id}" data-kind="{_attr(kind)}"{date_attr} '
         f'data-endpoint="{CHECKOUT_ENDPOINT}" data-sending="{_attr(copy["sending"])}" '
-        f'data-error="{_attr(copy["error"])}" data-closed="{_attr(copy["closed"])}">{label}</button>'
+        f'data-error="{_attr(copy["error"])}" data-closed="{_attr(copy["closed"])}" '
+        f'data-code-applied="{_attr(copy["code_applied"])}" data-code-invalid="{_attr(copy["code_invalid"])}">{label}</button>'
+        f'<p class="buy-code" role="status" hidden></p>'
         f'<p class="buy-status" role="status" aria-live="polite"></p>'
         f'</div>'
     )
@@ -836,7 +840,29 @@ def body_script():
   // closed (or, for jam/combo today, not configured yet) and the reader pays at the
   // door instead, so the button stays disabled and the status line carries the door
   // link rather than a dead button sitting next to a message that already answered it.
+  // A personal ticket code from the /t/<CODE> short link arrives as ?code= (CI10-XXXXXX or
+  // CI10XXXXXX). It is validated, kept for the tab in sessionStorage, shown as one line
+  // under every buy button, and sent with the checkout request.
+  var TICKET_RE = /^CI\d{2}-?[A-Z0-9]{6}$/i;
+  var normalizeCode = function (raw) {
+    if (!raw || !TICKET_RE.test(raw)) return '';
+    var u = raw.toUpperCase().replace('-', '');
+    return u.slice(0, 4) + '-' + u.slice(4);
+  };
+  var ticketCode = normalizeCode(new URLSearchParams(window.location.search).get('code'));
+  try {
+    if (ticketCode) sessionStorage.setItem('mci_ticket_code', ticketCode);
+    else ticketCode = normalizeCode(sessionStorage.getItem('mci_ticket_code'));
+  } catch (e) {}
+  var showCode = function (btn, key) {
+    var line = btn.closest('.buy-button') ? btn.closest('.buy-button').querySelector('.buy-code') : null;
+    if (!line) return;
+    if (!ticketCode) { line.hidden = true; return; }
+    line.textContent = (btn.getAttribute(key || 'data-code-applied') || '').replace('{code}', ticketCode);
+    line.hidden = false;
+  };
   document.querySelectorAll('[data-kind]').forEach(function (btn) {
+    showCode(btn);
     btn.addEventListener('click', function () {
       var wrap = btn.closest('.buy-button');
       var status = wrap ? wrap.querySelector('.buy-status') : null;
@@ -845,6 +871,7 @@ def body_script():
       var eventDate = btn.getAttribute('data-event-date');
       var payload = { kind: kind };
       if (eventDate) payload.event_date = eventDate;
+      if (ticketCode) payload.code = ticketCode;
       try {
         if (window.posthog) posthog.capture('buy_click', { kind: kind, event_date: eventDate || null });
       } catch (e) {}
@@ -871,7 +898,17 @@ def body_script():
           try {
             if (window.posthog) posthog.capture('checkout_started', { kind: kind });
           } catch (e) {}
-          window.location.href = result.data.url;
+          var go = function () { window.location.href = result.data.url; };
+          if (result.data.code_status === 'invalid') {
+            // The sale still goes through at full price with the code box; say why first.
+            try { sessionStorage.removeItem('mci_ticket_code'); } catch (e) {}
+            ticketCode = '';
+            var line = wrap ? wrap.querySelector('.buy-code') : null;
+            if (line) { line.textContent = btn.getAttribute('data-code-invalid') || ''; line.hidden = false; }
+            setTimeout(go, 1800);
+            return;
+          }
+          go();
           return;
         }
         if (result.status === 409 && result.data && result.data.closed) {
@@ -970,7 +1007,7 @@ def body_script():
       line.textContent = 'See you Friday, ' + when + ', for ' + what + '.';
     } catch (e) {}
   })();
-
+})();
 </script>
 </body>
 </html>"""
