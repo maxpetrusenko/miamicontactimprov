@@ -71,7 +71,7 @@ ARTICLES = [
 <h2>What it costs</h2>
 <p>A class is <strong>$20 when you book online</strong>. At the door it is <strong>$30 to $50, pay what you can</strong>, so booking ahead saves you at least $10. Online sales close two hours before class; after that the door price applies. Nobody is turned away from a first class over money. The full breakdown is on the <a href="/pricing">pricing page</a>.</p>
 <h2>How to book</h2>
-<p>You can buy a ticket on this site, register on Luma or Eventbrite, or book with ClassPass credits. All of them are linked from the <a href="/events">events page</a>. You do not need to bring a partner, and you do not need any dance experience.</p>
+<p>You can buy a ticket on this site, register on Luma or Eventbrite, or book with ClassPass credits. The 10% code from the monthly email works at online checkout on this site. All of them are linked from the <a href="/events">events page</a>. You do not need to bring a partner, and you do not need any dance experience.</p>
 <h2>What to bring</h2>
 <p>Clothes you can roll on the floor in, with long sleeves and long legs if you can, since you will be in contact with the floor and with other people. No shoes on the dance floor; bare feet or socks. Leave off jewellery, zips and buckles that could catch a partner. Bring water. That is it.</p>
 <h2>If you are nervous</h2>

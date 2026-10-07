@@ -867,7 +867,7 @@ def start():
       ("After that", "One email a month, and a reply to any of them takes you off the list"),
       ("Next classes", f"Fridays, 7:00&ndash;9:00 PM, from {first} to {last}"),
       ("Where", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
-      ("Cost", "$20&ndash;$50 sliding scale for each class, paid at the door or booked on Luma"),
+      ("Cost", "$20&ndash;$50 sliding scale for each class, paid at the door or booked online on this site, where the 10% subscriber code works at checkout"),
       ("Wear", "Clothes you can roll in, water, bare feet or soft socks"),
       ("To start", "No partner and no experience: drop into any of the eight classes"),
       ("Who runs it", "Max Petrusenko, who also maintains this site"),

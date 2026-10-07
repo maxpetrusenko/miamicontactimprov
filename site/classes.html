@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=8cb3b2b0">
+<link rel="stylesheet" href="/assets/site.css?v=eeb92ada">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -382,7 +382,7 @@
       <h3>What do I wear to a Contact Improvisation jam?</h3><p>Loose clothing that covers your back, shoulders and knees, since those are the usual contact points. Avoid zips, buckles, hard seams and anything with a rough texture. Bare feet or soft non-slip socks. Bring water.</p><h3>Do I have to dance with anyone?</h3><p>No. Sitting at the edge is a normal part of a jam, and dancing solo is part of the form. You may decline any invitation, at any point, without giving a reason, and you may end a dance mid-movement.</p><h3>Do I have to talk to people?</h3><p>Not much. Jams often open with a short circle where the organiser states the protocol and anyone can add a boundary or a note. After that, most of the communication is physical.</p><h3>How long is a jam?</h3><p>Typically two to three hours, often with a warm-up or a short class first. People arrive and leave throughout. Arriving after the opening circle is usually fine; leaving early always is.</p><h3>Is it expensive?</h3><p>Costs are set by whoever runs the session. Community jams are commonly free, donation-based, or a small door fee that covers the room hire. Rates for classes and workshops vary by teacher and are set individually.</p><h3>What if I am not fit or flexible?</h3><p>Neither is required to begin. The form is built on structure and gravity rather than strength or range, and beginners' sessions start from standing and rolling, not from lifts.</p><h3>Can I bring my child?</h3><p>Ask the organiser. Some jams run family or all-ages sessions; most open jams are adult spaces. There is no fixed rule, so the listing or the organiser is the authority.</p><h3>I have a back or joint condition. Can I still come?</h3><p>Many people with injuries and chronic conditions practise CI, sometimes with adaptations agreed with their partners. Talk to the organiser before your first session and to your partner before each dance. This site is not medical advice.</p>
     </div>
     <div class="subscribe-block">
-  <form class="subscribe-form" data-source="miamicontactimprov:classes" data-offer="New class dates by email, one message a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="Done. Your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
+  <form class="subscribe-form" data-source="miamicontactimprov:classes" data-offer="New class dates by email, one message a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="If this is your first signup, your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
   <label class="subscribe-label" for="subscribe-classes">New class dates by email, one message a month.</label>
   <div class="subscribe-row">
     <input id="subscribe-classes" name="email" type="email" inputmode="email" autocomplete="email" required>
@@ -429,7 +429,7 @@
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-classes">
     <button class="mci-popup-close" type="button" aria-label="Close">&times;</button>
     <h2 id="mci-popup-heading-classes" class="mci-h">10% off one event.</h2>
-    <form class="subscribe-form" data-source="miamicontactimprov:popup:classes" data-offer="Subscribe for 10% off one event, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="Done. Your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
+    <form class="subscribe-form" data-source="miamicontactimprov:popup:classes" data-offer="Subscribe for 10% off one event, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="If this is your first signup, your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
   <label class="subscribe-label" for="subscribe-popup-classes">Subscribe for 10% off one event, and one email a month.</label>
   <div class="subscribe-row">
     <input id="subscribe-popup-classes" name="email" type="email" inputmode="email" autocomplete="email" required>
@@ -857,6 +857,24 @@
         : kind === 'combo' ? 'the full evening, class at 7:00 then jam at 7:45'
         : 'the 7:00 PM class';
       line.textContent = 'See you Friday, ' + when + ', for ' + what + '.';
+    } catch (e) {}
+  })();
+
+  // ---- resubscribe notice ----
+  // The Worker's confirmation link redirects to /?resubscribed=1; say so in one line.
+  (function () {
+    try {
+      if (!/[?&]resubscribed=1(&|$)/.test(window.location.search)) return;
+      var main = document.getElementById('main');
+      if (!main) return;
+      var es = (document.documentElement.lang || '').slice(0, 2) === 'es';
+      var note = document.createElement('p');
+      note.className = 'resubscribe-note';
+      note.setAttribute('role', 'status');
+      note.textContent = es
+        ? 'Volviste a la lista. Si tu código sigue sin usar, va en tu correo.'
+        : 'You are back on the list. If your code is still unused, it is in your email.';
+      main.insertBefore(note, main.firstChild);
     } catch (e) {}
   })();
 

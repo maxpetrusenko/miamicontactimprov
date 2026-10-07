@@ -40,6 +40,7 @@ class FooterAndPopup(unittest.TestCase):
             ok = shell.SUBSCRIBE_COPY[lang]["ok"]
             self.assertIn("10%", ok)
             self.assertIn("20%", ok)
+            self.assertTrue(ok.startswith(("If this is your first signup", "Si es tu primera")))
             self.assertNotIn("\u2014", ok)
 
     def test_no_monthly_dates_heading_in_built_site(self):
@@ -47,6 +48,11 @@ class FooterAndPopup(unittest.TestCase):
             text = page.read_text()
             self.assertNotIn("The monthly dates", text, page.name)
             self.assertNotIn("Las fechas del mes", text, page.name)
+
+    def test_home_handles_resubscribed_notice(self):
+        html = (ROOT / "site" / "index.html").read_text()
+        self.assertIn("resubscribed=1", html)
+        self.assertIn("resubscribe-note", html)
 
     def test_popup_script_uses_seven_day_and_subscribed_keys(self):
         src = (ROOT / "build" / "shell.py").read_text()

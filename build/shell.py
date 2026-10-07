@@ -200,7 +200,7 @@ SUBSCRIBE_COPY = {
         "consent": "I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.",
         "button": "Subscribe",
         "sending": "Sending.",
-        "ok": "Done. Your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off.",
+        "ok": "If this is your first signup, your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off.",
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
     },
     "es": {
@@ -209,7 +209,7 @@ SUBSCRIBE_COPY = {
         "consent": "Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.",
         "button": "Suscribirme",
         "sending": "Enviando.",
-        "ok": "Listo. Tu código del 10% va en camino a tu correo (y a tu teléfono, si dejaste uno). Después enviamos un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
+        "ok": "Si es tu primera suscripción, tu código del 10% va en camino a tu correo (y a tu teléfono, si dejaste uno). Después enviamos un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
         "error": "No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.",
     },
 }
@@ -980,6 +980,24 @@ def body_script():
         : kind === 'combo' ? 'the full evening, class at 7:00 then jam at 7:45'
         : 'the 7:00 PM class';
       line.textContent = 'See you Friday, ' + when + ', for ' + what + '.';
+    } catch (e) {}
+  })();
+
+  // ---- resubscribe notice ----
+  // The Worker's confirmation link redirects to /?resubscribed=1; say so in one line.
+  (function () {
+    try {
+      if (!/[?&]resubscribed=1(&|$)/.test(window.location.search)) return;
+      var main = document.getElementById('main');
+      if (!main) return;
+      var es = (document.documentElement.lang || '').slice(0, 2) === 'es';
+      var note = document.createElement('p');
+      note.className = 'resubscribe-note';
+      note.setAttribute('role', 'status');
+      note.textContent = es
+        ? 'Volviste a la lista. Si tu código sigue sin usar, va en tu correo.'
+        : 'You are back on the list. If your code is still unused, it is in your email.';
+      main.insertBefore(note, main.firstChild);
     } catch (e) {}
   })();
 

@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=8cb3b2b0">
+<link rel="stylesheet" href="/assets/site.css?v=eeb92ada">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -737,7 +737,7 @@
   <p><strong>Checked 2026-09-17</strong></p>
 </li><li>
   <h3>Contact Improv — Fundamentals</h3>
-  <table class="facts"><tr><th scope="row">Organiser</th><td>Max Petrusenko, who also teaches it and maintains this site</td></tr><tr><th scope="row">Modality</th><td>Contact Improvisation</td></tr><tr><th scope="row">Where</th><td>Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009 (Miami, north edge: Hallandale Beach)</td></tr><tr><th scope="row">When</th><td>Eight Fridays, 7:00–9:00 PM, from Friday 2 October 2026 to Friday 20 November 2026</td></tr><tr><th scope="row">Cost</th><td>$20–$50 sliding scale for each class, paid at the door or booked on Luma</td></tr></table>
+  <table class="facts"><tr><th scope="row">Organiser</th><td>Max Petrusenko, who also teaches it and maintains this site</td></tr><tr><th scope="row">Modality</th><td>Contact Improvisation</td></tr><tr><th scope="row">Where</th><td>Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009 (Miami, north edge: Hallandale Beach)</td></tr><tr><th scope="row">When</th><td>Eight Fridays, 7:00–9:00 PM, from Friday 2 October 2026 to Friday 20 November 2026</td></tr><tr><th scope="row">Cost</th><td>$20–$50 sliding scale for each class, paid at the door or booked online on this site, where the 10% subscriber code works at checkout</td></tr></table>
   <p>Run by the same maintainer as the Friday jam, and the disclosure comes first: it is taught by Max Petrusenko, who also maintains miamicontactimprov.com, so this entry is the organiser describing his own class, on the same terms as every other entry on this page and ranked no higher for it. Eight weekly classes on the fundamentals of the form, 7:00 to 9:00 PM at Inner Motion Dance Studio on the north edge of Miami: giving and taking weight, a rolling point of contact, falling, momentum, consent, and small dances that build toward an open score. Each class ends with an open dance, and you can drop into any of the eight, with no partner and no experience needed. Booking is on this site, subscribers to the monthly email get 10% off one event, and payment at the door is accepted at every class. The series ends on 20 November 2026, so this entry comes down with it rather than sitting here looking current.</p>
   <p>Read at <a href="https://miamicontactimprov.com/fundamentals" rel="noopener nofollow">https://miamicontactimprov.com/fundamentals</a></p>
   <p><strong>Checked 2026-09-21</strong></p>
@@ -810,7 +810,7 @@
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-miami-jams">
     <button class="mci-popup-close" type="button" aria-label="Close">&times;</button>
     <h2 id="mci-popup-heading-miami-jams" class="mci-h">10% off one event.</h2>
-    <form class="subscribe-form" data-source="miamicontactimprov:popup:miami-jams" data-offer="Subscribe for 10% off one event, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="Done. Your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
+    <form class="subscribe-form" data-source="miamicontactimprov:popup:miami-jams" data-offer="Subscribe for 10% off one event, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="If this is your first signup, your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
   <label class="subscribe-label" for="subscribe-popup-miami-jams">Subscribe for 10% off one event, and one email a month.</label>
   <div class="subscribe-row">
     <input id="subscribe-popup-miami-jams" name="email" type="email" inputmode="email" autocomplete="email" required>
@@ -1238,6 +1238,24 @@
         : kind === 'combo' ? 'the full evening, class at 7:00 then jam at 7:45'
         : 'the 7:00 PM class';
       line.textContent = 'See you Friday, ' + when + ', for ' + what + '.';
+    } catch (e) {}
+  })();
+
+  // ---- resubscribe notice ----
+  // The Worker's confirmation link redirects to /?resubscribed=1; say so in one line.
+  (function () {
+    try {
+      if (!/[?&]resubscribed=1(&|$)/.test(window.location.search)) return;
+      var main = document.getElementById('main');
+      if (!main) return;
+      var es = (document.documentElement.lang || '').slice(0, 2) === 'es';
+      var note = document.createElement('p');
+      note.className = 'resubscribe-note';
+      note.setAttribute('role', 'status');
+      note.textContent = es
+        ? 'Volviste a la lista. Si tu código sigue sin usar, va en tu correo.'
+        : 'You are back on the list. If your code is still unused, it is in your email.';
+      main.insertBefore(note, main.firstChild);
     } catch (e) {}
   })();
 
