@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=2cea6bcc">
+<link rel="stylesheet" href="/assets/site.css?v=8cb3b2b0">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -295,7 +295,7 @@
 <div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-blog">
     <button class="mci-popup-close" type="button" aria-label="Close">&times;</button>
-    <h2 id="mci-popup-heading-blog" class="mci-h">10% off your first event.</h2>
+    <h2 id="mci-popup-heading-blog" class="mci-h">10% off one event.</h2>
     <form class="subscribe-form" data-source="miamicontactimprov:popup:blog" data-offer="Subscribe for 10% off one event, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
   <label class="subscribe-label" for="subscribe-popup-blog">Subscribe for 10% off one event, and one email a month.</label>
   <div class="subscribe-row">
@@ -558,6 +558,8 @@
         if (ok) {
           form.reset();
           say('ok');
+          // Any successful signup, from any form, retires the landing popup for good.
+          try { localStorage.setItem('mci_popup_subscribed', '1'); } catch (e) {}
           try {
             if (window.posthog && form.closest('#mci-popup')) posthog.capture('newsletter_popup_submitted');
           } catch (e) {}
@@ -727,7 +729,7 @@
 
   // ---- newsletter popup ----
   // Shown 5 seconds after load. Closing it hides it for 7 days (timestamp in
-  // mci_popup_closed_at); a successful subscribe sets mci_popup_subscribed and it never
+  // mci_popup_closed_at); a successful subscribe on any form (shared handler above) sets mci_popup_subscribed and it never
   // shows again. Every read/write is wrapped so private browsing or blocked storage
   // degrades to "never shows" rather than breaking the page.
   (function () {
@@ -735,7 +737,6 @@
     if (!modal) return;
     var card = modal.querySelector('.mci-popup');
     var closeBtn = modal.querySelector('.mci-popup-close');
-    var form = modal.querySelector('form.subscribe-form');
     var closedKey = 'mci_popup_closed_at';
     var subscribedKey = 'mci_popup_subscribed';
     var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
@@ -750,9 +751,6 @@
     };
     var markClosed = function () {
       try { localStorage.setItem(closedKey, String(Date.now())); } catch (e) {}
-    };
-    var markSubscribed = function () {
-      try { localStorage.setItem(subscribedKey, '1'); } catch (e) {}
     };
 
     var focusables = function () {
@@ -793,19 +791,6 @@
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-
-    // Marking "subscribed" on a successful submit without touching the shared subscribe
-    // handler above: watch the status line this page's form already carries, and
-    // treat it reaching the handler's own "ok" text as success.
-    if (form) {
-      var status = form.querySelector('.subscribe-status');
-      var okText = form.getAttribute('data-ok') || '';
-      if (status && okText && 'MutationObserver' in window) {
-        new MutationObserver(function () {
-          if (status.textContent === okText) markSubscribed();
-        }).observe(status, { childList: true, characterData: true, subtree: true });
-      }
-    }
 
     if (!seen()) {
       setTimeout(function () { if (!seen()) openModal(); }, 5000);

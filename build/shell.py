@@ -350,8 +350,8 @@ def buy_button(kind, label, uid, event_date=None, lang="en"):
 # offer carry the mechanics (10% off one event, one email a month); this heading carries the
 # hook that gets a reader to look at the form at all.
 POPUP_HEADING = {
-    "en": "10% off your first event.",
-    "es": "10% de descuento en tu primer evento.",
+    "en": "10% off one event.",
+    "es": "10% de descuento en un evento.",
 }
 
 POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
@@ -816,6 +816,8 @@ def body_script():
         if (ok) {
           form.reset();
           say('ok');
+          // Any successful signup, from any form, retires the landing popup for good.
+          try { localStorage.setItem('mci_popup_subscribed', '1'); } catch (e) {}
           try {
             if (window.posthog && form.closest('#mci-popup')) posthog.capture('newsletter_popup_submitted');
           } catch (e) {}
@@ -985,7 +987,7 @@ def body_script():
 
   // ---- newsletter popup ----
   // Shown 5 seconds after load. Closing it hides it for 7 days (timestamp in
-  // mci_popup_closed_at); a successful subscribe sets mci_popup_subscribed and it never
+  // mci_popup_closed_at); a successful subscribe on any form (shared handler above) sets mci_popup_subscribed and it never
   // shows again. Every read/write is wrapped so private browsing or blocked storage
   // degrades to "never shows" rather than breaking the page.
   (function () {
@@ -993,7 +995,6 @@ def body_script():
     if (!modal) return;
     var card = modal.querySelector('.mci-popup');
     var closeBtn = modal.querySelector('.mci-popup-close');
-    var form = modal.querySelector('form.subscribe-form');
     var closedKey = 'mci_popup_closed_at';
     var subscribedKey = 'mci_popup_subscribed';
     var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
@@ -1008,9 +1009,6 @@ def body_script():
     };
     var markClosed = function () {
       try { localStorage.setItem(closedKey, String(Date.now())); } catch (e) {}
-    };
-    var markSubscribed = function () {
-      try { localStorage.setItem(subscribedKey, '1'); } catch (e) {}
     };
 
     var focusables = function () {
@@ -1051,19 +1049,6 @@ def body_script():
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-
-    // Marking "subscribed" on a successful submit without touching the shared subscribe
-    // handler above: watch the status line this page's form already carries, and
-    // treat it reaching the handler's own "ok" text as success.
-    if (form) {
-      var status = form.querySelector('.subscribe-status');
-      var okText = form.getAttribute('data-ok') || '';
-      if (status && okText && 'MutationObserver' in window) {
-        new MutationObserver(function () {
-          if (status.textContent === okText) markSubscribed();
-        }).observe(status, { childList: true, characterData: true, subtree: true });
-      }
-    }
 
     if (!seen()) {
       setTimeout(function () { if (!seen()) openModal(); }, 5000);
