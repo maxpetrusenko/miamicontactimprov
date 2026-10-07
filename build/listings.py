@@ -249,7 +249,7 @@ SESSIONS = [
         "Miami, north edge: Hallandale Beach",
         "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009",
         "Eight Fridays, 7:00\u20139:00 PM, from Friday 2 October 2026 to Friday 20 November 2026",
-        "$20\u2013$50 sliding scale for each class, paid at the door or booked on Luma",
+        "$20\u2013$50 sliding scale for each class, paid at the door or booked online on this site, where the 10% subscriber code works at checkout",
         FUNDAMENTALS_URL,
         FUNDAMENTALS_VERIFIED,
         "Run by the same maintainer as the Friday jam, and the disclosure comes first: it is taught by Max "
@@ -259,8 +259,7 @@ SESSIONS = [
         "Studio on the north edge of Miami: giving and taking weight, a rolling point of contact, falling, "
         "momentum, consent, and small dances that build toward an open score. Each class ends with an open "
         "dance, and you can drop into any of the eight, with no partner and no experience needed. "
-        "Registration runs through Luma, subscribers to the monthly email get 20% off for the next two "
-        "months, and payment at the "
+        "Booking is on this site, subscribers to the monthly email get 10% off one event, and payment at the "
         "door is accepted at every class. The series ends on 20 "
         "November 2026, so this entry comes down with it rather than sitting here looking current.",
     ),

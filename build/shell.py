@@ -195,23 +195,21 @@ if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doN
 # legal consent statement, because a form that texts a phone number needs one.
 SUBSCRIBE_COPY = {
     "en": {
-        "heading": "The monthly dates",
-        "label": "Subscribe for 20% off classes for the next two months, and one email a month.",
+        "label": "Subscribe for 10% off one event, and one email a month.",
         "phone_label": "Phone (optional)",
         "consent": "I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.",
         "button": "Subscribe",
         "sending": "Sending.",
-        "ok": "You are on the list. The code is in the email that just went out.",
+        "ok": "If this is your first signup, your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off.",
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
     },
     "es": {
-        "heading": "Las fechas del mes",
-        "label": "Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes.",
+        "label": "Suscríbete para un 10% de descuento en un evento, y un correo al mes.",
         "phone_label": "Teléfono (opcional)",
         "consent": "Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.",
         "button": "Suscribirme",
         "sending": "Enviando.",
-        "ok": "Ya estás en la lista. El código va en el correo que acaba de salir.",
+        "ok": "Si es tu primera suscripción, tu código del 10% va en camino a tu correo (y a tu teléfono, si dejaste uno). Después enviamos un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
         "error": "No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.",
     },
 }
@@ -235,7 +233,7 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     submit does nothing rather than promising something it cannot do, which is why the
     markup carries no action attribute.
 
-    `source` travels with the signup. The Worker sends the welcome email and the 20%
+    `source` travels with the signup. The Worker sends the welcome email and the 10%
     code only when the source starts with `miamicontactimprov`, so the value here is
     what decides whether a reader gets the code.
 
@@ -244,8 +242,8 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     no separate hint line under the field, so a page that offers the next dates rather
     than the monthly email says so in the label itself and nowhere else.
 
-    Phone is a second, optional field: no SMS sends yet, so making it required would
-    ask for something the site cannot use today and only costs signups. The consent
+    Phone is a second, optional field: the Worker texts the code to it when given, but
+    making it required would only cost signups. The consent
     checkbox is required and is the actual legal line, not a hint - it names both
     channels because a reader who leaves a number is agreeing to be texted on it.
     The honeypot field is hidden from sighted users by CSS alone (no display:none, a
@@ -347,11 +345,11 @@ def buy_button(kind, label, uid, event_date=None, lang="en"):
 # ------------------------------------------------------------ newsletter popup
 # The copy for the popup heading, per locale. The form itself is the same
 # subscribe_form() every inline and footer placement uses, so its own label and
-# offer carry the mechanics (20% off, one email a month); this heading carries the
+# offer carry the mechanics (10% off one event, one email a month); this heading carries the
 # hook that gets a reader to look at the form at all.
 POPUP_HEADING = {
-    "en": "Get class updates + 20% off for the next two months.",
-    "es": "Novedades de las clases + 20% de descuento los próximos dos meses.",
+    "en": "10% off one event.",
+    "es": "10% de descuento en un evento.",
 }
 
 POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
@@ -530,19 +528,9 @@ def header(current, lang="en"):
 
 
 def footer(lang="en", path="/"):
-    """The footer, plus the subscribe form that sits on every page.
-
-    The form's source names the page it was submitted from, so a signup can be traced
-    to the page that produced it. It is the same value the in-page form on that page
-    sends, because the question a coupon code answers is which page earned it.
-    """
+    """The site footer: link columns and the colophon. No subscribe form lives here;
+    signups come from the landing popup and the inline page forms."""
     slug = page_slug(path)
-    subscribe = subscribe_form(
-        lang,
-        source=f"miamicontactimprov:{slug}",
-        uid=f"footer-{slug}",
-    )
-    subscribe_heading = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])["heading"]
     cols = []
     for _key, titles, items in FOOTER_COLS:
         title = titles.get(lang) or titles[locales.DEFAULT]
@@ -567,10 +555,6 @@ def footer(lang="en", path="/"):
   <div class="wrap">
     <div class="footer-grid">
       {''.join(cols)}
-    </div>
-    <div class="footer-subscribe">
-      <h3>{subscribe_heading}</h3>
-      {subscribe}
     </div>
     <div class="colophon">
       <span>&copy; Miami Contact Improv &middot; {sentence}</span>
@@ -830,6 +814,8 @@ def body_script():
         if (ok) {
           form.reset();
           say('ok');
+          // Any successful signup, from any form, retires the landing popup for good.
+          try { localStorage.setItem('mci_popup_subscribed', '1'); } catch (e) {}
           try {
             if (window.posthog && form.closest('#mci-popup')) posthog.capture('newsletter_popup_submitted');
           } catch (e) {}
@@ -997,24 +983,48 @@ def body_script():
     } catch (e) {}
   })();
 
+  // ---- resubscribe notice ----
+  // The Worker's confirmation link redirects to /?resubscribed=1; say so in one line.
+  (function () {
+    try {
+      if (!/[?&]resubscribed=1(&|$)/.test(window.location.search)) return;
+      var main = document.getElementById('main');
+      if (!main) return;
+      var es = (document.documentElement.lang || '').slice(0, 2) === 'es';
+      var note = document.createElement('p');
+      note.className = 'resubscribe-note';
+      note.setAttribute('role', 'status');
+      note.textContent = es
+        ? 'Volviste a la lista. Si tu código sigue sin usar, va en tu correo.'
+        : 'You are back on the list. If your code is still unused, it is in your email.';
+      main.insertBefore(note, main.firstChild);
+    } catch (e) {}
+  })();
+
   // ---- newsletter popup ----
-  // Shown once per visitor, 5 seconds after load, unless localStorage already says
-  // so. Every read/write is wrapped so private browsing or blocked storage degrades
-  // to "never shows" rather than breaking the page.
+  // Shown 5 seconds after load. Closing it hides it for 7 days (timestamp in
+  // mci_popup_closed_at); a successful subscribe on any form (shared handler above) sets mci_popup_subscribed and it never
+  // shows again. Every read/write is wrapped so private browsing or blocked storage
+  // degrades to "never shows" rather than breaking the page.
   (function () {
     var modal = document.getElementById('mci-popup');
     if (!modal) return;
     var card = modal.querySelector('.mci-popup');
     var closeBtn = modal.querySelector('.mci-popup-close');
-    var form = modal.querySelector('form.subscribe-form');
-    var seenKey = 'mci_popup_seen';
+    var closedKey = 'mci_popup_closed_at';
+    var subscribedKey = 'mci_popup_subscribed';
+    var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
     var lastFocus = null;
 
     var seen = function () {
-      try { return localStorage.getItem(seenKey) === '1'; } catch (e) { return false; }
+      try {
+        if (localStorage.getItem(subscribedKey) === '1') return true;
+        var t = parseInt(localStorage.getItem(closedKey), 10);
+        return !isNaN(t) && Date.now() - t < WEEK_MS;
+      } catch (e) { return true; }
     };
-    var markSeen = function () {
-      try { localStorage.setItem(seenKey, '1'); } catch (e) {}
+    var markClosed = function () {
+      try { localStorage.setItem(closedKey, String(Date.now())); } catch (e) {}
     };
 
     var focusables = function () {
@@ -1045,7 +1055,7 @@ def body_script():
     function closeModal() {
       modal.classList.remove('is-open');
       document.removeEventListener('keydown', onKeydown, true);
-      markSeen();
+      markClosed();
       try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
       try {
         if (lastFocus && lastFocus.focus) lastFocus.focus();
@@ -1055,19 +1065,6 @@ def body_script():
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-
-    // Marking "seen" on a successful submit without touching the shared subscribe
-    // handler above: watch the status line this page's form already carries, and
-    // treat it reaching the handler's own "ok" text as success.
-    if (form) {
-      var status = form.querySelector('.subscribe-status');
-      var okText = form.getAttribute('data-ok') || '';
-      if (status && okText && 'MutationObserver' in window) {
-        new MutationObserver(function () {
-          if (status.textContent === okText) markSeen();
-        }).observe(status, { childList: true, characterData: true, subtree: true });
-      }
-    }
 
     if (!seen()) {
       setTimeout(function () { if (!seen()) openModal(); }, 5000);
