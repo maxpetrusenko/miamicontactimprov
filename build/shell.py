@@ -20,6 +20,7 @@ import pathlib
 
 import locales
 import schema
+import signup
 
 SITE = locales.SITE
 NAME = "Miami Contact Improv"
@@ -172,7 +173,7 @@ def posthog_snippet():
     """
     if not POSTHOG_KEY:
         return ""
-    mask_selector = 'input[type="email"], input[type="tel"], input[name="email"], input[name="phone"]'
+    mask_selector = 'input[type="email"], input[type="tel"], input[name="email"], input[name="phone"], input[name="otp"], .signup-code'
     return f"""<script>
 !function(t,e){{var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){{function g(t,e){{var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){{t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{{configurable:!0,enumerable:!0,writable:!0,value:function(t){{var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}}}),Object.defineProperty(u.people,"toString",{{configurable:!0,enumerable:!0,writable:!0,value:function(){{return u.toString(1)+".people (stub)"}}}}),o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])}},e.__SV=1)}}(document,window.posthog||[]);
 if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doNotTrack === 'yes')) {{
@@ -196,20 +197,42 @@ if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doN
 SUBSCRIBE_COPY = {
     "en": {
         "label": "Subscribe for 10% off one event, and one email a month.",
+        "name_label": "Full name",
+        "name_placeholder": "First name",
+        "email_label": "Email",
         "phone_label": "Phone (optional)",
-        "consent": "I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.",
-        "button": "Subscribe",
+        "country_label": "Country",
+        "countries": [("US", "United States (+1)"), ("CA", "Canada (+1)")],
+        "consent": "I agree to receive promotional emails and text messages from Miami CI. Message and data rates may apply.",
+        "button": "Get my code",
+        "popup_button": "SECURE YOUR SPACE",
+        "no_thanks": "NO THANKS",
+        "card_heading": "Join the jam list",
+        "card_sub": "Be the first to know",
+        "card_consent": "I want to subscribe to your mailing list.",
+        "card_button": "Join",
         "sending": "Sending.",
-        "ok": "If this is your first signup, your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off.",
+        "ok": "We also emailed it to you. After this, an occasional discount about once a month, 20% off.",
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
     },
     "es": {
         "label": "Suscríbete para un 10% de descuento en un evento, y un correo al mes.",
+        "name_label": "Nombre completo",
+        "name_placeholder": "Nombre",
+        "email_label": "Correo",
         "phone_label": "Teléfono (opcional)",
-        "consent": "Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.",
-        "button": "Suscribirme",
+        "country_label": "País",
+        "countries": [("US", "Estados Unidos (+1)"), ("CA", "Canadá (+1)")],
+        "consent": "Acepto recibir correos promocionales y mensajes de texto de Miami CI. Pueden aplicarse tarifas de mensajes y datos.",
+        "button": "Quiero mi código",
+        "popup_button": "ASEGURA TU LUGAR",
+        "no_thanks": "NO, GRACIAS",
+        "card_heading": "Únete a la lista de jams",
+        "card_sub": "Entérate primero",
+        "card_consent": "Quiero suscribirme a su lista de correo.",
+        "card_button": "Unirme",
         "sending": "Enviando.",
-        "ok": "Si es tu primera suscripción, tu código del 10% va en camino a tu correo (y a tu teléfono, si dejaste uno). Después enviamos un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
+        "ok": "También te lo enviamos por correo. Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
         "error": "No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.",
     },
 }
@@ -226,57 +249,102 @@ def page_slug(path):
     return slug or "home"
 
 
-def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
-    """The subscribe form. One markup, every locale, every placement.
+def subscribe_form(lang="en", source="", uid="page", label=None, button=None, popup=False, card=False):
+    """The signup form. One markup, every locale, every placement.
 
-    It posts JSON to the Worker and writes its own result line. With JavaScript off the
-    submit does nothing rather than promising something it cannot do, which is why the
-    markup carries no action attribute.
+    Three stages live inside it (see signup.py): 1 the details, 2 the one-time code the
+    Worker sends by text or email, 3 the personal 10% code. The script swaps them in
+    place; with JavaScript off the submit does nothing rather than promising something
+    it cannot do, which is why the markup carries no action attribute and `novalidate`
+    leaves checking to the script (a hidden stage must never block a submit).
 
-    `source` travels with the signup. The Worker sends the welcome email and the 10%
-    code only when the source starts with `miamicontactimprov`, so the value here is
-    what decides whether a reader gets the code.
+    `source` travels with the signup, and the Worker runs the verified flow only when
+    it starts with `miamicontactimprov`.
 
-    `label` and `button` replace the shared copy for a form whose offer is written for
-    the page it sits on. The label is the sentence the reader answers and this site has
-    no separate hint line under the field, so a page that offers the next dates rather
-    than the monthly email says so in the label itself and nowhere else.
-
-    Phone is a second, optional field: the Worker texts the code to it when given, but
-    making it required would only cost signups. The consent
-    checkbox is required and is the actual legal line, not a hint - it names both
-    channels because a reader who leaves a number is agreeing to be texted on it.
-    The honeypot field is hidden from sighted users by CSS alone (no display:none, a
-    simple bot still fills it) and read by the Worker, which drops a submission that
-    fills it rather than answering it as spam.
+    `popup` swaps in the popup's button and NO THANKS; `card` is the compact
+    "Join the jam list" layout (email and button on one row, a mailing-list checkbox).
+    `label` and `button` replace the shared copy for a page whose offer is written for it.
+    The consent checkbox is required and is the actual legal line, not a hint. The
+    honeypot field is hidden from sighted users by CSS alone (no display:none, a simple
+    bot still fills it) and read by the Worker, which drops a submission that fills it.
     """
     copy = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])
     field_id = f"subscribe-{uid}"
+    name_id = f"subscribe-name-{uid}"
     phone_id = f"subscribe-phone-{uid}"
+    country_id = f"subscribe-country-{uid}"
     consent_id = f"subscribe-consent-{uid}"
     hp_id = f"subscribe-hp-{uid}"
     text = label or copy["label"]
-    action = button or copy["button"]
-    return f"""<form class="subscribe-form" data-source="{_attr(source)}" data-offer="{_attr(text)}" data-endpoint="{SUBSCRIBE_ENDPOINT}" data-sending="{_attr(copy['sending'])}" data-ok="{_attr(copy['ok'])}" data-error="{_attr(copy['error'])}">
-  <label class="subscribe-label" for="{field_id}">{text}</label>
-  <div class="subscribe-row">
-    <input id="{field_id}" name="email" type="email" inputmode="email" autocomplete="email" required>
-    <label class="subscribe-phone" for="{phone_id}">
-      <span>{copy['phone_label']}</span>
-      <input id="{phone_id}" name="phone" type="tel" inputmode="tel" autocomplete="tel">
-    </label>
-    <button class="btn primary" type="submit">{action}</button>
+    if card:
+        action = button or copy["card_button"]
+        consent_text = copy["card_consent"]
+    else:
+        action = button or (copy["popup_button"] if popup else copy["button"])
+        consent_text = copy["consent"]
+    # In the popup the heading carries the offer, so the label stays for screen readers only.
+    label_class = "subscribe-label sr-only" if popup or card else "subscribe-label"
+    options = "".join(f'<option value="{code}">{name}</option>' for code, name in copy["countries"])
+    no_thanks = (
+        f'\n    <button class="mci-popup-nothanks" type="button">{copy["no_thanks"]}</button>' if popup else ""
+    )
+    name_field = "" if card else f"""
+      <label class="subscribe-field" for="{name_id}">
+        <span>{copy['name_label']}</span>
+        <input id="{name_id}" name="name" type="text" autocomplete="name" maxlength="80" placeholder="{_attr(copy['name_placeholder'])}">
+      </label>"""
+    email_field = f"""
+      <label class="subscribe-field" for="{field_id}">
+        <span>{copy['email_label']}</span>
+        <input id="{field_id}" name="email" type="email" inputmode="email" autocomplete="email" required>
+      </label>"""
+    phone_field = f"""
+      <div class="subscribe-field subscribe-phone-row">
+        <span>{copy['phone_label']}</span>
+        <div class="subscribe-phone-inputs">
+          <select id="{country_id}" name="country" aria-label="{_attr(copy['country_label'])}">{options}</select>
+          <input id="{phone_id}" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" aria-label="{_attr(copy['phone_label'])}">
+        </div>
+      </div>"""
+    button_html = f'<button class="btn primary subscribe-submit" type="submit">{action}</button>'
+    if card:
+        first_row = f"""<div class="subscribe-card-row">{email_field.replace('subscribe-field', 'subscribe-field subscribe-card-email')}
+      {button_html}</div>{phone_field}"""
+        submit = ""
+    else:
+        first_row = f"""<div class="subscribe-fields">{name_field}{email_field}{phone_field}
+    </div>"""
+        submit = f"\n    {button_html}{no_thanks}"
+    return f"""<form class="subscribe-form" novalidate data-source="{_attr(source)}" data-offer="{_attr(text)}" data-endpoint="{SUBSCRIBE_ENDPOINT}" data-sending="{_attr(copy['sending'])}" data-ok="{_attr(copy['ok'])}" data-error="{_attr(copy['error'])}" {signup.message_attrs(lang)}>
+  <div class="signup-step" data-step="1">
+    <p class="{label_class}">{text}</p>
+    {first_row}
+    <div class="subscribe-hp" aria-hidden="true">
+      <label for="{hp_id}">Company</label>
+      <input id="{hp_id}" name="company" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <label class="subscribe-consent" for="{consent_id}">
+      <input id="{consent_id}" name="consent" type="checkbox" required>
+      <span>{consent_text}</span>
+    </label>{submit}
   </div>
-  <div class="subscribe-hp" aria-hidden="true">
-    <label for="{hp_id}">Company</label>
-    <input id="{hp_id}" name="company" type="text" tabindex="-1" autocomplete="off">
-  </div>
-  <label class="subscribe-consent" for="{consent_id}">
-    <input id="{consent_id}" name="consent" type="checkbox" required>
-    <span>{copy['consent']}</span>
-  </label>
+{signup.steps_two_three(lang, uid, popup)}
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>"""
+
+
+def newsletter_card(lang="en"):
+    """The "Join the jam list" card: a section for the bottom of the home page and /jams."""
+    copy = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])
+    form = subscribe_form(lang, source="miamicontactimprov:newsletter-card", uid=f"card-{lang}", card=True)
+    return f"""<section class="section newsletter-card-section">
+  <div class="wrap">
+    <div class="newsletter-card">
+      <h2 class="mci-h"><span class="newsletter-card-sub">{copy['card_heading']}</span> <span class="newsletter-card-big">{copy['card_sub']}</span></h2>
+      {form}
+    </div>
+  </div>
+</section>"""
 
 
 def subscribe_block(lang, source, offer, uid, button=None, anchor=None):
@@ -348,8 +416,8 @@ def buy_button(kind, label, uid, event_date=None, lang="en"):
 # offer carry the mechanics (10% off one event, one email a month); this heading carries the
 # hook that gets a reader to look at the form at all.
 POPUP_HEADING = {
-    "en": "10% off one event.",
-    "es": "10% de descuento en un evento.",
+    "en": ("Sign up to receive", "a 10% discount code"),
+    "es": ("Suscríbete y recibe", "un código de descuento del 10%"),
 }
 
 POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
@@ -365,13 +433,13 @@ def newsletter_popup(lang, path):
     """
     slug = page_slug(path)
     heading_id = f"mci-popup-heading-{slug}"
-    heading = POPUP_HEADING.get(lang, POPUP_HEADING["en"])
+    eyebrow, big = POPUP_HEADING.get(lang, POPUP_HEADING["en"])
     close_label = POPUP_CLOSE_LABEL.get(lang, POPUP_CLOSE_LABEL["en"])
-    form = subscribe_form(lang, source=f"miamicontactimprov:popup:{slug}", uid=f"popup-{slug}")
+    form = subscribe_form(lang, source=f"miamicontactimprov:popup:{slug}", uid=f"popup-{slug}", popup=True)
     return f"""<div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="{heading_id}">
     <button class="mci-popup-close" type="button" aria-label="{close_label}">&times;</button>
-    <h2 id="{heading_id}" class="mci-h">{heading}</h2>
+    <h2 id="{heading_id}" class="mci-h mci-popup-head"><span class="mci-popup-eyebrow">{eyebrow}</span> <span class="mci-popup-big">{big}</span></h2>
     {form}
   </div>
 </div>"""
@@ -760,86 +828,6 @@ def body_script():
   var v = document.getElementById('video');
   if (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
 
-  // Subscribe forms. The endpoint, the source and the result lines come from the
-  // form's own data attributes, so this runs unchanged on every page and in both
-  // locales. A signup that reaches the Worker is done: nothing is sent twice.
-  //
-  // The campaign fields are read at the moment of the submit, from the address the
-  // reader actually arrived on: a QR code at the door carries ?src=door, a link in an
-  // Instagram bio carries utm_*. `src` rides on the end of the source, which is what
-  // separates a signup made in the room from one made from the bio of the same page.
-  // The source the Worker keys the welcome email off is the part before it.
-  var query = new URLSearchParams(window.location.search);
-  var param = function (name) { return query.get(name) || ''; };
-  // Kept to letters, digits, dash and underscore, and short: the Worker stores a source
-  // up to 64 characters and reads it as a prefix.
-  var entry = param('src').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 24);
-  document.querySelectorAll('form.subscribe-form').forEach(function (form) {
-    var status = form.querySelector('.subscribe-status');
-    var button = form.querySelector('button[type="submit"]');
-    var input = form.querySelector('input[type="email"]');
-    var phone = form.querySelector('input[type="tel"]');
-    var consent = form.querySelector('input[name="consent"]');
-    var company = form.querySelector('input[name="company"]');
-    var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      if (!input.value.trim()) { input.focus(); return; }
-      if (!consent.checked) { consent.focus(); return; }
-      if (company && company.value.trim()) { return; }
-      button.disabled = true;
-      say('sending');
-      fetch(form.getAttribute('data-endpoint'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: input.value.trim(),
-          phone: phone ? phone.value.trim() : '',
-          consent: consent.checked,
-          company: company ? company.value.trim() : '',
-          source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
-          offer: form.getAttribute('data-offer') || '',
-          campaign: param('utm_campaign'),
-          landing_page: window.location.pathname,
-          referrer: document.referrer || '',
-          utm_source: param('utm_source'),
-          utm_medium: param('utm_medium'),
-          utm_content: param('utm_content'),
-        }),
-      }).then(function (response) {
-        return response.json().catch(function () { return {}; }).then(function (data) {
-          return response.ok && data.ok;
-        });
-      }).then(function (ok) {
-        if (ok) {
-          form.reset();
-          say('ok');
-          // Any successful signup, from any form, retires the landing popup for good.
-          try { localStorage.setItem('mci_popup_subscribed', '1'); } catch (e) {}
-          try {
-            if (window.posthog && form.closest('#mci-popup')) posthog.capture('newsletter_popup_submitted');
-          } catch (e) {}
-          // Identify by a hashed email, never the address itself: the hash is
-          // the distinct id, and the real email only ever becomes a person
-          // property when the reader ticked consent for it (same checkbox
-          // this handler already required before sending the subscribe call).
-          try {
-            if (window.posthog && window.crypto && window.crypto.subtle) {
-              var emailValue = input.value.trim().toLowerCase();
-              window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(emailValue)).then(function (buf) {
-                var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) {
-                  return b.toString(16).padStart(2, '0');
-                }).join('').slice(0, 32);
-                posthog.identify(hex, consent.checked ? { email: emailValue } : {});
-              }).catch(function () {});
-            }
-          } catch (e) {}
-        }
-        else { say('error'); button.disabled = false; }
-      }).catch(function () { say('error'); button.disabled = false; });
-    });
-  });
-
   // ---- buy buttons (drop-in class / jam / combo checkout) ----
   // One handler for every [data-kind] button on the site: the kind, the date (when
   // the button carries one) and the endpoint all come off the button's own data
@@ -983,94 +971,6 @@ def body_script():
     } catch (e) {}
   })();
 
-  // ---- resubscribe notice ----
-  // The Worker's confirmation link redirects to /?resubscribed=1; say so in one line.
-  (function () {
-    try {
-      if (!/[?&]resubscribed=1(&|$)/.test(window.location.search)) return;
-      var main = document.getElementById('main');
-      if (!main) return;
-      var es = (document.documentElement.lang || '').slice(0, 2) === 'es';
-      var note = document.createElement('p');
-      note.className = 'resubscribe-note';
-      note.setAttribute('role', 'status');
-      note.textContent = es
-        ? 'Volviste a la lista. Si tu código sigue sin usar, va en tu correo.'
-        : 'You are back on the list. If your code is still unused, it is in your email.';
-      main.insertBefore(note, main.firstChild);
-    } catch (e) {}
-  })();
-
-  // ---- newsletter popup ----
-  // Shown 5 seconds after load. Closing it hides it for 7 days (timestamp in
-  // mci_popup_closed_at); a successful subscribe on any form (shared handler above) sets mci_popup_subscribed and it never
-  // shows again. Every read/write is wrapped so private browsing or blocked storage
-  // degrades to "never shows" rather than breaking the page.
-  (function () {
-    var modal = document.getElementById('mci-popup');
-    if (!modal) return;
-    var card = modal.querySelector('.mci-popup');
-    var closeBtn = modal.querySelector('.mci-popup-close');
-    var closedKey = 'mci_popup_closed_at';
-    var subscribedKey = 'mci_popup_subscribed';
-    var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
-    var lastFocus = null;
-
-    var seen = function () {
-      try {
-        if (localStorage.getItem(subscribedKey) === '1') return true;
-        var t = parseInt(localStorage.getItem(closedKey), 10);
-        return !isNaN(t) && Date.now() - t < WEEK_MS;
-      } catch (e) { return true; }
-    };
-    var markClosed = function () {
-      try { localStorage.setItem(closedKey, String(Date.now())); } catch (e) {}
-    };
-
-    var focusables = function () {
-      return Array.prototype.slice.call(
-        card.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])')
-      );
-    };
-
-    var onKeydown = function (e) {
-      if (e.key === 'Escape') { closeModal(); return; }
-      if (e.key !== 'Tab') return;
-      var f = focusables();
-      if (!f.length) return;
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    };
-
-    var openModal = function () {
-      lastFocus = document.activeElement;
-      modal.classList.add('is-open');
-      document.addEventListener('keydown', onKeydown, true);
-      var f = focusables();
-      if (f.length) f[0].focus();
-      try { if (window.posthog) posthog.capture('newsletter_popup_shown'); } catch (e) {}
-    };
-
-    function closeModal() {
-      modal.classList.remove('is-open');
-      document.removeEventListener('keydown', onKeydown, true);
-      markClosed();
-      try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
-      try {
-        if (lastFocus && lastFocus.focus) lastFocus.focus();
-        else document.body.focus();
-      } catch (e) {}
-    }
-
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-
-    if (!seen()) {
-      setTimeout(function () { if (!seen()) openModal(); }, 5000);
-    }
-  })();
-})();
 </script>
 </body>
 </html>"""
@@ -1114,7 +1014,11 @@ def page(title, description, path, body, *, jsonld="", bg_video=None, bg_youtube
         + "\n</div>\n"
         + newsletter_popup(lang, path)
         + "\n"
+        + signup.ribbon(lang)
+        + "\n"
         + body_script()
+        + "\n"
+        + signup.SCRIPT
     )
 
 

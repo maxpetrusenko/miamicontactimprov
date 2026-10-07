@@ -17,7 +17,7 @@ uses Fridays, first session 2 October 2026, and reuses the verified Event node.
 
 import listings
 import schema
-from shell import buy_button, page
+from shell import buy_button, newsletter_card, page
 
 IG = "https://instagram.com/miamicontactimprov"
 LUMA = "https://luma.com/cbzvq6pj"  # Friday class + open practice registration
@@ -196,6 +196,8 @@ def home():
           "NEW HERE? COME AS YOU ARE.",
           "Follow along on Instagram for jam reminders, photos, and updates.",
           _ig_pill("terracotta"), tall=True)}
+
+{newsletter_card("en")}
 """
     jsonld = schema.render(
         schema.organisation(),

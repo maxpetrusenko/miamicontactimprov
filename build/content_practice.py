@@ -1,6 +1,6 @@
 """Practice pages: jams, classes, safety and consent, video room."""
 
-from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, buy_button, cards, cite_block, facts, page, subscribe_block
+from shell import LAST_CHECKED, LAST_CHECKED_ISO, answer, band, buy_button, cards, cite_block, facts, newsletter_card, page, subscribe_block
 import json
 import schema
 import listings
@@ -110,6 +110,7 @@ def jams():
       {faq_html}
     </div>
     {subscribe_block("en", source="miamicontactimprov:jams", offer="New jam dates by email, one message a month.", uid="jams")}
+    {newsletter_card("en")}
     {band("Run a jam?", "Tell us the schedule, the room and the door fee and we will list it. This page exists to be corrected by the people who are actually in the room.", [("Submit a jam", "/about#submit", "primary"), ("Find a class", "/classes", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Contact improv jams in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/jams")}
   </div>

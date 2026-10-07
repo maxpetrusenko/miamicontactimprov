@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=eeb92ada">
+<link rel="stylesheet" href="/assets/site.css?v=46b18710">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -349,28 +349,67 @@
 <div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-es-miami">
     <button class="mci-popup-close" type="button" aria-label="Cerrar">&times;</button>
-    <h2 id="mci-popup-heading-es-miami" class="mci-h">10% de descuento en un evento.</h2>
-    <form class="subscribe-form" data-source="miamicontactimprov:popup:es-miami" data-offer="Suscríbete para un 10% de descuento en un evento, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="Si es tu primera suscripción, tu código del 10% va en camino a tu correo (y a tu teléfono, si dejaste uno). Después enviamos un descuento de vez en cuando, más o menos una vez al mes, del 20%." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-popup-es-miami">Suscríbete para un 10% de descuento en un evento, y un correo al mes.</label>
-  <div class="subscribe-row">
-    <input id="subscribe-popup-es-miami" name="email" type="email" inputmode="email" autocomplete="email" required>
-    <label class="subscribe-phone" for="subscribe-phone-popup-es-miami">
-      <span>Teléfono (opcional)</span>
-      <input id="subscribe-phone-popup-es-miami" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+    <h2 id="mci-popup-heading-es-miami" class="mci-h mci-popup-head"><span class="mci-popup-eyebrow">Suscríbete y recibe</span> <span class="mci-popup-big">un código de descuento del 10%</span></h2>
+    <form class="subscribe-form" novalidate data-source="miamicontactimprov:popup:es-miami" data-offer="Suscríbete para un 10% de descuento en un evento, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="También te lo enviamos por correo. Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com." data-wrong="Ese código no es correcto. Inténtalo otra vez." data-expired="Ese código caducó. Empieza de nuevo." data-wait="Demasiados intentos. Espera unos minutos." data-sent-sms="Te enviamos un código por mensaje de texto." data-sent-email="Te enviamos un código por correo." data-used="Ya usaste tu código. Nos vemos el viernes." data-resend-label="Reenviar" data-resend-wait="Reenviar en {n}s" data-copy-label="Copiar" data-copied="Copiado">
+  <div class="signup-step" data-step="1">
+    <p class="subscribe-label sr-only">Suscríbete para un 10% de descuento en un evento, y un correo al mes.</p>
+    <div class="subscribe-fields">
+      <label class="subscribe-field" for="subscribe-name-popup-es-miami">
+        <span>Nombre completo</span>
+        <input id="subscribe-name-popup-es-miami" name="name" type="text" autocomplete="name" maxlength="80" placeholder="Nombre">
+      </label>
+      <label class="subscribe-field" for="subscribe-popup-es-miami">
+        <span>Correo</span>
+        <input id="subscribe-popup-es-miami" name="email" type="email" inputmode="email" autocomplete="email" required>
+      </label>
+      <div class="subscribe-field subscribe-phone-row">
+        <span>Teléfono (opcional)</span>
+        <div class="subscribe-phone-inputs">
+          <select id="subscribe-country-popup-es-miami" name="country" aria-label="País"><option value="US">Estados Unidos (+1)</option><option value="CA">Canadá (+1)</option></select>
+          <input id="subscribe-phone-popup-es-miami" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" aria-label="Teléfono (opcional)">
+        </div>
+      </div>
+    </div>
+    <div class="subscribe-hp" aria-hidden="true">
+      <label for="subscribe-hp-popup-es-miami">Company</label>
+      <input id="subscribe-hp-popup-es-miami" name="company" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <label class="subscribe-consent" for="subscribe-consent-popup-es-miami">
+      <input id="subscribe-consent-popup-es-miami" name="consent" type="checkbox" required>
+      <span>Acepto recibir correos promocionales y mensajes de texto de Miami CI. Pueden aplicarse tarifas de mensajes y datos.</span>
     </label>
-    <button class="btn primary" type="submit">Suscribirme</button>
+    <button class="btn primary subscribe-submit" type="submit">ASEGURA TU LUGAR</button>
+    <button class="mci-popup-nothanks" type="button">NO, GRACIAS</button>
   </div>
-  <div class="subscribe-hp" aria-hidden="true">
-    <label for="subscribe-hp-popup-es-miami">Company</label>
-    <input id="subscribe-hp-popup-es-miami" name="company" type="text" tabindex="-1" autocomplete="off">
+  <div class="signup-step" data-step="2" hidden>
+    <p class="signup-eyebrow">Te damos la bienvenida a</p>
+    <p class="signup-big">Miami CI</p>
+    <p class="signup-instr">Escribe abajo el código de 6 dígitos</p>
+    <p class="signup-sentto" aria-live="polite"></p>
+    <label class="subscribe-field" for="subscribe-otp-popup-es-miami">
+      <span class="sr-only">Código de un solo uso</span>
+      <input id="subscribe-otp-popup-es-miami" class="signup-otp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" placeholder="000000">
+    </label>
+    <p class="signup-resend">¿No llegó el código? <button class="signup-resend-btn" type="button" disabled>Reenviar</button></p>
+    <button class="btn primary subscribe-submit" type="submit">REGISTRARME</button>
+    <button class="mci-popup-nothanks" type="button">NO, GRACIAS</button>
   </div>
-  <label class="subscribe-consent" for="subscribe-consent-popup-es-miami">
-    <input id="subscribe-consent-popup-es-miami" name="consent" type="checkbox" required>
-    <span>Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.</span>
-  </label>
+  <div class="signup-step" data-step="3" hidden>
+    <p class="signup-eyebrow">¡Gracias por estar aquí!</p>
+    <div class="signup-code-row">
+      <span class="signup-code" aria-live="polite"></span>
+      <button class="signup-copy" type="button">Copiar</button>
+    </div>
+    <p class="signup-used" hidden>Ya usaste tu código. Nos vemos el viernes.</p>
+    <p class="signup-thanks">¡Gracias!</p>
+    <p class="signup-small"><span class="signup-emailed" hidden>También te lo enviamos por correo. </span>Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%.</p>
+  </div>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>
   </div>
+</div>
+<div class="mci-ribbon" id="mci-ribbon" hidden>
+  <button class="mci-ribbon-btn" type="button" aria-label="Consigue un 10% de descuento en un evento"><span>10% DE DESCUENTO</span></button>
 </div>
 <script>
 (function () {
@@ -558,86 +597,6 @@
   var v = document.getElementById('video');
   if (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
 
-  // Subscribe forms. The endpoint, the source and the result lines come from the
-  // form's own data attributes, so this runs unchanged on every page and in both
-  // locales. A signup that reaches the Worker is done: nothing is sent twice.
-  //
-  // The campaign fields are read at the moment of the submit, from the address the
-  // reader actually arrived on: a QR code at the door carries ?src=door, a link in an
-  // Instagram bio carries utm_*. `src` rides on the end of the source, which is what
-  // separates a signup made in the room from one made from the bio of the same page.
-  // The source the Worker keys the welcome email off is the part before it.
-  var query = new URLSearchParams(window.location.search);
-  var param = function (name) { return query.get(name) || ''; };
-  // Kept to letters, digits, dash and underscore, and short: the Worker stores a source
-  // up to 64 characters and reads it as a prefix.
-  var entry = param('src').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 24);
-  document.querySelectorAll('form.subscribe-form').forEach(function (form) {
-    var status = form.querySelector('.subscribe-status');
-    var button = form.querySelector('button[type="submit"]');
-    var input = form.querySelector('input[type="email"]');
-    var phone = form.querySelector('input[type="tel"]');
-    var consent = form.querySelector('input[name="consent"]');
-    var company = form.querySelector('input[name="company"]');
-    var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      if (!input.value.trim()) { input.focus(); return; }
-      if (!consent.checked) { consent.focus(); return; }
-      if (company && company.value.trim()) { return; }
-      button.disabled = true;
-      say('sending');
-      fetch(form.getAttribute('data-endpoint'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: input.value.trim(),
-          phone: phone ? phone.value.trim() : '',
-          consent: consent.checked,
-          company: company ? company.value.trim() : '',
-          source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
-          offer: form.getAttribute('data-offer') || '',
-          campaign: param('utm_campaign'),
-          landing_page: window.location.pathname,
-          referrer: document.referrer || '',
-          utm_source: param('utm_source'),
-          utm_medium: param('utm_medium'),
-          utm_content: param('utm_content'),
-        }),
-      }).then(function (response) {
-        return response.json().catch(function () { return {}; }).then(function (data) {
-          return response.ok && data.ok;
-        });
-      }).then(function (ok) {
-        if (ok) {
-          form.reset();
-          say('ok');
-          // Any successful signup, from any form, retires the landing popup for good.
-          try { localStorage.setItem('mci_popup_subscribed', '1'); } catch (e) {}
-          try {
-            if (window.posthog && form.closest('#mci-popup')) posthog.capture('newsletter_popup_submitted');
-          } catch (e) {}
-          // Identify by a hashed email, never the address itself: the hash is
-          // the distinct id, and the real email only ever becomes a person
-          // property when the reader ticked consent for it (same checkbox
-          // this handler already required before sending the subscribe call).
-          try {
-            if (window.posthog && window.crypto && window.crypto.subtle) {
-              var emailValue = input.value.trim().toLowerCase();
-              window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(emailValue)).then(function (buf) {
-                var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) {
-                  return b.toString(16).padStart(2, '0');
-                }).join('').slice(0, 32);
-                posthog.identify(hex, consent.checked ? { email: emailValue } : {});
-              }).catch(function () {});
-            }
-          } catch (e) {}
-        }
-        else { say('error'); button.disabled = false; }
-      }).catch(function () { say('error'); button.disabled = false; });
-    });
-  });
-
   // ---- buy buttons (drop-in class / jam / combo checkout) ----
   // One handler for every [data-kind] button on the site: the kind, the date (when
   // the button carries one) and the endpoint all come off the button's own data
@@ -781,94 +740,270 @@
     } catch (e) {}
   })();
 
-  // ---- resubscribe notice ----
-  // The Worker's confirmation link redirects to /?resubscribed=1; say so in one line.
-  (function () {
-    try {
-      if (!/[?&]resubscribed=1(&|$)/.test(window.location.search)) return;
-      var main = document.getElementById('main');
-      if (!main) return;
-      var es = (document.documentElement.lang || '').slice(0, 2) === 'es';
-      var note = document.createElement('p');
-      note.className = 'resubscribe-note';
-      note.setAttribute('role', 'status');
-      note.textContent = es
-        ? 'Volviste a la lista. Si tu código sigue sin usar, va en tu correo.'
-        : 'You are back on the list. If your code is still unused, it is in your email.';
-      main.insertBefore(note, main.firstChild);
-    } catch (e) {}
-  })();
-
-  // ---- newsletter popup ----
-  // Shown 5 seconds after load. Closing it hides it for 7 days (timestamp in
-  // mci_popup_closed_at); a successful subscribe on any form (shared handler above) sets mci_popup_subscribed and it never
-  // shows again. Every read/write is wrapped so private browsing or blocked storage
-  // degrades to "never shows" rather than breaking the page.
-  (function () {
-    var modal = document.getElementById('mci-popup');
-    if (!modal) return;
-    var card = modal.querySelector('.mci-popup');
-    var closeBtn = modal.querySelector('.mci-popup-close');
-    var closedKey = 'mci_popup_closed_at';
-    var subscribedKey = 'mci_popup_subscribed';
-    var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
-    var lastFocus = null;
-
-    var seen = function () {
-      try {
-        if (localStorage.getItem(subscribedKey) === '1') return true;
-        var t = parseInt(localStorage.getItem(closedKey), 10);
-        return !isNaN(t) && Date.now() - t < WEEK_MS;
-      } catch (e) { return true; }
-    };
-    var markClosed = function () {
-      try { localStorage.setItem(closedKey, String(Date.now())); } catch (e) {}
-    };
-
-    var focusables = function () {
-      return Array.prototype.slice.call(
-        card.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])')
-      );
-    };
-
-    var onKeydown = function (e) {
-      if (e.key === 'Escape') { closeModal(); return; }
-      if (e.key !== 'Tab') return;
-      var f = focusables();
-      if (!f.length) return;
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    };
-
-    var openModal = function () {
-      lastFocus = document.activeElement;
-      modal.classList.add('is-open');
-      document.addEventListener('keydown', onKeydown, true);
-      var f = focusables();
-      if (f.length) f[0].focus();
-      try { if (window.posthog) posthog.capture('newsletter_popup_shown'); } catch (e) {}
-    };
-
-    function closeModal() {
-      modal.classList.remove('is-open');
-      document.removeEventListener('keydown', onKeydown, true);
-      markClosed();
-      try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
-      try {
-        if (lastFocus && lastFocus.focus) lastFocus.focus();
-        else document.body.focus();
-      } catch (e) {}
-    }
-
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-
-    if (!seen()) {
-      setTimeout(function () { if (!seen()) openModal(); }, 5000);
-    }
-  })();
-})();
 </script>
 </body>
 </html>
+<script>
+(function () {
+  var CLOSED_KEY = 'mci_popup_closed_at';
+  var SUB_KEY = 'mci_popup_subscribed';
+  var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+  var get = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  var set = function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} };
+  // Storage that cannot be read counts as "subscribed" for the popup (never nag) and as
+  // "not subscribed" for the ribbon (a quiet, always available way in).
+  var storageWorks = (function () { try { localStorage.getItem('x'); return true; } catch (e) { return false; } })();
+  var isSubscribed = function () { return get(SUB_KEY) === '1'; };
+  var recentlyClosed = function () {
+    var t = parseInt(get(CLOSED_KEY), 10);
+    return !isNaN(t) && Date.now() - t < WEEK_MS;
+  };
+  var capture = function (name) { try { if (window.posthog) posthog.capture(name); } catch (e) {} };
+
+  var ribbon = document.getElementById('mci-ribbon');
+  var syncRibbon = function () { if (ribbon) ribbon.hidden = isSubscribed(); };
+  syncRibbon();
+
+  // ---- popup ----
+  var modal = document.getElementById('mci-popup');
+  var card = modal ? modal.querySelector('.mci-popup') : null;
+  var lastFocus = null;
+  var focusables = function () {
+    return Array.prototype.slice.call(
+      card.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])')
+    ).filter(function (el) { return !el.closest('[hidden]'); });
+  };
+  var onKeydown = function (e) {
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    var f = focusables();
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  var openModal = function () {
+    if (!modal || modal.classList.contains('is-open')) return;
+    lastFocus = document.activeElement;
+    modal.classList.add('is-open');
+    document.body.classList.add('mci-popup-open');
+    document.addEventListener('keydown', onKeydown, true);
+    var f = focusables();
+    if (f.length) f[0].focus();
+    capture('newsletter_popup_shown');
+  };
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    document.body.classList.remove('mci-popup-open');
+    document.removeEventListener('keydown', onKeydown, true);
+    set(CLOSED_KEY, String(Date.now()));
+    capture('newsletter_popup_closed');
+    try { if (lastFocus && lastFocus.focus) lastFocus.focus(); else document.body.focus(); } catch (e) {}
+  }
+  if (modal) {
+    var closeBtn = modal.querySelector('.mci-popup-close');
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    Array.prototype.forEach.call(modal.querySelectorAll('.mci-popup-nothanks'), function (b) { b.addEventListener('click', closeModal); });
+    // Once a week: shown 5 seconds after load unless closed in the last 7 days or subscribed.
+    if (storageWorks && !isSubscribed() && !recentlyClosed()) {
+      setTimeout(function () { if (!isSubscribed() && !recentlyClosed()) openModal(); }, 5000);
+    }
+  }
+  if (ribbon) {
+    var rb = ribbon.querySelector('button');
+    // The ribbon opens the popup even while the weekly timer is still counting.
+    if (rb) rb.addEventListener('click', openModal);
+  }
+
+  // ---- signup forms ----
+  var query = new URLSearchParams(window.location.search);
+  var param = function (name) { return query.get(name) || ''; };
+  var entry = param('src').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 24);
+
+  Array.prototype.forEach.call(document.querySelectorAll('form.subscribe-form'), function (form) {
+    var q = function (s) { return form.querySelector(s); };
+    var attr = function (k) { return form.getAttribute('data-' + k) || ''; };
+    var steps = { 1: q('[data-step="1"]'), 2: q('[data-step="2"]'), 3: q('[data-step="3"]') };
+    var status = q('.subscribe-status');
+    var email = q('input[type="email"]');
+    var phone = q('input[type="tel"]');
+    var fullName = q('input[name="name"]');
+    var consent = q('input[name="consent"]');
+    var company = q('input[name="company"]');
+    var otp = q('input[name="otp"]');
+    var sentTo = q('.signup-sentto');
+    var resendBtn = q('.signup-resend-btn');
+    var codeEl = q('.signup-code');
+    var copyBtn = q('.signup-copy');
+    var usedEl = q('.signup-used');
+    var emailedEl = q('.signup-emailed');
+    var base = attr('endpoint').replace(/\/subscribe$/, '');
+    var stage = 1, timer = null, address = '';
+
+    var say = function (key) { status.textContent = attr(key); };
+    var submitBtn = function () { var s = steps[stage]; return s ? s.querySelector('button[type="submit"]') : null; };
+    var show = function (n) {
+      stage = n;
+      [1, 2, 3].forEach(function (i) { if (steps[i]) steps[i].hidden = i !== n; });
+      form.setAttribute('data-stage', String(n));
+      var host = form.closest('.mci-popup');
+      if (host) host.setAttribute('data-stage', String(n));
+      status.textContent = '';
+      var target = n === 2 ? otp : (n === 3 ? copyBtn : email);
+      if (target) { try { target.focus(); } catch (e) {} }
+    };
+    var post = function (path, body) {
+      return fetch(base + path, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) { return { status: r.status, data: d }; });
+      });
+    };
+    // The select only offers +1 (US and Canada): a typed national number goes out as
+    // +1 and ten digits; a number typed with its own + goes out as written.
+    var phoneValue = function () {
+      var raw = phone ? phone.value.trim() : '';
+      if (!raw || raw.charAt(0) === '+') return raw;
+      var digits = raw.replace(/\D/g, '');
+      if (digits.length === 11 && digits.charAt(0) === '1') digits = digits.slice(1);
+      return digits.length === 10 ? '+1' + digits : raw;
+    };
+    var countdown = function (seconds) {
+      if (!resendBtn) return;
+      clearInterval(timer);
+      var n = seconds;
+      var tick = function () {
+        if (n <= 0) { clearInterval(timer); resendBtn.disabled = false; resendBtn.textContent = attr('resend-label'); return; }
+        resendBtn.disabled = true;
+        resendBtn.textContent = attr('resend-wait').replace('{n}', String(n));
+        n -= 1;
+      };
+      tick();
+      timer = setInterval(tick, 1000);
+    };
+    var failure = function (res, disableKey) {
+      var btn = submitBtn();
+      if (btn) btn.disabled = false;
+      if (res && res.data && res.data.expired) { show(1); say('expired'); return; }
+      say(res && res.status === 429 ? 'wait' : (disableKey || 'error'));
+    };
+
+    var startSignup = function () {
+      if (!email.value.trim()) { email.focus(); return; }
+      if (!consent.checked) { consent.focus(); return; }
+      if (company && company.value.trim()) { return; }
+      var btn = submitBtn();
+      btn.disabled = true;
+      say('sending');
+      address = email.value.trim();
+      post('/subscribe', {
+        email: address,
+        name: fullName ? fullName.value.trim() : '',
+        phone: phoneValue(),
+        consent: consent.checked,
+        company: company ? company.value.trim() : '',
+        source: attr('source') + (entry ? ':' + entry : ''),
+        offer: attr('offer'),
+        campaign: param('utm_campaign'),
+        landing_page: window.location.pathname,
+        referrer: document.referrer || '',
+        utm_source: param('utm_source'),
+        utm_medium: param('utm_medium'),
+        utm_content: param('utm_content'),
+      }).then(function (res) {
+        btn.disabled = false;
+        if (res.status === 200 && res.data.ok && res.data.step === 'verify') {
+          if (form.closest('#mci-popup')) capture('newsletter_popup_submitted');
+          show(2);
+          if (sentTo) sentTo.textContent = attr(res.data.channel === 'sms' ? 'sent-sms' : 'sent-email');
+          countdown(30);
+        } else if (res.status === 200 && res.data.ok) {
+          show(3);
+        } else {
+          failure(res);
+        }
+      }).catch(function () { failure(null); });
+    };
+
+    var finish = function (data) {
+      // "We also emailed it" only when the Worker says an email actually went out.
+      if (emailedEl) emailedEl.hidden = data.emailed !== true;
+      if (data.code) {
+        codeEl.textContent = data.code;
+        codeEl.hidden = false;
+        if (copyBtn) copyBtn.hidden = false;
+        if (usedEl) usedEl.hidden = true;
+      } else {
+        codeEl.textContent = '';
+        codeEl.hidden = true;
+        if (copyBtn) copyBtn.hidden = true;
+        if (usedEl) usedEl.hidden = false;
+      }
+      set(SUB_KEY, '1');
+      syncRibbon();
+      show(3);
+      capture('newsletter_verified');
+      // Identify by a hashed address only; the address itself is never sent as a property.
+      try {
+        if (window.posthog && window.crypto && window.crypto.subtle) {
+          var value = address.toLowerCase();
+          window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)).then(function (buf) {
+            var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return b.toString(16).padStart(2, '0'); }).join('').slice(0, 32);
+            posthog.identify(hex);
+          }).catch(function () {});
+        }
+      } catch (e) {}
+    };
+
+    var verify = function () {
+      var code = otp.value.replace(/\D/g, '');
+      if (code.length !== 6) { otp.focus(); return; }
+      var btn = submitBtn();
+      btn.disabled = true;
+      post('/verify', { email: address, code: code }).then(function (res) {
+        btn.disabled = false;
+        if (res.status === 200 && res.data.ok) { finish(res.data); return; }
+        if (res.status === 400 && !res.data.expired) { say('wrong'); otp.value = ''; otp.focus(); return; }
+        failure(res);
+      }).catch(function () { failure(null); });
+    };
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (stage === 1) startSignup();
+      else if (stage === 2) verify();
+    });
+    if (otp) otp.addEventListener('input', function () { otp.value = otp.value.replace(/\D/g, '').slice(0, 6); });
+    if (resendBtn) resendBtn.addEventListener('click', function () {
+      if (resendBtn.disabled) return;
+      resendBtn.disabled = true;
+      post('/resend-code', { email: address }).then(function (res) {
+        if (res.status === 200 && res.data.ok) { countdown(30); return; }
+        if (res.data && res.data.expired) { show(1); say('expired'); return; }
+        if (res.status === 429 && res.data && res.data.retry_after) { countdown(Math.min(res.data.retry_after, 3600)); say('wait'); return; }
+        resendBtn.disabled = false;
+        say('error');
+      }).catch(function () { resendBtn.disabled = false; say('error'); });
+    });
+    if (copyBtn) copyBtn.addEventListener('click', function () {
+      var value = codeEl.textContent;
+      var done = function () {
+        copyBtn.textContent = attr('copied');
+        setTimeout(function () { copyBtn.textContent = attr('copy-label'); }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(value).then(done).catch(function () {});
+      } else {
+        try {
+          var range = document.createRange();
+          range.selectNodeContents(codeEl);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+          document.execCommand('copy'); done();
+        } catch (e) {}
+      }
+    });
+  });
+})();
+</script>
