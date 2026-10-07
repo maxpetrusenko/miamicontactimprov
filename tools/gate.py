@@ -1268,7 +1268,9 @@ def main():
     # rglob, not glob: the Spanish pages live under /es/, and a non-recursive glob would
     # have measured only the English tree while reporting a full green run. Page keys are
     # site-relative paths ("es/jams.html") so a finding names the file it came from.
-    html_files = sorted(site_dir.rglob("*.html"))
+    # t/index.html is the /t/<CODE> short-link rewrite target: a noindex stub, not a page.
+    non_pages = {"t/index.html"}
+    html_files = sorted(p for p in site_dir.rglob("*.html") if p.relative_to(site_dir).as_posix() not in non_pages)
     if not html_files:
         print(f"no html files in {site_dir}", file=sys.stderr)
         return 2
