@@ -35,7 +35,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=eeb92ada">
+<link rel="stylesheet" href="/assets/site.css?v=0e5b9b09">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -194,16 +194,25 @@
 <div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-404">
     <button class="mci-popup-close" type="button" aria-label="Close">&times;</button>
-    <h2 id="mci-popup-heading-404" class="mci-h">10% off one event.</h2>
+    <h2 id="mci-popup-heading-404" class="mci-h"><span class="mci-popup-eyebrow">Sign up to receive</span> <span class="mci-popup-big">a 10% discount code</span></h2>
     <form class="subscribe-form" data-source="miamicontactimprov:popup:404" data-offer="Subscribe for 10% off one event, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="If this is your first signup, your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-popup-404">Subscribe for 10% off one event, and one email a month.</label>
-  <div class="subscribe-row">
-    <input id="subscribe-popup-404" name="email" type="email" inputmode="email" autocomplete="email" required>
-    <label class="subscribe-phone" for="subscribe-phone-popup-404">
-      <span>Phone (optional)</span>
-      <input id="subscribe-phone-popup-404" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+  <p class="subscribe-label sr-only">Subscribe for 10% off one event, and one email a month.</p>
+  <div class="subscribe-fields">
+    <label class="subscribe-field" for="subscribe-name-popup-404">
+      <span>Full name</span>
+      <input id="subscribe-name-popup-404" name="name" type="text" autocomplete="name" maxlength="80" placeholder="First name">
     </label>
-    <button class="btn primary" type="submit">Subscribe</button>
+    <label class="subscribe-field" for="subscribe-popup-404">
+      <span>Email</span>
+      <input id="subscribe-popup-404" name="email" type="email" inputmode="email" autocomplete="email" required>
+    </label>
+    <div class="subscribe-field subscribe-phone-row">
+      <span>Phone (optional)</span>
+      <div class="subscribe-phone-inputs">
+        <select id="subscribe-country-popup-404" name="country" aria-label="Country"><option value="US">United States (+1)</option><option value="CA">Canada (+1)</option></select>
+        <input id="subscribe-phone-popup-404" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" aria-label="Phone (optional)">
+      </div>
+    </div>
   </div>
   <div class="subscribe-hp" aria-hidden="true">
     <label for="subscribe-hp-popup-404">Company</label>
@@ -211,8 +220,10 @@
   </div>
   <label class="subscribe-consent" for="subscribe-consent-popup-404">
     <input id="subscribe-consent-popup-404" name="consent" type="checkbox" required>
-    <span>I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.</span>
+    <span>I agree to receive promotional emails and text messages from Miami CI. Message and data rates may apply.</span>
   </label>
+  <button class="btn primary subscribe-submit" type="submit">SECURE YOUR SPACE</button>
+  <button class="mci-popup-nothanks" type="button">NO THANKS</button>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>
   </div>
@@ -422,9 +433,19 @@
     var button = form.querySelector('button[type="submit"]');
     var input = form.querySelector('input[type="email"]');
     var phone = form.querySelector('input[type="tel"]');
+    var fullName = form.querySelector('input[name="name"]');
     var consent = form.querySelector('input[name="consent"]');
     var company = form.querySelector('input[name="company"]');
     var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
+    // The country select only offers +1 (US and Canada), so a typed national number is
+    // sent as +1 and ten digits; a number typed with its own + is sent as written.
+    var phoneValue = function () {
+      var raw = phone ? phone.value.trim() : '';
+      if (!raw || raw.charAt(0) === '+') return raw;
+      var digits = raw.replace(/\D/g, '');
+      if (digits.length === 11 && digits.charAt(0) === '1') digits = digits.slice(1);
+      return digits.length === 10 ? '+1' + digits : raw;
+    };
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       if (!input.value.trim()) { input.focus(); return; }
@@ -437,7 +458,8 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: input.value.trim(),
-          phone: phone ? phone.value.trim() : '',
+          name: fullName ? fullName.value.trim() : '',
+          phone: phoneValue(),
           consent: consent.checked,
           company: company ? company.value.trim() : '',
           source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
@@ -707,6 +729,8 @@
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    var noThanks = modal.querySelector('.mci-popup-nothanks');
+    if (noThanks) noThanks.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
 
     if (!seen()) {

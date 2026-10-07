@@ -497,9 +497,12 @@ def check_event_details(pages):
 
 def check_seo(pages, site_dir, canonicals_seen):
     for page, src in pages.items():
+        # The signup form's name field legitimately carries placeholder="First name";
+        # that is real UI copy, not template residue, so only that attribute is exempt.
+        scan = re.sub(r'placeholder="(?:First name|Nombre)"', "", src)
         hits = sorted(
-            {m.group(0) for m in PLACE_RE.finditer(src)}
-            | {m.group(0) for m in PLACE_SENSITIVE_RE.finditer(src)}
+            {m.group(0) for m in PLACE_RE.finditer(scan)}
+            | {m.group(0) for m in PLACE_SENSITIVE_RE.finditer(scan)}
         )
         if hits:
             add(ERROR, "seo", page, f"placeholder text in markup: {hits}")

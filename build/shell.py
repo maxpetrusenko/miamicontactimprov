@@ -196,18 +196,32 @@ if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doN
 SUBSCRIBE_COPY = {
     "en": {
         "label": "Subscribe for 10% off one event, and one email a month.",
+        "name_label": "Full name",
+        "name_placeholder": "First name",
+        "email_label": "Email",
         "phone_label": "Phone (optional)",
-        "consent": "I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.",
-        "button": "Subscribe",
+        "country_label": "Country",
+        "countries": [("US", "United States (+1)"), ("CA", "Canada (+1)")],
+        "consent": "I agree to receive promotional emails and text messages from Miami CI. Message and data rates may apply.",
+        "button": "Get my code",
+        "popup_button": "SECURE YOUR SPACE",
+        "no_thanks": "NO THANKS",
         "sending": "Sending.",
         "ok": "If this is your first signup, your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off.",
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
     },
     "es": {
         "label": "Suscríbete para un 10% de descuento en un evento, y un correo al mes.",
+        "name_label": "Nombre completo",
+        "name_placeholder": "Nombre",
+        "email_label": "Correo",
         "phone_label": "Teléfono (opcional)",
-        "consent": "Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.",
-        "button": "Suscribirme",
+        "country_label": "País",
+        "countries": [("US", "Estados Unidos (+1)"), ("CA", "Canadá (+1)")],
+        "consent": "Acepto recibir correos promocionales y mensajes de texto de Miami CI. Pueden aplicarse tarifas de mensajes y datos.",
+        "button": "Quiero mi código",
+        "popup_button": "ASEGURA TU LUGAR",
+        "no_thanks": "NO, GRACIAS",
         "sending": "Enviando.",
         "ok": "Si es tu primera suscripción, tu código del 10% va en camino a tu correo (y a tu teléfono, si dejaste uno). Después enviamos un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
         "error": "No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.",
@@ -226,7 +240,7 @@ def page_slug(path):
     return slug or "home"
 
 
-def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
+def subscribe_form(lang="en", source="", uid="page", label=None, button=None, popup=False):
     """The subscribe form. One markup, every locale, every placement.
 
     It posts JSON to the Worker and writes its own result line. With JavaScript off the
@@ -252,20 +266,37 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     """
     copy = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])
     field_id = f"subscribe-{uid}"
+    name_id = f"subscribe-name-{uid}"
     phone_id = f"subscribe-phone-{uid}"
+    country_id = f"subscribe-country-{uid}"
     consent_id = f"subscribe-consent-{uid}"
     hp_id = f"subscribe-hp-{uid}"
     text = label or copy["label"]
-    action = button or copy["button"]
+    action = button or (copy["popup_button"] if popup else copy["button"])
+    # In the popup the heading carries the offer, so the label stays for screen readers only.
+    label_class = "subscribe-label sr-only" if popup else "subscribe-label"
+    options = "".join(f'<option value="{code}">{name}</option>' for code, name in copy["countries"])
+    no_thanks = (
+        f'\n  <button class="mci-popup-nothanks" type="button">{copy["no_thanks"]}</button>' if popup else ""
+    )
     return f"""<form class="subscribe-form" data-source="{_attr(source)}" data-offer="{_attr(text)}" data-endpoint="{SUBSCRIBE_ENDPOINT}" data-sending="{_attr(copy['sending'])}" data-ok="{_attr(copy['ok'])}" data-error="{_attr(copy['error'])}">
-  <label class="subscribe-label" for="{field_id}">{text}</label>
-  <div class="subscribe-row">
-    <input id="{field_id}" name="email" type="email" inputmode="email" autocomplete="email" required>
-    <label class="subscribe-phone" for="{phone_id}">
-      <span>{copy['phone_label']}</span>
-      <input id="{phone_id}" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+  <p class="{label_class}">{text}</p>
+  <div class="subscribe-fields">
+    <label class="subscribe-field" for="{name_id}">
+      <span>{copy['name_label']}</span>
+      <input id="{name_id}" name="name" type="text" autocomplete="name" maxlength="80" placeholder="{_attr(copy['name_placeholder'])}">
     </label>
-    <button class="btn primary" type="submit">{action}</button>
+    <label class="subscribe-field" for="{field_id}">
+      <span>{copy['email_label']}</span>
+      <input id="{field_id}" name="email" type="email" inputmode="email" autocomplete="email" required>
+    </label>
+    <div class="subscribe-field subscribe-phone-row">
+      <span>{copy['phone_label']}</span>
+      <div class="subscribe-phone-inputs">
+        <select id="{country_id}" name="country" aria-label="{_attr(copy['country_label'])}">{options}</select>
+        <input id="{phone_id}" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" aria-label="{_attr(copy['phone_label'])}">
+      </div>
+    </div>
   </div>
   <div class="subscribe-hp" aria-hidden="true">
     <label for="{hp_id}">Company</label>
@@ -275,6 +306,7 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     <input id="{consent_id}" name="consent" type="checkbox" required>
     <span>{copy['consent']}</span>
   </label>
+  <button class="btn primary subscribe-submit" type="submit">{action}</button>{no_thanks}
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>"""
 
@@ -348,8 +380,8 @@ def buy_button(kind, label, uid, event_date=None, lang="en"):
 # offer carry the mechanics (10% off one event, one email a month); this heading carries the
 # hook that gets a reader to look at the form at all.
 POPUP_HEADING = {
-    "en": "10% off one event.",
-    "es": "10% de descuento en un evento.",
+    "en": ("Sign up to receive", "a 10% discount code"),
+    "es": ("Suscríbete y recibe", "un código de descuento del 10%"),
 }
 
 POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
@@ -365,13 +397,13 @@ def newsletter_popup(lang, path):
     """
     slug = page_slug(path)
     heading_id = f"mci-popup-heading-{slug}"
-    heading = POPUP_HEADING.get(lang, POPUP_HEADING["en"])
+    eyebrow, big = POPUP_HEADING.get(lang, POPUP_HEADING["en"])
     close_label = POPUP_CLOSE_LABEL.get(lang, POPUP_CLOSE_LABEL["en"])
-    form = subscribe_form(lang, source=f"miamicontactimprov:popup:{slug}", uid=f"popup-{slug}")
+    form = subscribe_form(lang, source=f"miamicontactimprov:popup:{slug}", uid=f"popup-{slug}", popup=True)
     return f"""<div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="{heading_id}">
     <button class="mci-popup-close" type="button" aria-label="{close_label}">&times;</button>
-    <h2 id="{heading_id}" class="mci-h">{heading}</h2>
+    <h2 id="{heading_id}" class="mci-h"><span class="mci-popup-eyebrow">{eyebrow}</span> <span class="mci-popup-big">{big}</span></h2>
     {form}
   </div>
 </div>"""
@@ -779,9 +811,19 @@ def body_script():
     var button = form.querySelector('button[type="submit"]');
     var input = form.querySelector('input[type="email"]');
     var phone = form.querySelector('input[type="tel"]');
+    var fullName = form.querySelector('input[name="name"]');
     var consent = form.querySelector('input[name="consent"]');
     var company = form.querySelector('input[name="company"]');
     var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
+    // The country select only offers +1 (US and Canada), so a typed national number is
+    // sent as +1 and ten digits; a number typed with its own + is sent as written.
+    var phoneValue = function () {
+      var raw = phone ? phone.value.trim() : '';
+      if (!raw || raw.charAt(0) === '+') return raw;
+      var digits = raw.replace(/\D/g, '');
+      if (digits.length === 11 && digits.charAt(0) === '1') digits = digits.slice(1);
+      return digits.length === 10 ? '+1' + digits : raw;
+    };
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       if (!input.value.trim()) { input.focus(); return; }
@@ -794,7 +836,8 @@ def body_script():
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: input.value.trim(),
-          phone: phone ? phone.value.trim() : '',
+          name: fullName ? fullName.value.trim() : '',
+          phone: phoneValue(),
           consent: consent.checked,
           company: company ? company.value.trim() : '',
           source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
@@ -1064,6 +1107,8 @@ def body_script():
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    var noThanks = modal.querySelector('.mci-popup-nothanks');
+    if (noThanks) noThanks.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
 
     if (!seen()) {

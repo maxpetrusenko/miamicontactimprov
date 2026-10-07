@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=eeb92ada">
+<link rel="stylesheet" href="/assets/site.css?v=0e5b9b09">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -380,16 +380,25 @@
 <div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-es-jam-de-los-viernes">
     <button class="mci-popup-close" type="button" aria-label="Cerrar">&times;</button>
-    <h2 id="mci-popup-heading-es-jam-de-los-viernes" class="mci-h">10% de descuento en un evento.</h2>
+    <h2 id="mci-popup-heading-es-jam-de-los-viernes" class="mci-h"><span class="mci-popup-eyebrow">Suscríbete y recibe</span> <span class="mci-popup-big">un código de descuento del 10%</span></h2>
     <form class="subscribe-form" data-source="miamicontactimprov:popup:es-jam-de-los-viernes" data-offer="Suscríbete para un 10% de descuento en un evento, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="Si es tu primera suscripción, tu código del 10% va en camino a tu correo (y a tu teléfono, si dejaste uno). Después enviamos un descuento de vez en cuando, más o menos una vez al mes, del 20%." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-popup-es-jam-de-los-viernes">Suscríbete para un 10% de descuento en un evento, y un correo al mes.</label>
-  <div class="subscribe-row">
-    <input id="subscribe-popup-es-jam-de-los-viernes" name="email" type="email" inputmode="email" autocomplete="email" required>
-    <label class="subscribe-phone" for="subscribe-phone-popup-es-jam-de-los-viernes">
-      <span>Teléfono (opcional)</span>
-      <input id="subscribe-phone-popup-es-jam-de-los-viernes" name="phone" type="tel" inputmode="tel" autocomplete="tel">
+  <p class="subscribe-label sr-only">Suscríbete para un 10% de descuento en un evento, y un correo al mes.</p>
+  <div class="subscribe-fields">
+    <label class="subscribe-field" for="subscribe-name-popup-es-jam-de-los-viernes">
+      <span>Nombre completo</span>
+      <input id="subscribe-name-popup-es-jam-de-los-viernes" name="name" type="text" autocomplete="name" maxlength="80" placeholder="Nombre">
     </label>
-    <button class="btn primary" type="submit">Suscribirme</button>
+    <label class="subscribe-field" for="subscribe-popup-es-jam-de-los-viernes">
+      <span>Correo</span>
+      <input id="subscribe-popup-es-jam-de-los-viernes" name="email" type="email" inputmode="email" autocomplete="email" required>
+    </label>
+    <div class="subscribe-field subscribe-phone-row">
+      <span>Teléfono (opcional)</span>
+      <div class="subscribe-phone-inputs">
+        <select id="subscribe-country-popup-es-jam-de-los-viernes" name="country" aria-label="País"><option value="US">Estados Unidos (+1)</option><option value="CA">Canadá (+1)</option></select>
+        <input id="subscribe-phone-popup-es-jam-de-los-viernes" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" aria-label="Teléfono (opcional)">
+      </div>
+    </div>
   </div>
   <div class="subscribe-hp" aria-hidden="true">
     <label for="subscribe-hp-popup-es-jam-de-los-viernes">Company</label>
@@ -397,8 +406,10 @@
   </div>
   <label class="subscribe-consent" for="subscribe-consent-popup-es-jam-de-los-viernes">
     <input id="subscribe-consent-popup-es-jam-de-los-viernes" name="consent" type="checkbox" required>
-    <span>Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.</span>
+    <span>Acepto recibir correos promocionales y mensajes de texto de Miami CI. Pueden aplicarse tarifas de mensajes y datos.</span>
   </label>
+  <button class="btn primary subscribe-submit" type="submit">ASEGURA TU LUGAR</button>
+  <button class="mci-popup-nothanks" type="button">NO, GRACIAS</button>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>
   </div>
@@ -608,9 +619,19 @@
     var button = form.querySelector('button[type="submit"]');
     var input = form.querySelector('input[type="email"]');
     var phone = form.querySelector('input[type="tel"]');
+    var fullName = form.querySelector('input[name="name"]');
     var consent = form.querySelector('input[name="consent"]');
     var company = form.querySelector('input[name="company"]');
     var say = function (key) { status.textContent = form.getAttribute('data-' + key) || ''; };
+    // The country select only offers +1 (US and Canada), so a typed national number is
+    // sent as +1 and ten digits; a number typed with its own + is sent as written.
+    var phoneValue = function () {
+      var raw = phone ? phone.value.trim() : '';
+      if (!raw || raw.charAt(0) === '+') return raw;
+      var digits = raw.replace(/\D/g, '');
+      if (digits.length === 11 && digits.charAt(0) === '1') digits = digits.slice(1);
+      return digits.length === 10 ? '+1' + digits : raw;
+    };
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       if (!input.value.trim()) { input.focus(); return; }
@@ -623,7 +644,8 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: input.value.trim(),
-          phone: phone ? phone.value.trim() : '',
+          name: fullName ? fullName.value.trim() : '',
+          phone: phoneValue(),
           consent: consent.checked,
           company: company ? company.value.trim() : '',
           source: form.getAttribute('data-source') + (entry ? ':' + entry : ''),
@@ -893,6 +915,8 @@
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    var noThanks = modal.querySelector('.mci-popup-nothanks');
+    if (noThanks) noThanks.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
 
     if (!seen()) {

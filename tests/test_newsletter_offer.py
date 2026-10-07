@@ -28,7 +28,7 @@ class FooterAndPopup(unittest.TestCase):
 
     def test_popup_copy_is_ten_percent_one_event(self):
         for lang in ("en", "es"):
-            self.assertIn("10%", shell.POPUP_HEADING[lang])
+            self.assertIn("10%", " ".join(shell.POPUP_HEADING[lang]))
             self.assertIn("10%", shell.SUBSCRIBE_COPY[lang]["label"])
             html = shell.newsletter_popup(lang, "/")
             self.assertIn("10%", html)
@@ -48,6 +48,24 @@ class FooterAndPopup(unittest.TestCase):
             text = page.read_text()
             self.assertNotIn("The monthly dates", text, page.name)
             self.assertNotIn("Las fechas del mes", text, page.name)
+
+    def test_popup_fields_order_and_buttons(self):
+        html = shell.newsletter_popup("en", "/")
+        pos = [html.index(m) for m in ('name="name"', 'name="email"', 'name="country"', 'name="phone"', 'name="consent"', "SECURE YOUR SPACE", "NO THANKS")]
+        self.assertEqual(pos, sorted(pos))
+        self.assertIn('placeholder="First name"', html)
+        self.assertIn("Sign up to receive", html)
+        self.assertIn("a 10% discount code", html)
+        self.assertIn('<option value="US">United States (+1)</option>', html)
+        self.assertEqual(html.count("<option"), 2)
+        self.assertIn("I agree to receive promotional emails and text messages from Miami CI. Message and data rates may apply.", html)
+        self.assertNotIn("Miami Contact Improv", html)
+
+    def test_inline_form_uses_get_my_code(self):
+        html = shell.subscribe_form("en", source="x", uid="t")
+        self.assertIn("Get my code", html)
+        self.assertNotIn("NO THANKS", html)
+        self.assertIn('name="name"', html)
 
     def test_home_handles_resubscribed_notice(self):
         html = (ROOT / "site" / "index.html").read_text()

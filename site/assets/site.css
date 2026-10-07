@@ -466,7 +466,19 @@ a:hover { color: var(--terracotta-dark); }
   color: var(--ink); background: rgba(12, 18, 16, 0.7);
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
 }
-.subscribe-row input::placeholder { color: var(--muted); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.subscribe-fields { display: grid; gap: 12px; }
+.subscribe-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.subscribe-field > span { font-size: 0.72rem; letter-spacing: 0.04em; color: var(--muted); }
+.subscribe-field input, .subscribe-field select {
+  padding: 12px 14px; font: inherit; font-size: 0.95rem; width: 100%; box-sizing: border-box;
+  color: var(--ink); background: rgba(12, 18, 16, 0.7);
+  border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+}
+.subscribe-phone-inputs { display: grid; grid-template-columns: minmax(0, 13.5rem) minmax(0, 1fr); gap: 8px; }
+@media (max-width: 480px) { .subscribe-phone-inputs { grid-template-columns: 1fr; } }
+.subscribe-field input::placeholder { color: var(--muted); }
+.subscribe-submit { margin-top: 16px; width: 100%; justify-content: center; }
 button.btn { border: none; font-family: inherit; cursor: pointer; }
 button.btn[disabled] { opacity: 0.6; cursor: default; }
 /* Honeypot: hidden from sighted users and from a screen reader (aria-hidden), but
@@ -721,12 +733,22 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
   padding: 34px 30px 28px;
 }
 .mci-popup h2 {
-  font-size: 1.5rem; line-height: 1.12; color: var(--ink);
-  max-width: 26ch; margin: 0 0 18px; text-transform: uppercase;
+  line-height: 1.12; color: var(--ink); max-width: 26ch; margin: 0 0 18px; text-transform: uppercase;
+}
+.mci-popup-eyebrow { display: block; font-size: 0.82rem; letter-spacing: 0.16em; color: var(--muted); margin-bottom: 6px; }
+.mci-popup-big { display: block; font-size: 1.9rem; }
+.mci-popup-nothanks {
+  display: block; margin: 12px auto 0; padding: 6px 10px; border: none; background: none;
+  font: inherit; font-size: 0.78rem; letter-spacing: 0.14em; color: var(--muted); cursor: pointer;
+}
+.mci-popup-nothanks:hover { color: var(--ink); text-decoration: underline; }
+@media (max-width: 480px) {
+  .mci-popup-overlay { padding: 12px; align-items: flex-start; overflow-y: auto; }
+  .mci-popup { padding: 28px 20px 20px; margin: auto 0; }
+  .mci-popup-big { font-size: 1.6rem; }
 }
 .mci-popup .subscribe-form { max-width: none; }
-.mci-popup .subscribe-row input[type="email"],
-.mci-popup .subscribe-phone input[type="tel"] {
+.mci-popup .subscribe-field input, .mci-popup .subscribe-field select {
   color: var(--ink); background: var(--input); border: 1px solid var(--line-strong);
 }
 .mci-popup-close {
