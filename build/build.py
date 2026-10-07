@@ -263,7 +263,7 @@ REDIRECT_ALIASES = """# Clean-URL safety net. Cloudflare Pages serves /miami.htm
 
 
 # /t/<CODE> serves one static page (see ticket_link.py) with status 200.
-TICKET_REWRITE = "/t/*  /t/index.html  200"
+TICKET_REWRITE = "/t/*  /t/  200"
 
 
 def redirects_file():
@@ -292,7 +292,7 @@ def redirects_file():
     # page with the code pre-applied (the page reads ?code= and passes it to checkout).
     lines.append("")
     lines.append("# Short link for personal ticket codes (email and text). A rewrite, not a redirect:")
-    lines.append("# Pages does not fill :code into a query string, so /t/<CODE> serves t/index.html,")
+    lines.append("# Pages does not fill :code into a query string, so /t/<CODE> serves the /t/ page (target is the clean URL: Pages 308s /t/index.html),")
     lines.append("# whose script reads the code from the path and goes to /pricing?code=<CODE>.")
     lines.append(TICKET_REWRITE)
     lines.append("")
