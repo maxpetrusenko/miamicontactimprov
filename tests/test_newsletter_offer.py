@@ -32,7 +32,21 @@ class FooterAndPopup(unittest.TestCase):
             self.assertIn("10%", shell.SUBSCRIBE_COPY[lang]["label"])
             html = shell.newsletter_popup(lang, "/")
             self.assertIn("10%", html)
-            self.assertNotIn("20%", html)
+            self.assertNotIn("next two months", html)
+            self.assertNotIn("dos meses", html)
+
+    def test_success_line_names_code_and_monthly_discount(self):
+        for lang in ("en", "es"):
+            ok = shell.SUBSCRIBE_COPY[lang]["ok"]
+            self.assertIn("10%", ok)
+            self.assertIn("20%", ok)
+            self.assertNotIn("\u2014", ok)
+
+    def test_no_monthly_dates_heading_in_built_site(self):
+        for page in (ROOT / "site").rglob("*.html"):
+            text = page.read_text()
+            self.assertNotIn("The monthly dates", text, page.name)
+            self.assertNotIn("Las fechas del mes", text, page.name)
 
     def test_popup_script_uses_seven_day_and_subscribed_keys(self):
         src = (ROOT / "build" / "shell.py").read_text()

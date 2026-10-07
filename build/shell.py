@@ -195,23 +195,21 @@ if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doN
 # legal consent statement, because a form that texts a phone number needs one.
 SUBSCRIBE_COPY = {
     "en": {
-        "heading": "The monthly dates",
         "label": "Subscribe for 10% off one event, and one email a month.",
         "phone_label": "Phone (optional)",
         "consent": "I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.",
         "button": "Subscribe",
         "sending": "Sending.",
-        "ok": "You are on the list. The code is in the email that just went out.",
+        "ok": "Done. Your 10% code is on its way to your email (and phone, if you left one). After that we send an occasional discount, about once a month, 20% off.",
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
     },
     "es": {
-        "heading": "Las fechas del mes",
         "label": "Suscríbete para un 10% de descuento en un evento, y un correo al mes.",
         "phone_label": "Teléfono (opcional)",
         "consent": "Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.",
         "button": "Suscribirme",
         "sending": "Enviando.",
-        "ok": "Ya estás en la lista. El código va en el correo que acaba de salir.",
+        "ok": "Listo. Tu código del 10% va en camino a tu correo (y a tu teléfono, si dejaste uno). Después enviamos un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
         "error": "No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.",
     },
 }
@@ -244,8 +242,8 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     no separate hint line under the field, so a page that offers the next dates rather
     than the monthly email says so in the label itself and nowhere else.
 
-    Phone is a second, optional field: no SMS sends yet, so making it required would
-    ask for something the site cannot use today and only costs signups. The consent
+    Phone is a second, optional field: the Worker texts the code to it when given, but
+    making it required would only cost signups. The consent
     checkbox is required and is the actual legal line, not a hint - it names both
     channels because a reader who leaves a number is agreeing to be texted on it.
     The honeypot field is hidden from sighted users by CSS alone (no display:none, a
