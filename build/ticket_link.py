@@ -30,6 +30,8 @@ def page():
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Opening tickets</title>
+<meta name="description" content="Opening Miami Contact Improv tickets with your discount code applied.">
+<link rel="canonical" href="https://miamicontactimprov.com/pricing">
 <style>body {{ font-family: Georgia, serif; max-width: 32rem; margin: 18vh auto; padding: 0 1rem; color: #171512; background: #F3EDE1; }} a {{ color: #9C5A38; }}</style>
 </head>
 <body>
