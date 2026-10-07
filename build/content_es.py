@@ -1781,7 +1781,7 @@ def fundamentals():
 
       <h2>Cuánto cuesta una clase</h2>
       <p>Cada clase son 20 dólares o más dentro de una escala que llega a 50. Paga lo que puedas dentro de ese rango y nadie te va a preguntar dónde te quedaste. El extremo bajo cubre la sala; el alto es para quien pueda cargar con más y quiera que la serie siga en pie.</p>
-      <p>Quien se suscribe al correo mensual tiene un 20% de descuento en cualquier clase durante los próximos dos meses; el código llega en el primer correo. Nada más en este sitio abre un descuento.</p>
+      <p>Quien se suscribe al correo mensual tiene un 10% de descuento en un evento, de un solo uso; el código llega en el primer correo. Nada más en este sitio abre un descuento.</p>
       <p>Si esta semana los 20 dólares son la barrera, dilo antes de la clase. Un correo basta y se resuelve. A nadie se le deja fuera de una clase de fundamentos por dinero.</p>
 
       {subscribe_block("es", source="miamicontactimprov:es-fundamentos", offer=START_OFFER_ES, uid="es-fundamentos")}
@@ -1833,7 +1833,7 @@ def fundamentals():
 # precios de /es/fundamentos, donde quien lee acaba de enterarse del descuento. Escrita
 # una sola vez: la frase que responde quien lee es la frase que queda guardada con esa
 # dirección, así que el informe del embudo puede decir qué oferta consiguió el correo.
-START_OFFER_ES = "¿Todavía no puedes este viernes? Recibe las próximas fechas y un 20% en las clases durante los próximos dos meses."
+START_OFFER_ES = "¿Todavía no puedes este viernes? Recibe las próximas fechas y un 10% de descuento en un evento."
 
 
 def start():
@@ -1866,7 +1866,7 @@ def start():
   <div class="wrap">
     <p class="eyebrow">Empieza aquí &middot; Miami &middot; sin pareja</p>
     <h1>¿Nuevo en la Improvisación de Contacto?</h1>
-    <p class="lede">Recibe las próximas clases en Miami, un vídeo útil de IC al mes y un 20% en las clases durante los próximos dos meses.</p>
+    <p class="lede">Recibe las próximas clases en Miami, un vídeo útil de IC al mes y un 10% de descuento en un evento.</p>
     <div class="btn-row">
       <a class="btn primary" href="{R_FUND}">Ver la próxima clase</a>
     </div>
@@ -1876,9 +1876,9 @@ def start():
 
 <section class="section">
   <div class="wrap">
-    {answer("Deja tu correo y recibes las próximas fechas de las clases en Miami, un vídeo de IC al mes y un código del 20% para las clases durante los próximos dos meses. Después es un correo al mes, y responder a cualquiera de ellos te saca de la lista. Para nada de esto hace falta pareja ni experiencia.", label="Qué llega por correo")}
+    {answer("Deja tu correo y recibes las próximas fechas de las clases en Miami, un vídeo de IC al mes y un código del 10% para un evento, de un solo uso. Después es un correo al mes, y responder a cualquiera de ellos te saca de la lista. Para nada de esto hace falta pareja ni experiencia.", label="Qué llega por correo")}
     {facts([
-      ("Qué llega", "Las próximas fechas por correo, un vídeo de IC al mes y el código del 20% para las clases durante los próximos dos meses"),
+      ("Qué llega", "Las próximas fechas por correo, un vídeo de IC al mes y el código del 10% para un evento"),
       ("Después", "Un correo al mes, y responder a cualquiera te saca de la lista"),
       ("Próximas clases", f"Viernes, 7:00&ndash;9:00 PM, del {first} al {last}"),
       ("Dónde", "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"),
@@ -1908,7 +1908,7 @@ def start():
         schema.webpage(
             R_START,
             "Nuevo en la Improvisación de Contacto en Miami",
-            "Las próximas clases de Improvisación de Contacto en Miami por correo, un vídeo de IC al mes y un 20% en las clases durante los próximos dos meses. Viernes de 7 a 9 PM en Inner Motion Dance Studio, Hallandale Beach, desde el 2 de octubre de 2026.",
+            "Las próximas clases de Improvisación de Contacto en Miami por correo, un vídeo de IC al mes y un 10% de descuento en un evento. Viernes de 7 a 9 PM en Inner Motion Dance Studio, Hallandale Beach, desde el 2 de octubre de 2026.",
             date_modified=listings.FUNDAMENTALS_VERIFIED,
             lang="es",
         ),
@@ -1916,7 +1916,7 @@ def start():
     )
     return page(
         "¿Nuevo en la Improvisación de Contacto? Empieza en Miami",
-        "Recibe las próximas clases de Improvisación de Contacto en Miami por correo, un vídeo al mes y un 20% en clases durante dos meses. Sin pareja y sin experiencia.",
+        "Recibe las próximas clases de Improvisación de Contacto en Miami por correo, un vídeo al mes y un 10% de descuento en un evento. Sin pareja y sin experiencia.",
         R_START,
         body,
         jsonld=jsonld,

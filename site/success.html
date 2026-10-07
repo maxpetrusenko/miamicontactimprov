@@ -226,29 +226,6 @@
     <div class="footer-grid">
       <div><h3>Start here</h3><ul><li><a href="/what-is-contact-improvisation">What is Contact Improvisation?</a></li><li><a href="/your-first-jam">Your first jam, step by step</a></li><li><a href="/glossary">Glossary of CI terms</a></li><li><a href="/history">History of CI</a></li><li><a href="/blog/">Blog</a></li></ul></div><div><h3>In Miami</h3><ul><li><a href="/events">Upcoming events</a></li><li><a href="/friday-jam">Friday jam, Miami</a></li><li><a href="/fundamentals">Fundamentals, eight Fridays</a></li><li><a href="/miami">The Miami scene</a></li><li><a href="/miami-jams">Miami-Dade and Broward jam list</a></li><li><a href="/jams">Jams and open practice</a></li><li><a href="/classes">Classes and workshops</a></li><li><a href="/keep-practising">Keep practising</a></li></ul></div><div><h3>This site</h3><ul><li><a href="/about">About the practice</a></li><li><a href="/safety-and-consent">Safety and consent</a></li><li><a href="/faq">Questions people ask</a></li><li><a href="/directory">Directory</a></li><li><a href="/contact">Contact</a></li></ul></div>
     </div>
-    <div class="footer-subscribe">
-      <h3>The monthly dates</h3>
-      <form class="subscribe-form" data-source="miamicontactimprov:success" data-offer="Subscribe for 20% off classes for the next two months, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-footer-success">Subscribe for 20% off classes for the next two months, and one email a month.</label>
-  <div class="subscribe-row">
-    <input id="subscribe-footer-success" name="email" type="email" inputmode="email" autocomplete="email" required>
-    <label class="subscribe-phone" for="subscribe-phone-footer-success">
-      <span>Phone (optional)</span>
-      <input id="subscribe-phone-footer-success" name="phone" type="tel" inputmode="tel" autocomplete="tel">
-    </label>
-    <button class="btn primary" type="submit">Subscribe</button>
-  </div>
-  <div class="subscribe-hp" aria-hidden="true">
-    <label for="subscribe-hp-footer-success">Company</label>
-    <input id="subscribe-hp-footer-success" name="company" type="text" tabindex="-1" autocomplete="off">
-  </div>
-  <label class="subscribe-consent" for="subscribe-consent-footer-success">
-    <input id="subscribe-consent-footer-success" name="consent" type="checkbox" required>
-    <span>I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.</span>
-  </label>
-  <p class="subscribe-status" role="status" aria-live="polite"></p>
-</form>
-    </div>
     <div class="colophon">
       <span>&copy; Miami Contact Improv &middot; Miami Contact Improv is an independent, non-commercial community resource mapping Contact Improvisation practice across Miami-Dade and Broward County, Florida.</span>
     </div>
@@ -258,9 +235,9 @@
 <div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-success">
     <button class="mci-popup-close" type="button" aria-label="Close">&times;</button>
-    <h2 id="mci-popup-heading-success" class="mci-h">Get class updates + 20% off for the next two months.</h2>
-    <form class="subscribe-form" data-source="miamicontactimprov:popup:success" data-offer="Subscribe for 20% off classes for the next two months, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-popup-success">Subscribe for 20% off classes for the next two months, and one email a month.</label>
+    <h2 id="mci-popup-heading-success" class="mci-h">10% off your first event.</h2>
+    <form class="subscribe-form" data-source="miamicontactimprov:popup:success" data-offer="Subscribe for 10% off one event, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="You are on the list. The code is in the email that just went out." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com.">
+  <label class="subscribe-label" for="subscribe-popup-success">Subscribe for 10% off one event, and one email a month.</label>
   <div class="subscribe-row">
     <input id="subscribe-popup-success" name="email" type="email" inputmode="email" autocomplete="email" required>
     <label class="subscribe-phone" for="subscribe-phone-popup-success">
@@ -689,23 +666,33 @@
   })();
 
   // ---- newsletter popup ----
-  // Shown once per visitor, 5 seconds after load, unless localStorage already says
-  // so. Every read/write is wrapped so private browsing or blocked storage degrades
-  // to "never shows" rather than breaking the page.
+  // Shown 5 seconds after load. Closing it hides it for 7 days (timestamp in
+  // mci_popup_closed_at); a successful subscribe sets mci_popup_subscribed and it never
+  // shows again. Every read/write is wrapped so private browsing or blocked storage
+  // degrades to "never shows" rather than breaking the page.
   (function () {
     var modal = document.getElementById('mci-popup');
     if (!modal) return;
     var card = modal.querySelector('.mci-popup');
     var closeBtn = modal.querySelector('.mci-popup-close');
     var form = modal.querySelector('form.subscribe-form');
-    var seenKey = 'mci_popup_seen';
+    var closedKey = 'mci_popup_closed_at';
+    var subscribedKey = 'mci_popup_subscribed';
+    var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
     var lastFocus = null;
 
     var seen = function () {
-      try { return localStorage.getItem(seenKey) === '1'; } catch (e) { return false; }
+      try {
+        if (localStorage.getItem(subscribedKey) === '1') return true;
+        var t = parseInt(localStorage.getItem(closedKey), 10);
+        return !isNaN(t) && Date.now() - t < WEEK_MS;
+      } catch (e) { return true; }
     };
-    var markSeen = function () {
-      try { localStorage.setItem(seenKey, '1'); } catch (e) {}
+    var markClosed = function () {
+      try { localStorage.setItem(closedKey, String(Date.now())); } catch (e) {}
+    };
+    var markSubscribed = function () {
+      try { localStorage.setItem(subscribedKey, '1'); } catch (e) {}
     };
 
     var focusables = function () {
@@ -736,7 +723,7 @@
     function closeModal() {
       modal.classList.remove('is-open');
       document.removeEventListener('keydown', onKeydown, true);
-      markSeen();
+      markClosed();
       try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
       try {
         if (lastFocus && lastFocus.focus) lastFocus.focus();
@@ -747,7 +734,7 @@
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
 
-    // Marking "seen" on a successful submit without touching the shared subscribe
+    // Marking "subscribed" on a successful submit without touching the shared subscribe
     // handler above: watch the status line this page's form already carries, and
     // treat it reaching the handler's own "ok" text as success.
     if (form) {
@@ -755,7 +742,7 @@
       var okText = form.getAttribute('data-ok') || '';
       if (status && okText && 'MutationObserver' in window) {
         new MutationObserver(function () {
-          if (status.textContent === okText) markSeen();
+          if (status.textContent === okText) markSubscribed();
         }).observe(status, { childList: true, characterData: true, subtree: true });
       }
     }

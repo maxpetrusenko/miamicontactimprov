@@ -196,7 +196,7 @@ if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doN
 SUBSCRIBE_COPY = {
     "en": {
         "heading": "The monthly dates",
-        "label": "Subscribe for 20% off classes for the next two months, and one email a month.",
+        "label": "Subscribe for 10% off one event, and one email a month.",
         "phone_label": "Phone (optional)",
         "consent": "I agree to get email, and texts if I leave a number, from Miami Contact Improv, including this discount code, and can opt out anytime.",
         "button": "Subscribe",
@@ -206,7 +206,7 @@ SUBSCRIBE_COPY = {
     },
     "es": {
         "heading": "Las fechas del mes",
-        "label": "Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes.",
+        "label": "Suscríbete para un 10% de descuento en un evento, y un correo al mes.",
         "phone_label": "Teléfono (opcional)",
         "consent": "Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.",
         "button": "Suscribirme",
@@ -235,7 +235,7 @@ def subscribe_form(lang="en", source="", uid="page", label=None, button=None):
     submit does nothing rather than promising something it cannot do, which is why the
     markup carries no action attribute.
 
-    `source` travels with the signup. The Worker sends the welcome email and the 20%
+    `source` travels with the signup. The Worker sends the welcome email and the 10%
     code only when the source starts with `miamicontactimprov`, so the value here is
     what decides whether a reader gets the code.
 
@@ -347,11 +347,11 @@ def buy_button(kind, label, uid, event_date=None, lang="en"):
 # ------------------------------------------------------------ newsletter popup
 # The copy for the popup heading, per locale. The form itself is the same
 # subscribe_form() every inline and footer placement uses, so its own label and
-# offer carry the mechanics (20% off, one email a month); this heading carries the
+# offer carry the mechanics (10% off one event, one email a month); this heading carries the
 # hook that gets a reader to look at the form at all.
 POPUP_HEADING = {
-    "en": "Get class updates + 20% off for the next two months.",
-    "es": "Novedades de las clases + 20% de descuento los próximos dos meses.",
+    "en": "10% off your first event.",
+    "es": "10% de descuento en tu primer evento.",
 }
 
 POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
@@ -530,19 +530,9 @@ def header(current, lang="en"):
 
 
 def footer(lang="en", path="/"):
-    """The footer, plus the subscribe form that sits on every page.
-
-    The form's source names the page it was submitted from, so a signup can be traced
-    to the page that produced it. It is the same value the in-page form on that page
-    sends, because the question a coupon code answers is which page earned it.
-    """
+    """The site footer: link columns and the colophon. No subscribe form lives here;
+    signups come from the landing popup and the inline page forms."""
     slug = page_slug(path)
-    subscribe = subscribe_form(
-        lang,
-        source=f"miamicontactimprov:{slug}",
-        uid=f"footer-{slug}",
-    )
-    subscribe_heading = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])["heading"]
     cols = []
     for _key, titles, items in FOOTER_COLS:
         title = titles.get(lang) or titles[locales.DEFAULT]
@@ -567,10 +557,6 @@ def footer(lang="en", path="/"):
   <div class="wrap">
     <div class="footer-grid">
       {''.join(cols)}
-    </div>
-    <div class="footer-subscribe">
-      <h3>{subscribe_heading}</h3>
-      {subscribe}
     </div>
     <div class="colophon">
       <span>&copy; Miami Contact Improv &middot; {sentence}</span>
@@ -998,23 +984,33 @@ def body_script():
   })();
 
   // ---- newsletter popup ----
-  // Shown once per visitor, 5 seconds after load, unless localStorage already says
-  // so. Every read/write is wrapped so private browsing or blocked storage degrades
-  // to "never shows" rather than breaking the page.
+  // Shown 5 seconds after load. Closing it hides it for 7 days (timestamp in
+  // mci_popup_closed_at); a successful subscribe sets mci_popup_subscribed and it never
+  // shows again. Every read/write is wrapped so private browsing or blocked storage
+  // degrades to "never shows" rather than breaking the page.
   (function () {
     var modal = document.getElementById('mci-popup');
     if (!modal) return;
     var card = modal.querySelector('.mci-popup');
     var closeBtn = modal.querySelector('.mci-popup-close');
     var form = modal.querySelector('form.subscribe-form');
-    var seenKey = 'mci_popup_seen';
+    var closedKey = 'mci_popup_closed_at';
+    var subscribedKey = 'mci_popup_subscribed';
+    var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
     var lastFocus = null;
 
     var seen = function () {
-      try { return localStorage.getItem(seenKey) === '1'; } catch (e) { return false; }
+      try {
+        if (localStorage.getItem(subscribedKey) === '1') return true;
+        var t = parseInt(localStorage.getItem(closedKey), 10);
+        return !isNaN(t) && Date.now() - t < WEEK_MS;
+      } catch (e) { return true; }
     };
-    var markSeen = function () {
-      try { localStorage.setItem(seenKey, '1'); } catch (e) {}
+    var markClosed = function () {
+      try { localStorage.setItem(closedKey, String(Date.now())); } catch (e) {}
+    };
+    var markSubscribed = function () {
+      try { localStorage.setItem(subscribedKey, '1'); } catch (e) {}
     };
 
     var focusables = function () {
@@ -1045,7 +1041,7 @@ def body_script():
     function closeModal() {
       modal.classList.remove('is-open');
       document.removeEventListener('keydown', onKeydown, true);
-      markSeen();
+      markClosed();
       try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
       try {
         if (lastFocus && lastFocus.focus) lastFocus.focus();
@@ -1056,7 +1052,7 @@ def body_script():
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
 
-    // Marking "seen" on a successful submit without touching the shared subscribe
+    // Marking "subscribed" on a successful submit without touching the shared subscribe
     // handler above: watch the status line this page's form already carries, and
     // treat it reaching the handler's own "ok" text as success.
     if (form) {
@@ -1064,7 +1060,7 @@ def body_script():
       var okText = form.getAttribute('data-ok') || '';
       if (status && okText && 'MutationObserver' in window) {
         new MutationObserver(function () {
-          if (status.textContent === okText) markSeen();
+          if (status.textContent === okText) markSubscribed();
         }).observe(status, { childList: true, characterData: true, subtree: true });
       }
     }

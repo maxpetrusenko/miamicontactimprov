@@ -357,29 +357,6 @@
     <div class="footer-grid">
       <div><h3>Para empezar</h3><ul><li><a href="/es/que-es-la-improvisacion-de-contacto">¿Qué es la Improvisación de Contacto?</a></li><li><a href="/es/tu-primera-jam">Tu primera jam, paso a paso</a></li><li><a href="/es/glosario">Glosario de términos</a></li><li><a href="/es/historia">Historia de la IC</a></li><li><a href="/blog/" lang="en" hreflang="en">Blog</a></li></ul></div><div><h3>En Miami</h3><ul><li><a href="/events" lang="en" hreflang="en">Próximos eventos</a></li><li><a href="/es/jam-de-los-viernes">Jam de los viernes, Miami</a></li><li><a href="/es/fundamentos">Fundamentos, ocho viernes</a></li><li><a href="/es/miami">La escena de Miami</a></li><li><a href="/es/jams-miami-dade-broward">Lista de jams de Miami-Dade y Broward</a></li><li><a href="/es/jams">Jams y práctica abierta</a></li><li><a href="/es/clases">Clases y talleres</a></li><li><a href="/es/seguir-practicando">Seguir practicando</a></li></ul></div><div><h3>Este sitio</h3><ul><li><a href="/es/acerca-de">Acerca de la práctica</a></li><li><a href="/es/seguridad-y-consentimiento">Seguridad y consentimiento</a></li><li><a href="/es/preguntas-frecuentes">Preguntas frecuentes</a></li><li><a href="/es/directorio">Directorio</a></li><li><a href="/contact" lang="en" hreflang="en">Contacto</a></li></ul></div>
     </div>
-    <div class="footer-subscribe">
-      <h3>Las fechas del mes</h3>
-      <form class="subscribe-form" data-source="miamicontactimprov:es-videos" data-offer="Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="Ya estás en la lista. El código va en el correo que acaba de salir." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-footer-es-videos">Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes.</label>
-  <div class="subscribe-row">
-    <input id="subscribe-footer-es-videos" name="email" type="email" inputmode="email" autocomplete="email" required>
-    <label class="subscribe-phone" for="subscribe-phone-footer-es-videos">
-      <span>Teléfono (opcional)</span>
-      <input id="subscribe-phone-footer-es-videos" name="phone" type="tel" inputmode="tel" autocomplete="tel">
-    </label>
-    <button class="btn primary" type="submit">Suscribirme</button>
-  </div>
-  <div class="subscribe-hp" aria-hidden="true">
-    <label for="subscribe-hp-footer-es-videos">Company</label>
-    <input id="subscribe-hp-footer-es-videos" name="company" type="text" tabindex="-1" autocomplete="off">
-  </div>
-  <label class="subscribe-consent" for="subscribe-consent-footer-es-videos">
-    <input id="subscribe-consent-footer-es-videos" name="consent" type="checkbox" required>
-    <span>Acepto recibir correos, y mensajes de texto si dejo un número, de Miami Contact Improv, incluido este código de descuento, y puedo darme de baja cuando quiera.</span>
-  </label>
-  <p class="subscribe-status" role="status" aria-live="polite"></p>
-</form>
-    </div>
     <div class="colophon">
       <span>&copy; Miami Contact Improv &middot; Miami Contact Improv es un recurso comunitario independiente y sin ánimo de lucro que traza un mapa de la práctica de la Improvisación de Contacto en los condados de Miami-Dade y Broward, Florida.</span>
     </div>
@@ -389,9 +366,9 @@
 <div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-es-videos">
     <button class="mci-popup-close" type="button" aria-label="Cerrar">&times;</button>
-    <h2 id="mci-popup-heading-es-videos" class="mci-h">Novedades de las clases + 20% de descuento los próximos dos meses.</h2>
-    <form class="subscribe-form" data-source="miamicontactimprov:popup:es-videos" data-offer="Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="Ya estás en la lista. El código va en el correo que acaba de salir." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.">
-  <label class="subscribe-label" for="subscribe-popup-es-videos">Suscríbete para un 20% de descuento en las clases durante los próximos dos meses, y un correo al mes.</label>
+    <h2 id="mci-popup-heading-es-videos" class="mci-h">10% de descuento en tu primer evento.</h2>
+    <form class="subscribe-form" data-source="miamicontactimprov:popup:es-videos" data-offer="Suscríbete para un 10% de descuento en un evento, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="Ya estás en la lista. El código va en el correo que acaba de salir." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.">
+  <label class="subscribe-label" for="subscribe-popup-es-videos">Suscríbete para un 10% de descuento en un evento, y un correo al mes.</label>
   <div class="subscribe-row">
     <input id="subscribe-popup-es-videos" name="email" type="email" inputmode="email" autocomplete="email" required>
     <label class="subscribe-phone" for="subscribe-phone-popup-es-videos">
@@ -820,23 +797,33 @@
   })();
 
   // ---- newsletter popup ----
-  // Shown once per visitor, 5 seconds after load, unless localStorage already says
-  // so. Every read/write is wrapped so private browsing or blocked storage degrades
-  // to "never shows" rather than breaking the page.
+  // Shown 5 seconds after load. Closing it hides it for 7 days (timestamp in
+  // mci_popup_closed_at); a successful subscribe sets mci_popup_subscribed and it never
+  // shows again. Every read/write is wrapped so private browsing or blocked storage
+  // degrades to "never shows" rather than breaking the page.
   (function () {
     var modal = document.getElementById('mci-popup');
     if (!modal) return;
     var card = modal.querySelector('.mci-popup');
     var closeBtn = modal.querySelector('.mci-popup-close');
     var form = modal.querySelector('form.subscribe-form');
-    var seenKey = 'mci_popup_seen';
+    var closedKey = 'mci_popup_closed_at';
+    var subscribedKey = 'mci_popup_subscribed';
+    var WEEK_MS = 7 * 24 * 60 * 60 * 1000;
     var lastFocus = null;
 
     var seen = function () {
-      try { return localStorage.getItem(seenKey) === '1'; } catch (e) { return false; }
+      try {
+        if (localStorage.getItem(subscribedKey) === '1') return true;
+        var t = parseInt(localStorage.getItem(closedKey), 10);
+        return !isNaN(t) && Date.now() - t < WEEK_MS;
+      } catch (e) { return true; }
     };
-    var markSeen = function () {
-      try { localStorage.setItem(seenKey, '1'); } catch (e) {}
+    var markClosed = function () {
+      try { localStorage.setItem(closedKey, String(Date.now())); } catch (e) {}
+    };
+    var markSubscribed = function () {
+      try { localStorage.setItem(subscribedKey, '1'); } catch (e) {}
     };
 
     var focusables = function () {
@@ -867,7 +854,7 @@
     function closeModal() {
       modal.classList.remove('is-open');
       document.removeEventListener('keydown', onKeydown, true);
-      markSeen();
+      markClosed();
       try { if (window.posthog) posthog.capture('newsletter_popup_closed'); } catch (e) {}
       try {
         if (lastFocus && lastFocus.focus) lastFocus.focus();
@@ -878,7 +865,7 @@
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
 
-    // Marking "seen" on a successful submit without touching the shared subscribe
+    // Marking "subscribed" on a successful submit without touching the shared subscribe
     // handler above: watch the status line this page's form already carries, and
     // treat it reaching the handler's own "ok" text as success.
     if (form) {
@@ -886,7 +873,7 @@
       var okText = form.getAttribute('data-ok') || '';
       if (status && okText && 'MutationObserver' in window) {
         new MutationObserver(function () {
-          if (status.textContent === okText) markSeen();
+          if (status.textContent === okText) markSubscribed();
         }).observe(status, { childList: true, characterData: true, subtree: true });
       }
     }
