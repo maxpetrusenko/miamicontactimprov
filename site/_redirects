@@ -150,9 +150,9 @@
 /es  /es/  301
 
 # Short link for personal ticket codes (email and text). A rewrite, not a redirect:
-# Pages does not fill :code into a query string, so /t/<CODE> serves t/index.html,
+# Pages does not fill :code into a query string, so /t/<CODE> serves the /t/ page (target is the clean URL: Pages 308s /t/index.html),
 # whose script reads the code from the path and goes to /pricing?code=<CODE>.
-/t/*  /t/index.html  200
+/t/*  /t/  200
 
 # Clean-URL safety net. Cloudflare Pages serves /miami.html at /miami, but the
 # .html form is still reachable, which is a second URL for the same page. These

@@ -17,7 +17,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*a, directory=ROOT, **k)
 
     def translate_path(self, path):
-        # Emulates the _redirects rewrite `/t/*  /t/index.html  200`.
+        # Emulates the _redirects rewrite `/t/*  /t/  200`.
         if urllib.parse.urlparse(path).path.startswith("/t/"):
             return os.path.join(ROOT, "t", "index.html")
         fs = super().translate_path(urllib.parse.urlparse(path).path)
