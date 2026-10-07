@@ -31,6 +31,7 @@ from shell import (
     cards,
     cite_block,
     facts,
+    newsletter_card,
     page,
     subscribe_block,
 )
@@ -208,6 +209,8 @@ def home():
 </div>
 
 {cm._gallery("band-home.jpg", "Dos bailarines moviéndose juntos en larga exposición, en blanco y negro", "¿NUEVO POR AQUÍ? VEN COMO ERES.", "Síguenos en Instagram para recordatorios de jams, fotos y novedades.", f'<a class="mci-pill terracotta" href="{cm.IG}" target="_blank" rel="noopener">{cm.IG_GLYPH}<span>@miamicontactimprov</span></a>', tall=True)}
+
+{newsletter_card("es")}
 """
     jsonld = schema.render(
         schema.organisation("es"),
@@ -404,6 +407,7 @@ def jams():
       <h2>Preguntas sobre las jams</h2>
       {faq_html}
     </div>
+    {newsletter_card("es")}
     {band("¿Organizas una jam?", "Dinos el horario, la sala y la entrada y la publicamos. Esta página existe para que la corrija quien está de verdad en la sala.", [("Publicar una jam", R_SUBMIT, "primary"), ("Buscar clase", R_CLASSES, "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>Jams de Improvisación de Contacto en Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/es/jams", CITE)}
   </div>
