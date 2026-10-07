@@ -91,6 +91,7 @@ class FooterAndPopup(unittest.TestCase):
             self.assertIn("We appreciate you!", html)
             self.assertIn("Thank you!", html)
             self.assertIn("We also emailed it to you.", html)
+            self.assertIn('class="signup-emailed" hidden', html)
             self.assertIn("Welcome to", html)
             self.assertIn("Miami CI", html)
         # a promo code is never in the markup; only the verify reply can supply one
@@ -128,6 +129,12 @@ class FooterAndPopup(unittest.TestCase):
         self.assertIn("Join the jam list", en)
         self.assertIn("Be the first to know", en)
         self.assertIn("I want to subscribe to your mailing list.", en)
+
+    def test_emailed_line_only_when_worker_says_emailed_and_no_plain_email_to_posthog(self):
+        js = signup.SCRIPT
+        self.assertIn("emailedEl.hidden = data.emailed !== true", js)
+        self.assertIn("posthog.identify(hex);", js)
+        self.assertNotIn("posthog.identify(hex,", js)
 
     def test_verify_endpoints_derive_from_subscribe_endpoint(self):
         js = signup.SCRIPT

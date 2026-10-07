@@ -20,7 +20,8 @@ STEP_COPY = {
         "copy": "Copy",
         "copied": "Copied",
         "thanks": "Thank you!",
-        "small": "We also emailed it to you. After this, an occasional discount about once a month, 20% off.",
+        "emailed": "We also emailed it to you.",
+        "small": "After this, an occasional discount about once a month, 20% off.",
         "used": "You already used your code. See you on Friday.",
         "sent_sms": "We texted you a code.",
         "sent_email": "We emailed you a code.",
@@ -43,7 +44,8 @@ STEP_COPY = {
         "copy": "Copiar",
         "copied": "Copiado",
         "thanks": "¡Gracias!",
-        "small": "También te lo enviamos por correo. Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
+        "emailed": "También te lo enviamos por correo.",
+        "small": "Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
         "used": "Ya usaste tu código. Nos vemos el viernes.",
         "sent_sms": "Te enviamos un código por mensaje de texto.",
         "sent_email": "Te enviamos un código por correo.",
@@ -100,7 +102,7 @@ def steps_two_three(lang, uid, popup):
     </div>
     <p class="signup-used" hidden>{c['used']}</p>
     <p class="signup-thanks">{c['thanks']}</p>
-    <p class="signup-small">{c['small']}</p>
+    <p class="signup-small"><span class="signup-emailed" hidden>{c['emailed']} </span>{c['small']}</p>
   </div>"""
 
 
@@ -206,6 +208,7 @@ SCRIPT = r"""<script>
     var codeEl = q('.signup-code');
     var copyBtn = q('.signup-copy');
     var usedEl = q('.signup-used');
+    var emailedEl = q('.signup-emailed');
     var base = attr('endpoint').replace(/\/subscribe$/, '');
     var stage = 1, timer = null, address = '';
 
@@ -295,6 +298,8 @@ SCRIPT = r"""<script>
     };
 
     var finish = function (data) {
+      // "We also emailed it" only when the Worker says an email actually went out.
+      if (emailedEl) emailedEl.hidden = data.emailed !== true;
       if (data.code) {
         codeEl.textContent = data.code;
         codeEl.hidden = false;
@@ -310,13 +315,13 @@ SCRIPT = r"""<script>
       syncRibbon();
       show(3);
       capture('newsletter_verified');
-      // Identify by a hashed address, never the address itself.
+      // Identify by a hashed address only; the address itself is never sent as a property.
       try {
         if (window.posthog && window.crypto && window.crypto.subtle) {
           var value = address.toLowerCase();
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)).then(function (buf) {
             var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return b.toString(16).padStart(2, '0'); }).join('').slice(0, 32);
-            posthog.identify(hex, consent && consent.checked ? { email: value } : {});
+            posthog.identify(hex);
           }).catch(function () {});
         }
       } catch (e) {}

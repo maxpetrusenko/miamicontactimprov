@@ -402,7 +402,7 @@
     </div>
     <p class="signup-used" hidden>Ya usaste tu código. Nos vemos el viernes.</p>
     <p class="signup-thanks">¡Gracias!</p>
-    <p class="signup-small">También te lo enviamos por correo. Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%.</p>
+    <p class="signup-small"><span class="signup-emailed" hidden>También te lo enviamos por correo. </span>Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%.</p>
   </div>
   <p class="subscribe-status" role="status" aria-live="polite"></p>
 </form>
@@ -838,6 +838,7 @@
     var codeEl = q('.signup-code');
     var copyBtn = q('.signup-copy');
     var usedEl = q('.signup-used');
+    var emailedEl = q('.signup-emailed');
     var base = attr('endpoint').replace(/\/subscribe$/, '');
     var stage = 1, timer = null, address = '';
 
@@ -927,6 +928,8 @@
     };
 
     var finish = function (data) {
+      // "We also emailed it" only when the Worker says an email actually went out.
+      if (emailedEl) emailedEl.hidden = data.emailed !== true;
       if (data.code) {
         codeEl.textContent = data.code;
         codeEl.hidden = false;
@@ -942,13 +945,13 @@
       syncRibbon();
       show(3);
       capture('newsletter_verified');
-      // Identify by a hashed address, never the address itself.
+      // Identify by a hashed address only; the address itself is never sent as a property.
       try {
         if (window.posthog && window.crypto && window.crypto.subtle) {
           var value = address.toLowerCase();
           window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)).then(function (buf) {
             var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return b.toString(16).padStart(2, '0'); }).join('').slice(0, 32);
-            posthog.identify(hex, consent && consent.checked ? { email: value } : {});
+            posthog.identify(hex);
           }).catch(function () {});
         }
       } catch (e) {}
