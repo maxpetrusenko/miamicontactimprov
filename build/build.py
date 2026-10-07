@@ -20,6 +20,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import content_checkout  # noqa: E402
+import ticket_link  # noqa: E402
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
 import content_es  # noqa: E402
@@ -242,6 +243,9 @@ HEADERS = """/*
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
+/t/*
+  X-Robots-Tag: noindex
+
 /llms.txt
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
@@ -258,8 +262,8 @@ REDIRECT_ALIASES = """# Clean-URL safety net. Cloudflare Pages serves /miami.htm
 """
 
 
-# Where /t/<CODE> lands: the page with the buy button and the prices.
-TICKET_LINK_TARGET = "/pricing"
+# /t/<CODE> serves one static page (see ticket_link.py) with status 200.
+TICKET_REWRITE = "/t/*  /t/index.html  200"
 
 
 def redirects_file():
@@ -287,8 +291,10 @@ def redirects_file():
     # The short ticket link in the code emails and texts: /t/CI10K7P2QX opens the pricing
     # page with the code pre-applied (the page reads ?code= and passes it to checkout).
     lines.append("")
-    lines.append("# Short link for personal ticket codes (email and text). The page validates the code.")
-    lines.append(f"/t/:code  {TICKET_LINK_TARGET}?code=:code  302")
+    lines.append("# Short link for personal ticket codes (email and text). A rewrite, not a redirect:")
+    lines.append("# Pages does not fill :code into a query string, so /t/<CODE> serves t/index.html,")
+    lines.append("# whose script reads the code from the path and goes to /pricing?code=<CODE>.")
+    lines.append(TICKET_REWRITE)
     lines.append("")
     lines.append(REDIRECT_ALIASES.rstrip())
     lines.append("")
@@ -344,6 +350,11 @@ def build(out_dir: pathlib.Path, base_url=None):
         encoding="utf-8",
     )
     written.append("sitemap.xml")
+
+    # The /t/<CODE> short-link page: not a content page, not in the sitemap.
+    (out_dir / "t").mkdir(exist_ok=True)
+    (out_dir / "t" / "index.html").write_text(ticket_link.page(), encoding="utf-8")
+    written.append("t/index.html")
 
     (out_dir / "robots.txt").write_text(ROBOTS, encoding="utf-8")
     (out_dir / "_headers").write_text(HEADERS, encoding="utf-8")

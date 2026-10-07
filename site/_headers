@@ -13,6 +13,9 @@
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
+/t/*
+  X-Robots-Tag: noindex
+
 /llms.txt
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
