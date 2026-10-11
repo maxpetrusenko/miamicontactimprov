@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=1dede446">
+<link rel="stylesheet" href="/assets/site.css?v=aff7ed59">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -377,6 +377,58 @@
     <div class="footer-grid">
       <div><h3>Para empezar</h3><ul><li><a href="/es/que-es-la-improvisacion-de-contacto">¿Qué es la Improvisación de Contacto?</a></li><li><a href="/es/tu-primera-jam">Tu primera jam, paso a paso</a></li><li><a href="/es/glosario">Glosario de términos</a></li><li><a href="/es/historia">Historia de la IC</a></li><li><a href="/blog/" lang="en" hreflang="en">Blog</a></li></ul></div><div><h3>En Miami</h3><ul><li><a href="/events" lang="en" hreflang="en">Próximos eventos</a></li><li><a href="/es/jam-de-los-viernes">Jam de los viernes, Miami</a></li><li><a href="/es/fundamentos">Fundamentos, ocho viernes</a></li><li><a href="/es/miami">La escena de Miami</a></li><li><a href="/es/jams-miami-dade-broward">Lista de jams de Miami-Dade y Broward</a></li><li><a href="/es/jams">Jams y práctica abierta</a></li><li><a href="/es/clases">Clases y talleres</a></li><li><a href="/es/seguir-practicando">Seguir practicando</a></li></ul></div><div><h3>Este sitio</h3><ul><li><a href="/es/acerca-de">Acerca de la práctica</a></li><li><a href="/es/seguridad-y-consentimiento">Seguridad y consentimiento</a></li><li><a href="/es/preguntas-frecuentes">Preguntas frecuentes</a></li><li><a href="/es/directorio">Directorio</a></li><li><a href="/contact" lang="en" hreflang="en">Contacto</a></li></ul></div>
     </div>
+    <div class="footer-subscribe">
+      <h3>Un correo al mes</h3>
+      <form class="subscribe-form" novalidate data-source="miamicontactimprov:footer:es-jams-miami-dade-broward" data-offer="Un correo al mes" data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="También te lo enviamos por correo. Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com." data-wrong="Ese código no es correcto. Inténtalo otra vez." data-expired="Ese código caducó. Empieza de nuevo." data-wait="Demasiados intentos. Espera unos minutos." data-sent-sms="Te enviamos un código por mensaje de texto." data-sent-email="Te enviamos un código por correo." data-used="Ya usaste tu código. Nos vemos el viernes." data-resend-label="Reenviar" data-resend-wait="Reenviar en {n}s" data-copy-label="Copiar" data-copied="Copiado">
+  <div class="signup-step" data-step="1">
+    <p class="subscribe-label sr-only">Un correo al mes</p>
+    <div class="subscribe-card-row">
+      <label class="subscribe-field subscribe-card-email" for="subscribe-footer-es-jams-miami-dade-broward">
+        <span>Correo</span>
+        <input id="subscribe-footer-es-jams-miami-dade-broward" name="email" type="email" inputmode="email" autocomplete="email" required>
+      </label>
+      <button class="btn primary subscribe-submit" type="submit">Unirme</button></div>
+      <div class="subscribe-field subscribe-phone-row">
+        <span>Teléfono (opcional)</span>
+        <div class="subscribe-phone-inputs">
+          <select id="subscribe-country-footer-es-jams-miami-dade-broward" name="country" aria-label="País"><option value="US">Estados Unidos (+1)</option><option value="CA">Canadá (+1)</option></select>
+          <input id="subscribe-phone-footer-es-jams-miami-dade-broward" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" aria-label="Teléfono (opcional)">
+        </div>
+      </div>
+    <div class="subscribe-hp" aria-hidden="true">
+      <label for="subscribe-hp-footer-es-jams-miami-dade-broward">Company</label>
+      <input id="subscribe-hp-footer-es-jams-miami-dade-broward" name="company" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <label class="subscribe-consent" for="subscribe-consent-footer-es-jams-miami-dade-broward">
+      <input id="subscribe-consent-footer-es-jams-miami-dade-broward" name="consent" type="checkbox" required>
+      <span>Quiero suscribirme a su lista de correo.</span>
+    </label>
+  </div>
+  <div class="signup-step" data-step="2" hidden>
+    <p class="signup-eyebrow">Te damos la bienvenida a</p>
+    <p class="signup-big">Miami CI</p>
+    <p class="signup-instr">Escribe abajo el código de 6 dígitos</p>
+    <p class="signup-sentto" aria-live="polite"></p>
+    <label class="subscribe-field" for="subscribe-otp-footer-es-jams-miami-dade-broward">
+      <span class="sr-only">Código de un solo uso</span>
+      <input id="subscribe-otp-footer-es-jams-miami-dade-broward" class="signup-otp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" placeholder="000000">
+    </label>
+    <p class="signup-resend">¿No llegó el código? <button class="signup-resend-btn" type="button" disabled>Reenviar</button></p>
+    <button class="btn primary subscribe-submit" type="submit">REGISTRARME</button>
+  </div>
+  <div class="signup-step" data-step="3" hidden>
+    <p class="signup-eyebrow">¡Gracias por estar aquí!</p>
+    <div class="signup-code-row">
+      <span class="signup-code" aria-live="polite"></span>
+      <button class="signup-copy" type="button">Copiar</button>
+    </div>
+    <p class="signup-used" hidden>Ya usaste tu código. Nos vemos el viernes.</p>
+    <p class="signup-thanks">¡Gracias!</p>
+    <p class="signup-small"><span class="signup-emailed" hidden>También te lo enviamos por correo. </span>Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%.</p>
+  </div>
+  <p class="subscribe-status" role="status" aria-live="polite"></p>
+</form>
+    </div>
     <div class="colophon">
       <span>&copy; Miami Contact Improv &middot; Miami Contact Improv es un recurso comunitario independiente y sin ánimo de lucro que traza un mapa de la práctica de la Improvisación de Contacto en los condados de Miami-Dade y Broward, Florida.</span>
     </div>
@@ -386,10 +438,10 @@
 <div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-es-jams-miami-dade-broward">
     <button class="mci-popup-close" type="button" aria-label="Cerrar">&times;</button>
-    <h2 id="mci-popup-heading-es-jams-miami-dade-broward" class="mci-h mci-popup-head"><span class="mci-popup-eyebrow">Suscríbete y recibe</span> <span class="mci-popup-big">un código de descuento del 10%</span></h2>
-    <form class="subscribe-form" novalidate data-source="miamicontactimprov:popup:es-jams-miami-dade-broward" data-offer="Suscríbete para un 10% de descuento en un evento, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="También te lo enviamos por correo. Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com." data-wrong="Ese código no es correcto. Inténtalo otra vez." data-expired="Ese código caducó. Empieza de nuevo." data-wait="Demasiados intentos. Espera unos minutos." data-sent-sms="Te enviamos un código por mensaje de texto." data-sent-email="Te enviamos un código por correo." data-used="Ya usaste tu código. Nos vemos el viernes." data-resend-label="Reenviar" data-resend-wait="Reenviar en {n}s" data-copy-label="Copiar" data-copied="Copiado">
+    <h2 id="mci-popup-heading-es-jams-miami-dade-broward" class="mci-h mci-popup-head"><span class="mci-popup-eyebrow">Únete a la lista</span> <span class="mci-popup-big">10% de descuento en tu primera clase</span></h2>
+    <form class="subscribe-form" novalidate data-source="miamicontactimprov:popup:es-jams-miami-dade-broward" data-offer="10% de descuento en tu primera clase, y un correo al mes." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Enviando." data-ok="También te lo enviamos por correo. Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%." data-error="No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com." data-wrong="Ese código no es correcto. Inténtalo otra vez." data-expired="Ese código caducó. Empieza de nuevo." data-wait="Demasiados intentos. Espera unos minutos." data-sent-sms="Te enviamos un código por mensaje de texto." data-sent-email="Te enviamos un código por correo." data-used="Ya usaste tu código. Nos vemos el viernes." data-resend-label="Reenviar" data-resend-wait="Reenviar en {n}s" data-copy-label="Copiar" data-copied="Copiado">
   <div class="signup-step" data-step="1">
-    <p class="subscribe-label sr-only">Suscríbete para un 10% de descuento en un evento, y un correo al mes.</p>
+    <p class="subscribe-label sr-only">10% de descuento en tu primera clase, y un correo al mes.</p>
     <div class="subscribe-fields">
       <label class="subscribe-field" for="subscribe-name-popup-es-jams-miami-dade-broward">
         <span>Nombre completo</span>
@@ -446,7 +498,7 @@
   </div>
 </div>
 <div class="mci-ribbon" id="mci-ribbon" hidden>
-  <button class="mci-ribbon-btn" type="button" aria-label="Consigue un 10% de descuento en un evento"><span>10% DE DESCUENTO</span></button>
+  <button class="mci-ribbon-btn" type="button" aria-label="Consigue un 10% de descuento en tu primera clase"><span>10% DE DESCUENTO</span></button>
 </div>
 <script>
 (function () {
@@ -828,7 +880,7 @@
     var t = parseInt(get(CLOSED_KEY), 10);
     return !isNaN(t) && Date.now() - t < WEEK_MS;
   };
-  var capture = function (name) { try { if (window.posthog) posthog.capture(name); } catch (e) {} };
+  var capture = function (name, props) { try { if (window.posthog) posthog.capture(name, props); } catch (e) {} };
 
   var ribbon = document.getElementById('mci-ribbon');
   var syncRibbon = function () { if (ribbon) ribbon.hidden = isSubscribed(); };
@@ -852,7 +904,7 @@
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   };
-  var openModal = function () {
+  var openModal = function (trigger) {
     if (!modal || modal.classList.contains('is-open')) return;
     lastFocus = document.activeElement;
     modal.classList.add('is-open');
@@ -860,7 +912,7 @@
     document.addEventListener('keydown', onKeydown, true);
     var f = focusables();
     if (f.length) f[0].focus();
-    capture('newsletter_popup_shown');
+    capture('newsletter_popup_shown', { trigger: typeof trigger === 'string' ? trigger : 'ribbon' });
   };
   function closeModal() {
     if (!modal) return;
@@ -876,15 +928,30 @@
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     Array.prototype.forEach.call(modal.querySelectorAll('.mci-popup-nothanks'), function (b) { b.addEventListener('click', closeModal); });
-    // Once a week: shown 5 seconds after load unless closed in the last 7 days or subscribed.
+    // Shown at 10 seconds or 40% scroll, whichever comes first, unless closed in the last
+    // 7 days or already subscribed. The first trigger to fire cancels the other.
     if (storageWorks && !isSubscribed() && !recentlyClosed()) {
-      setTimeout(function () { if (!isSubscribed() && !recentlyClosed()) openModal(); }, 5000);
+      var armed = true, delay = null;
+      var fire = function (trigger) {
+        if (!armed) return;
+        armed = false;
+        clearTimeout(delay);
+        window.removeEventListener('scroll', onScroll);
+        if (!isSubscribed() && !recentlyClosed()) openModal(trigger);
+      };
+      var onScroll = function () {
+        var root = document.documentElement;
+        var range = root.scrollHeight - window.innerHeight;
+        if (range > 0 && (window.pageYOffset || root.scrollTop) / range >= 0.4) fire('scroll');
+      };
+      delay = setTimeout(function () { fire('time'); }, 10000);
+      window.addEventListener('scroll', onScroll, { passive: true });
     }
   }
   if (ribbon) {
     var rb = ribbon.querySelector('button');
     // The ribbon opens the popup even while the weekly timer is still counting.
-    if (rb) rb.addEventListener('click', openModal);
+    if (rb) rb.addEventListener('click', function () { openModal('ribbon'); });
   }
 
   // ---- signup forms ----

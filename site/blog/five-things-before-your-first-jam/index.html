@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=1dede446">
+<link rel="stylesheet" href="/assets/site.css?v=aff7ed59">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -267,6 +267,58 @@
     <div class="footer-grid">
       <div><h3>Start here</h3><ul><li><a href="/what-is-contact-improvisation">What is Contact Improvisation?</a></li><li><a href="/your-first-jam">Your first jam, step by step</a></li><li><a href="/glossary">Glossary of CI terms</a></li><li><a href="/history">History of CI</a></li><li><a href="/blog/">Blog</a></li></ul></div><div><h3>In Miami</h3><ul><li><a href="/events">Upcoming events</a></li><li><a href="/friday-jam">Friday jam, Miami</a></li><li><a href="/fundamentals">Fundamentals, eight Fridays</a></li><li><a href="/miami">The Miami scene</a></li><li><a href="/miami-jams">Miami-Dade and Broward jam list</a></li><li><a href="/jams">Jams and open practice</a></li><li><a href="/classes">Classes and workshops</a></li><li><a href="/keep-practising">Keep practising</a></li></ul></div><div><h3>This site</h3><ul><li><a href="/about">About the practice</a></li><li><a href="/safety-and-consent">Safety and consent</a></li><li><a href="/faq">Questions people ask</a></li><li><a href="/directory">Directory</a></li><li><a href="/contact">Contact</a></li></ul></div>
     </div>
+    <div class="footer-subscribe">
+      <h3>One email a month</h3>
+      <form class="subscribe-form" novalidate data-source="miamicontactimprov:footer:blog-five-things-before-your-first-jam" data-offer="One email a month" data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="We also emailed it to you. After this, an occasional discount about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com." data-wrong="That code is not right. Try again." data-expired="That code expired. Start again." data-wait="Too many tries. Please wait a few minutes." data-sent-sms="We texted you a code." data-sent-email="We emailed you a code." data-used="You already used your code. See you on Friday." data-resend-label="Resend" data-resend-wait="Resend in {n}s" data-copy-label="Copy" data-copied="Copied">
+  <div class="signup-step" data-step="1">
+    <p class="subscribe-label sr-only">One email a month</p>
+    <div class="subscribe-card-row">
+      <label class="subscribe-field subscribe-card-email" for="subscribe-footer-blog-five-things-before-your-first-jam">
+        <span>Email</span>
+        <input id="subscribe-footer-blog-five-things-before-your-first-jam" name="email" type="email" inputmode="email" autocomplete="email" required>
+      </label>
+      <button class="btn primary subscribe-submit" type="submit">Join</button></div>
+      <div class="subscribe-field subscribe-phone-row">
+        <span>Phone (optional)</span>
+        <div class="subscribe-phone-inputs">
+          <select id="subscribe-country-footer-blog-five-things-before-your-first-jam" name="country" aria-label="Country"><option value="US">United States (+1)</option><option value="CA">Canada (+1)</option></select>
+          <input id="subscribe-phone-footer-blog-five-things-before-your-first-jam" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" aria-label="Phone (optional)">
+        </div>
+      </div>
+    <div class="subscribe-hp" aria-hidden="true">
+      <label for="subscribe-hp-footer-blog-five-things-before-your-first-jam">Company</label>
+      <input id="subscribe-hp-footer-blog-five-things-before-your-first-jam" name="company" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <label class="subscribe-consent" for="subscribe-consent-footer-blog-five-things-before-your-first-jam">
+      <input id="subscribe-consent-footer-blog-five-things-before-your-first-jam" name="consent" type="checkbox" required>
+      <span>I want to subscribe to your mailing list.</span>
+    </label>
+  </div>
+  <div class="signup-step" data-step="2" hidden>
+    <p class="signup-eyebrow">Welcome to</p>
+    <p class="signup-big">Miami CI</p>
+    <p class="signup-instr">Enter 6 digit one-time code below</p>
+    <p class="signup-sentto" aria-live="polite"></p>
+    <label class="subscribe-field" for="subscribe-otp-footer-blog-five-things-before-your-first-jam">
+      <span class="sr-only">One-time code</span>
+      <input id="subscribe-otp-footer-blog-five-things-before-your-first-jam" class="signup-otp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" placeholder="000000">
+    </label>
+    <p class="signup-resend">Didn't get code? <button class="signup-resend-btn" type="button" disabled>Resend</button></p>
+    <button class="btn primary subscribe-submit" type="submit">SIGN UP</button>
+  </div>
+  <div class="signup-step" data-step="3" hidden>
+    <p class="signup-eyebrow">We appreciate you!</p>
+    <div class="signup-code-row">
+      <span class="signup-code" aria-live="polite"></span>
+      <button class="signup-copy" type="button">Copy</button>
+    </div>
+    <p class="signup-used" hidden>You already used your code. See you on Friday.</p>
+    <p class="signup-thanks">Thank you!</p>
+    <p class="signup-small"><span class="signup-emailed" hidden>We also emailed it to you. </span>After this, an occasional discount about once a month, 20% off.</p>
+  </div>
+  <p class="subscribe-status" role="status" aria-live="polite"></p>
+</form>
+    </div>
     <div class="colophon">
       <span>&copy; Miami Contact Improv &middot; Miami Contact Improv is an independent, non-commercial community resource mapping Contact Improvisation practice across Miami-Dade and Broward County, Florida.</span>
     </div>
@@ -276,10 +328,10 @@
 <div class="mci-popup-overlay" id="mci-popup">
   <div class="mci-popup" role="dialog" aria-modal="true" aria-labelledby="mci-popup-heading-blog-five-things-before-your-first-jam">
     <button class="mci-popup-close" type="button" aria-label="Close">&times;</button>
-    <h2 id="mci-popup-heading-blog-five-things-before-your-first-jam" class="mci-h mci-popup-head"><span class="mci-popup-eyebrow">Sign up to receive</span> <span class="mci-popup-big">a 10% discount code</span></h2>
-    <form class="subscribe-form" novalidate data-source="miamicontactimprov:popup:blog-five-things-before-your-first-jam" data-offer="Subscribe for 10% off one event, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="We also emailed it to you. After this, an occasional discount about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com." data-wrong="That code is not right. Try again." data-expired="That code expired. Start again." data-wait="Too many tries. Please wait a few minutes." data-sent-sms="We texted you a code." data-sent-email="We emailed you a code." data-used="You already used your code. See you on Friday." data-resend-label="Resend" data-resend-wait="Resend in {n}s" data-copy-label="Copy" data-copied="Copied">
+    <h2 id="mci-popup-heading-blog-five-things-before-your-first-jam" class="mci-h mci-popup-head"><span class="mci-popup-eyebrow">Join the list</span> <span class="mci-popup-big">10% off your first class</span></h2>
+    <form class="subscribe-form" novalidate data-source="miamicontactimprov:popup:blog-five-things-before-your-first-jam" data-offer="10% off your first class, and one email a month." data-endpoint="https://newsletter-api.max-petrusenko.workers.dev/api/subscribe" data-sending="Sending." data-ok="We also emailed it to you. After this, an occasional discount about once a month, 20% off." data-error="That did not go through. Try again, or email hello@miamicontactimprov.com." data-wrong="That code is not right. Try again." data-expired="That code expired. Start again." data-wait="Too many tries. Please wait a few minutes." data-sent-sms="We texted you a code." data-sent-email="We emailed you a code." data-used="You already used your code. See you on Friday." data-resend-label="Resend" data-resend-wait="Resend in {n}s" data-copy-label="Copy" data-copied="Copied">
   <div class="signup-step" data-step="1">
-    <p class="subscribe-label sr-only">Subscribe for 10% off one event, and one email a month.</p>
+    <p class="subscribe-label sr-only">10% off your first class, and one email a month.</p>
     <div class="subscribe-fields">
       <label class="subscribe-field" for="subscribe-name-popup-blog-five-things-before-your-first-jam">
         <span>Full name</span>
@@ -336,7 +388,7 @@
   </div>
 </div>
 <div class="mci-ribbon" id="mci-ribbon" hidden>
-  <button class="mci-ribbon-btn" type="button" aria-label="Get 10% off one event"><span>GET 10% OFF</span></button>
+  <button class="mci-ribbon-btn" type="button" aria-label="Get 10% off your first class"><span>GET 10% OFF</span></button>
 </div>
 <script>
 (function () {
@@ -718,7 +770,7 @@
     var t = parseInt(get(CLOSED_KEY), 10);
     return !isNaN(t) && Date.now() - t < WEEK_MS;
   };
-  var capture = function (name) { try { if (window.posthog) posthog.capture(name); } catch (e) {} };
+  var capture = function (name, props) { try { if (window.posthog) posthog.capture(name, props); } catch (e) {} };
 
   var ribbon = document.getElementById('mci-ribbon');
   var syncRibbon = function () { if (ribbon) ribbon.hidden = isSubscribed(); };
@@ -742,7 +794,7 @@
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   };
-  var openModal = function () {
+  var openModal = function (trigger) {
     if (!modal || modal.classList.contains('is-open')) return;
     lastFocus = document.activeElement;
     modal.classList.add('is-open');
@@ -750,7 +802,7 @@
     document.addEventListener('keydown', onKeydown, true);
     var f = focusables();
     if (f.length) f[0].focus();
-    capture('newsletter_popup_shown');
+    capture('newsletter_popup_shown', { trigger: typeof trigger === 'string' ? trigger : 'ribbon' });
   };
   function closeModal() {
     if (!modal) return;
@@ -766,15 +818,30 @@
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     Array.prototype.forEach.call(modal.querySelectorAll('.mci-popup-nothanks'), function (b) { b.addEventListener('click', closeModal); });
-    // Once a week: shown 5 seconds after load unless closed in the last 7 days or subscribed.
+    // Shown at 10 seconds or 40% scroll, whichever comes first, unless closed in the last
+    // 7 days or already subscribed. The first trigger to fire cancels the other.
     if (storageWorks && !isSubscribed() && !recentlyClosed()) {
-      setTimeout(function () { if (!isSubscribed() && !recentlyClosed()) openModal(); }, 5000);
+      var armed = true, delay = null;
+      var fire = function (trigger) {
+        if (!armed) return;
+        armed = false;
+        clearTimeout(delay);
+        window.removeEventListener('scroll', onScroll);
+        if (!isSubscribed() && !recentlyClosed()) openModal(trigger);
+      };
+      var onScroll = function () {
+        var root = document.documentElement;
+        var range = root.scrollHeight - window.innerHeight;
+        if (range > 0 && (window.pageYOffset || root.scrollTop) / range >= 0.4) fire('scroll');
+      };
+      delay = setTimeout(function () { fire('time'); }, 10000);
+      window.addEventListener('scroll', onScroll, { passive: true });
     }
   }
   if (ribbon) {
     var rb = ribbon.querySelector('button');
     // The ribbon opens the popup even while the weekly timer is still counting.
-    if (rb) rb.addEventListener('click', openModal);
+    if (rb) rb.addEventListener('click', function () { openModal('ribbon'); });
   }
 
   // ---- signup forms ----
