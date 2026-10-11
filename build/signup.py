@@ -29,7 +29,7 @@ STEP_COPY = {
         "expired": "That code expired. Start again.",
         "wait": "Too many tries. Please wait a few minutes.",
         "ribbon": "GET 10% OFF",
-        "ribbon_label": "Get 10% off one event",
+        "ribbon_label": "Get 10% off your first class",
     },
     "es": {
         "welcome": "Te damos la bienvenida a",
@@ -53,7 +53,7 @@ STEP_COPY = {
         "expired": "Ese código caducó. Empieza de nuevo.",
         "wait": "Demasiados intentos. Espera unos minutos.",
         "ribbon": "10% DE DESCUENTO",
-        "ribbon_label": "Consigue un 10% de descuento en un evento",
+        "ribbon_label": "Consigue un 10% de descuento en tu primera clase",
     },
 }
 
@@ -128,7 +128,7 @@ SCRIPT = r"""<script>
     var t = parseInt(get(CLOSED_KEY), 10);
     return !isNaN(t) && Date.now() - t < WEEK_MS;
   };
-  var capture = function (name) { try { if (window.posthog) posthog.capture(name); } catch (e) {} };
+  var capture = function (name, props) { try { if (window.posthog) posthog.capture(name, props); } catch (e) {} };
 
   var ribbon = document.getElementById('mci-ribbon');
   var syncRibbon = function () { if (ribbon) ribbon.hidden = isSubscribed(); };
@@ -152,7 +152,7 @@ SCRIPT = r"""<script>
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   };
-  var openModal = function () {
+  var openModal = function (trigger) {
     if (!modal || modal.classList.contains('is-open')) return;
     lastFocus = document.activeElement;
     modal.classList.add('is-open');
@@ -160,7 +160,7 @@ SCRIPT = r"""<script>
     document.addEventListener('keydown', onKeydown, true);
     var f = focusables();
     if (f.length) f[0].focus();
-    capture('newsletter_popup_shown');
+    capture('newsletter_popup_shown', { trigger: typeof trigger === 'string' ? trigger : 'ribbon' });
   };
   function closeModal() {
     if (!modal) return;
@@ -176,15 +176,30 @@ SCRIPT = r"""<script>
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     Array.prototype.forEach.call(modal.querySelectorAll('.mci-popup-nothanks'), function (b) { b.addEventListener('click', closeModal); });
-    // Once a week: shown 5 seconds after load unless closed in the last 7 days or subscribed.
+    // Shown at 10 seconds or 40% scroll, whichever comes first, unless closed in the last
+    // 7 days or already subscribed. The first trigger to fire cancels the other.
     if (storageWorks && !isSubscribed() && !recentlyClosed()) {
-      setTimeout(function () { if (!isSubscribed() && !recentlyClosed()) openModal(); }, 5000);
+      var armed = true, delay = null;
+      var fire = function (trigger) {
+        if (!armed) return;
+        armed = false;
+        clearTimeout(delay);
+        window.removeEventListener('scroll', onScroll);
+        if (!isSubscribed() && !recentlyClosed()) openModal(trigger);
+      };
+      var onScroll = function () {
+        var root = document.documentElement;
+        var range = root.scrollHeight - window.innerHeight;
+        if (range > 0 && (window.pageYOffset || root.scrollTop) / range >= 0.4) fire('scroll');
+      };
+      delay = setTimeout(function () { fire('time'); }, 10000);
+      window.addEventListener('scroll', onScroll, { passive: true });
     }
   }
   if (ribbon) {
     var rb = ribbon.querySelector('button');
     // The ribbon opens the popup even while the weekly timer is still counting.
-    if (rb) rb.addEventListener('click', openModal);
+    if (rb) rb.addEventListener('click', function () { openModal('ribbon'); });
   }
 
   // ---- signup forms ----
