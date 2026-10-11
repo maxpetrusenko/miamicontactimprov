@@ -426,6 +426,10 @@ a:hover { color: var(--terracotta-dark); }
 .site-footer .footer-projects-title { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
 .site-footer .footer-projects a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 .site-footer .footer-projects a:hover { color: var(--ink); }
+.site-footer .footer-subscribe { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); max-width: 560px; }
+.site-footer .footer-subscribe h3 { margin-bottom: 12px; }
+.site-footer .footer-subscribe .subscribe-form { max-width: none; }
+.site-footer .footer-subscribe .subscribe-field input, .site-footer .footer-subscribe .subscribe-field select { color: var(--ink); background: var(--input); }
 .site-footer .colophon { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 10px 26px; justify-content: space-between; }
 
 /* ---------------- responsive ---------------- */
@@ -745,11 +749,19 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
   font: inherit; font-size: 0.78rem; letter-spacing: 0.14em; color: var(--muted); cursor: pointer;
 }
 .mci-popup-nothanks:hover { color: var(--ink); text-decoration: underline; }
-@media (max-width: 480px) {
-  .mci-popup-overlay { padding: 12px; align-items: flex-start; overflow-y: auto; }
-  .mci-popup { padding: 28px 20px 20px; margin: auto 0; }
+/* Mobile: a bottom sheet, not a full-screen modal. The page stays visible above it. */
+@media (max-width: 640px) {
+  .mci-popup-overlay { padding: 0; align-items: flex-end; background: rgba(23, 21, 18, 0.35); }
+  .mci-popup {
+    max-width: none; max-height: 88vh; max-height: 88dvh; overflow-y: auto; overscroll-behavior: contain;
+    border-radius: var(--radius) var(--radius) 0 0; padding: 26px 20px calc(20px + env(safe-area-inset-bottom));
+    box-shadow: 0 -12px 40px rgba(23, 21, 18, 0.25);
+    animation: mci-sheet-up 0.28s ease-out;
+  }
   .mci-popup-big { font-size: 1.6rem; }
 }
+@keyframes mci-sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .mci-popup { animation: none; } }
 .mci-popup .subscribe-form { max-width: none; }
 .mci-popup .subscribe-field input, .mci-popup .subscribe-field select {
   color: var(--ink); background: var(--input); border: 1px solid var(--line-strong);

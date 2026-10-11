@@ -196,7 +196,7 @@ if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doN
 # legal consent statement, because a form that texts a phone number needs one.
 SUBSCRIBE_COPY = {
     "en": {
-        "label": "Subscribe for 10% off one event, and one email a month.",
+        "label": "10% off your first class, and one email a month.",
         "name_label": "Full name",
         "name_placeholder": "First name",
         "email_label": "Email",
@@ -211,12 +211,13 @@ SUBSCRIBE_COPY = {
         "card_sub": "Be the first to know",
         "card_consent": "I want to subscribe to your mailing list.",
         "card_button": "Join",
+        "footer_heading": "One email a month",
         "sending": "Sending.",
         "ok": "We also emailed it to you. After this, an occasional discount about once a month, 20% off.",
         "error": "That did not go through. Try again, or email hello@miamicontactimprov.com.",
     },
     "es": {
-        "label": "Suscríbete para un 10% de descuento en un evento, y un correo al mes.",
+        "label": "10% de descuento en tu primera clase, y un correo al mes.",
         "name_label": "Nombre completo",
         "name_placeholder": "Nombre",
         "email_label": "Correo",
@@ -231,6 +232,7 @@ SUBSCRIBE_COPY = {
         "card_sub": "Entérate primero",
         "card_consent": "Quiero suscribirme a su lista de correo.",
         "card_button": "Unirme",
+        "footer_heading": "Un correo al mes",
         "sending": "Enviando.",
         "ok": "También te lo enviamos por correo. Después, un descuento de vez en cuando, más o menos una vez al mes, del 20%.",
         "error": "No se pudo enviar. Inténtalo otra vez o escribe a hello@miamicontactimprov.com.",
@@ -420,8 +422,8 @@ def buy_button(kind, label, uid, event_date=None, lang="en"):
 # offer carry the mechanics (10% off one event, one email a month); this heading carries the
 # hook that gets a reader to look at the form at all.
 POPUP_HEADING = {
-    "en": ("Sign up to receive", "a 10% discount code"),
-    "es": ("Suscríbete y recibe", "un código de descuento del 10%"),
+    "en": ("Join the list", "10% off your first class"),
+    "es": ("Únete a la lista", "10% de descuento en tu primera clase"),
 }
 
 POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
@@ -430,9 +432,10 @@ POPUP_CLOSE_LABEL = {"en": "Close", "es": "Cerrar"}
 def newsletter_popup(lang, path):
     """The site-wide signup modal, injected once per page by page().
 
-    Behaviour lives in body_script(): shown once per visitor after 5 seconds via
-    localStorage, closed by the ✕, Escape or a backdrop click, focus-trapped while
-    open. The form posts through the same `.subscribe-form` handler every other
+    Behaviour lives in signup.SCRIPT: opens at 10 seconds or 40% scroll, whichever comes
+    first, then stays hidden for 7 days after a dismissal (localStorage). A centred modal
+    on desktop, a bottom sheet at 640px and below. Closed by the x, Escape or a backdrop
+    click, focus-trapped while open. The form posts through the same `.subscribe-form` handler every other
     form on the site already uses - this markup only has to carry the class.
     """
     slug = page_slug(path)
@@ -600,9 +603,16 @@ def header(current, lang="en"):
 
 
 def footer(lang="en", path="/"):
-    """The site footer: link columns and the colophon. No subscribe form lives here;
-    signups come from the landing popup and the inline page forms."""
+    """The site footer: link columns, the one-email-a-month signup, and the colophon.
+
+    The signup is the compact card form, so it posts to the same Worker endpoint and runs
+    the same verify-first stages as the popup. It makes no discount promise."""
     slug = page_slug(path)
+    copy = SUBSCRIBE_COPY.get(lang, SUBSCRIBE_COPY[locales.DEFAULT])
+    form = subscribe_form(
+        lang, source=f"miamicontactimprov:footer:{slug}", uid=f"footer-{slug}",
+        label=copy["footer_heading"], card=True,
+    )
     cols = []
     for _key, titles, items in FOOTER_COLS:
         title = titles.get(lang) or titles[locales.DEFAULT]
@@ -627,6 +637,10 @@ def footer(lang="en", path="/"):
   <div class="wrap">
     <div class="footer-grid">
       {''.join(cols)}
+    </div>
+    <div class="footer-subscribe">
+      <h3>{copy['footer_heading']}</h3>
+      {form}
     </div>
     <div class="colophon">
       <span>&copy; Miami Contact Improv &middot; {sentence}</span>

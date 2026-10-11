@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Footer has no subscribe form; the popup offers 10% off one event and remembers 7 days."""
+"""Footer carries the one-email-a-month form; the popup offers 10% off the first class, opens at 10s or 40% scroll, and remembers 7 days."""
 
 import pathlib
 import re
@@ -14,18 +14,26 @@ import signup  # noqa: E402
 
 
 class FooterAndPopup(unittest.TestCase):
-    def test_footer_has_no_subscribe_form(self):
-        for lang in ("en", "es"):
+    def test_footer_has_one_email_a_month_form_without_discount(self):
+        for lang, heading in (("en", "One email a month"), ("es", "Un correo al mes")):
             html = shell.footer(lang, "/")
-            self.assertNotIn("subscribe-form", html)
-            self.assertNotIn("<form", html)
-            self.assertNotIn("footer-subscribe", html)
+            self.assertEqual(html.count("<form"), 1)
+            self.assertIn("subscribe-form", html)
+            self.assertIn(heading, html)
+            self.assertIn(shell.SUBSCRIBE_ENDPOINT, html)
+            self.assertIn('data-source="miamicontactimprov:footer:', html)
+            visible = re.sub(r"<[^>]+>", " ", html.split('<div class="signup-step" data-step="2"')[0])
+            self.assertNotIn("%", visible)
+            self.assertNotIn("discount", visible.lower())
 
-    def test_built_pages_have_no_footer_form(self):
-        for page in (ROOT / "site").glob("*.html"):
-            m = re.search(r'<footer class="site-footer">.*?</footer>', page.read_text(), re.S)
+    def test_built_pages_have_footer_form(self):
+        pages = list((ROOT / "site").rglob("*.html"))
+        self.assertGreater(len(pages), 20)
+        for page in pages:
+            text = page.read_text()
+            m = re.search(r'<footer class="site-footer">.*?</footer>', text, re.S)
             if m:
-                self.assertNotIn("<form", m.group(0), page.name)
+                self.assertEqual(m.group(0).count("<form"), 1, str(page))
 
     def test_popup_copy_is_ten_percent_one_event(self):
         for lang in ("en", "es"):
@@ -53,8 +61,8 @@ class FooterAndPopup(unittest.TestCase):
         pos = [html.index(m) for m in ('name="name"', 'name="email"', 'name="country"', 'name="phone"', 'name="consent"', "SECURE YOUR SPACE", "NO THANKS")]
         self.assertEqual(pos, sorted(pos))
         self.assertIn('placeholder="First name"', html)
-        self.assertIn("Sign up to receive", html)
-        self.assertIn("a 10% discount code", html)
+        self.assertIn("Join the list", html)
+        self.assertIn("10% off your first class", html)
         self.assertIn('<option value="US">United States (+1)</option>', html)
         self.assertEqual(html.count("<option"), 2)
         self.assertIn("I agree to receive promotional emails and text messages from Miami CI. Message and data rates may apply.", html)
@@ -72,6 +80,18 @@ class FooterAndPopup(unittest.TestCase):
         self.assertIn("mci_popup_subscribed", js)
         self.assertIn("7 * 24 * 60 * 60 * 1000", js)
         self.assertNotIn("mci_popup_seen", js)
+
+    def test_popup_triggers_ten_seconds_or_forty_percent_scroll(self):
+        js = signup.SCRIPT
+        self.assertIn("setTimeout(function () { fire('time'); }, 10000)", js)
+        self.assertIn(">= 0.4) fire('scroll')", js)
+        self.assertNotIn("5000", js)
+        self.assertIn("{ trigger:", js)
+
+    def test_popup_is_bottom_sheet_on_mobile(self):
+        css = (ROOT / "site" / "assets" / "site.css").read_text()
+        self.assertIn("@media (max-width: 640px)", css)
+        self.assertIn("align-items: flex-end", css)
 
     def test_stage_markup_in_popup_inline_and_card(self):
         for html in (
@@ -110,7 +130,7 @@ class FooterAndPopup(unittest.TestCase):
         # shown only when not subscribed, opens the popup regardless of the weekly timer,
         # hidden while the popup is open
         self.assertIn("ribbon.hidden = isSubscribed()", js)
-        self.assertIn("rb.addEventListener('click', openModal)", js)
+        self.assertIn("rb.addEventListener('click', function () { openModal('ribbon'); })", js)
         self.assertIn("mci-popup-open", js)
         css = (ROOT / "site" / "assets" / "site.css").read_text()
         self.assertIn(".mci-popup-open .mci-ribbon", css)
