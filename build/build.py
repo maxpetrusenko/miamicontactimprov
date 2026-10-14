@@ -86,6 +86,7 @@ PAGES = [
     ("pay", "en", content_checkout.pay, "0.1", "yearly", None),
     ("success", "en", content_checkout.success, "0.3", "yearly", None),
     ("blog", "en", content_blog.index, "0.7", "weekly", None),
+    ("blog-salsa-bachata", "en", content_blog.salsa_bachata, "0.7", "monthly", None),
     ("blog-miami-class", "en", content_blog.miami_class, "0.7", "monthly", None),
     ("blog-levels", "en", content_blog.levels, "0.6", "monthly", None),
     ("blog-small-dance", "en", content_blog.small_dance, "0.6", "monthly", None),
