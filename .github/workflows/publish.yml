@@ -39,6 +39,9 @@ jobs:
       - name: Build assets
         run: python3 build/make_assets.py
 
+      - name: Unit tests (robots.txt generator)
+        run: python3 -m unittest tests.test_robots
+
       - name: Build site
         env:
           # The PostHog public client token. Safe to appear in built HTML (it's a
