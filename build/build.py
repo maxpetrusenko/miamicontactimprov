@@ -226,6 +226,7 @@ User-agent: MistralAI-User
 Allow: /
 
 Sitemap: https://miamicontactimprov.com/sitemap.xml
+Sitemap: https://miamicontactimprov.com/blog/weekly/sitemap.xml
 """
 
 HEADERS = """/*
