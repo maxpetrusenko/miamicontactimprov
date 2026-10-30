@@ -30,6 +30,8 @@ import content_marketing  # noqa: E402
 import content_practice  # noqa: E402
 import locales  # noqa: E402
 import schema  # noqa: E402
+import seo_flags  # noqa: E402
+import seo_variants  # noqa: E402
 import shell  # noqa: E402
 import videos_data  # noqa: E402
 
@@ -161,7 +163,7 @@ def rows():
         }
 
 
-ROBOTS = """# miamicontactimprov.com
+_ROBOTS_BASE = """# miamicontactimprov.com
 
 User-agent: *
 Allow: /
@@ -228,6 +230,20 @@ Allow: /
 Sitemap: https://miamicontactimprov.com/sitemap.xml
 Sitemap: https://miamicontactimprov.com/blog/weekly/sitemap.xml
 """
+
+# H005 (seo_h005_ai_crawlers): name Googlebot explicitly alongside the other crawlers. With the
+# flag off, robots.txt is exactly _ROBOTS_BASE, the pre-experiment file.
+_ROBOTS_H005_ANCHOR = "User-agent: Bingbot\nAllow: /\n\n"
+
+
+def robots_txt():
+    if not seo_flags.site_enabled("seo_h005_ai_crawlers"):
+        return _ROBOTS_BASE
+    assert _ROBOTS_H005_ANCHOR in _ROBOTS_BASE
+    return _ROBOTS_BASE.replace(_ROBOTS_H005_ANCHOR, _ROBOTS_H005_ANCHOR + "User-agent: Googlebot\nAllow: /\n\n", 1)
+
+
+ROBOTS = robots_txt()
 
 HEADERS = """/*
   X-Content-Type-Options: nosniff
@@ -337,6 +353,8 @@ def build(out_dir: pathlib.Path, base_url=None):
     # sitemap
     sitemap_rows = []
     for row in page_rows:
+        if seo_variants.is_private(row["route"]):  # H021: noindex pages are not listed
+            continue
         loc = site + row["route"]
         sitemap_rows.append(
             f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{TODAY}</lastmod>\n"

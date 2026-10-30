@@ -40,7 +40,7 @@ jobs:
         run: python3 build/make_assets.py
 
       - name: Unit tests (robots.txt generator)
-        run: python3 -m unittest tests.test_robots
+        run: python3 -m unittest tests.test_robots tests.test_seo_flags
 
       - name: Build site
         env:

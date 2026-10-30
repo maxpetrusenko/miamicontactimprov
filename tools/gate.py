@@ -583,13 +583,17 @@ def check_title_width(pages):
     measured("title-width.titles", n)
 
 
+NOINDEX_RE = re.compile(r'<meta name="robots" content="[^"]*noindex', re.I)
+
+
 def check_sitemap(site_dir, pages):
     sm = (site_dir / "sitemap.xml").read_text(encoding="utf-8")
     locs = SITEMAP_LOC_RE.findall(sm)
     measured("sitemap.urls", len(locs))
     if len(set(locs)) != len(locs):
         add(ERROR, "sitemap", "sitemap.xml", "duplicate <loc> entries")
-    page_urls = {CANON_RE.search(s).group(1) for s in pages.values() if CANON_RE.search(s)}
+    page_urls = {CANON_RE.search(s).group(1) for s in pages.values()
+                 if CANON_RE.search(s) and not NOINDEX_RE.search(s)}
     page_urls.discard("https://miamicontactimprov.com/404")
     missing = page_urls - set(locs)
     extra = set(locs) - page_urls
