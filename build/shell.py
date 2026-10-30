@@ -19,6 +19,8 @@ Spanish tree) are kept reachable from the footer and inherit the same shell.
 import pathlib
 
 import locales
+import seo_flags
+import seo_variants
 import schema
 import signup
 
@@ -153,6 +155,10 @@ def _posthog_config():
 
 POSTHOG_KEY, POSTHOG_HOST = _posthog_config()
 
+# Referrer hosts that count as an AI answer engine for the traffic_class property.
+AI_REFERRERS = ["chatgpt.com", "chat.openai.com", "perplexity.ai", "gemini.google.com",
+                "copilot.microsoft.com", "claude.ai", "you.com", "phind.com", "meta.ai", "grok.com"]
+
 
 def posthog_snippet():
     """The PostHog bootstrap script, or "" when POSTHOG_KEY is unset.
@@ -181,10 +187,33 @@ if (!(navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.doN
     api_host: '{POSTHOG_HOST}',
     defaults: '2026-05-30',
     person_profiles: 'identified_only',
-    capture_pageview: true,
+    capture_pageview: false,
     capture_pageleave: true,
     autocapture: true,
-    session_recording: {{ maskAllInputs: true, maskTextSelector: '{mask_selector}' }}
+    session_recording: {{ maskAllInputs: true, maskTextSelector: '{mask_selector}' }},
+    loaded: function (ph) {{
+      var props = {{ site: '{seo_flags.CONFIG["site"]}', seo_experiment: '{seo_flags.CONFIG["experiment"]}' }};
+      try {{
+        var m = document.querySelector('meta[name="seo-variants"]');
+        var names = {{ v: 'variant', c: 'control', s: 'site' }};
+        if (m) m.content.split(';').forEach(function (kv) {{ var p = kv.split('='); if (p[0] && names[p[1]]) props['seo_' + p[0]] = names[p[1]]; }});
+      }} catch (e) {{}}
+      var cls = 'direct';
+      try {{
+        var utm = (new URLSearchParams(location.search).get('utm_source') || '').toLowerCase();
+        var ref = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : '';
+        var host = function (d) {{ return ref === d || ref.endsWith('.' + d); }};
+        var inc = function (list) {{ return list.some(function (d) {{ return ref.indexOf(d) !== -1; }}); }};
+        if (/chatgpt|perplexity|openai/.test(utm) || {__import__('json').dumps(AI_REFERRERS)}.some(host)) cls = 'ai_referral';
+        else if (ref && ref === location.hostname.toLowerCase()) cls = 'direct';
+        else if (inc(['google.', 'bing.', 'duckduckgo.', 'yahoo.', 'ecosia.', 'search.brave.com'])) cls = 'organic_search';
+        else if (inc(['facebook.', 'instagram.', 'twitter.', 'linkedin.', 'reddit.', 'pinterest.', 'tiktok.', 'youtube.']) || ['t.co', 'x.com', 'lnkd.in'].some(host)) cls = 'social';
+        else if (ref) cls = 'other';
+      }} catch (e) {{}}
+      props.traffic_class = cls;
+      ph.register(props);
+      ph.capture('$pageview', {{ traffic_class: cls }});
+    }}
   }});
 }}
 </script>"""
@@ -1035,6 +1064,11 @@ def page(title, description, path, body, *, jsonld="", bg_video=None, bg_youtube
     extra_head: raw HTML appended into <head>, before the PostHog snippet and the
     JSON-LD. The only user today is /pay's no-JS meta-refresh fallback.
     """
+    return seo_variants.apply(_assemble(title, description, path, body, jsonld, bg_video, bg_youtube,
+                                        og_type, lang, extra_head), path, lang)
+
+
+def _assemble(title, description, path, body, jsonld, bg_video, bg_youtube, og_type, lang, extra_head):
     return (
         head(title, description, path, jsonld=jsonld, og_type=og_type, lang=lang, extra_head=extra_head)
         + "\n<body>\n"
