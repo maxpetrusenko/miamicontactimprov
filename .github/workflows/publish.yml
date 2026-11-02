@@ -36,6 +36,12 @@ jobs:
       - name: Install build dependencies
         run: python3 -m pip install --quiet pillow
 
+      - name: Resolve the next Luma event
+        # Rewrites build/content_marketing.py so every RSVP link points at the
+        # next upcoming event instead of a slug that aged into a past event.
+        # Never fails the build: on any error it keeps the last known-good URL.
+        run: python3 build/link_luma.py
+
       - name: Build assets
         run: python3 build/make_assets.py
 
