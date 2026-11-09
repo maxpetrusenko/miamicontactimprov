@@ -115,7 +115,7 @@ CH8 = {
     "desc": "Chapter 8 of the free contact improv beginner's guide: the qualities of a seasoned dancer, how to track your own progress, and where to go next.",
     "html": f"""
 <h2>No belts, so look at qualities</h2>
-<p>Contact improvisation has no ranks. A dancer who can lift and spin is not further along than one who can stand still and listen. To see progress you have to look at how someone dances. Martin Keogh says his own measure of success is seeing dancers increase their capacity for sensation and risk, and <a href="{STORY}" rel="noopener">dance "less with their 'ideal' and more with their partner"</a>.</p>
+<p>Contact improvisation has no ranks. A dancer who can lift and spin is not further along than one who can stand still and listen. To see progress you have to look at how someone dances. Martin Keogh judges his teaching by whether dancers can take in more sensation and more risk, and whether they <a href="{STORY}" rel="noopener">dance "less with their 'ideal' and more with their partner"</a>.</p>
 <h2>What seasoned dancing tends to look like</h2>
 <p>Keogh posted a minute of a twenty-minute duet and listed what he noticed in it, at <a href="{TERMINUS}" rel="noopener">Terminus Stations</a>. Here are the same qualities in our words, with one of our own at the end.</p>
 <ul>
