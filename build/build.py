@@ -19,6 +19,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import buyer_routes  # noqa: E402
 import content_buyer  # noqa: E402
 import content_checkout  # noqa: E402
 import ticket_link  # noqa: E402
@@ -322,6 +323,21 @@ def redirects_file():
     return "\n".join(lines)
 
 
+def prune_disabled_pages(out_dir: pathlib.Path):
+    """Delete outputs of flagged-off page sets. The build writes over a committed site/
+    and never cleans it, so switching a flag off must remove the pages explicitly."""
+    if seo_flags.site_enabled("seo_h006"):
+        return
+    for route in buyer_routes.ROUTES.values():
+        stem = route.strip("/")
+        (out_dir / f"{stem}.html").unlink(missing_ok=True)
+        (out_dir / stem / "index.html").unlink(missing_ok=True)
+        try:
+            (out_dir / stem).rmdir()
+        except OSError:
+            pass
+
+
 def build(out_dir: pathlib.Path, base_url=None):
     site = SITE if not base_url else base_url.rstrip("/")
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -344,6 +360,8 @@ def build(out_dir: pathlib.Path, base_url=None):
             alias.parent.mkdir(parents=True, exist_ok=True)
             alias.write_text(body, encoding="utf-8")
             written.append(alias.relative_to(out_dir).as_posix())
+
+    prune_disabled_pages(out_dir)
 
     # 404. One document, served for every locale: the Spanish pages are translations of
     # pages that exist, and a missing URL is missing in both languages.

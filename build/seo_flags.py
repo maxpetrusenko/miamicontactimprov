@@ -81,7 +81,7 @@ def variant_map(path, has_content, config=None):
     out = {}
     for key, flag in cfg["flags"].items():
         if flag.get("scope") == "site":
-            out[SHORT[key]] = "s"
+            out[SHORT[key]] = "s" if flag.get("enabled") else "c"
         else:
             out[SHORT[key]] = "v" if is_variant(key, path, cfg) and has_content(key) else "c"
     return out

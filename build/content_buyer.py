@@ -11,10 +11,9 @@ PAGES here through seo_flags.site_enabled("seo_h006").
 
 from shell import answer, buy_button, cite_block, facts, page
 import schema
+from buyer_routes import ROUTES, SITEMAP
 
 VENUE = "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"
-
-from buyer_routes import ROUTES, SITEMAP  # noqa: E402
 
 
 def class_tickets():
@@ -73,8 +72,8 @@ def jam_cost():
 <section class="hero">
   <div class="wrap">
     <p class="eyebrow">Cost &middot; Fridays &middot; Hallandale Beach</p>
-    <h1>Contact improv jam cost in Miami: pay what you can at the door.</h1>
-    <p class="lede">The Friday jam takes $30 to $50 at the door, pay what you can, with no booking. The class ticket before it is $20 online.</p>
+    <h1>Friday contact improv jam cost in Miami: pay what you can at the door.</h1>
+    <p class="lede">The door price for the Friday evening, class and jam together, is $30 to $50, pay what you can, with no booking. The class ticket is $20 online.</p>
     <div class="btn-row">
       {buy_button("class", "Buy class ticket &ndash; $20", "buyer-jam-hero")}
       <a class="btn secondary" href="/friday-jam">Friday jam details</a>
@@ -85,9 +84,9 @@ def jam_cost():
 
 <section class="section">
   <div class="wrap">
-    {answer("A contact improv jam in Miami costs $30 to $50 at the door, pay what you can, and needs no booking. Every Friday a class runs 7:00 to 7:45 PM and the open jam follows until 9:00 PM at Inner Motion Dance Studio in Hallandale Beach.")}
+    {answer("The Friday evening at Inner Motion Dance Studio in Hallandale Beach (class and jam) costs $30 to $50 at the door, pay what you can, and needs no booking. Every Friday a class runs 7:00 to 7:45 PM and the open jam follows until 9:00 PM.")}
     {facts([
-      ("Door price", "$30&ndash;$50, pay what you can"),
+      ("Door price, class and jam", "$30&ndash;$50, pay what you can"),
       ("Booking", "None needed at the door"),
       ("Class ticket", "$20 online, promotion codes apply"),
       ("When", "Fridays, class 7:00&ndash;7:45 PM, open jam 7:45&ndash;9:00 PM"),
@@ -104,7 +103,7 @@ def jam_cost():
 </section>
 """
     path = ROUTES["buy-jam-cost"]
-    desc = "Contact improv jam cost in Miami: $30 to $50 pay what you can at the door, no booking. Fridays in Hallandale Beach."
+    desc = "Friday contact improv jam cost in Miami: the door price for class and jam is $30 to $50, pay what you can, no booking. Hallandale Beach."
     return page(
         "Contact Improv Jam Cost in Miami | Miami Contact Improv",
         desc, path, body,
