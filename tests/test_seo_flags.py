@@ -83,7 +83,7 @@ class Apply(unittest.TestCase):
 
     def test_control_only_adds_meta(self):
         out = seo_variants.apply(self.PAGE, "/", "en")
-        self.assertIn('<meta name="seo-variants" content="h005=s;h021=s;h003=c;h013=c;h014=c;h015=c;h022=c">', out)
+        self.assertIn('<meta name="seo-variants" content="h005=s;h021=s;h006=s;h003=c;h013=c;h014=c;h015=c;h022=c">', out)
         self.assertEqual(out.replace(re.search(r'<meta name="seo-variants"[^>]*>\n', out).group(0), ""), self.PAGE)
 
     def test_private_pages_noindex(self):

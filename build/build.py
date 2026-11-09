@@ -19,6 +19,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import content_buyer  # noqa: E402
 import content_checkout  # noqa: E402
 import ticket_link  # noqa: E402
 import content_core  # noqa: E402
@@ -118,6 +119,9 @@ PAGES = [
     ("faq", "es", content_es.faq, "0.6", "monthly", None),
     ("about", "es", content_es.about, "0.4", "yearly", None),
 ]
+
+if seo_flags.site_enabled("seo_h006"):  # H006: buyer-intent landing pages
+    PAGES += [(slug, "en", fn, prio, freq, None) for slug, fn, prio, freq in content_buyer.PAGES]
 
 ROW_FIELDS = ("slug", "lang", "route", "filename", "builder", "priority", "changefreq", "bg")
 

@@ -83,6 +83,14 @@ ROUTES = {
     "blog-solo-practice": {"en": "/blog/solo-practice-between-jams"},
 }
 
+# H006 (flag seo_h006): buyer-intent landing pages exist only while the flag is on.
+import seo_flags as _seo_flags  # noqa: E402
+import buyer_routes as _buyer  # noqa: E402
+
+if _seo_flags.site_enabled("seo_h006"):
+    for _slug, _route in _buyer.ROUTES.items():
+        ROUTES[_slug] = {"en": _route}
+
 # The order the pages are written, ranked and listed in llms.txt. Purely presentational.
 ORDER = [
     ("home", "en"), ("home", "es"),
@@ -109,6 +117,8 @@ ORDER = [
     ("about", "en"), ("about", "es"),
     ("pricing", "en"), ("pay", "en"), ("success", "en"),
 ]
+if _seo_flags.site_enabled("seo_h006"):
+    ORDER += [(_slug, "en") for _slug in _buyer.ROUTES]
 
 
 def route(slug, lang):

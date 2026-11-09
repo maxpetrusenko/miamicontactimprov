@@ -15,6 +15,7 @@ FLAGS_PATH = pathlib.Path(__file__).resolve().parent.parent / "seo-flags.json"
 SHORT = {
     "seo_h005_ai_crawlers": "h005",
     "seo_h021_indexing": "h021",
+    "seo_h006": "h006",
     "seo_h003_titles": "h003",
     "seo_h013_keyword_placement": "h013",
     "seo_h014_tldr": "h014",
