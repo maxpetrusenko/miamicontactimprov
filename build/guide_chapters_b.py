@@ -64,7 +64,7 @@ CH6 = {
 <h2>Leaving a dance</h2>
 <p>A dance ends when either person ends it. Slow down, lighten the contact and part. Many dancers finish with a nod, a hand on the chest or a short "thank you". Then walk to the edge, drink some water and watch for a while. You do not owe anyone a second dance, and you do not owe anyone an explanation either.</p>
 <h2>Focus jams</h2>
-<p>Some jams pick a single theme for the evening, which is called a focus jam. Martin Keogh ran weekly focus jams in Boston and kept <a href="{FOCUS}" rel="noopener">notes on the format</a>: a theme introduced with a quote or a question, an evening of dancing, and a closing circle where people say what they noticed. Dancers can follow the theme, argue with it or ignore it. If you are not sure whether a jam is a focus jam, ask the host.</p>
+<p>Some jams pick a single theme for the evening, which is called a focus jam. Martin Keogh ran regular focus jams in Boston and kept <a href="{FOCUS}" rel="noopener">notes on the format</a>: a theme introduced with a quote or a question, an evening of dancing, and a closing circle where people say what they noticed. Dancers can follow the theme, argue with it or ignore it. If you are not sure whether a jam is a focus jam, ask the host.</p>
 <h2>Try this: rehearse your two lines</h2>
 <p>Write down the sentence you would use to ask someone to dance and the sentence you would use to end one. Say each aloud three times. They can be as short as "Would you like to dance?" and "Thank you, I'm going to rest." Having the words ready takes the fear out of the first ten minutes.</p>
 <h2>Try this: the edge hour</h2>
@@ -84,19 +84,19 @@ CH7 = {
     "desc": "Chapter 7 of the free contact improv beginner's guide: quieting self-doubt with un-weighting and simplicity, and staying true to your own limits in a duet.",
     "html": f"""
 <h2>The voice in the room</h2>
-<p>Almost everyone arrives with a running commentary. It compares you with the dancer across the room. It plans the next move before the current one has finished. It apologises when you step on a foot. Martin Keogh writes about <a href="{TRAIN}" rel="noopener">the train of self-doubt</a>, which is a fair name for how one worry pulls the next one behind it.</p>
+<p>Almost everyone arrives with a running commentary. It compares you with the dancer across the room. It plans the next move before the current one has finished. It apologises when you step on a foot. Martin Keogh made a short video called <a href="{TRAIN}" rel="noopener">The Train of Self-Doubt</a>, a fair name for how one worry pulls the next one behind it.</p>
 <p>You will not switch the voice off, and you do not need to. The aim is to stop giving it your weight.</p>
 <h2>Un-weighting</h2>
-<p>Un-weighting is a skiing term. A skier unweights by easing pressure off the skis for an instant so they can turn. Keogh used it as the theme of one of his Boston focus jams and <a href="{UNWEIGHT}" rel="noopener">posted the notes</a>. He suggests you can unweight a foot, a limb or the core, and also the day you had and the part of you that criticises. Dancers there said it made the dance less precious and gave them more permission to be odd.</p>
+<p>Un-weighting is a skiing term. A skier unweights by easing pressure off the skis for an instant so they can turn. Keogh used it as the theme of one of his Boston focus jams and <a href="{UNWEIGHT}" rel="noopener">posted the notes</a>, where he extends the word from limbs to the weight of the day and of the self-critic. We find the same idea useful in a plain form. Easing off effort lowers the stakes, and a dance with lower stakes allows odd, personal choices.</p>
 <h2>Try this: set the voice down</h2>
 <ol>
 <li>Lie on your back. Notice where your limbs press into the floor. Lift an arm a centimetre off the floor and hold it there, lighter, then lower it.</li>
-<li>Do the same with a leg, then with your ribs. The core takes more organisation than the limbs, so go slowly.</li>
+<li>Do the same with a leg, then with your ribs. The trunk is harder to lighten than a limb, so take your time with it.</li>
 <li>Name the voice with one word, such as Comparing, Planning or Apologising. Imagine setting it on the floor beside you, the way you would set down a bag.</li>
 <li>Stand up and take one small walk without picking it up again.</li>
 </ol>
 <h2>Simplicity</h2>
-<p>Keogh also ran a focus jam called <a href="{SIMPLICITY}" rel="noopener">Simplicity</a>. One newcomer said it made the dance less scary than expected. Another said it quieted the internal voices that usually keep them from dancing. A third found that trying to be simple made them notice how much standing in balance involves, and a fourth caught themselves planning a dance and dropped the plan so they could dance with their partner.</p>
+<p>Keogh also ran a focus jam on <a href="{SIMPLICITY}" rel="noopener">simplicity</a>, and his notes suggest it suits newcomers well. The reason is practical. A simple task leaves less room for the critic to talk. If you only have to do one thing, there is little left to judge, and a plan for the whole dance has no place to live.</p>
 <h2>Try this: one simple thing</h2>
 <p>In your next solo practice or warm-up, choose one thing and repeat it. It could be a slow roll, a lean, or eye contact at the start of a dance. Repeat it ten times. The tenth version is never the same as the first, and the changes are your material. When a thought starts planning the next move, say "planning" under your breath and go back to the repetition.</p>
 <h2>Staying inside your limits</h2>
@@ -120,7 +120,7 @@ CH8 = {
 <p>Keogh posted a minute of a twenty-minute duet and listed what he noticed in it, at <a href="{TERMINUS}" rel="noopener">Terminus Stations</a>. Here are the same qualities in our words, with one of our own at the end.</p>
 <ul>
 <li><strong>Soft tone.</strong> The body is firm enough to carry weight and loose enough to answer.</li>
-<li><strong>No terminus stations.</strong> Each movement becomes the seed of the next one. There are no dead stops at the end of a phrase.</li>
+<li><strong>No terminus stations.</strong> Every movement flows into the next, and nothing comes to a full stop at the end of a phrase.</li>
 <li><strong>Hands that map.</strong> Hands read the partner's shape and do not steer it.</li>
 <li><strong>Receiving impulses.</strong> The dance comes from the exchange between two people, with nobody pushing a plan into it.</li>
 <li><strong>Honest sound.</strong> A breath, a hum or a word reports what is happening. A sound that performs adds nothing.</li>

@@ -5,7 +5,7 @@ index, the chapter shell with its breadcrumb and prev/next links, and the one-pa
 view that tools/make_guide_pdf.py turns into the committed PDF.
 """
 
-import re
+import hashlib
 
 import guide_chapters
 import locales
@@ -298,3 +298,15 @@ def page_rows():
         rows.append(("guide-" + c["slug"], "en", chapter_builder(c["slug"]), "0.6", "monthly", None))
     rows.append(("guide-print", "en", print_page, "0.1", "yearly", None))
     return rows
+
+
+def print_fingerprint():
+    """sha256 of everything that decides what the PDF looks like: the print page's <main> and its CSS.
+
+    Nothing date- or build-dependent is in either (the head, with the analytics snippet, is
+    excluded). tools/make_guide_pdf.py stores this next to the PDF and tests/test_guide.py
+    recomputes it, so a chapter edit without a regenerated PDF fails CI without needing Chrome.
+    """
+    html = print_page()
+    main = html.split("<main", 1)[1].split("</main>", 1)[0]
+    return hashlib.sha256((main + PRINT_STYLE).encode("utf-8")).hexdigest()

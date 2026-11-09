@@ -267,6 +267,9 @@ HEADERS = """/*
 /t/*
   X-Robots-Tag: noindex
 
+/guide/*.pdf
+  Link: <https://miamicontactimprov.com/guide/>; rel="canonical"
+
 /llms.txt
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600

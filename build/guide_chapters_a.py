@@ -55,28 +55,27 @@ CH2 = {
     "html": f"""
 <h2>Start with the smallest fall</h2>
 <p>Falling gets a chapter this early because it decides how safe everything after it is. A dancer who can meet the floor calmly can take risks with a partner. A dancer who braces against it gets hurt, and tends to hurt the partner too. You can learn the basics alone, on a clean floor, in about ten minutes.</p>
-<p>The sequence below follows an exercise progression Martin Keogh teaches and has <a href="{FALLING}" rel="noopener">written up on his site</a>. The wording, the cautions and the extra detail are ours. Read his version as well.</p>
-<h2>Try this: lying down</h2>
+<p>The idea of beginning with tiny falls, alone, before any partner work comes from a progression Martin Keogh teaches and has <a href="{FALLING}" rel="noopener">written up on his site</a>. The exercises below are our own versions, so read his as well.</p>
+<h2>Try this: settle into the floor</h2>
 <ol>
-<li>Lie on your back on a mat or a clean, non-slip floor. Let your arms and legs land wherever they land. Notice that gravity is already pulling you down and the floor is already holding you up.</li>
-<li>Follow your breath for a minute. Watch the belly and ribs rise and settle. Wherever you find yourself holding, in the jaw, the shoulders or the backs of the knees, let that part get heavier and sink.</li>
-<li>Roll onto your side. From there, drop the short distance onto your back, then try it onto your front. Keep the drop tiny at first, a few centimetres.</li>
+<li>Lie on a mat or a clean, non-slip floor and let your limbs go wherever they go. You are already supported, and nothing needs holding up.</li>
+<li>Watch your breath for a minute. Then scan for tension in the jaw, the shoulders, the hands and the backs of the knees. Let each one go heavier, one at a time.</li>
+<li>Come up onto hands and knees. Lower one hip toward the floor and let yourself tip the short way onto your back. Then try the other side. Keep the drop to a few centimetres.</li>
 <li>If anything pinches or jars, make the movement smaller or stop.</li>
 </ol>
-<h2>Two ways to arrive</h2>
-<p>Repeat the same small drop in two ways. In the first, let all your weight pour down at once and spread, like water leaving a basin. In the second, keep a little tone in your body, enough that you roll and travel after you land. The second version carries momentum. Momentum is what lets you get back up without pushing off the floor with your hands.</p>
-<p>Alternate the two for a few minutes. Notice which one makes standing up easy.</p>
-<h2>Keep the weight moving</h2>
-<p>The most useful rule in this chapter is short. Do not let the weight die at the bottom of the fall. When you land, the speed you carried down has to go somewhere. If you stop dead, the impact stays in one spot, usually a wrist, an elbow or the tailbone. If you keep moving, rolling over a shoulder or sliding along a hip, the same energy spreads over a large surface and can carry you back to your feet.</p>
-<p>That is why you should not catch yourself with a straight arm. A stiff wrist is a small joint trying to absorb the whole fall. Let the thigh, the hip and the back of the shoulder take contact first, and let your arms stay soft and follow.</p>
+<h2>Landing is a transfer of speed</h2>
+<p>Every fall builds a little speed, and a landing has to pass that speed on to something. If you stop dead, all of it goes into one small spot, usually a wrist, an elbow or the tailbone. If you let the body keep travelling, with a roll over the shoulder or a slide along the hip, the speed spreads across a wide area and can even carry you up into sitting or standing.</p>
+<p>That is why a straight arm makes a poor brake. A wrist is a small joint, and it cannot absorb a whole fall. Let the big surfaces, the thigh, the hip and the back of the shoulder, meet the floor first, and keep the arms soft and travelling with you.</p>
 <h2>Try this: three falling shapes</h2>
-<p>Stand on a mat, clear of walls and furniture. Fall a very short distance in each of these ways and repeat each one a few times before you move on.</p>
+<p>Stand on a mat, clear of walls and furniture. Fall a very short distance in each of these ways, and repeat each a few times before you move on. The idea of separating these three shapes is also from Keogh's progression, and the images are ours.</p>
 <ul>
 <li><strong>Fold.</strong> Crease at the hips and knees, like a coat sliding off a hanger, and settle into a pile.</li>
 <li><strong>Roll.</strong> Keep a rounded, toned shape, like a ball, and let it travel across the floor in one direction.</li>
 <li><strong>Stretch.</strong> Extend along one long line, like a plank tipping onto its edge, and meet the floor along the whole side of the body.</li>
 </ul>
 <p>Afterwards ask which shape was easiest to recover from and which one made you tense. Most beginners favour one and avoid another. Give the avoided one a few more goes, always from a small drop.</p>
+<h2>Try this: soft and toned landings</h2>
+<p>Repeat the same small drop twice. First let the body go loose and heavy, so the landing is quiet and you stay where you land. Then keep a little tone, so you roll on and travel. Compare how each one feels when you try to stand. The toned version is the one that lets you rise without pressing your hands into the floor.</p>
 <h2>Before you add a partner</h2>
 <p>Falling next to someone comes later. Read <a href="/safety-and-consent">safety and consent</a> and the blog post on <a href="/blog/how-to-fall-without-getting-hurt">how to fall without getting hurt</a> first. Keep your nails short, take off rings and watches, and tell a partner which way you are heading.</p>
 <p>Stop when you feel sharp pain, as opposed to effort. This guide is not medical advice. If you have a condition that affects your joints, back or balance, talk to a clinician and to whoever leads the session.</p>
@@ -99,7 +98,7 @@ CH3 = {
 <h2>Bones carry weight, muscles steer</h2>
 <p>A body stacks its weight through the skeleton into the floor with very little muscle effort. A lean on a partner follows the same rule. Their weight should travel through their bones to the floor, not hang from your gripping shoulders.</p>
 <p>Use this test. If your shoulder, neck or forearm is working hard to hold the contact, you are holding it with muscle. Ease off until the work moves into your legs and feet. The contact gets lighter and lasts longer.</p>
-<p>Martin Keogh collects dancers' notes on <a href="{SUPPORT}" rel="noopener">support</a>, starting from the dictionary sense of bearing weight from below. His notes also treat witnessing as a form of support. The dancer at the edge who is paying attention helps keep the room safe, and that counts.</p>
+<p>Martin Keogh collects dancers' notes on <a href="{SUPPORT}" rel="noopener">support</a>, starting from the dictionary sense of bearing weight from below. One dancer in those notes describes watching others as a way of supporting them. We would add that the person at the edge who is paying attention helps keep the room safe, and that counts.</p>
 <h2>Try this: back to back</h2>
 <p>Sit back to back with a partner on the floor, spines touching. Agree who starts. The first person leans a few degrees and the second one receives the lean. Swap. Notice what your partner's spine feels like and how their breathing moves it.</p>
 <p>When that is easy, press your backs together, walk your feet in slowly and rise together to standing. Go slowly. If either of you wobbles, sit back down and try again.</p>
@@ -114,7 +113,7 @@ CH3 = {
 <h2>Try this: the leaning walk</h2>
 <p>Stay shoulder to shoulder, lean slightly, and walk across the room together at the slowest pace you can manage. The contact point travels while neither of you can leave without the other noticing. Swap sides, then swap who sets the speed. Talk afterwards about where the weight felt balanced and where it felt like work.</p>
 <h2>Letting a shared balance fall</h2>
-<p>Later, once the lean feels easy, you can give up control of your own balance to the shared one. The pair tips off balance together, and your steps keep it upright. Keogh writes that in this ongoing fall around each other and the floor, <a href="{FALLING}" rel="noopener">"instability leads to greater mobility"</a>.</p>
+<p>Later, once the lean feels easy, you can stop guarding your own balance and trust the pair's. The two of you tip off balance together, and your steps keep the pair upright. Keogh's description of this stage ends with the observation that <a href="{FALLING}" rel="noopener">"instability leads to greater mobility"</a>.</p>
 <p>That is why being off balance is the aim and not a mistake. The steps you take to keep the pair standing are the dance. Beginners should try this slowly, on a mat, after the earlier practice, with an agreement to stop whenever either person says so.</p>
 <h2>When it hurts</h2>
 <p>Say "lighter" or "less" as soon as you feel pressure on a joint. Agree on those words before you start. A partner who hears them and eases off is a partner you can learn with. The next chapters build on the same idea, and chapter 5 covers what to say when "less" is not enough.</p>
@@ -132,7 +131,7 @@ CH4 = {
     "html": f"""
 <h2>Sensation comes first</h2>
 <p>Speed looks like dancing, so beginners often rush toward it. Before speed there is sensation: pressure, warmth, the texture of a sleeve, the tilt of a partner's ribs. Dancing from sensation means you let those details decide what happens next.</p>
-<p>Martin Keogh ran weekly focus jams in Boston in the early 2000s and posted the closing-circle notes. In <a href="{SENSATION}" rel="noopener">his notes on sensation into momentum</a>, several dancers reported that momentum felt safer when it grew out of sensation than when they entered it directly. You can test it in one afternoon.</p>
+<p>Martin Keogh ran regular focus jams in Boston in the early 2000s and posted the closing-circle notes, including a <a href="{SENSATION}" rel="noopener">jam on the step from sensation into momentum</a>. We suggest you test the idea yourself. Dance one slow minute where speed is only allowed to appear if the contact asks for it, then one minute where you start fast, and compare how much control you felt.</p>
 <h2>Try this: slow hands</h2>
 <p>Work with a partner and agree where the contact is, for example a palm on a forearm. One of you moves their arm slowly and the other keeps contact. Stay with these questions for a few minutes. Where does the skin shift? Where is the warmth? Where does the pressure travel?</p>
 <p>Do not speed up until you can describe what you feel. When the contact itself asks for more speed, give it only as much as it asks. Then swap roles.</p>

@@ -25,6 +25,7 @@ import time
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "build"))
 OUT = ROOT / "build" / "static" / "guide" / "contact-improvisation-beginners-guide.pdf"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 MIN_BYTES = 20 * 1024
@@ -85,6 +86,8 @@ def main():
             print(f"Chrome produced {len(data)} bytes that are not a usable PDF", file=sys.stderr)
             return 1
         out.write_bytes(data)
+        import content_guide  # noqa: E402  (needs build/ on sys.path)
+        out.with_name(out.name + ".sha256").write_text(content_guide.print_fingerprint() + "\n", encoding="utf-8")
         print(f"wrote {out} ({len(data)} bytes)")
         return 0
     finally:

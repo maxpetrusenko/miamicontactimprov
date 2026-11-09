@@ -64,6 +64,18 @@ class Guide(unittest.TestCase):
         self.assertGreater(len(data), 20 * 1024)
         self.assertTrue(data.startswith(b"%PDF"))
 
+    def test_pdf_matches_guide_text(self):
+        """The PDF was rendered from the current guide text (hash of the print page's main + CSS)."""
+        import content_guide
+        stamp = PDF.with_name(PDF.name + ".sha256")
+        self.assertTrue(stamp.is_file(), "run python3 tools/make_guide_pdf.py")
+        self.assertEqual(stamp.read_text().strip(), content_guide.print_fingerprint(),
+                         "guide text changed since the PDF was made: run python3 tools/make_guide_pdf.py")
+
+    def test_fingerprint_is_deterministic(self):
+        import content_guide
+        self.assertEqual(content_guide.print_fingerprint(), content_guide.print_fingerprint())
+
 
 if __name__ == "__main__":
     unittest.main()
