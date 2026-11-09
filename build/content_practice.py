@@ -388,7 +388,7 @@ def your_first_jam():
       <p>Most jams begin with two or three minutes of standing or sitting in a circle. Whoever holds the room states the protocol: consent is continuous, anyone may decline anything without giving a reason, the edge is for resting, nobody teaches unless they were asked to, and nobody is filmed without agreeing to it. Anyone in the circle may add a boundary or a note.</p>
       <p>The sessions worth your time state their protocol out loud at the start of every session. A jam with no circle and no stated protocol is telling you something about the room.</p>
       <h2>Your first ten minutes of dancing</h2>
-      <p>A warm-up usually comes first: standing still and following the small adjustments your body makes to stay upright. That is the practice at low volume rather than a formality before the real thing.</p>
+      <p>A warm-up usually comes first: standing still and following the small adjustments your body makes to stay upright. That is the practice at low volume rather than a formality before the real thing. The free <a href="/guide/your-first-jam">first jam chapter of the beginner's guide</a> has two drills to rehearse before you walk in.</p>
       <p>Then dancing starts around you, often without any signal at all. A dance begins with a look, an offered hand, or two people already moving near each other. Watching from the edge for twenty minutes is a normal way to begin, and so is beginning immediately. Most of what an experienced dancer does in the first minutes is listen rather than move. Beginning is not a performance.</p>
       <h2>What is expected of you</h2>
       <ul>
@@ -491,7 +491,7 @@ def keep_practising():
     <div class="prose">
       <p>{SESSIONS_RANK_NOTE}</p>
       <h2>What this page will not do</h2>
-      <p>It will not give you a calendar. A date that has not been verified against the organiser's own page does not appear on this site, because an out-of-date listing is worse than no listing. A class teaches the skills a jam assumes, and <a href="/classes">classes and workshops</a> covers how to judge one.</p>
+      <p>It will not give you a calendar. A date that has not been verified against the organiser's own page does not appear on this site, because an out-of-date listing is worse than no listing. A class teaches the skills a jam assumes, and <a href="/classes">classes and workshops</a> covers how to judge one. For exercises to do on your own between sessions, the free <a href="/guide/">beginner's guide</a> has eight short chapters.</p>
     </div>
     {band("Where this week's dancing actually is", "The organisers' own pages are the only current source, and each entry above links to one.", [("Jams in Miami", "/jams", "primary"), ("Teachers and organisers", "/directory", "secondary")])}
     {cite_block("Miami Contact Improv (2026). <em>How to keep practising Contact Improvisation in Miami</em>. miamicontactimprov.com. https://miamicontactimprov.com/keep-practising")}
@@ -880,7 +880,7 @@ def start():
   <div class="wrap">
     <div class="prose">
       <p>Contact Improvisation is an improvised dance for two or more people, built on a single point of contact that keeps moving. Weight travels through bone instead of being held by grip, and momentum gets followed rather than watched. There are no steps to learn first, which is why somebody who has never danced can be dancing properly inside the first hour, and no partner to bring.</p>
-      <p>This site is a working map of the form in Miami: what runs, where, what it costs and who runs it. <a href="/what-is-contact-improvisation">What Contact Improvisation is</a> covers the dance itself, and <a href="/your-first-jam">your first jam</a> walks through the evening hour by hour.</p>
+      <p>This site is a working map of the form in Miami: what runs, where, what it costs and who runs it. <a href="/what-is-contact-improvisation">What Contact Improvisation is</a> covers the dance itself, and <a href="/your-first-jam">your first jam</a> walks through the evening hour by hour. The free <a href="/guide/">beginner's guide</a> adds eight short chapters of exercises to try before you come.</p>
       <p>The class series runs eight Fridays at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, 7:00 to 9:00 PM, from {first} to {last}. Each class stands on its own, so dropping into any one of the eight works. <a href="/fundamentals">The eight dates, what the classes cover and what they cost</a>.</p>
       <p>Max Petrusenko teaches the series and also maintains this website, so this page reads as the organiser describing his own class. The <a href="/miami-jams">Miami-Dade and Broward jam list</a> carries the same disclosure beside its entry.</p>
     </div>

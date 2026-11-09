@@ -77,6 +77,7 @@ FOOTER_COLS = [
         ("your-first-jam", {"en": "Your first jam, step by step", "es": "Tu primera jam, paso a paso"}),
         ("glossary", {"en": "Glossary of CI terms", "es": "Glosario de términos"}),
         ("history", {"en": "History of CI", "es": "Historia de la IC"}),
+        ("guide", {"en": "Beginner's guide", "es": "Guía para principiantes (en inglés)"}),
         ("blog", {"en": "Blog", "es": "Blog"}),
     ]),
     ("miami", {

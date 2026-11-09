@@ -647,6 +647,29 @@ def check_files(site_dir):
         add(ERROR, "files", "robots.txt", "a blanket Disallow blocks every crawler")
 
 
+GUIDE_PDF = "guide/contact-improvisation-beginners-guide.pdf"
+GUIDE_PDF_MIN_BYTES = 20 * 1024
+
+
+def check_guide_pdf(site_dir):
+    """The guide's free PDF is a committed file the build copies (CI has no Chrome to make it).
+
+    Fail closed if it is missing, too small to hold eight chapters, or not a PDF, because the
+    guide index and every chapter link to it.
+    """
+    p = site_dir / GUIDE_PDF
+    if not p.is_file():
+        add(ERROR, "guide-pdf", GUIDE_PDF, "missing: run tools/make_guide_pdf.py and commit build/static/" + GUIDE_PDF)
+        measured("guide-pdf.checked", 1)
+        return
+    data = p.read_bytes()
+    if len(data) < GUIDE_PDF_MIN_BYTES:
+        add(ERROR, "guide-pdf", GUIDE_PDF, f"{len(data)} bytes, under {GUIDE_PDF_MIN_BYTES}: not a full guide")
+    if not data.startswith(b"%PDF"):
+        add(ERROR, "guide-pdf", GUIDE_PDF, "does not start with %PDF")
+    measured("guide-pdf.checked", 1)
+
+
 def check_canonical_forms(site_dir, pages):
     """Every page must exist at exactly one URL. The .html form 301s to the clean form.
 
@@ -1293,6 +1316,7 @@ def main():
     check_sitemap(site_dir, pages)
     check_links(pages, site_dir)
     check_files(site_dir)
+    check_guide_pdf(site_dir)
     check_canonical_forms(site_dir, pages)
     check_assets(site_dir)
     check_a11y(pages)

@@ -55,6 +55,15 @@ The library pages are published in both English and Spanish; the Events, Contact
 - https://miamicontactimprov.com/blog/how-to-fall-without-getting-hurt  (en)
 - https://miamicontactimprov.com/blog/consent-and-saying-no-mid-dance  (en)
 - https://miamicontactimprov.com/blog/why-there-is-no-music-at-a-jam  (en)
+- https://miamicontactimprov.com/guide/  (en)
+- https://miamicontactimprov.com/guide/what-contact-improvisation-is  (en)
+- https://miamicontactimprov.com/guide/the-floor-is-your-first-partner  (en)
+- https://miamicontactimprov.com/guide/sharing-weight  (en)
+- https://miamicontactimprov.com/guide/sensation-and-space  (en)
+- https://miamicontactimprov.com/guide/saying-no-well  (en)
+- https://miamicontactimprov.com/guide/your-first-jam  (en)
+- https://miamicontactimprov.com/guide/the-inner-critic  (en)
+- https://miamicontactimprov.com/guide/what-progress-looks-like  (en)
 - https://miamicontactimprov.com/es/  (es)
 - https://miamicontactimprov.com/es/empezar  (es)
 - https://miamicontactimprov.com/es/que-es-la-improvisacion-de-contacto  (es)
@@ -73,6 +82,7 @@ The library pages are published in both English and Spanish; the Events, Contact
 - https://miamicontactimprov.com/es/seguridad-y-consentimiento  (es)
 - https://miamicontactimprov.com/es/preguntas-frecuentes  (es)
 - https://miamicontactimprov.com/es/acerca-de  (es)
+- https://miamicontactimprov.com/guide/contact-improvisation-beginners-guide.pdf  (en, PDF of the beginner's guide)
 
 ## Contact
 
