@@ -23,6 +23,7 @@ import content_checkout  # noqa: E402
 import ticket_link  # noqa: E402
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
+import content_guide  # noqa: E402
 import content_es  # noqa: E402
 import content_local  # noqa: E402
 import content_blog  # noqa: E402
@@ -36,6 +37,7 @@ import shell  # noqa: E402
 import videos_data  # noqa: E402
 
 SITE = shell.SITE
+STATIC_DIR = pathlib.Path(__file__).resolve().parent / "static"
 def _sitemap_lastmod():
     """The sitemap's lastmod: when this site's content last changed.
 
@@ -97,6 +99,8 @@ PAGES = [
     ("blog-falling", "en", content_blog.falling, "0.6", "monthly", None),
     ("blog-consent", "en", content_blog.consent, "0.6", "monthly", None),
     ("blog-no-music", "en", content_blog.no_music, "0.6", "monthly", None),
+    # The free beginner's guide: index, eight chapters, and the print view the PDF is made from.
+    *content_guide.page_rows(),
     # Spanish. Same slug, second locale: each of these is a first-class route with its
     # own canonical, its own sitemap entry and its own side of the hreflang pair.
     ("home", "es", content_es.home, "1.0", "weekly", None),
@@ -353,7 +357,7 @@ def build(out_dir: pathlib.Path, base_url=None):
     # sitemap
     sitemap_rows = []
     for row in page_rows:
-        if seo_variants.is_private(row["route"]):  # H021: noindex pages are not listed
+        if seo_variants.is_private(row["route"]) or content_guide.is_noindex(row["route"]):  # noindex pages are not listed
             continue
         loc = site + row["route"]
         sitemap_rows.append(
@@ -374,6 +378,15 @@ def build(out_dir: pathlib.Path, base_url=None):
     (out_dir / "t").mkdir(exist_ok=True)
     (out_dir / "t" / "index.html").write_text(ticket_link.page(), encoding="utf-8")
     written.append("t/index.html")
+
+    # The guide PDF is a committed source file (made by tools/make_guide_pdf.py, which needs
+    # Chrome). The build only copies it, so CI never has to render it.
+    pdf_src = STATIC_DIR / "guide" / content_guide.PDF_NAME
+    if pdf_src.is_file():
+        pdf_out = out_dir / "guide" / content_guide.PDF_NAME
+        pdf_out.parent.mkdir(parents=True, exist_ok=True)
+        pdf_out.write_bytes(pdf_src.read_bytes())
+        written.append(f"guide/{content_guide.PDF_NAME}")
 
     (out_dir / "robots.txt").write_text(ROBOTS, encoding="utf-8")
     (out_dir / "_headers").write_text(HEADERS, encoding="utf-8")
@@ -428,7 +441,10 @@ LOCALE_NOTE = (
 def _page_index(site):
     lines = []
     for row in rows():
+        if content_guide.is_noindex(row["route"]):
+            continue
         lines.append(f"- {site}{row['route']}  ({row['lang']})")
+    lines.append(f"- {site}{content_guide.PDF_PATH}  (en, PDF of the beginner's guide)")
     return "\n".join(lines)
 
 
@@ -479,6 +495,8 @@ def llms_full(site):
         "",
     ]
     for row in rows():
+        if content_guide.is_noindex(row["route"]):
+            continue  # the print view repeats every chapter
         html_src = (pathlib.Path(OUT_DIR) / row["filename"]).read_text(encoding="utf-8")
         parts.append(f"\n---\n\n## {site}{row['route']}\n")
         parts.append(to_text(html_src))

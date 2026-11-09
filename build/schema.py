@@ -207,6 +207,25 @@ def breadcrumb(path, label, lang="en"):
     }
 
 
+def breadcrumb_trail(path, trail, lang="en"):
+    """A breadcrumb of any depth: Home > each (label, route) in `trail`, the last being this page.
+
+    `breadcrumb` is the two-level case; the guide's chapters sit three deep (Home > Guide >
+    Chapter), so they pass the middle step explicitly rather than hiding it.
+    """
+    url = SITE + ("/" if path == "/" else path)
+    root = "Inicio" if lang == "es" else "Home"
+    items = [(root, "/")] + list(trail)
+    return {
+        "@type": "BreadcrumbList",
+        "@id": url + "#breadcrumb",
+        "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": name, "item": SITE + route}
+            for i, (name, route) in enumerate(items)
+        ],
+    }
+
+
 def faq(entries, lang="en"):
     return {
         "@type": "FAQPage",

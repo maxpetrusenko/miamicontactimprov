@@ -81,7 +81,24 @@ ROUTES = {
     "blog-levels": {"en": "/blog/floor-to-standing-dancing-through-levels"},
     "blog-small-dance": {"en": "/blog/the-small-dance-standing-still"},
     "blog-solo-practice": {"en": "/blog/solo-practice-between-jams"},
+    # The beginner's guide. English only. Chapter slugs live in GUIDE_SLUGS below so the
+    # routes, ORDER and the chapter text (build/guide_chapters.py) cannot drift apart.
+    "guide": {"en": "/guide/"},
+    "guide-print": {"en": "/guide/print"},
 }
+
+GUIDE_SLUGS = (
+    "what-contact-improvisation-is",
+    "the-floor-is-your-first-partner",
+    "sharing-weight",
+    "sensation-and-space",
+    "saying-no-well",
+    "your-first-jam",
+    "the-inner-critic",
+    "what-progress-looks-like",
+)
+for _s in GUIDE_SLUGS:
+    ROUTES["guide-" + _s] = {"en": "/guide/" + _s}
 
 # The order the pages are written, ranked and listed in llms.txt. Purely presentational.
 ORDER = [
@@ -108,6 +125,9 @@ ORDER = [
     ("faq", "en"), ("faq", "es"),
     ("about", "en"), ("about", "es"),
     ("pricing", "en"), ("pay", "en"), ("success", "en"),
+    ("guide", "en"),
+    *[("guide-" + _s, "en") for _s in GUIDE_SLUGS],
+    ("guide-print", "en"),
 ]
 
 
