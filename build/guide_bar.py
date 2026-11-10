@@ -18,7 +18,7 @@ def shows(path, lang):
 
 
 MARKUP = (
-    '<div class="gn-bar" id="mci-guide-bar" role="region" aria-label="Free guide">'
+    '<div class="gn-bar" id="mci-guide-bar">'
     '<a class="gn-tag" href="/guide/" data-gn="guide">Free</a>'
     '<span><span class="gn-long"><a class="gn-title" href="/guide/" data-gn="guide">'
     "Contact Improvisation, a Beginner&rsquo;s Guide.</a> </span>"
@@ -41,12 +41,19 @@ SCRIPT = r"""<script>
     var t = parseInt(localStorage.getItem(KEY), 10);
     if (!isNaN(t) && Date.now() - t < 30 * DAY) { bar.hidden = true; return; }
   } catch (e) {}
+  var root = document.documentElement;
+  var setH = function () { root.style.setProperty('--gn-h', (bar.hidden ? 0 : bar.offsetHeight) + 'px'); };
+  setH();
+  window.addEventListener('resize', setH);
   bar.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('[data-gn]') : null;
     if (a) capture('guide_bar_click', { target: a.getAttribute('data-gn') });
   });
   bar.querySelector('.gn-x').addEventListener('click', function () {
     bar.hidden = true;
+    setH();
+    var main = document.getElementById('main');
+    if (main) { if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1'); main.focus({ preventScroll: true }); }
     try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
     capture('guide_bar_dismiss');
   });

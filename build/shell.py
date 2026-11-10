@@ -685,9 +685,15 @@ def body_script():
   // ---- mobile nav ----
   var header = document.getElementById('site-header');
   var toggle = header && header.querySelector('.nav-toggle');
+  var syncNavTop = function () {
+    document.documentElement.style.setProperty('--nav-top', Math.round(header.getBoundingClientRect().bottom) + 'px');
+  };
   if (toggle) {
+    window.addEventListener('scroll', function () { if (header.classList.contains('nav-open')) syncNavTop(); }, { passive: true });
+    window.addEventListener('resize', function () { if (header.classList.contains('nav-open')) syncNavTop(); });
     toggle.addEventListener('click', function () {
       var open = header.classList.toggle('nav-open');
+      if (open) syncNavTop();
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
     });
