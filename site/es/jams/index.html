@@ -38,7 +38,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=1dede446">
+<link rel="stylesheet" href="/assets/site.css?v=e39bd2f0">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -555,9 +555,15 @@
   // ---- mobile nav ----
   var header = document.getElementById('site-header');
   var toggle = header && header.querySelector('.nav-toggle');
+  var syncNavTop = function () {
+    document.documentElement.style.setProperty('--nav-top', Math.round(header.getBoundingClientRect().bottom) + 'px');
+  };
   if (toggle) {
+    window.addEventListener('scroll', function () { if (header.classList.contains('nav-open')) syncNavTop(); }, { passive: true });
+    window.addEventListener('resize', function () { if (header.classList.contains('nav-open')) syncNavTop(); });
     toggle.addEventListener('click', function () {
       var open = header.classList.toggle('nav-open');
+      if (open) syncNavTop();
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
     });

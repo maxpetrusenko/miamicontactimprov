@@ -18,6 +18,7 @@ Spanish tree) are kept reachable from the footer and inherit the same shell.
 
 import pathlib
 
+import guide_bar
 import locales
 import seo_flags
 import seo_variants
@@ -684,9 +685,15 @@ def body_script():
   // ---- mobile nav ----
   var header = document.getElementById('site-header');
   var toggle = header && header.querySelector('.nav-toggle');
+  var syncNavTop = function () {
+    document.documentElement.style.setProperty('--nav-top', Math.round(header.getBoundingClientRect().bottom) + 'px');
+  };
   if (toggle) {
+    window.addEventListener('scroll', function () { if (header.classList.contains('nav-open')) syncNavTop(); }, { passive: true });
+    window.addEventListener('resize', function () { if (header.classList.contains('nav-open')) syncNavTop(); });
     toggle.addEventListener('click', function () {
       var open = header.classList.toggle('nav-open');
+      if (open) syncNavTop();
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
     });
@@ -1076,6 +1083,7 @@ def _assemble(title, description, path, body, jsonld, bg_video, bg_youtube, og_t
         + f'<a class="skip-link" href="#main">{SKIP_LABELS.get(lang, SKIP_LABELS["en"])}</a>\n'
         + '<div id="grain" aria-hidden="true"></div>\n'
         + '<div class="page">\n'
+        + guide_bar.bar(path, lang)
         + header(path, lang)
         + "\n<main id=\"main\">\n"
         + body

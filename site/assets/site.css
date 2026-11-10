@@ -128,12 +128,12 @@ a:hover { color: var(--terracotta-dark); }
   .nav-toggle { display: flex; }
   .lang-switch { margin-left: auto; }
   .nav {
-    position: fixed; inset: 0; top: 71px; background: var(--cream);
+    position: fixed; inset: 0; top: var(--nav-top, 71px); background: var(--cream);
     z-index: 49; flex-direction: column; align-items: stretch; gap: 0;
     padding: 24px 6vw 40px; max-height: 0; overflow: hidden; opacity: 0;
     transition: opacity 0.2s ease;
   }
-  .site-header.nav-open .nav { max-height: calc(100vh - 71px); overflow-y: auto; opacity: 1; }
+  .site-header.nav-open .nav { max-height: calc(100vh - var(--nav-top, 71px)); overflow-y: auto; opacity: 1; }
   .nav a {
     font-family: var(--display); font-size: 40px; text-transform: uppercase;
     text-align: left; padding: 10px 0; border-radius: 0;
@@ -540,7 +540,7 @@ button.btn[disabled] { opacity: 0.6; cursor: default; }
 @media (max-width: 460px) { .ig-embeds { grid-template-columns: 1fr; } }
 
 /* full-viewport poster hero */
-.mci-hero-full { position: relative; width: 100vw; margin-left: calc(50% - 50vw); min-height: calc(100vh - 71px); display: flex; align-items: flex-end; overflow: hidden; background: #171512; }
+.mci-hero-full { position: relative; width: 100vw; margin-left: calc(50% - 50vw); min-height: calc(100vh - 71px - var(--gn-h, 0px)); display: flex; align-items: flex-end; overflow: hidden; background: #171512; }
 .mci-hero-full > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
 .mci-hero-full .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,21,18,0) 40%, rgba(23,21,18,0.55) 75%, rgba(23,21,18,0.82) 100%); }
 .mci-hero-full .inner { position: relative; z-index: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 5vw 64px; }
@@ -553,7 +553,7 @@ button.btn[disabled] { opacity: 0.6; cursor: default; }
 @media (max-width: 820px) { .mci-hero-full > img.bg { object-position: center 30%; } .mci-hero-full .inner { padding-bottom: 44px; } }
 
 /* photo-only hero + headline block beneath it */
-.mci-hero-full.plain { min-height: calc(100vh - 71px); background: #171512; }
+.mci-hero-full.plain { min-height: calc(100vh - 71px - var(--gn-h, 0px)); background: #171512; }
 .mci-hero-full.plain > img.bg { object-position: center 45%; }
 .mci-hero-intro { max-width: var(--wrap); margin: 0 auto; padding: 64px 5vw 0; }
 .mci-hero-intro h1 { font-size: clamp(48px, 7vw, 100px); line-height: 0.95; color: var(--ink); margin: 0 0 20px; }
@@ -668,7 +668,7 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
   /* backdrop-filter makes the header the containing block for the fixed menu,
      collapsing it to header height; drop it on mobile so the menu fills the screen */
   .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--cream); }
-  .nav { flex-wrap: nowrap; bottom: 0; height: calc(100dvh - 71px); }
+  .nav { flex-wrap: nowrap; bottom: 0; height: calc(100dvh - var(--nav-top, 71px)); }
   .site-header:not(.nav-open) .nav { visibility: hidden; pointer-events: none; }
   .nav a { font-size: 34px; }
   body:has(.site-header.nav-open) { overflow: hidden; }
@@ -677,7 +677,7 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
   .scroll-controls { display: none; }
 
   /* hero: fit the real visible viewport, no scroll cue colliding with the buttons */
-  .mci-hero-full, .mci-hero-full.plain { min-height: calc(100svh - 71px); }
+  .mci-hero-full, .mci-hero-full.plain { min-height: calc(100svh - 71px - var(--gn-h, 0px)); }
   .scroll-cue { display: none; }
   .mci-hero-full .inner { padding-bottom: 40px; }
 
@@ -863,6 +863,39 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
 .mci-ribbon-btn:hover { background: var(--terracotta-dark); }
 .mci-ribbon-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
 @media (max-width: 480px) { .mci-ribbon { transform: scale(0.72); transform-origin: bottom left; } }
+
+/* ---------------------------------------------------------------- free guide bar
+   Thin strip above the header on English pages. In the flow (scrolls away), so it never
+   overlaps the sticky header, the corner ribbon or the signup popup. */
+.gn-bar {
+  display: flex; align-items: center; justify-content: center; gap: 14px; position: relative;
+  background: var(--ink); color: var(--cream); padding: 9px 48px 9px 16px;
+  font: 500 13px/1.35 var(--sans); text-align: center;
+}
+.gn-bar[hidden] { display: none; }
+.gn-bar a { color: var(--peach); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.gn-bar a:hover { color: var(--cream); }
+.gn-bar a.gn-tag {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
+  background: var(--peach); border-radius: 999px; padding: 3px 9px; text-decoration: none;
+}
+.gn-bar a.gn-tag:hover { background: var(--cream); color: var(--ink); }
+.gn-bar a.gn-title { color: var(--cream); font-weight: 500; text-decoration: none; }
+.gn-bar a.gn-title:hover { color: var(--peach); }
+.gn-bar a.gn-pdf { white-space: nowrap; }
+.gn-x {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 44px; height: 44px;
+  border: 0; background: transparent; color: var(--cream); display: flex; align-items: center;
+  justify-content: center; cursor: pointer; border-radius: 50%;
+}
+.gn-x:hover { background: rgba(243, 237, 225, 0.15); }
+.gn-short { display: none; }
+@media (max-width: 600px) {
+  .gn-long { display: none; }
+  .gn-short { display: inline; }
+  .gn-bar a.gn-tag { display: none; }
+  .gn-bar { padding: 9px 44px 9px 14px; }
+}
 
 /* ---------------------------------------------------------------- jam list card */
 .newsletter-card-section { padding-top: 0; }
