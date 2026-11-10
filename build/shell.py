@@ -18,6 +18,7 @@ Spanish tree) are kept reachable from the footer and inherit the same shell.
 
 import pathlib
 
+import guide_bar
 import locales
 import seo_flags
 import seo_variants
@@ -1076,6 +1077,7 @@ def _assemble(title, description, path, body, jsonld, bg_video, bg_youtube, og_t
         + f'<a class="skip-link" href="#main">{SKIP_LABELS.get(lang, SKIP_LABELS["en"])}</a>\n'
         + '<div id="grain" aria-hidden="true"></div>\n'
         + '<div class="page">\n'
+        + guide_bar.bar(path, lang)
         + header(path, lang)
         + "\n<main id=\"main\">\n"
         + body

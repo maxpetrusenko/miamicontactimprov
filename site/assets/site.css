@@ -864,6 +864,39 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
 .mci-ribbon-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
 @media (max-width: 480px) { .mci-ribbon { transform: scale(0.72); transform-origin: bottom left; } }
 
+/* ---------------------------------------------------------------- free guide bar
+   Thin strip above the header on English pages. In the flow (scrolls away), so it never
+   overlaps the sticky header, the corner ribbon or the signup popup. */
+.gn-bar {
+  display: flex; align-items: center; justify-content: center; gap: 14px; position: relative;
+  background: var(--ink); color: var(--cream); padding: 9px 48px 9px 16px;
+  font: 500 13px/1.35 var(--sans); text-align: center;
+}
+.gn-bar[hidden] { display: none; }
+.gn-bar a { color: var(--peach); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.gn-bar a:hover { color: var(--cream); }
+.gn-bar a.gn-tag {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
+  background: var(--peach); border-radius: 999px; padding: 3px 9px; text-decoration: none;
+}
+.gn-bar a.gn-tag:hover { background: var(--cream); color: var(--ink); }
+.gn-bar a.gn-title { color: var(--cream); font-weight: 500; text-decoration: none; }
+.gn-bar a.gn-title:hover { color: var(--peach); }
+.gn-bar a.gn-pdf { white-space: nowrap; }
+.gn-x {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px;
+  border: 0; background: transparent; color: var(--cream); display: flex; align-items: center;
+  justify-content: center; cursor: pointer; border-radius: 50%;
+}
+.gn-x:hover { background: rgba(243, 237, 225, 0.15); }
+.gn-short { display: none; }
+@media (max-width: 600px) {
+  .gn-long { display: none; }
+  .gn-short { display: inline; }
+  .gn-bar a.gn-tag { display: none; }
+  .gn-bar { padding: 9px 44px 9px 14px; }
+}
+
 /* ---------------------------------------------------------------- jam list card */
 .newsletter-card-section { padding-top: 0; }
 .newsletter-card {

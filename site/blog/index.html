@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=1dede446">
+<link rel="stylesheet" href="/assets/site.css?v=8af3a082">
 <link rel="alternate" type="text/plain" href="https://miamicontactimprov.com/llms.txt" title="llms.txt">
 <script type="application/ld+json">
 {
@@ -251,6 +251,29 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="grain" aria-hidden="true"></div>
 <div class="page">
+<div class="gn-bar" id="mci-guide-bar" role="region" aria-label="Free guide"><a class="gn-tag" href="/guide/" data-gn="guide">Free</a><span><span class="gn-long"><a class="gn-title" href="/guide/" data-gn="guide">Contact Improvisation, a Beginner&rsquo;s Guide.</a> </span><span class="gn-short">Free beginner&rsquo;s guide. </span><a class="gn-pdf" href="/guide/contact-improvisation-beginners-guide.pdf" download data-gn="pdf">Download the PDF</a></span><button class="gn-x" type="button" aria-label="Dismiss"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+<script>
+(function () {
+  var bar = document.getElementById('mci-guide-bar');
+  if (!bar) return;
+  var KEY = 'mci_guide_bar_closed';
+  var DAY = 24 * 60 * 60 * 1000;
+  var capture = function (name, props) { try { if (window.posthog) posthog.capture(name, props); } catch (e) {} };
+  try {
+    var t = parseInt(localStorage.getItem(KEY), 10);
+    if (!isNaN(t) && Date.now() - t < 30 * DAY) { bar.hidden = true; return; }
+  } catch (e) {}
+  bar.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('[data-gn]') : null;
+    if (a) capture('guide_bar_click', { target: a.getAttribute('data-gn') });
+  });
+  bar.querySelector('.gn-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+    capture('guide_bar_dismiss');
+  });
+})();
+</script>
 <header class="site-header" id="site-header">
   <div class="header-inner">
     <a class="brand" href="/">
