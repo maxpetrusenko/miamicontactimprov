@@ -132,6 +132,10 @@ def success():
     <p class="eyebrow">You're checked out</p>
     <h1>You're in.</h1>
     <p class="lede" id="mci-success-line">Come to the door with your name &mdash; details below.</p>
+    <div id="mci-ticket" hidden style="margin-top:24px">
+      <p class="label">Your ticket</p>
+      <img id="mci-ticket-qr" alt="Check-in QR code" width="220" height="220" style="display:block;background:#fff;border-radius:8px">
+    </div>
   </div>
 </section>
 

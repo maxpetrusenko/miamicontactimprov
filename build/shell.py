@@ -133,6 +133,9 @@ SUBSCRIBE_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/subs
 # docs/plans/pricing-events-config.md -- so there is no plan/subscription concept
 # here any more, only a drop-in kind.
 CHECKOUT_ENDPOINT = "https://newsletter-api.max-petrusenko.workers.dev/api/checkout"
+# GET ?session_id=cs_... : the Worker confirms the payment with Stripe and returns the
+# ticket's QR. The success page fires `checkout_completed` only after this says paid.
+TICKET_ENDPOINT = CHECKOUT_ENDPOINT.rsplit("/", 1)[0] + "/ticket"
 
 # The door payment link the /pay page hands off to. Printed on physical materials
 # (door QR, posters) too, so this exact URL is the one stable thing that must never
@@ -1009,23 +1012,38 @@ def body_script():
     }, 250);
   }
 
-  // ---- success page: personalise from the checkout redirect's query string ----
-  // No ticket ID, no QR - this page works purely off ?kind=, ?event_date= and
-  // ?amount=, which is all a redirect from Stripe Checkout can hand it. The
-  // server-rendered line above is already a correct generic sentence; this only
-  // overwrites it when the params are present and parse cleanly.
+  // ---- success page: confirm the payment, show the ticket, personalise the line ----
+  // ?kind= and ?event_date= only reword the sentence. The ticket and the
+  // `checkout_completed` event both wait for the Worker to confirm with Stripe that
+  // ?session_id= was paid, and the event fires once per session (a reload or a
+  // shared link does not count again).
   (function () {
     var q = new URLSearchParams(window.location.search);
     var kind = q.get('kind');
-    var amount = q.get('amount');
-    try {
-      if (window.posthog && kind) {
-        posthog.capture('checkout_completed', {
-          kind: kind,
-          amount: amount ? parseInt(amount, 10) : null,
-        });
-      }
-    } catch (e) {}
+    var sid = q.get('session_id');
+    if (sid && /^cs_(test|live)_[A-Za-z0-9]+$/.test(sid) && window.fetch) {
+      fetch('__TICKET_ENDPOINT__?session_id=' + encodeURIComponent(sid))
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (t) {
+          if (!t || !t.paid) return;
+          var key = 'mci_checkout_completed_' + sid;
+          var seen = false;
+          try { seen = !!localStorage.getItem(key); } catch (e) {}
+          if (!seen) {
+            try { localStorage.setItem(key, '1'); } catch (e) {}
+            try {
+              if (window.posthog) posthog.capture('checkout_completed', { kind: t.kind, amount: t.amount });
+            } catch (e) {}
+          }
+          var box = document.getElementById('mci-ticket');
+          var img = document.getElementById('mci-ticket-qr');
+          if (box && img && t.qr_svg) {
+            img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(t.qr_svg);
+            box.hidden = false;
+          }
+        })
+        .catch(function () {});
+    }
 
     var line = document.getElementById('mci-success-line');
     if (!line) return;
@@ -1047,7 +1065,7 @@ def body_script():
 })();
 </script>
 </body>
-</html>"""
+</html>""".replace("__TICKET_ENDPOINT__", TICKET_ENDPOINT)
 
 
 def bg_youtube_embed(video_id):
