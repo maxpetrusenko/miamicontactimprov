@@ -131,11 +131,13 @@ right now, door is the fallback either way.
   `?utm_source=poster&utm_medium=qr`) before the visitor leaves for Stripe — a
   bare 302 runs no JS and would silently lose both.
 - `/success` — a plain confirmation page, no `Event` JSON-LD (transactional,
-  not a discovery page). Reads `?kind=`, `?event_date=` and `?amount=` from the
-  query string client-side to personalize the message and fire
-  `checkout_completed { kind, amount }`. No ticket ID, no QR — purely off the
-  URL, by design (the webhook/entitlement work that would produce a real
-  ticket ID is a later PR).
+  not a discovery page). Reads `?kind=` and `?event_date=` from the query string
+  client-side to personalize the message. With `?session_id=` it calls the
+  Worker's `GET /api/ticket`, which confirms the payment with Stripe and returns
+  the ticket's QR (shown as an `<img>`); `checkout_completed { kind, amount }`
+  fires only after that confirms `paid`, once per session (localStorage key
+  `mci_checkout_completed_<session>`). No `session_id`, or an unpaid one: no
+  event, no QR.
 - A site-wide newsletter popup (`shell.newsletter_popup()`, injected by
   `shell.page()` on every page), shown once per visitor 5 seconds after load
   via `localStorage`, reusing the existing `subscribe_form()`/
@@ -189,9 +191,9 @@ identify exception below:
   `fetch` to `/api/checkout`.
 - `checkout_started { kind }` — right after a `200 { url }` response, just
   before the redirect to Stripe.
-- `checkout_completed { kind, amount }` — on `/success` load, straight from its
-  query string (the Worker's success URL carries `amount` in cents precisely
-  so this page never has to guess or re-derive it).
+- `checkout_completed { kind, amount }` — on `/success`, after `GET /api/ticket`
+  confirms the session is paid, once per session. `amount` is what Stripe
+  charged in cents (after any promo code), not the list price.
 - `newsletter_popup_shown` / `newsletter_popup_closed` /
   `newsletter_popup_submitted` — at the matching points in the popup
   lifecycle. `_submitted` only fires for the popup's own form instance (it
@@ -237,12 +239,13 @@ ci-fundamentals` are both manual follow-ups for Max, not code changes.
 
 ## What is explicitly NOT built yet (next PR)
 
-- The Stripe webhook that would actually record a completed checkout.
-- Ticket and membership entitlement records in KV (or anywhere) — nothing on
-  the Worker or site side currently knows whether a given purchase happened
-  beyond the Stripe Checkout session itself.
-- The confirmation-email QR code.
-- The `/checkin` scanner page.
+- Built in ticketing slice 1 (Worker repo, `TICKETING.md`): the Stripe webhook,
+  drop-in ticket records in KV (`TICKETS`), the confirmation email with QR,
+  `.ics` and Google Calendar link, and `GET /api/ticket` for `/success`.
+- Still open for slice 2: the `/checkin/<id>` scanner page (the QR already
+  encodes that URL, so it 404s until the page exists), 24 hour reminders, a
+  host attendee list view, and replacing the Luma buy buttons.
+- Membership entitlement records — nothing knows who holds a membership.
 - Notion/CRM sync of purchases.
 - Memberships and the intro pack as real, bookable, customer-facing things —
   see "Deferred, not built" above.
