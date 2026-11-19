@@ -24,7 +24,11 @@ concurrency:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    # Self-hosted on vps-builder: GitHub-hosted runners are blocked by account billing.
+    # Runbook: manager docs/vps-builder-gh-runner.md. The repo is public and a self-hosted
+    # runner runs whatever the workflow runs, so fork PRs never reach it.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, vps-builder]
     name: Gate and deploy
     steps:
       - uses: actions/checkout@v4
@@ -35,6 +39,12 @@ jobs:
 
       - name: Install build dependencies
         run: python3 -m pip install --quiet pillow
+
+      - name: Resolve the next Luma event
+        # Rewrites build/content_marketing.py so every RSVP link points at the
+        # next upcoming event instead of a slug that aged into a past event.
+        # Never fails the build: on any error it keeps the last known-good URL.
+        run: python3 build/link_luma.py
 
       - name: Build assets
         run: python3 build/make_assets.py

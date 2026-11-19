@@ -20,7 +20,15 @@ import schema
 from shell import buy_button, newsletter_card, page
 
 IG = "https://instagram.com/miamicontactimprov"
-LUMA = "https://luma.com/cbzvq6pj"  # Friday class + open practice registration
+# --- Luma RSVP link -------------------------------------------------------
+# The event this site sells changes every Friday. `build/link_luma.py` rewrites
+# the two values below from the public Luma calendar before every build; never
+# edit them by hand. LUMA_LAST_KNOWN is the fallback used when Luma cannot be
+# read, so a network blip degrades to the last good event instead of a broken
+# RSVP button.
+LUMA_CALENDAR = "https://luma.com/miamicontactimprov"
+LUMA_LAST_KNOWN = "https://luma.com/0czqen1b"
+LUMA = LUMA_LAST_KNOWN  # alias kept: existing call sites use LUMA
 LUMA_EMBED = "https://luma.com/embed/event/evt-YVDi6vViD3q6ZpX/simple"  # same event, Luma's own embed
 EVENTBRITE = "https://www.eventbrite.com/e/contact-improvisation-ci-class-miami-exploring-levels-tickets-2003010213468"
 CLASSPASS = "https://classpass.com/studios/miami-contact-improv-hallandale-beach"
