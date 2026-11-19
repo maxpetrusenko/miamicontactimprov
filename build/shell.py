@@ -1021,18 +1021,40 @@ def body_script():
     var q = new URLSearchParams(window.location.search);
     var kind = q.get('kind');
     var sid = q.get('session_id');
-    if (sid && /^cs_(test|live)_[A-Za-z0-9]+$/.test(sid) && window.fetch) {
+    // Take the session id out of the address bar before anything can record it: PostHog
+    // reads the URL for $current_url, and the id should not end up in analytics, history
+    // sharing or a copied link. kind and event_date stay.
+    if (sid) {
+      try {
+        q.delete('session_id');
+        var qs = q.toString();
+        window.history.replaceState(window.history.state, '', window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+      } catch (e) {}
+    }
+    function confirmTicket(attempt) {
+      // 502 = the Worker could not reach Stripe right now; the payment is not in doubt, so
+      // retry a few times with growing pauses before giving up.
       fetch('__TICKET_ENDPOINT__?session_id=' + encodeURIComponent(sid))
-        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (r) {
+          if (r.status === 502 && attempt < 3) {
+            setTimeout(function () { confirmTicket(attempt + 1); }, 1000 * Math.pow(2, attempt));
+            return null;
+          }
+          return r.ok ? r.json() : null;
+        })
         .then(function (t) {
           if (!t || !t.paid) return;
           var key = 'mci_checkout_completed_' + sid;
           var seen = false;
           try { seen = !!localStorage.getItem(key); } catch (e) {}
           if (!seen) {
-            try { localStorage.setItem(key, '1'); } catch (e) {}
+            // Mark it seen only once capture has actually been called, so a missing or
+            // blocked PostHog does not burn the one chance to count this purchase.
             try {
-              if (window.posthog) posthog.capture('checkout_completed', { kind: t.kind, amount: t.amount });
+              if (window.posthog) {
+                posthog.capture('checkout_completed', { kind: t.kind, amount: t.amount });
+                try { localStorage.setItem(key, '1'); } catch (e) {}
+              }
             } catch (e) {}
           }
           var box = document.getElementById('mci-ticket');
@@ -1044,6 +1066,7 @@ def body_script():
         })
         .catch(function () {});
     }
+    if (sid && /^cs_(test|live)_[A-Za-z0-9]+$/.test(sid) && window.fetch) confirmTicket(0);
 
     var line = document.getElementById('mci-success-line');
     if (!line) return;

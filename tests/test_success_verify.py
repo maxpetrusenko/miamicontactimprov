@@ -37,8 +37,21 @@ class SuccessVerify(unittest.TestCase):
         dedupe = script.index("localStorage.getItem(key)")
         self.assertLess(paid_gate, capture)
         self.assertLess(dedupe, capture)
+        # the dedupe key is written after capture, never before it
+        self.assertLess(capture, script.index("localStorage.setItem(key"))
         # one capture site only, and not from the bare URL
         self.assertEqual(len(re.findall(r"checkout_completed'", self.html)), 1)
+
+    def test_session_id_stripped_before_anything_captures(self):
+        script = self.html[self.html.index("function () {\n    var q = new URLSearchParams"):]
+        strip = script.index("history.replaceState")
+        self.assertIn("q.delete('session_id')", script)
+        self.assertLess(strip, script.index("confirmTicket(0)"))
+        self.assertLess(strip, script.index("posthog.capture('checkout_completed'"))
+
+    def test_retries_on_502_with_backoff(self):
+        self.assertIn("r.status === 502 && attempt < 3", self.html)
+        self.assertIn("Math.pow(2, attempt)", self.html)
 
     def test_qr_goes_in_as_an_image_not_markup(self):
         self.assertIn("data:image/svg+xml", self.html)
