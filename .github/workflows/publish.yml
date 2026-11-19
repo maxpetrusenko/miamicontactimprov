@@ -24,7 +24,11 @@ concurrency:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    # Self-hosted on vps-builder: GitHub-hosted runners are blocked by account billing.
+    # Runbook: manager docs/vps-builder-gh-runner.md. The repo is public and a self-hosted
+    # runner runs whatever the workflow runs, so fork PRs never reach it.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, vps-builder]
     name: Gate and deploy
     steps:
       - uses: actions/checkout@v4
