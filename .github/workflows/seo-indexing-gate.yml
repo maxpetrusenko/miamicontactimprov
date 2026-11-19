@@ -22,9 +22,9 @@ name: SEO Indexing Gate
 #                        makes the gate provably run before a merge — the PR that
 #                        adds this workflow executes it.
 #   workflow_dispatch  : LIVE crawl of production (--url, --max 60).
-#   schedule (weekly)   : LIVE crawl of production. PUBLIC repo, so GitHub-hosted
-#                        Actions minutes are free and the weekly cadence belongs
-#                        here. (The private properties in the estate get their
+#   schedule (weekly)   : LIVE crawl of production. PUBLIC repo; runs on the
+#                        vps-builder self-hosted runner (GitHub-hosted is billing-blocked).
+#                        (The private properties in the estate get their
 #                        weekly cadence from the local watchdog
 #                        ~/.hermes/scripts/seo-index-weekly.sh instead, because
 #                        scheduled lanes in private repos stopped when the
@@ -76,8 +76,10 @@ env:
 jobs:
   local-build-check:
     name: Local build SEO check (pre-deploy)
-    if: github.event_name != 'schedule'
-    runs-on: ubuntu-latest
+    # Self-hosted on vps-builder (GitHub-hosted runners are blocked by billing). Fork PRs
+    # must never reach it: the repo is public.
+    if: github.event_name != 'schedule' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: [self-hosted, vps-builder]
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -165,7 +167,7 @@ jobs:
   live-check:
     name: Live site SEO check (post-deploy)
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, vps-builder]
     timeout-minutes: 30
     steps:
       - name: Checkout
