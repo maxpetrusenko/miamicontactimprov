@@ -41,6 +41,11 @@ def pricing():
   </div>
 
   <div class="price-row">
+    <div class="price-text"><strong>Membership &mdash; $40 a month or $260 a year.</strong><br>Four classes a month, or a class every week.</div>
+    <a class="btn secondary" href="/membership">See memberships</a>
+  </div>
+
+  <div class="price-row">
     <div class="price-text"><strong>At the door &mdash; $30&ndash;$50, pay what you can.</strong>
       <p class="price-note">No booking. Come to the door; nobody is turned away over money.</p>
     </div>
