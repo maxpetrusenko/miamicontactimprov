@@ -20,6 +20,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import content_checkout  # noqa: E402
+import content_membership  # noqa: E402
 import ticket_link  # noqa: E402
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
@@ -89,6 +90,9 @@ PAGES = [
     ("pricing", "en", content_checkout.pricing, "0.8", "monthly", None),
     ("pay", "en", content_checkout.pay, "0.1", "yearly", None),
     ("success", "en", content_checkout.success, "0.3", "yearly", None),
+    ("membership", "en", content_membership.membership, "0.8", "weekly", None),
+    ("membership-success", "en", content_membership.membership_success, "0.1", "yearly", None),
+    ("membership-manage", "en", content_membership.membership_manage, "0.1", "yearly", None),
     ("blog", "en", content_blog.index, "0.7", "weekly", None),
     ("blog-miami-class", "en", content_blog.miami_class, "0.7", "monthly", None),
     ("blog-levels", "en", content_blog.levels, "0.6", "monthly", None),
