@@ -165,7 +165,7 @@ class ManagePage(unittest.TestCase):
         # in a build without POSTHOG_KEY, so check the template rather than the output)
         shell_src = (ROOT / "build" / "shell.py").read_text()
         self.assertIn("{extra_head}{posthog_snippet()}", shell_src)
-        body = self.page[self.page.index("<main"):]
+        body = self.page[self.page.index("<main"):self.page.index("</main>")]
         self.assertNotIn("location.search", body)
         self.assertIn("window.__mciManageId", body)
 
