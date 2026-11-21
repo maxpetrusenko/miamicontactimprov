@@ -164,6 +164,9 @@ SUCCESS_SCRIPT = r"""<script>
       })
       .then(function (m) {
         if (!m || !m.paid) return;
+        // The webhook has not written the member yet, so the stored Black Friday decision is not
+        // readable: wait and ask again rather than count the purchase with a guess.
+        if (m.pending && attempt < 4) { setTimeout(function () { confirmMember(attempt + 1); }, 1500 * (attempt + 1)); return; }
         var key = 'mci_membership_completed_' + sid;
         var seen = false;
         try { seen = !!localStorage.getItem(key); } catch (e) {}
@@ -232,9 +235,22 @@ def membership_success():
     )
 
 
+# The member id in the emailed link is a bearer secret. This runs in <head>, before the
+# PostHog snippet, so analytics never reads it from the address bar: it is moved into a
+# window variable and the URL is rewritten to the bare path.
+MANAGE_HEAD = r"""<script>
+(function () {
+  try {
+    var m = new URLSearchParams(window.location.search).get('m') || '';
+    window.__mciManageId = m;
+    window.history.replaceState(window.history.state, '', window.location.pathname + window.location.hash);
+  } catch (e) {}
+})();
+</script>"""
+
 MANAGE_SCRIPT = r"""<script>
 (function () {
-  var id = new URLSearchParams(window.location.search).get('m') || '';
+  var id = window.__mciManageId || '';
   var msg = document.getElementById('mci-manage-msg');
   var fail = function () { if (msg) msg.textContent = 'This link did not work. Reply to your confirmation email and we will sort it out.'; };
   if (!/^[0-9a-f]{32}$/.test(id) || !window.fetch) { fail(); return; }
@@ -272,4 +288,5 @@ def membership_manage():
         "/membership/manage",
         body,
         jsonld=jsonld,
+        extra_head=MANAGE_HEAD,
     )

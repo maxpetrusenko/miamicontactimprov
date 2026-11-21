@@ -133,6 +133,12 @@ class SuccessPage(unittest.TestCase):
         self.assertLess(dedupe, capture)
         self.assertLess(capture, stored)
 
+    def test_waits_for_the_stored_offer_decision_before_counting(self):
+        pending = self.page.index("m.pending && attempt < 4")
+        capture = self.page.index("membership_checkout_completed")
+        self.assertLess(pending, capture)
+        self.assertNotIn("session.created", self.page)
+
     def test_session_id_leaves_the_address_bar(self):
         self.assertIn("q.delete('session_id')", self.page)
         self.assertIn("history.replaceState", self.page)
@@ -144,10 +150,24 @@ class SuccessPage(unittest.TestCase):
 
 
 class ManagePage(unittest.TestCase):
+    def setUp(self):
+        self.page = html(content_membership.membership_manage)
+
     def test_posts_member_id_to_the_portal_route(self):
-        page = html(content_membership.membership_manage)
-        self.assertIn(bf_bar.PORTAL_ENDPOINT, page)
-        self.assertIn("[0-9a-f]{32}", page)
+        self.assertIn(bf_bar.PORTAL_ENDPOINT, self.page)
+        self.assertIn("[0-9a-f]{32}", self.page)
+
+    def test_member_id_leaves_the_url_before_posthog_loads(self):
+        head = self.page[: self.page.index("</head>")]
+        strip = head.index("window.__mciManageId = m;")
+        self.assertIn("history.replaceState", head[strip:])
+        # extra_head is emitted immediately before the PostHog loader (the loader is empty
+        # in a build without POSTHOG_KEY, so check the template rather than the output)
+        shell_src = (ROOT / "build" / "shell.py").read_text()
+        self.assertIn("{extra_head}{posthog_snippet()}", shell_src)
+        body = self.page[self.page.index("<main"):]
+        self.assertNotIn("location.search", body)
+        self.assertIn("window.__mciManageId", body)
 
 
 class Routes(unittest.TestCase):
