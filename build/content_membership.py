@@ -28,7 +28,7 @@ MEMBERSHIP_SCRIPT = r"""<script>
   if (!bf) return;
   var ENDPOINT = '%(endpoint)s';
   var section = document.getElementById('mci-bf');
-  if (section && bf.open()) {
+  if (section && bf.active()) {
     section.hidden = false;
     bf.viewOnce('landing');
   }

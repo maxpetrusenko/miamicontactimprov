@@ -5,9 +5,9 @@ America/New_York comes with one free bring-a-friend pass a month for the first t
 months. No price change. The Worker (newsletter-api, src/bf.ts) decides who actually
 gets the passes, on payment time; this file only decides what the page shows.
 
-The strip is in the HTML but `hidden`; the script shows it until the window closes
-(before Nov 27 it names the dates, so the same words are true on both sides of the
-start). No JS means no strip, which is the safe failure after the offer ends.
+The strip is in the HTML but `hidden`; the script shows it only while the window is
+active (START <= now <= END), so nothing shows before Nov 27 00:00 ET or after Dec 1
+23:59:59 ET. No JS means no strip, which is the safe failure after the offer ends.
 """
 
 # Both instants carry the EST offset: DST ended Nov 1, 2026. Keep in sync with
@@ -62,7 +62,6 @@ COMMON = r"""<script>
   window.mciBf = {
     start: START, end: END,
     active: function (now) { now = now || Date.now(); return now >= START && now <= END; },
-    open: function (now) { return (now || Date.now()) <= END; },
     utm: function () { var o = {}; for (var k in utm) o[k] = utm[k]; return o; },
     capture: function (name, props) {
       try {
@@ -85,7 +84,7 @@ COMMON = r"""<script>
 BAR_SCRIPT = r"""<script>
 (function () {
   var bar = document.getElementById('mci-bf-bar');
-  if (!bar || !window.mciBf || !window.mciBf.open()) return;
+  if (!bar || !window.mciBf || !window.mciBf.active()) return;
   bar.hidden = false;
   window.mciBf.viewOnce('bar');
   bar.addEventListener('click', function (e) {
