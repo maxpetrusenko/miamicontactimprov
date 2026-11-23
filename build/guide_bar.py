@@ -12,7 +12,7 @@ def shows(path, lang):
     """English pages only; not the guide (index, chapters, /guide/print) or checkout."""
     if lang != "en":
         return False
-    if path in ("/pay", "/success") or path.startswith("/t/"):
+    if path in ("/pay", "/success", "/membership/success", "/membership/manage", "/checkin") or path.startswith("/t/"):
         return False
     return path != "/guide" and not path.startswith("/guide/")
 

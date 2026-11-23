@@ -916,3 +916,24 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
   .subscribe-card-row .subscribe-submit { width: 100%; }
   .newsletter-card { padding: 24px 18px 20px; }
 }
+
+/* ---------------------------------------------------------------- Black Friday strip and offer
+   .bf-bar sits above the free-guide bar and is shown by script only while the offer is open. */
+.bf-bar {
+  display: flex; align-items: center; justify-content: center; position: relative;
+  background: var(--terracotta); color: var(--ink); padding: 9px 16px;
+  font: 600 13px/1.35 var(--sans); text-align: center;
+}
+.bf-bar[hidden] { display: none; }
+.bf-bar a { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.bf-bar a:hover { color: var(--cream); }
+.bf-offer { max-width: var(--read); border: 2px solid var(--ink); border-radius: var(--radius-sm); background: var(--cream-2); padding: 22px 24px; }
+.bf-offer[hidden], #mci-bf[hidden], #mci-bf-passes[hidden], #mci-manage[hidden] { display: none; }
+.bf-offer h2 { margin: 0 0 8px; }
+.bf-offer p { margin: 0; }
+
+/* ---------------------------------------------------------------- /checkin */
+.ck-form { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin-top: 18px; }
+.ck-form label { font-weight: 600; }
+.ck-form input { font: inherit; padding: 14px 16px; border: 2px solid var(--ink); border-radius: var(--radius-sm); background: var(--white); color: var(--ink); }
+#mci-checkin-ready[hidden], .hero [id^="ck-"][hidden] { display: none; }
