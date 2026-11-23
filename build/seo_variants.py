@@ -213,7 +213,7 @@ TABLES = {
 }
 
 # H021: transactional pages that stay reachable but should not be indexed or listed.
-PRIVATE_ROUTES = ("/pay", "/success", "/membership/success", "/membership/manage")
+PRIVATE_ROUTES = ("/pay", "/success", "/membership/success", "/membership/manage", "/checkin")
 
 
 def has_content(key, path):

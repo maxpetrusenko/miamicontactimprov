@@ -23,13 +23,13 @@ PORTAL_ENDPOINT = API + "/portal"
 BAR_HREF = "/membership?utm_source=site&utm_medium=bf-bar&utm_campaign=bf-2026"
 
 # Pages that never carry the strip: checkout hand-offs, member-only pages, the short link.
-HIDDEN_PATHS = ("/pay", "/success", "/membership/success", "/membership/manage")
+HIDDEN_PATHS = ("/pay", "/success", "/membership/success", "/membership/manage", "/checkin")
 
 
 def shows(path, lang):
     if lang != "en":
         return False
-    if path in HIDDEN_PATHS or path.startswith("/t/"):
+    if path in HIDDEN_PATHS or path.startswith("/t/") or path.startswith("/checkin/"):
         return False
     return path != "/guide" and not path.startswith("/guide/")
 

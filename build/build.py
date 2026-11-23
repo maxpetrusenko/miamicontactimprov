@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import content_checkout  # noqa: E402
 import content_membership  # noqa: E402
+import content_checkin  # noqa: E402
 import ticket_link  # noqa: E402
 import content_core  # noqa: E402
 import content_directory  # noqa: E402
@@ -93,6 +94,7 @@ PAGES = [
     ("membership", "en", content_membership.membership, "0.8", "weekly", None),
     ("membership-success", "en", content_membership.membership_success, "0.1", "yearly", None),
     ("membership-manage", "en", content_membership.membership_manage, "0.1", "yearly", None),
+    ("checkin", "en", content_checkin.checkin, "0.1", "yearly", None),
     ("blog", "en", content_blog.index, "0.7", "weekly", None),
     ("blog-miami-class", "en", content_blog.miami_class, "0.7", "monthly", None),
     ("blog-levels", "en", content_blog.levels, "0.6", "monthly", None),
@@ -292,6 +294,8 @@ REDIRECT_ALIASES = """# Clean-URL safety net. Cloudflare Pages serves /miami.htm
 
 # /t/<CODE> serves one static page (see ticket_link.py) with status 200.
 TICKET_REWRITE = "/t/*  /t/  200"
+# The single-class ticket QR opens /checkin/<ticketId>; that one page handles every id.
+CHECKIN_REWRITE = "/checkin/*  /checkin  200"
 
 
 def redirects_file():
@@ -323,6 +327,7 @@ def redirects_file():
     lines.append("# Pages does not fill :code into a query string, so /t/<CODE> serves the /t/ page (target is the clean URL: Pages 308s /t/index.html),")
     lines.append("# whose script reads the code from the path and goes to /pricing?code=<CODE>.")
     lines.append(TICKET_REWRITE)
+    lines.append(CHECKIN_REWRITE)
     lines.append("")
     lines.append(REDIRECT_ALIASES.rstrip())
     lines.append("")

@@ -115,6 +115,7 @@ def membership():
       ("Where", VENUE),
       ("When", "Fridays, 7:00&ndash;9:00 PM"),
       ("Single class", '$20 online, <a href="/pricing">see pricing</a>'),
+      ("Refunds and problems", '<a href="mailto:hello@miamicontactimprov.com">hello@miamicontactimprov.com</a>'),
     ])}
     {cite_block("Miami Contact Improv (2026). <em>Membership</em>. miamicontactimprov.com. https://miamicontactimprov.com/membership")}
   </div>
@@ -179,6 +180,16 @@ SUCCESS_SCRIPT = r"""<script>
             }
           } catch (e) {}
         }
+        // Keep the member token on this phone so scanning the studio QR checks in. The token is
+        // the id in the manage link; the address bar never shows it.
+        try {
+          var tok = (String(m.manage_url || '').match(/[?&]m=([0-9a-f]{32})/) || [])[1];
+          if (tok) {
+            localStorage.setItem('mci_member', tok);
+            var ready = document.getElementById('mci-checkin-ready');
+            if (ready) ready.hidden = false;
+          }
+        } catch (e) {}
         var link = document.getElementById('mci-manage-link');
         if (link && m.manage_url) { link.href = m.manage_url; document.getElementById('mci-manage').hidden = false; }
         var passes = document.getElementById('mci-bf-passes');
@@ -199,6 +210,7 @@ def membership_success():
     <h1>You're a member.</h1>
     <p class="lede">A confirmation is on its way to your inbox. Come to the door with your name on Friday.</p>
     <p id="mci-bf-passes" hidden>Your membership includes three bring-a-friend passes, one a month for your first three months. Reply to the confirmation email the week you want to use one.</p>
+    <p id="mci-checkin-ready" hidden>This phone is set up for check-in. On Fridays, scan the QR at the studio.</p>
     <p id="mci-manage" hidden><a class="btn secondary" id="mci-manage-link" href="#">Manage your membership</a></p>
   </div>
 </section>
@@ -210,7 +222,7 @@ def membership_success():
       ("When", "Fridays, 7:00&ndash;9:00 PM"),
     ])}
     <div class="prose">
-      <p>First time? <a href="/your-first-jam">Your first jam, step by step</a> walks through arriving and the opening circle. Questions: <a href="mailto:hello@miamicontactimprov.com">hello@miamicontactimprov.com</a>.</p>
+      <p>First time? <a href="/your-first-jam">Your first jam, step by step</a> walks through arriving and the opening circle. Refunds and problems: <a href="mailto:hello@miamicontactimprov.com">hello@miamicontactimprov.com</a>.</p>
     </div>
   </div>
 </section>

@@ -931,3 +931,9 @@ a.mci-info-card.live .body .mci-pill { display: inline-flex; margin-top: 14px; }
 .bf-offer[hidden], #mci-bf[hidden], #mci-bf-passes[hidden], #mci-manage[hidden] { display: none; }
 .bf-offer h2 { margin: 0 0 8px; }
 .bf-offer p { margin: 0; }
+
+/* ---------------------------------------------------------------- /checkin */
+.ck-form { display: flex; flex-direction: column; gap: 12px; max-width: 360px; margin-top: 18px; }
+.ck-form label { font-weight: 600; }
+.ck-form input { font: inherit; padding: 14px 16px; border: 2px solid var(--ink); border-radius: var(--radius-sm); background: var(--white); color: var(--ink); }
+#mci-checkin-ready[hidden], .hero [id^="ck-"][hidden] { display: none; }
