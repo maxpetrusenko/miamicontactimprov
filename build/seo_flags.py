@@ -20,6 +20,7 @@ SHORT = {
     "seo_h014_tldr": "h014",
     "seo_h015_open_faq": "h015",
     "seo_h022_internal_links": "h022",
+    "seo_h001": "h001",
 }
 
 
