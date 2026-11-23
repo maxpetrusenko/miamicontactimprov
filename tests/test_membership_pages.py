@@ -35,7 +35,7 @@ class Window(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which("node"), "node not installed")
     def test_script_window_boundaries(self):
-        # Run the real COMMON script against a stub window and probe active()/open().
+        # Run the real COMMON script against a stub window and probe active(); open() is gone so no gate can reveal early.
         script = re.search(r"<script>(.*)</script>", bf_bar.COMMON, re.S).group(1)
         probe = (
             "var window = { location: { search: '' } }; var sessionStorage = { getItem: function () { return null; }, setItem: function () {} };\n"
@@ -46,13 +46,13 @@ class Window(unittest.TestCase):
             "start: b.active(t('2026-11-27T00:00:00-05:00')),"
             "end: b.active(t('2026-12-01T23:59:59.999-05:00')),"
             "after: b.active(t('2026-12-02T00:00:00-05:00')),"
-            "openBefore: b.open(t('2026-11-21T00:00:00-05:00')),"
-            "openAfter: b.open(t('2026-12-02T00:00:00-05:00'))}));"
+            "today: b.active(t('2026-11-23T12:00:00-05:00')),"
+            "hasOpen: typeof b.open}));"
         )
         out = subprocess.run(["node", "-e", probe], capture_output=True, text=True, check=True).stdout
         self.assertEqual(
             json.loads(out),
-            {"before": False, "start": True, "end": True, "after": False, "openBefore": True, "openAfter": False},
+            {"before": False, "start": True, "end": True, "after": False, "today": False, "hasOpen": "undefined"},
         )
 
 
