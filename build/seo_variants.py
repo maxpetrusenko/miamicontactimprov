@@ -205,7 +205,7 @@ RELATED = {
     ],
 }
 
-# H001. Striking-distance GSC refresh: pages whose queries rank 3-20. Each entry rewrites the
+# H001. Striking-distance GSC refresh: pages whose queries rank 2-20. Each entry rewrites the
 # title, H1, first paragraph and adds one H2 section to match the query. English pages only;
 # "/" is always control for page-scope flags, and the Spanish pages are out of scope.
 # "first" is an exact (old, new) substitution; "section" is (h2, paragraph html).
@@ -217,7 +217,7 @@ STRIKING = {
                   "An improv jam, in the Contact Improvisation sense, is an open session where the form actually lives."),
         "section": ("Improv jam: the dance, not the comedy night",
                     'Search for an improv jam and you will also find comedy nights and music sessions. This page is about the dance: '
-                    'Contact Improvisation, a partnered movement form with no steps. The weekly session we can verify in Miami is the '
+                    'Contact Improvisation, a partnered movement form with no steps. A weekly session we can verify in Miami is the '
                     '<a href="/friday-jam">Friday jam in Hallandale Beach</a>, and the <a href="/miami-jams">list of verified sessions</a> '
                     'covers Miami-Dade and Broward.'),
     },
@@ -226,7 +226,7 @@ STRIKING = {
         "h1": ("<h1>Where Contact Improvisation came from.</h1>",
                "<h1>The history of Contact Improvisation, from Steve Paxton in 1972.</h1>"),
         "first": ("It started in a college gymnasium in Ohio,",
-                  "The history of contact improvisation started in a college gymnasium in Ohio, with Steve Paxton's work,"),
+                  "Contact Improvisation started with Steve Paxton's work in a college gymnasium in Ohio,"),
         "section": ("Steve Paxton and the first year",
                     'Steve Paxton is the dancer most closely tied to the start of the form. It took shape in 1972, through a residency at '
                     'Oberlin College in January and performances at the John Weber Gallery in New York in June. In 1975 the dancers decided '
@@ -247,13 +247,13 @@ STRIKING = {
     "/blog/contact-improv-class-miami-what-to-expect": {
         "title": "Contact Improv Near Me: Miami Friday Class & Jam",
         "h1": ("CONTACT IMPROV IN MIAMI: WHAT TO EXPECT ON A FRIDAY",
-               "CONTACT IMPROV NEAR ME? WHAT TO EXPECT ON A FRIDAY IN MIAMI"),
+               "CONTACT IMPROV IN MIAMI: WHAT TO EXPECT ON A FRIDAY"),
         "first": ("If you have searched for a contact improv class in Miami,",
-                  "If you have searched for contact improv near me in Miami,"),
-        "section": ("Contact improv near me: the weekly session we can verify",
+                  "If you have searched for a contact improv class in Miami,"),
+        "section": ("A weekly contact improv session we can verify in Miami",
                     'The Friday class and open jam at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, runs 7 to 9 PM. '
                     'For anything else in Miami-Dade and Broward, the <a href="/miami-jams">verified session list</a> names the organiser, '
-                    'room and price for each.'),
+                    'venue and cost where published.'),
     },
 }
 

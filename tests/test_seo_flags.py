@@ -83,6 +83,11 @@ class Striking(unittest.TestCase):
     def test_homepage_control(self):
         self.assertNotIn("/", seo_variants.STRIKING)
 
+    def test_no_near_me_stuffing(self):
+        row = seo_variants.STRIKING["/blog/contact-improv-class-miami-what-to-expect"]
+        text = " ".join([row["h1"][1], row["first"][1], row["section"][0]]).lower()
+        self.assertNotIn("near me", text)
+
 
 class Apply(unittest.TestCase):
     PAGE = ('<head><title>Old</title><meta property="og:title" content="Old">'
