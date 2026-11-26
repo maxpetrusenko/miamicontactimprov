@@ -74,6 +74,21 @@ class Copy(unittest.TestCase):
                 self.assertNotEqual(href, route)
 
 
+class Striking(unittest.TestCase):
+    def test_titles_and_sections(self):
+        for route, row in seo_variants.STRIKING.items():
+            self.assertLessEqual(len(row["title"]), 60, route)
+            self.assertNotRegex(row["section"][1] + row["title"], r"(?i)ubud|bali|studio price")
+
+    def test_homepage_control(self):
+        self.assertNotIn("/", seo_variants.STRIKING)
+
+    def test_no_near_me_stuffing(self):
+        row = seo_variants.STRIKING["/blog/contact-improv-class-miami-what-to-expect"]
+        text = " ".join([row["title"], row["h1"][1], row["first"][1], row["section"][0]]).lower()
+        self.assertNotIn("near me", text)
+
+
 class Apply(unittest.TestCase):
     PAGE = ('<head><title>Old</title><meta property="og:title" content="Old">'
             '<meta name="twitter:title" content="Old">'
@@ -83,7 +98,7 @@ class Apply(unittest.TestCase):
 
     def test_control_only_adds_meta(self):
         out = seo_variants.apply(self.PAGE, "/", "en")
-        self.assertIn('<meta name="seo-variants" content="h005=s;h021=s;h003=c;h013=c;h014=c;h015=c;h022=c">', out)
+        self.assertIn('<meta name="seo-variants" content="h005=s;h021=s;h003=c;h013=c;h014=c;h015=c;h022=c;h001=c">', out)
         self.assertEqual(out.replace(re.search(r'<meta name="seo-variants"[^>]*>\n', out).group(0), ""), self.PAGE)
 
     def test_private_pages_noindex(self):

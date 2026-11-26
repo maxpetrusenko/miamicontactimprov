@@ -205,11 +205,65 @@ RELATED = {
     ],
 }
 
+# H001. Striking-distance GSC refresh: pages whose queries rank 2-20. Each entry rewrites the
+# title, H1, first paragraph and adds one H2 section to match the query. English pages only;
+# "/jams" is dormant while it hashes to control for seo_h001 (its copy ships only if the split changes).
+# "/" is always control for page-scope flags, and the Spanish pages are out of scope.
+# "first" is an exact (old, new) substitution; "section" is (h2, paragraph html).
+STRIKING = {
+    "/jams": {
+        "title": "Improv Jam in Miami: What to Expect | Miami Contact Improv",
+        "h1": ("<h1>Jams: the room is the teacher.</h1>", "<h1>Improv jam: the room is the teacher.</h1>"),
+        "first": ("A jam is where Contact Improvisation actually lives.",
+                  "An improv jam, in the Contact Improvisation sense, is an open session where the form actually lives."),
+        "section": ("Improv jam: the dance, not the comedy night",
+                    'Search for an improv jam and you will also find comedy nights and music sessions. This page is about the dance: '
+                    'Contact Improvisation, a partnered movement form with no steps. A weekly session we can verify in Miami is the '
+                    '<a href="/friday-jam">Friday jam in Hallandale Beach</a>, and the <a href="/miami-jams">list of verified sessions</a> '
+                    'covers Miami-Dade and Broward.'),
+    },
+    "/history": {
+        "title": "History of Contact Improvisation: Steve Paxton, 1972",
+        "h1": ("<h1>Where Contact Improvisation came from.</h1>",
+               "<h1>The history of Contact Improvisation, from Steve Paxton in 1972.</h1>"),
+        "first": ("It started in a college gymnasium in Ohio,",
+                  "Contact Improvisation started with Steve Paxton's work in a college gymnasium in Ohio,"),
+        "section": ("Steve Paxton and the first year",
+                    'Steve Paxton is the dancer most closely tied to the start of the form. It took shape in 1972, through a residency at '
+                    'Oberlin College in January and performances at the John Weber Gallery in New York in June. In 1975 the dancers decided '
+                    'against trademarking or licensing it. For the form itself, see '
+                    '<a href="/what-is-contact-improvisation">what Contact Improvisation is</a>.'),
+    },
+    "/guide/what-contact-improvisation-is": {
+        "title": "Contact Improvisation: What It Is | Beginner's Guide",
+        "h1": ("<h1>What contact improvisation is.</h1>", "<h1>Contact improvisation: what it is.</h1>"),
+        "first": ("A dance with no steps, built on curiosity.",
+                  "Contact improvisation is a dance with no steps, built on curiosity."),
+        "section": ("Contact improvisation in one paragraph",
+                    'Contact improvisation is a partnered, improvised dance that Steve Paxton developed in 1972. Two or more dancers keep a '
+                    'moving point of contact and trade weight through gravity and momentum. There is no set choreography and no dance '
+                    'training required. The <a href="/what-is-contact-improvisation">short answer page</a> and the '
+                    '<a href="/history">history</a> go further.'),
+    },
+    "/blog/contact-improv-class-miami-what-to-expect": {
+        "title": "Contact Improv in Miami: Friday Open Jam",
+        "h1": ("CONTACT IMPROV IN MIAMI: WHAT TO EXPECT ON A FRIDAY",
+               "CONTACT IMPROV IN MIAMI: WHAT TO EXPECT AT A FRIDAY JAM"),
+        "first": ("If you have searched for a contact improv class in Miami,",
+                  "If you have searched for a contact improv class in Miami,"),
+        "section": ("A weekly contact improv session we can verify in Miami",
+                    'The Friday open jam at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, runs 7 to 9 PM. '
+                    'For anything else in Miami-Dade and Broward, the <a href="/miami-jams">verified session list</a> names the organiser, '
+                    'venue and cost where published.'),
+    },
+}
+
 TABLES = {
     "seo_h003_titles": TITLES,
     "seo_h013_keyword_placement": KEYWORD,
     "seo_h014_tldr": TLDR,
     "seo_h022_internal_links": RELATED,
+    "seo_h001": STRIKING,
 }
 
 # H021: transactional pages that stay reachable but should not be indexed or listed.
@@ -238,6 +292,21 @@ def _related_html(links):
     )
 
 
+def _striking(html, route):
+    row = STRIKING[route]
+    cur = re.search(r"<title>(.*?)</title>", html, re.S).group(1)
+    new = row["title"].replace("&", "&amp;")
+    for pat in ("<title>{}</title>", '<meta property="og:title" content="{}">',
+                '<meta name="twitter:title" content="{}">'):
+        html = _once(html, pat.format(cur), pat.format(new), route)
+    html = _once(html, *row["h1"], route)
+    html = _once(html, *row["first"], route)
+    h2, body = row["section"]
+    block = (f'<section class="section"><div class="wrap"><h2>{h2}</h2>'
+             f'<div class="prose"><p>{body}</p></div></div></section>')
+    return _once(html, "\n</main>", "\n" + block + "\n</main>", route)
+
+
 def apply(html, path, lang="en"):
     """Return `html` with this page's variants applied and the seo-variants meta added."""
     route = seo_flags.normalize_path(path)
@@ -257,6 +326,8 @@ def apply(html, path, lang="en"):
         if variants["h014"] == "v":
             block = f'<div class="answer"><div class="label">TL;DR</div><p>{TLDR[route]}</p></div>'
             html = _once(html, "</h1>", "</h1>\n    " + block, route)
+        if variants["h001"] == "v":
+            html = _striking(html, route)
         if variants["h022"] == "v":
             html = _once(html, "\n</main>", "\n" + _related_html(RELATED[route]) + "\n</main>", route)
     if is_private(route):
