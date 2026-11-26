@@ -207,6 +207,7 @@ RELATED = {
 
 # H001. Striking-distance GSC refresh: pages whose queries rank 2-20. Each entry rewrites the
 # title, H1, first paragraph and adds one H2 section to match the query. English pages only;
+# "/jams" is dormant while it hashes to control for seo_h001 (its copy ships only if the split changes).
 # "/" is always control for page-scope flags, and the Spanish pages are out of scope.
 # "first" is an exact (old, new) substitution; "section" is (h2, paragraph html).
 STRIKING = {
@@ -245,13 +246,13 @@ STRIKING = {
                     '<a href="/history">history</a> go further.'),
     },
     "/blog/contact-improv-class-miami-what-to-expect": {
-        "title": "Contact Improv Near Me: Miami Friday Class & Jam",
+        "title": "Contact Improv in Miami: Friday Open Jam",
         "h1": ("CONTACT IMPROV IN MIAMI: WHAT TO EXPECT ON A FRIDAY",
-               "CONTACT IMPROV IN MIAMI: WHAT TO EXPECT ON A FRIDAY"),
+               "CONTACT IMPROV IN MIAMI: WHAT TO EXPECT AT A FRIDAY JAM"),
         "first": ("If you have searched for a contact improv class in Miami,",
                   "If you have searched for a contact improv class in Miami,"),
         "section": ("A weekly contact improv session we can verify in Miami",
-                    'The Friday class and open jam at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, runs 7 to 9 PM. '
+                    'The Friday open jam at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, runs 7 to 9 PM. '
                     'For anything else in Miami-Dade and Broward, the <a href="/miami-jams">verified session list</a> names the organiser, '
                     'venue and cost where published.'),
     },

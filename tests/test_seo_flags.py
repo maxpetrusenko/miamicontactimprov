@@ -85,7 +85,7 @@ class Striking(unittest.TestCase):
 
     def test_no_near_me_stuffing(self):
         row = seo_variants.STRIKING["/blog/contact-improv-class-miami-what-to-expect"]
-        text = " ".join([row["h1"][1], row["first"][1], row["section"][0]]).lower()
+        text = " ".join([row["title"], row["h1"][1], row["first"][1], row["section"][0]]).lower()
         self.assertNotIn("near me", text)
 
 
