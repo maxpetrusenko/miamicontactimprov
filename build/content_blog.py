@@ -16,6 +16,7 @@ BLOG_ROUTE = "/blog/"
 PUBLISHED = "2026-09-20"
 # Articles published after the first batch carry their own date; the rest use PUBLISHED.
 DATES = {
+    "blog-salsa-bachata": "2026-10-14",
     "blog-miami-class": "2026-10-06",
     "blog-levels": "2026-10-06",
     "blog-small-dance": "2026-10-05",
@@ -26,6 +27,7 @@ DATES = {
 # A one-paragraph answer shown at the top of each article and used as the BlogPosting
 # abstract: self-contained, so a search or AI answer can quote it without the page.
 ANSWERS = {
+    "blog-salsa-bachata": "Salsa and bachata dancers already know how to feel a partner's balance, read intention through contact, and share a crowded floor. In contact improv you set down fixed roles, the count, and the pattern. Both people lead and follow at once, and there is no beat to land on.",
     "blog-miami-class": "The Friday contact improv class in Miami meets at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, every Friday from 7:00 to 9:00 PM: a 45-minute guided class, then an open jam. A class is $20 booked online or $30 to $50 pay-what-you-can at the door. No partner or dance experience needed.",
     "blog-levels": "Contact improvisation moves between three levels: the floor, a middle level of kneeling and crouching, and standing. Classes start on the floor because it teaches how to give weight safely, and the core skill is travelling smoothly between levels by spiralling and rolling rather than pushing or dropping.",
     "blog-small-dance": "The small dance is a contact improvisation exercise in which you stand still and notice the tiny, constant reflexes that keep you balanced. It trains the sensitivity dancers use to feel a partner's weight through the point of contact, and it takes two or three minutes with no equipment.",
@@ -38,6 +40,7 @@ ANSWERS = {
 }
 
 KEYWORDS = {
+    "blog-salsa-bachata": ["contact improv Miami", "contact improv for salsa dancers", "bachata dancers contact improvisation", "partner dance to contact improv", "Miami contact improv class"],
     "blog-miami-class": ["contact improv Miami", "contact improvisation class Miami", "dance class Hallandale Beach", "Friday jam Miami", "Inner Motion Dance Studio"],
     "blog-levels": ["contact improvisation levels", "floor work", "contact improv technique", "contact improv Miami"],
     "blog-small-dance": ["small dance", "standing meditation dance", "contact improvisation exercise", "contact improv Miami"],
@@ -55,6 +58,32 @@ def _date_label(slug):
 
 # slug, route, title, h1, description, read minutes, body html
 ARTICLES = [
+    (
+        "blog-salsa-bachata",
+        "/blog/contact-improv-for-salsa-and-bachata-dancers",
+        "Contact Improv for Salsa and Bachata Dancers in Miami",
+        "Contact improv for salsa and bachata dancers",
+        "What salsa and bachata dancers already bring to contact improv, what to unlearn, and how to try it at the Friday class and open jam in Hallandale Beach.",
+        3,
+        """
+<p>If you dance salsa or bachata in Miami, you already spend your weekends pressed up against near strangers. That is a real head start. It is also a small trap, because habits that make you good on a social floor will quietly get in your way at a jam. Here is what to bring and what to leave at the door.</p>
+<h2>What you already have</h2>
+<p>You know what connection feels like. A hand or a forearm tells you whether a partner is about to go left, stall, or hand you a turn. Contact improv asks for the same sensitivity, except the contact point wanders. It might be a shoulder, a back, a hip, the side of a ribcage.</p>
+<p>You also read people well. Before a step happens, you have already picked up their breath and where their weight sits. And you know how to share a room. You steer around other couples without looking and sense when a gap is about to close. A jam has several dances going at once, so that awareness helps.</p>
+<h2>The first thing to put down is the role</h2>
+<p>In partner dancing, one person proposes and the other answers. In contact improv both people do both, all the time. Nobody leads. When you feel the urge to steer someone, notice it. Offer your weight or your attention instead and see what comes back.</p>
+<p>This is harder than it sounds, and it is hard in different ways. Habitual leaders keep sending signals nobody is obliged to follow. Habitual followers wait for an instruction that never arrives. Neither habit is wrong in a salsa club. In a jam, both leave the dance empty.</p>
+<h2>No count, no pattern</h2>
+<p>Salsa gives you a count to land on. Bachata gives you its step and tap. Take that away and many dancers feel their feet go missing. Without a beat, the timing comes from the two bodies in front of you, and it can be very slow. One dance might be a single roll over a shoulder that takes a full minute.</p>
+<p>There is no basic step to return to, and no sequence to finish. Nothing has to resolve. A dance can simply stop. To see how weight does the work a pattern normally would, read <a href="/blog/weight-sharing-explained">weight sharing explained</a>, and keep the <a href="/glossary">glossary</a> open for any new term.</p>
+<h2>A few ways to ease in</h2>
+<p>Go slower than feels reasonable, then slower again. Do less than you want to in your first dance. Pick a partner who is also new, since neither of you will be tempted to carry the other. If you catch yourself running a familiar combination, stop mid-move and see what is left. Often it is better.</p>
+<p>Sitting at the edge for a while is fine. The <a href="/your-first-jam">first jam guide</a> walks through what the room usually does.</p>
+<h2>Try it on Friday</h2>
+<p>The Friday class and open jam runs 7:00 to 9:00 PM at Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009. A 45-minute guided class comes first, then the open jam begins at about 7:45. Jams usually have no music.</p>
+<p>Online tickets are $20, and booking closes 2 hours before the start. At the door, you pay what you can, $30 to $50. You do not need a partner or any experience. Details are on the <a href="/friday-jam">Friday jam page</a>, and booking links for the current event are on <a href="/events">events</a>.</p>
+""",
+    ),
     (
         "blog-miami-class",
         "/blog/contact-improv-class-miami-what-to-expect",
@@ -372,3 +401,7 @@ def solo_practice():
 
 def miami_class():
     return _article("blog-miami-class")
+
+
+def salsa_bachata():
+    return _article("blog-salsa-bachata")

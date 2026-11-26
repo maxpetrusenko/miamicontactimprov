@@ -96,6 +96,7 @@ PAGES = [
     ("membership-manage", "en", content_membership.membership_manage, "0.1", "yearly", None),
     ("checkin", "en", content_checkin.checkin, "0.1", "yearly", None),
     ("blog", "en", content_blog.index, "0.7", "weekly", None),
+    ("blog-salsa-bachata", "en", content_blog.salsa_bachata, "0.7", "monthly", None),
     ("blog-miami-class", "en", content_blog.miami_class, "0.7", "monthly", None),
     ("blog-levels", "en", content_blog.levels, "0.6", "monthly", None),
     ("blog-small-dance", "en", content_blog.small_dance, "0.6", "monthly", None),
