@@ -8,6 +8,7 @@ portal all run through the newsletter-api Worker; nothing here asks for a card.
 
 from shell import answer, cite_block, facts, page
 import bf_bar
+import plan_cards
 import schema
 
 VENUE = "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"
@@ -100,17 +101,8 @@ def membership():
 
 <section class="section">
   <div class="wrap">
-    <div class="price-list">
-      <div class="price-row">
-        <div class="price-text"><strong>Monthly &mdash; $40 a month.</strong><br>4 class credits every billing month. Credits you do not use roll over, up to 8 banked.</div>
-        {_plan_button("monthly", "Join monthly &ndash; $40")}
-      </div>
-      <div class="price-row">
-        <div class="price-text"><strong>Yearly &mdash; $260 a year.</strong><br>One class every week, 52 in the year.</div>
-        {_plan_button("yearly", "Join yearly &ndash; $260")}
-      </div>
-    </div>
-    {answer("Memberships cover the Friday class, not jams or workshops. If we cancel a class, the credit goes back to your balance.", label="What it covers")}
+    {plan_cards.grid(plan_cards.monthly(_plan_button("monthly", "Join monthly")), plan_cards.yearly(_plan_button("yearly", "Join yearly")))}
+    {answer("Memberships cover the Friday class, not jams or workshops. Monthly gives 4 classes each billing month; unused classes don't carry over. If we cancel a class, the credit goes back to your balance.", label="What it covers")}
     {facts([
       ("Where", VENUE),
       ("When", "Fridays, 7:00&ndash;9:00 PM"),
