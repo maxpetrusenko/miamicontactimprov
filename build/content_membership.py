@@ -106,7 +106,7 @@ def membership():
     {facts([
       ("Where", VENUE),
       ("When", "Fridays, 7:00&ndash;9:00 PM"),
-      ("Single class", '$20 online, <a href="/pricing">see pricing</a>'),
+      ("Single class", '$20, $30 after 3pm on Friday, <a href="/pricing">see pricing</a>'),
       ("Refunds and problems", '<a href="mailto:hello@miamicontactimprov.com">hello@miamicontactimprov.com</a>'),
     ])}
     {cite_block("Miami Contact Improv (2026). <em>Membership</em>. miamicontactimprov.com. https://miamicontactimprov.com/membership")}

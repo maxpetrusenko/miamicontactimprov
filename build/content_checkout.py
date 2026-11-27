@@ -44,7 +44,7 @@ def pricing():
 
 <section class="section">
   <div class="wrap">
-    {answer("A class is $20 online or $30 to $50 at the door, pay what you can. Promotion codes apply to every online ticket.")}
+    {answer("A class is $20 online ($30 after 3pm on Friday) or $30 to $50 at the door, pay what you can. Promotion codes apply to every online ticket.")}
     {rows}
     {answer("If we cancel a class or jam, we refund your ticket in full.", label="Refund policy")}
     <div class="prose">
