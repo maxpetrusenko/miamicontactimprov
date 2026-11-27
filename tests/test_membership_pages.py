@@ -94,7 +94,9 @@ class MembershipPage(unittest.TestCase):
         self.assertIn('data-plan="yearly"', self.page)
         self.assertIn("$40 a month", self.page)
         self.assertIn("$260 a year", self.page)
-        self.assertIn("up to 8 banked", self.page)
+        self.assertIn("4 classes each billing month", self.page)
+        self.assertIn("Unused classes don't carry over", self.page)
+        self.assertNotRegex(self.page, r"(?i)roll(s|ed)? over|banked")
         self.assertIn("not jams or workshops", self.page)
 
     def test_checkout_goes_to_the_worker_membership_route(self):
@@ -180,7 +182,12 @@ class Routes(unittest.TestCase):
         self.assertNotIn("/membership", seo_variants.PRIVATE_ROUTES)
 
     def test_pricing_links_to_membership(self):
-        self.assertIn('href="/membership"', html(content_checkout.pricing))
+        page = html(content_checkout.pricing)
+        self.assertIn('href="/membership?utm_source=site&amp;utm_medium=pricing&amp;utm_campaign=monthly"', page)
+        self.assertIn('href="/membership?utm_source=site&amp;utm_medium=pricing&amp;utm_campaign=yearly"', page)
+        self.assertIn('data-kind="class"', page)
+        self.assertIn("Unused classes don't carry over", page)
+        self.assertNotRegex(page, r"(?i)roll(s|ed)? over|banked")
 
     def test_no_dark_mode_in_the_stylesheet(self):
         css = (ROOT / "site" / "assets" / "site.css").read_text()

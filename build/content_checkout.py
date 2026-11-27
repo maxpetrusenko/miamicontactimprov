@@ -7,6 +7,7 @@ commercial mechanics, not translated library pages.
 """
 
 from shell import answer, buy_button, cite_block, facts, page, DOOR_PAYMENT_LINK
+import plan_cards
 import schema
 
 VENUE = "Inner Motion Dance Studio, 216 NE 1st Ave, Hallandale Beach, FL 33009"
@@ -19,38 +20,18 @@ DOOR_LINK = DOOR_PAYMENT_LINK
 
 # ---------------------------------------------------------------- pricing
 def pricing():
+    link = "/membership?utm_source=site&amp;utm_medium=pricing&amp;utm_campaign="
+    cards = plan_cards.grid(
+        plan_cards.drop_in(buy_button("class", "Book a class", "pricing-class")),
+        plan_cards.monthly(f'<a class="btn primary" href="{link}monthly">Join monthly</a>'),
+        plan_cards.yearly(f'<a class="btn primary" href="{link}yearly">Join yearly</a>'),
+    )
     rows = f"""
-<div class="price-list">
-  <div class="price-row">
-    <div class="price-text"><strong>Class, online &mdash; $20.</strong><br>Promotion codes apply.
-      <p class="price-note">Online sales close two hours before each class; after that it is $30&ndash;$50 pay-what-you-can at the door.</p>
-    </div>
-    {buy_button("class", "Buy ticket &ndash; $20", "pricing-class")}
-  </div>
-
-  <div class="price-row">
-    <div class="price-text"><strong>Jam, online &mdash; $15.</strong><br>Promotion codes apply.
-      <p class="price-note">Not bookable yet: no jam night has its own date in the schedule yet. This row becomes a button once one does.</p>
-    </div>
-  </div>
-
-  <div class="price-row">
-    <div class="price-text"><strong>Class + jam, same day &mdash; $30.</strong><br>Promotion codes apply.
-      <p class="price-note">Not bookable yet, for the same reason as the jam row above.</p>
-    </div>
-  </div>
-
-  <div class="price-row">
-    <div class="price-text"><strong>Membership &mdash; $40 a month or $260 a year.</strong><br>Four classes a month, or a class every week.</div>
-    <a class="btn secondary" href="/membership">See memberships</a>
-  </div>
-
-  <div class="price-row">
-    <div class="price-text"><strong>At the door &mdash; $30&ndash;$50, pay what you can.</strong>
-      <p class="price-note">No booking. Come to the door; nobody is turned away over money.</p>
-    </div>
-  </div>
-</div>
+{cards}
+{facts([
+    ("Jam, online", "$15. Not bookable yet: no jam night has its own date in the schedule."),
+    ("Class + jam, same day", "$30. Not bookable yet, for the same reason."),
+])}
 """
     body = f"""
 <section class="hero">
