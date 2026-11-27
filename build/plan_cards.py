@@ -16,6 +16,7 @@ YEARLY_ITEMS = [
     "Cancel any time from your confirmation email",
 ]
 DROP_IN_ITEMS = [
+    "$20, $30 after 3pm on Friday",
     "Friday class, 7:00 to 7:45",
     "Promotion codes apply online",
     "Online sales close 2 hours before class",
