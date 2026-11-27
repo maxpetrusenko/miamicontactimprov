@@ -624,7 +624,7 @@ FUNDAMENTALS_FAQ = [
     ("Do I have to come to all eight classes?",
      "No. Each class stands on its own, so you can drop into any one of the eight. Coming to all of them is what turns the material into dancing, and it is not required."),
     ("How much does a class cost?",
-     "$20 online, booked in advance through the button on this page. Promotion codes apply, and new codes go out monthly to subscribers. Online sales close two hours before each class; after that it is $30 to $50 pay-what-you-can at the door."),
+     "$20 online ($30 after 3pm on Friday), booked in advance through the button on this page. Promotion codes apply, and new codes go out monthly to subscribers. Online sales close two hours before each class; after that it is $30 to $50 pay-what-you-can at the door."),
     ("How do I book?",
      "Buy the $20 online ticket above, any time until two hours before the class starts. No booking is needed to come to the door either: every class accepts $30 to $50 pay-what-you-can, no advance registration, right up to 9:00."),
     ("Where is it, and how do I get there?",
